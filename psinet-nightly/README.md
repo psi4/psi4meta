@@ -12,8 +12,8 @@ psinet nightly
   * Build of Linux conda package from fresh ``psi4/psi4`` checkout
   * If a few test cases pass, upload conda package to anaconda.org
   * Run **all** test cases, send results to testboard.org
-  * Make docs. If successful, tgz and send to psicode
-  * Make github feed. If successful, tgz and send to psicode
+  * Make docs. If successful, tgz and send to psicode for "docs" link in header
+  * Make github feed. If successful, tgz and send to psicode for single commit on main page and recent history on ``timeline.php``
 
 * Many comments in script itself
 
