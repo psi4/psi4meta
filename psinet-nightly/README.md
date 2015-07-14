@@ -3,6 +3,10 @@ psinet nightly
 
 * ``nightlycondabuildctestcdash.sh`` is run nightly from a crontab
 
+```bash
+00 02 * * * /theoryfs2/ds/cdsgroup/psi4-compile/nightly/nightlycondabuildctestcdash.sh >/theoryfs2/ds/cdsgroup/psi4-compile/nightly/cb-psinet.log 2>&1
+```
+
 * It does:
 
   * Build of Linux conda package from fresh ``psi4/psi4`` checkout
