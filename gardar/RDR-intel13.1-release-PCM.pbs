@@ -1,0 +1,58 @@
+#!/bin/bash
+#PBS -lnodes=1:ppn=12
+#PBS -lwalltime=4:00:00
+#PBS -A nn4654k
+
+module purge
+module load intel/13.1
+module load python/2.7.5
+module load mkl/11.0.0
+module load openmpi
+module load hdf5
+
+export PATH=/global/home/roberto/Software/bin:$PATH
+
+which cmake
+cmake --version
+
+which ifort
+which icc
+which icpc
+ifort --version
+icc --version
+icpc --version
+
+export build_name=RDR-CentOS-6.6-intel13.1-release-pcm
+export site_name=gardar.nhpc.hi.is
+PSI4_TMPDIR=/scratch/roberto/scratch-${build_name}
+mkdir -p $PSI4_TMPDIR
+export PSI4_TMPDIR
+export NPROCS=`lscpu -p | egrep -v '^#' | wc -l`
+export CTEST_MAKE_NUM_PROCS=$NPROCS
+export PSI4_NUM_MPI_PROCS=1
+
+export PYTHON=`which python`
+export GSL_CONFIG_EXECUTABLE=/global/home/roberto/Software/gsl/bin/gsl-config
+
+TMP_DIR=/scratch/roberto/tmprunpsi4/${build_name}
+mkdir -p $TMP_DIR
+
+git clone git@github.com:psi4/psi4.git $TMP_DIR
+
+cd $TMP_DIR
+
+./setup --fc=ifort --cc=icc --cxx=icpc --plugins=on --python=$PYTHON --type=release -DENABLE_CHEMPS2=OFF --pcmsolver -D BUILDNAME=${build_name} -D SITE=${site_name}
+
+cd $TMP_DIR/objdir
+
+export PSI4DATADIR=$TMP_DIR/lib
+mkdir -p $PSI4_TMPDIR/psi4scr
+export PSI4_SCRATCH=$PSI4_TMPDIR/psi4scr
+
+ctest -D Nightly -j$NPROCS
+
+cd
+rm -rf $PSI4_TMPDIR $TMP_DIR
+
+exit 0
+
