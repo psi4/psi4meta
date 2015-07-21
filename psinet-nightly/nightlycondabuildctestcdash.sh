@@ -16,6 +16,8 @@
 # get scp to psicode working
 # [LAB, 22 Jun 2015]
 # get feed scp to psicode working, erroring a lot upon connection
+# [LAB, 20 Jul 2015]
+# split out mrcc test cases so can give them the Intel compilers the exe needs
 
 # Make a restricted path and ld_library_path that includes conda's cmake
 #   (3.1) and python (2.7). This forcible inclusion of conda's python in the
@@ -33,7 +35,7 @@ TAG=LAB-intel15.0-mkl-release-conda
 
 # Directory containing this script itself. Moreover, contains a directory
 #   psi4 containing the conda-build recipe files meta.yaml and build.sh
-NIGHTLYDIR=/theoryfs2/ds/cdsgroup/psi4-compile/nightly
+NIGHTLYDIR=/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/conda-recipies
 
 # Machine settings and directories
 #   if CONDA_BLD_PATH not set, takes value of $MINICONDA/conda-bld
@@ -47,6 +49,8 @@ export CONDA_BLD_PATH=/scratch/cdsgroup/conda-builds
 MINICONDA=/theoryfs2/ds/cdsgroup/psi4-install/miniconda
 CONDABUILDDIR=$CONDA_BLD_PATH/work/build
 CONDAINSTALLDIR=$MINICONDA/envs/_build_placehold_placehold_pl
+
+# <<<  Build Conda Binary  >>>
 
 # This script moves to a directory $NIGHTLYDIR that contains the
 #   psi4 conda recipe that is essentially the same as in the psi4
@@ -65,16 +69,7 @@ conda build psi4
 #binstar upload /path/to/conda-package-2.0.tar.bz2 --channel test
 #binstar channel --copy test main
 
-# Form links to enable misuse of conda (conda wants to run from installed pkg, 
-#   ctest wants git repo)
-mkdir -p $CONDAINSTALLDIR/bin
-ln -s $MINICONDA/bin/python $CONDAINSTALLDIR/bin/python
-
-# Runs test cases and hopefully communicates results with CDash.
-#   Communication details in psi4/CTestConfig.cmake in repo.
-cd $CONDABUILDDIR
-export LD_LIBRARY_PATH=$CONDAINSTALLDIR/lib
-ctest -M Nightly -T Test -T Submit -j$NPROCS
+# <<<  Docs Feed  >>>
 
 # Upon sucessful docs build, tars it up here and sends to psicode
 #   uses double scp because single often fails, even command-line
@@ -86,6 +81,8 @@ if [ -d "$CONDABUILDDIR/doc/sphinxman/html" ]; then
     scp -r cb-sphinxman.tar.gz psicode@www.psicode.org:~/machinations/cb-sphinxman.tar.gz
 fi
 
+# <<<  PSICODE Feed  >>>
+
 # Upon sucessful feed build, tars it up here and sends to psicode
 #   uses double scp because single often fails, even command-line
 if [ -d "$CONDABUILDDIR/doc/sphinxman/feed" ]; then
@@ -94,6 +91,22 @@ if [ -d "$CONDABUILDDIR/doc/sphinxman/feed" ]; then
     scp -r cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
     scp -r cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
 fi
+
+# <<<  Dashboard Tests  >>>
+
+# Form links to enable misuse of conda (conda wants to run from installed pkg, 
+#   ctest wants git repo)
+mkdir -p $CONDAINSTALLDIR/bin
+ln -s $MINICONDA/bin/python $CONDAINSTALLDIR/bin/python
+
+# Runs test cases and hopefully communicates results with CDash.
+#   Communication details in psi4/CTestConfig.cmake in repo.
+#   Intel sourced b/c mrcc depends on it, not psi4
+cd $CONDABUILDDIR
+export LD_LIBRARY_PATH=$CONDAINSTALLDIR/lib
+ctest -M Nightly -T Test -T Submit -LE mrcc -j$NPROCS
+source /theoryfs2/common/software/intel2015/bin/compilervars.sh intel64
+ctest -M Nightly -T Test -T Submit -L mrcc -j$NPROCS
 
 cd $NIGHTLYDIR
 exit 0
