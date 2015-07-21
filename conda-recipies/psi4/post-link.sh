@@ -17,6 +17,8 @@ echo "  For sh/bash command-line use, add to shell or ~/.bashrc file:"
 echo "    export PATH=${PREFIX}/bin:\$PATH"
 echo "    export PSI_SCRATCH=/path/to/existing/writable/local-not-network/disk/for/scratch/files"
 echo ""
+echo "  Report problems at http://forum.psicode.org/t/report-conda-update-psi4-oddities-here/32"
+echo ""
 
 cat > linktest.in << EOL
 memory 250 mb

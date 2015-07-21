@@ -24,7 +24,7 @@ about:
   home: http://www.psicode.org
   license: GNU General Public License v2 or later (GPLv2+)
   summary: "open-source quantum chemistry"
-  readme: README.rst
+  readme: README.md
 
 # to conda build package from local source rather than github, substitute like below
 #package/version: 0.1.6
