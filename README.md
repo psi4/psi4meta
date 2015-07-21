@@ -6,6 +6,6 @@ machine-specificity or rare use or otherwise. Also files that other developers
 should be aware of so 'auto-procedures' can be traced.
 
 * Nightly build scripts for the testboard
-* Package recipies with build-computer paths
+* Package recipes with build-computer paths
 * That script that adds the License text to every file
 
