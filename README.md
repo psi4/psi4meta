@@ -9,3 +9,5 @@ should be aware of so 'auto-procedures' can be traced.
 * Package recipes with build-computer paths
 * That script that adds the License text to every file
 
+See README.md files in subdirectories for specific notes
+

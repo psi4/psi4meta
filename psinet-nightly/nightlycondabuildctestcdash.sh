@@ -104,9 +104,9 @@ ln -s $MINICONDA/bin/python $CONDAINSTALLDIR/bin/python
 #   Intel sourced b/c mrcc depends on it, not psi4
 cd $CONDABUILDDIR
 export LD_LIBRARY_PATH=$CONDAINSTALLDIR/lib
-ctest -M Nightly -T Test -T Submit -LE mrcc -j$NPROCS
+ctest -M Nightly -T Test -T Submit -LE dmrcc -j$NPROCS
 source /theoryfs2/common/software/intel2015/bin/compilervars.sh intel64
-ctest -M Nightly -T Test -T Submit -L mrcc -j$NPROCS
+ctest -M Nightly -T Test -T Submit -L dmrcc -j$NPROCS
 
 cd $NIGHTLYDIR
 exit 0

@@ -19,3 +19,5 @@ psinet nightly
 
 * Accessible to anyone with a cdsgroup account after talking about some details.
 
+* **Takeaway: everything built from private repo at 2 AM**
+
