@@ -1,0 +1,32 @@
+package:
+  name: chemps2
+  version: "1.5"
+
+source:
+  git_url: git@github.com:SebWouters/CheMPS2.git
+  git_tag: "v1.5"
+
+build:
+  number: 6
+  binary_relocation: true
+
+requirements:
+  build:
+    - cmake >=2.8.11
+    - hdf5
+    - gsl
+  run:
+    - hdf5
+    - gsl
+
+about:
+  home: http://sebwouters.github.io/CheMPS2
+  license: GNU General Public License v2 or later (GPLv2+)
+  summary: "a spin-adapted implementation of DMRG for ab initio quantum chemistry"
+  readme: README.md
+
+# to conda build package from local source rather than github, substitute like below
+#package/version: 0.1.6
+#source/path: ../../psi4mangle/psi4
+#build/number: 1
+#build/string: abc
