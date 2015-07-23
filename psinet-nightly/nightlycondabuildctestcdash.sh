@@ -18,6 +18,8 @@
 # get feed scp to psicode working, erroring a lot upon connection
 # [LAB, 20 Jul 2015]
 # split out mrcc test cases so can give them the Intel compilers the exe needs
+# [LAB, 22 Jul 2015]
+# add loop to get around psicode failures: ssh_exchange_identification: Connection closed by remote host
 
 # Make a restricted path and ld_library_path that includes conda's cmake
 #   (3.1) and python (2.7). This forcible inclusion of conda's python in the
@@ -76,9 +78,14 @@ conda build psi4
 if [ -d "$CONDABUILDDIR/doc/sphinxman/html" ]; then
     cd $CONDABUILDDIR/doc/sphinxman
     mv html master
-    tar -zcvf cb-sphinxman.tar.gz master/
-    scp -r cb-sphinxman.tar.gz psicode@www.psicode.org:~/machinations/cb-sphinxman.tar.gz
-    scp -r cb-sphinxman.tar.gz psicode@www.psicode.org:~/machinations/cb-sphinxman.tar.gz
+    tar -zcf cb-sphinxman.tar.gz master/
+
+    scp -rv cb-sphinxman.tar.gz psicode@www.psicode.org:~/machinations/cb-sphinxman.tar.gz
+    while [ $? -ne 0 ]; do
+        sleep 6
+        echo "trying to upload sphinxman"
+        scp -rv cb-sphinxman.tar.gz psicode@www.psicode.org:~/machinations/cb-sphinxman.tar.gz
+    done
 fi
 
 # <<<  PSICODE Feed  >>>
@@ -87,9 +94,14 @@ fi
 #   uses double scp because single often fails, even command-line
 if [ -d "$CONDABUILDDIR/doc/sphinxman/feed" ]; then
     cd $CONDABUILDDIR/doc/sphinxman
-    tar -zcvf cb-feed.tar.gz feed/
-    scp -r cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
-    scp -r cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
+    tar -zcf cb-feed.tar.gz feed/
+
+    scp -rv cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
+    while [ $? -ne 0 ]; do
+        sleep 6
+        echo "trying to upload ghfeed"
+        scp -rv cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
+    done
 fi
 
 # <<<  Dashboard Tests  >>>
