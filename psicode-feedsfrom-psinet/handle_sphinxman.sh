@@ -1,7 +1,10 @@
 #!/bin/sh  
 DOCSTAR=~/machinations/cb-sphinxman.tar.gz
 FEEDSTAR=~/machinations/cb-feed.tar.gz
-# */15 * * * * bash ~/machinations/handle_sphinxman.sh >~/machinations/ct.log 2>&1
+# */15 * * * * bash ~/machinations/handle_sphinxman.sh >>~/machinations/ct.log 2>&1
+
+echo ""
+echo "handle_sphinxman.sh: episode" `date`
 
 echo "handle_sphinxman.sh: starting on $DOCSTAR"
 if [ -f "$DOCSTAR" ]; then
@@ -11,7 +14,7 @@ if [ -f "$DOCSTAR" ]; then
     mv ~/html/psi4manual/master/ ~/html/psi4manual/master-but-one/
 
     echo "handle_sphinxman.sh: unpacking new docs"
-    tar -zxvf $DOCSTAR -C ~/html/psi4manual/
+    tar -zxf $DOCSTAR -C ~/html/psi4manual/
 
     echo "handle_sphinxman.sh: removing tarball"
     rm $DOCSTAR
@@ -25,7 +28,7 @@ if [ -f "$FEEDSTAR" ]; then
     mv ~/html/psi4manual/feed/ ~/html/psi4manual/feed-but-one/
 
     echo "handle_sphinxman.sh: unpacking new feed"
-    tar -zxvf $FEEDSTAR -C ~/html/psi4manual/
+    tar -zxf $FEEDSTAR -C ~/html/psi4manual/
 
     echo "handle_sphinxman.sh: removing tarball"
     rm $FEEDSTAR

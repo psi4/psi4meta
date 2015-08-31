@@ -6,7 +6,7 @@ psicode feeds from psinet
 * ``handle_sphinxman.sh`` is run every quarter hour from a crontab
 
 ```bash
-*/15 * * * * bash ~/machinations/handle_sphinxman.sh >~/machinations/ct.log 2>&1
+*/15 * * * * bash ~/machinations/handle_sphinxman.sh >>~/machinations/ct.log 2>&1
 ```
 
 * It does:
