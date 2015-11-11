@@ -33,7 +33,7 @@ export PYTHON=`which python`
 TMP_DIR=/global/work/roberto/tmprunpsi4/RDR-CentOS-6.6-intel13.0-release
 mkdir -p $TMP_DIR
 
-git clone git@github.com:psi4/psi4.git $TMP_DIR
+git clone --recursive git@github.com:psi4/psi4.git $TMP_DIR
 
 cd $TMP_DIR
 

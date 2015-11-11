@@ -12,7 +12,7 @@ export PSI4DATADIR=$TMP_DIR/lib
 mkdir -p $PSI4_TMPDIR/psi4scr
 export PSI4_SCRATCH=$PSI4_TMPDIR/psi4scr
 
-git clone git@github.com:psi4/psi4.git $TMP_DIR
+git clone --recursive git@github.com:psi4/psi4.git $TMP_DIR
 
 cd $TMP_DIR
 
