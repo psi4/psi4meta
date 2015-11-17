@@ -5,21 +5,22 @@
 
 module purge
 module rm intel
-module load gcc/4.7.2
+module load intel/14.0
 module load cmake/3.1.0
 module load python/2.7.3
 module load gsl/1.15
 module load hdf5/1.8.9
 module load gold
+module load gcc/4.7.2-coalesce
 
 which gfortran
-which gcc
-which g++
+which icc
+which icpc
 gfortran --version
-gcc --version
-g++ --version
+icc --version
+icpc --version
 
-export build_name=RDR-CentOS-6.6-gcc4.7.2-coverage
+export build_name=RDR-CentOS-6.6-intel14.0_gfortran4.7.2-release-PCM
 export site_name=stallo.uit.no
 PSI4_TMPDIR=/local/work/roberto/scratch-${build_name}
 mkdir -p $PSI4_TMPDIR
@@ -37,7 +38,7 @@ git clone --recursive git@github.com:psi4/psi4.git $TMP_DIR
 
 cd $TMP_DIR
 
-./setup --fc=gfortran --cc=gcc --cxx=g++ --coverage --plugins=on --python=$PYTHON -D BUILDNAME=${build_name} -D SITE=${site_name}
+./setup --fc=gfortran --cc=icc --cxx=icpc --type=release --pcmsolver=on --plugins=on --python=$PYTHON -D BUILDNAME=${build_name} -D SITE=${site_name}
 
 cd $TMP_DIR/objdir
 

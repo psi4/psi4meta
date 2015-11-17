@@ -14,7 +14,7 @@ mkdir -p $PSI4_TMPDIR
 mkdir -p $TMP_DIR
 mkdir -p $PSI4_SCRATCH
 
-git clone --depth=1 git@github.com:psi4/psi4.git $TMP_DIR
+git clone --recursive --depth=1 git@github.com:psi4/psi4.git $TMP_DIR
 
 cd $TMP_DIR
 

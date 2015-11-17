@@ -33,11 +33,11 @@ export PYTHON=`which python`
 TMP_DIR=/global/work/roberto/tmprunpsi4/${build_name}
 mkdir -p $TMP_DIR
 
-git clone git@github.com:psi4/psi4.git $TMP_DIR
+git clone --recursive git@github.com:psi4/psi4.git $TMP_DIR
 
 cd $TMP_DIR
 
-./setup --fc=ifort --cc=icc --cxx=icpc --type=debug --plugins=on --python=$PYTHON -D BUILDNAME=${build_name} -D SITE=${site_name}
+./setup --fc=ifort --cc=icc --cxx=icpc --type=release --plugins=on --python=$PYTHON -D BUILDNAME=${build_name} -D SITE=${site_name}
 
 cd $TMP_DIR/objdir
 

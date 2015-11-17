@@ -1,4 +1,6 @@
 set +x off
+
+#Print install text
 echo ""
 echo ""
 echo "  Thank you for installing psi4. Additional resources:"
@@ -20,6 +22,7 @@ echo ""
 echo "  Report problems at http://forum.psicode.org/t/report-conda-update-psi4-oddities-here/32"
 echo ""
 
+#Create input file
 cat > linktest.in << EOL
 memory 250 mb
 
@@ -55,6 +58,11 @@ compare_values(-0.001672292164, psi4.get_variable("SAPT DISP ENERGY"), 6, "SAPT0
 compare_values(-0.002235581423, psi4.get_variable("SAPT SAPT0 ENERGY"), 6, "SAPT0 Etotal")
 EOL
 
-PSIOUT=`PSI_SCRATCH=/tmp ${PREFIX}/bin/psi4 linktest.in`
+#Run test calculation
+PSIOUT=`PSI_SCRATCH=/tmp; ${PREFIX}/bin/psi4 -i linktest.in -o linktest.out > linktest.txt`
 echo $PSIOUT
+#Print test results
+cat linktest.txt
 echo ""
+#Remove temporary files
+rm -f linktest.in linktest.out linktest.txt timer.dat

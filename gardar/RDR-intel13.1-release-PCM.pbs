@@ -37,7 +37,7 @@ export GSL_CONFIG_EXECUTABLE=/global/home/roberto/Software/gsl/bin/gsl-config
 TMP_DIR=/scratch/roberto/tmprunpsi4/${build_name}
 mkdir -p $TMP_DIR
 
-git clone git@github.com:psi4/psi4.git $TMP_DIR
+git clone --recursive git@github.com:psi4/psi4.git $TMP_DIR
 
 cd $TMP_DIR
 

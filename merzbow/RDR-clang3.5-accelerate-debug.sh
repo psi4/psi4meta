@@ -12,7 +12,7 @@ export CTEST_MAKE_NUM_PROCS=$NPROCS
 TMP_DIR=/Users/roberto/Scratch/tmprunpsi4/RDR-clang3.5-accelerate-debug
 mkdir -p $TMP_DIR
 
-git clone git@github.com:psi4/psi4.git $TMP_DIR
+git clone --recursive git@github.com:psi4/psi4.git $TMP_DIR
 
 cd $TMP_DIR
 
