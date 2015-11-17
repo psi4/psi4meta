@@ -28,6 +28,6 @@ about:
 
 # to conda build package from local source rather than github, substitute like below
 #package/version: 0.1.6
-#source/path: ../../psi4mangle/psi4
+#source/path: ../../../psi4mangle/psi4
 #build/number: 1
 #build/string: abc

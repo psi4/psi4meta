@@ -21,3 +21,6 @@ psinet nightly
 
 * **Takeaway: everything built from private repo at 2 AM**
 
+* Fork conda package so users can subscribe just to psi4 channel
+  * >>> ``~/psi4-install/miniconda/bin/anaconda copy asmeurer/gsl/1.16/linux-64/gsl-1.16-1.tar.bz2``
+

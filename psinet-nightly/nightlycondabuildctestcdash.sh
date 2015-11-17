@@ -31,6 +31,7 @@ export PATH=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/bin:/theoryfs2/ds/cdsg
 #export LD_LIBRARY_PATH=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/envs/p4env/lib
 #export LD_LIBRARY_PATH=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/lib
 source /theoryfs2/common/software/intel2015/bin/compilervars.sh intel64
+export PYTHONIOENCODING="UTF-8"  # fix for temp bug https://github.com/conda/conda-build/issues/636
 
 # CDash tag according to RDR pattern
 TAG=LAB-intel15.0-mkl-release-conda
