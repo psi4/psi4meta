@@ -1,0 +1,29 @@
+package:
+  name: pcmsolver
+  version: "1.0.4"
+
+source:
+  git_url: git@github.com:PCMSolver/pcmsolver.git
+
+build:
+  number: 1
+  binary_relocation: true
+
+requirements:
+  build:
+    - cmake >=2.8.8
+    - python 2.7*
+  run:
+    - python 2.7*
+
+about:
+  home: http://pcmsolver.readthedocs.org/en/latest/
+  license: GNU Lesser General Public License v3 (LGPLv3)
+  summary: "An API for the Polarizable Continuum Model"
+  readme: README.md
+
+# to conda build package from local source rather than github, substitute like below
+#package/version: 0.1.6
+#source/path: ../../psi4mangle/psi4
+#build/number: 1
+#build/string: abc
