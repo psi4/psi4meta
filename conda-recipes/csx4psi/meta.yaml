@@ -1,0 +1,32 @@
+package:
+  name: csx4psi
+  version: "0.0.8"
+
+source:
+  git_url: git@github.com:ChemSem/csx4psi.git
+  #git_tag: "v1.5"
+
+build:
+  number: 0
+  binary_relocation: true
+  always_include_files:
+    - lib/libiomp5.so    [linux]
+
+requirements:
+  build:
+    - psi4
+  #run:
+  #  - hdf5
+  #  - gsl
+
+about:
+  home: https://github.com/ChemSem/csx4psi
+  #license: GNU General Public License v2 or later (GPLv2+)
+  summary: "a spin-adapted implementation of DMRG for ab initio quantum chemistry"
+  readme: README.md
+
+# to conda build package from local source rather than github, substitute like below
+#package/version: 0.1.6
+#source/path: ../../psi4mangle/psi4
+#build/number: 1
+#build/string: abc

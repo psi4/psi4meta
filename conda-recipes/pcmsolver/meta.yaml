@@ -3,7 +3,8 @@ package:
   version: "1.0.4"
 
 source:
-  git_url: git@github.com:PCMSolver/pcmsolver.git
+  #git_url: git@github.com:PCMSolver/pcmsolver.git
+  path: ../../../nightly/pcmsolver
 
 build:
   number: 1
@@ -12,14 +13,15 @@ build:
 requirements:
   build:
     - cmake >=2.8.8
-    - python 2.7*
+    - zlib
   run:
-    - python 2.7*
+    - zlib
+#    - python 2.7*
 
 about:
   home: http://pcmsolver.readthedocs.org/en/latest/
   license: GNU Lesser General Public License v3 (LGPLv3)
-  summary: "An API for the Polarizable Continuum Model"
+  summary: "Polarizable Continuum Model API"
   readme: README.md
 
 # to conda build package from local source rather than github, substitute like below
