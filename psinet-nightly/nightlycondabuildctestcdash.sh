@@ -38,7 +38,7 @@ TAG=LAB-intel15.0-mkl-release-conda
 
 # Directory containing this script itself. Moreover, contains a directory
 #   psi4 containing the conda-build recipe files meta.yaml and build.sh
-NIGHTLYDIR=/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/conda-recipies
+NIGHTLYDIR=/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/conda-recipes
 
 # Machine settings and directories
 #   if CONDA_BLD_PATH not set, takes value of $MINICONDA/conda-bld
@@ -57,7 +57,7 @@ CONDAINSTALLDIR=$MINICONDA/envs/_build_placehold_placehold_pl
 
 # This script moves to a directory $NIGHTLYDIR that contains the
 #   psi4 conda recipe that is essentially the same as in the psi4
-#   repository (can't use the psi4/conda-recipe/psi4 code itself b/c
+#   repository (can't use the psi4/conda-recipes/psi4 code itself b/c
 #   the recipe is cloning the repo from github). It issues conda-build
 #   which checks out the source from github (ssh key, private repo)
 #   into $MINICONDA/conda-bld/work (directory gets entirely replaced at 
