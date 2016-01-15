@@ -7,15 +7,17 @@ source:
   git_tag: "v1.5"
 
 build:
-  number: 6
+  number: 9
   binary_relocation: true
 
 requirements:
   build:
     - cmake >=2.8.11
+    - iomp5
     - hdf5
     - gsl
   run:
+    - iomp5
     - hdf5
     - gsl
 
