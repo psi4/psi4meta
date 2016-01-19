@@ -1,30 +1,46 @@
 package:
   name: psi4
   version: {{ environ.get('GIT_DESCRIBE_TAG', '') + '.' + environ.get('GIT_DESCRIBE_NUMBER', 0)|string }}
+  #version: {{ environ.get('GIT_DESCRIBE_NUMBER', '') }}
 
 source:
   git_url: git@github.com:psi4/psi4.git
+  #path: ../../../psi4mangle/psi4
 
 build:
   string: py{{ environ.get('PY_VER').replace('.', '') }}_{{ environ.get('GIT_DESCRIBE_HASH', 'GIT_STUB') }}
+  #number: {{ environ.get('GIT_DESCRIBE_NUMBER', 0) }}
+  #string: py{{ environ.get('PY_VER').replace('.', '') }}_{{ environ.get('GIT_BUILD_STR', 'GIT_STUB') }}
   binary_relocation: true
   binary_has_prefix_files:
     - bin/psi4
   has_prefix_files:
     - share/psi/scripts/setenv.py
+    - share/psi/python/pcm_placeholder.py
+    - bin/psi4-config
 
 requirements:
   build:
     - cmake >3                               [linux]
     - python 2.7*
+    - chemps2
+    - pcmsolver
+    - libgcc
+#    - jinja2
   run:
     - python 2.7*
+#    - libgcc
+    - gsl
+    - hdf5
+#    - chemps2
+#    - jinja2
 
 about:
   home: http://www.psicode.org
   license: GNU General Public License v2 or later (GPLv2+)
+  #license_file: LICENSE
   summary: "open-source quantum chemistry"
-  readme: README.md
+  #readme: README.md
 
 # to conda build package from local source rather than github, substitute like below
 #package/version: 0.1.6
