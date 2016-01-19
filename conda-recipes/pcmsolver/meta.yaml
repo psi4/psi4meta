@@ -3,11 +3,11 @@ package:
   version: "1.0.4"
 
 source:
-  #git_url: git@github.com:PCMSolver/pcmsolver.git
-  path: ../../../nightly/pcmsolver
+  git_url: git@github.com:PCMSolver/pcmsolver.git
+  #path: ../../../nightly/pcmsolver
 
 build:
-  number: 1
+  number: 3
   binary_relocation: true
 
 requirements:
