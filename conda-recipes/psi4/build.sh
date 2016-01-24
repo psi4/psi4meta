@@ -14,6 +14,8 @@ cmake \
     -DDETECT_EXTERNAL_STATIC=ON \
     -DENABLE_CONDA_DEST=ON \
     -DENABLE_PLUGINS=ON \
+    -DBOOST_INCLUDEDIR=${PREFIX}/include \
+    -DBOOST_LIBRARYDIR=${PREFIX}/lib \
     -DENABLE_CHEMPS2=ON \
     -DCHEMPS2_ROOT=${PREFIX} \
     -DZLIB_ROOT=${PREFIX} \
@@ -21,7 +23,7 @@ cmake \
     -DHDF5_ROOT=${PREFIX} \
     -DENABLE_PCMSOLVER=ON \
     -DPCMSOLVER_ROOT=${PREFIX} \
-    -DSPHINX_ROOT=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/envs/boostenv \
+    -DSPHINX_ROOT=${PREFIX} \
     -DCMAKE_BUILD_TYPE=release \
     -DLIBC_INTERJECT="-L${TLIBC}/usr/lib64 ${TLIBC}/lib64/libpthread.so.0 ${TLIBC}/lib64/libc.so.6" \
     -DBUILDNAME=LAB-RHEL7-gcc4.8.2-intel15.0.3-mkl-release-conda \
@@ -32,8 +34,4 @@ make -j3  #-j${CPU_COUNT}  # get incomplete build at full throttle
 make sphinxman
 make ghfeed
 make install
-
-# -DBOOST_INCLUDEDIR=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/envs/boostenv/include
-# -DBOOST_LIBRARYDIR=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/envs/boostenv/lib
-# -DCMAKE_BUILD_TYPE=release
 

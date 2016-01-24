@@ -1,15 +1,16 @@
 set +x off
 
-#Print install text
+# print install text
 echo ""
 echo ""
 echo "  Thank you for installing psi4. Additional resources:"
 echo "    Website: www.psicode.org"
-echo "    Inputs:  ${PREFIX}/share/psi/samples"
+echo "    Inputs:  ${PREFIX}/share/psi4/samples"
 echo "    Manual:  http://psicode.org/psi4manual/master/index.html"
 echo "    GitHub:  https://github.com/psi4/psi4public/wiki"
 echo "    Binary:  https://anaconda.org/psi4"
-echo "    Runtime Environment Diagnostic: ${PREFIX}/share/psi/scripts/setenv.py"
+echo "    Runtime Environment Diagnostic: ${PREFIX}/share/psi4/scripts/setenv.py"
+echo "    Youtube: https://www.youtube.com/user/psitutorials"
 echo ""
 echo "  For csh/tcsh command-line use, add to shell or ~/.tcshrc file:"
 echo "    setenv PATH ${PREFIX}/bin:\$PATH"
@@ -22,7 +23,7 @@ echo ""
 echo "  Report problems at http://forum.psicode.org/t/report-conda-update-psi4-oddities-here/32"
 echo ""
 
-#Create input file
+# create input file
 cat > linktest.in << EOL
 memory 250 mb
 
@@ -58,11 +59,11 @@ compare_values(-0.001672292164, psi4.get_variable("SAPT DISP ENERGY"), 6, "SAPT0
 compare_values(-0.002235581423, psi4.get_variable("SAPT SAPT0 ENERGY"), 6, "SAPT0 Etotal")
 EOL
 
-#Run test calculation
+# run test calculation
 PSIOUT=`PSI_SCRATCH=/tmp; ${PREFIX}/bin/psi4 -i linktest.in -o linktest.out > linktest.txt`
 echo $PSIOUT
-#Print test results
+# print test results
 cat linktest.txt
 echo ""
-#Remove temporary files
+# remove temporary files
 rm -f linktest.in linktest.out linktest.txt timer.dat

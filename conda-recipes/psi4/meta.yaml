@@ -1,39 +1,33 @@
 package:
   name: psi4
   version: {{ environ.get('GIT_DESCRIBE_TAG', '') + '.' + environ.get('GIT_DESCRIBE_NUMBER', 0)|string }}
-  #version: {{ environ.get('GIT_DESCRIBE_NUMBER', '') }}
 
 source:
   git_url: git@github.com:psi4/psi4.git
-  #path: ../../../psi4mangle/psi4
 
 build:
   string: py{{ environ.get('PY_VER').replace('.', '') }}_{{ environ.get('GIT_DESCRIBE_HASH', 'GIT_STUB') }}
-  #number: {{ environ.get('GIT_DESCRIBE_NUMBER', 0) }}
-  #string: py{{ environ.get('PY_VER').replace('.', '') }}_{{ environ.get('GIT_BUILD_STR', 'GIT_STUB') }}
   binary_relocation: true
   binary_has_prefix_files:
     - bin/psi4
   has_prefix_files:
-    - share/psi/scripts/setenv.py
-    - share/psi/python/pcm_placeholder.py
+    - share/psi4/scripts/setenv.py
+    - share/psi4/python/pcm_placeholder.py
     - bin/psi4-config
 
 requirements:
   build:
     - cmake >3                               [linux]
-    - python 2.7*
-    - chemps2
-    - pcmsolver
+    - psi4metapackage  # python 2.7*, boost, chemps2, pcmsolver, hdf5, gsl, zlib
+    - boost 1.57.0 0  # boost *really* wants to be the latest build (1.57.0-4); though the right one's in the package this is an extra bit of persuasion
     - libgcc
-#    - jinja2
+    - sphinx  # for docs
   run:
     - python 2.7*
-#    - libgcc
     - gsl
     - hdf5
-#    - chemps2
-#    - jinja2
+    - pcmsolver  # lib baked in but pkg needed for py module
+    #- chemps2  # revive for download count?
 
 about:
   home: http://www.psicode.org
