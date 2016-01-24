@@ -22,6 +22,8 @@
 # add loop to get around psicode failures: ssh_exchange_identification: Connection closed by remote host
 # [LAB, 23 Jan 2016]
 # switch out to new miniconda install. now working from ~/miniconda/bin, instead of ~/psi4-install/miniconda/bin
+# [LAB, 24 Jan 2016]
+# add no host checking to get around psicode failures: DSA host key for www.psicode.org has changed and you have requested strict checking.
 
 # Make a restricted path and ld_library_path that includes conda's cmake
 #   (3.1) and python (2.7). This forcible inclusion of conda's python in the
@@ -79,16 +81,17 @@ conda build psi4
 
 # Upon sucessful docs build, tars it up here and sends to psicode
 #   uses double scp because single often fails, even command-line
+# The godaddy site keeps changing identities so circumventing check
 if [ -d "$CONDABUILDDIR/doc/sphinxman/html" ]; then
     cd $CONDABUILDDIR/doc/sphinxman
     mv html master
     tar -zcf cb-sphinxman.tar.gz master/
 
-    scp -rv cb-sphinxman.tar.gz psicode@www.psicode.org:~/machinations/cb-sphinxman.tar.gz
+    scp -rv -o 'StrictHostKeyChecking no' cb-sphinxman.tar.gz psicode@www.psicode.org:~/machinations/cb-sphinxman.tar.gz
     while [ $? -ne 0 ]; do
         sleep 6
         echo "trying to upload sphinxman"
-        scp -rv cb-sphinxman.tar.gz psicode@www.psicode.org:~/machinations/cb-sphinxman.tar.gz
+        scp -rv -o 'StrictHostKeyChecking no' cb-sphinxman.tar.gz psicode@www.psicode.org:~/machinations/cb-sphinxman.tar.gz
     done
 fi
 
@@ -100,11 +103,11 @@ if [ -d "$CONDABUILDDIR/doc/sphinxman/feed" ]; then
     cd $CONDABUILDDIR/doc/sphinxman
     tar -zcf cb-feed.tar.gz feed/
 
-    scp -rv cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
+    scp -rv -o 'StrictHostKeyChecking no' cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
     while [ $? -ne 0 ]; do
         sleep 6
         echo "trying to upload ghfeed"
-        scp -rv cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
+        scp -rv -o 'StrictHostKeyChecking no' cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
     done
 fi
 
