@@ -20,6 +20,8 @@
 # split out mrcc test cases so can give them the Intel compilers the exe needs
 # [LAB, 22 Jul 2015]
 # add loop to get around psicode failures: ssh_exchange_identification: Connection closed by remote host
+# [LAB, 23 Jan 2016]
+# switch out to new miniconda install. now working from ~/miniconda/bin, instead of ~/psi4-install/miniconda/bin
 
 # Make a restricted path and ld_library_path that includes conda's cmake
 #   (3.1) and python (2.7). This forcible inclusion of conda's python in the
@@ -27,11 +29,12 @@
 #   arrangments conda provides are for the *installed* entity whereas the ctest
 #   facilities needed for a CDash submission are present in the *build* entity.
 #export PATH=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/bin:/theoryfs2/ds/cdsgroup/psi4-install/miniconda/envs/p4env/bin:/theoryfs2/ds/cdsgroup/psi4-compile/mrcc:/theoryfs2/ds/cdsgroup/scripts/bin:/theoryfs2/common/software/libexec/git-core:/usr/lib64/qt-3.3/bin:/theoryfs2/ds/cdsgroup/perl5/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin
-export PATH=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/bin:/theoryfs2/ds/cdsgroup/psi4-compile/mrcc:/theoryfs2/ds/cdsgroup/scripts/bin:/theoryfs2/common/software/libexec/git-core:/usr/lib64/qt-3.3/bin:/theoryfs2/ds/cdsgroup/perl5/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+export PATH=/theoryfs2/ds/cdsgroup/miniconda/bin:/theoryfs2/ds/cdsgroup/psi4-compile/mrcc:/theoryfs2/ds/cdsgroup/scripts/bin:/theoryfs2/common/software/libexec/git-core:/usr/lib64/qt-3.3/bin:/theoryfs2/ds/cdsgroup/perl5/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin
 #export LD_LIBRARY_PATH=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/envs/p4env/lib
 #export LD_LIBRARY_PATH=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/lib
 source /theoryfs2/common/software/intel2015/bin/compilervars.sh intel64
 export PYTHONIOENCODING="UTF-8"  # fix for temp bug https://github.com/conda/conda-build/issues/636
+#newconda export LD_LIBRARY_PATH=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/envs/analibgcc/lib:$LD_LIBRARY_PATH
 
 # CDash tag according to RDR pattern
 TAG=LAB-intel15.0-mkl-release-conda
@@ -49,7 +52,7 @@ export NPROCS=4
 export CTEST_MAKE_NUM_PROCS=$NPROCS
 export PSI_SCRATCH=/scratch/cdsgroup
 export CONDA_BLD_PATH=/scratch/cdsgroup/conda-builds
-MINICONDA=/theoryfs2/ds/cdsgroup/psi4-install/miniconda
+MINICONDA=/theoryfs2/ds/cdsgroup/miniconda
 CONDABUILDDIR=$CONDA_BLD_PATH/work/build
 CONDAINSTALLDIR=$MINICONDA/envs/_build_placehold_placehold_pl
 

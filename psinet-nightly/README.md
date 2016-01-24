@@ -24,3 +24,11 @@ psinet nightly
 * Fork conda package so users can subscribe just to psi4 channel
   * >>> ``~/psi4-install/miniconda/bin/anaconda copy asmeurer/gsl/1.16/linux-64/gsl-1.16-1.tar.bz2``
 
+* 23 January 2016
+
+  * fresh miniconda installation
+    * `conda install conda-build=1.18.0`  # current is 1.18.2 but they changed their jinja2 parsing and our versioning hasn't been updated to compatibility
+    * `conda install jinja2`
+    * `conda install anaconda-client`  # needed to upload to anaconda.org
+    * unnecessary for me since login transferred from prev installation, but generally `anaconda login`
+
