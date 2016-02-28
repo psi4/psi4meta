@@ -122,7 +122,7 @@ ln -s $MINICONDA/bin/python $CONDAINSTALLDIR/bin/python
 #   Communication details in psi4/CTestConfig.cmake in repo.
 #   Intel sourced b/c mrcc depends on it, not psi4
 cd $CONDABUILDDIR
-export LD_LIBRARY_PATH=$CONDAINSTALLDIR/lib
+export LD_LIBRARY_PATH=$CONDAINSTALLDIR/share
 ctest -M Nightly -T Test -T Submit -LE dmrcc -j$NPROCS
 source /theoryfs2/common/software/intel2015/bin/compilervars.sh intel64
 ctest -M Nightly -T Test -T Submit -L dmrcc -j$NPROCS

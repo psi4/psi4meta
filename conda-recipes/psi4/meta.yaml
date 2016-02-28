@@ -27,6 +27,7 @@ requirements:
     - gsl
     - hdf5
     - pcmsolver  # lib baked in but pkg needed for py module
+    - ncurses
     #- chemps2  # revive for download count?
 
 about:
