@@ -35,3 +35,4 @@ make sphinxman
 make ghfeed
 make install
 
+#    -DBUILD_CUSTOM_BOOST=ON \
