@@ -20,6 +20,9 @@ echo "  For sh/bash command-line use, add to shell or ~/.bashrc file:"
 echo "    export PATH=${PREFIX}/bin:\$PATH"
 echo "    export PSI_SCRATCH=/path/to/existing/writable/local-not-network/disk/for/scratch/files"
 echo ""
+echo "  Test with below, after first activating conda environment if installed into environment:"
+echo "    psi4 \"\$(dirname \$(which psi4))\"/../share/psi4/samples/stability2/input.dat"
+echo ""
 echo "  Report problems at http://forum.psicode.org/t/report-conda-update-psi4-oddities-here/32"
 echo ""
 
@@ -59,11 +62,12 @@ compare_values(-0.001672292164, psi4.get_variable("SAPT DISP ENERGY"), 6, "SAPT0
 compare_values(-0.002235581423, psi4.get_variable("SAPT SAPT0 ENERGY"), 6, "SAPT0 Etotal")
 EOL
 
-# run test calculation
-PSIOUT=`PSI_SCRATCH=/tmp; ${PREFIX}/bin/psi4 -i linktest.in -o linktest.out > linktest.txt`
-echo $PSIOUT
-# print test results
-cat linktest.txt
-echo ""
-# remove temporary files
-rm -f linktest.in linktest.out linktest.txt timer.dat
+# removed b/c install env may not have numpy so test can't run
+# # run test calculation
+# PSIOUT=`PSI_SCRATCH=/tmp; ${PREFIX}/bin/psi4 -i linktest.in -o linktest.out > linktest.txt`
+# echo $PSIOUT
+# # print test results
+# cat linktest.txt
+# echo ""
+# # remove temporary files
+# rm -f linktest.in linktest.out linktest.txt timer.dat
