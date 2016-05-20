@@ -1,6 +1,6 @@
 package:
   name: pcmsolver
-  version: "1.0.4"
+  version: "1.1.1"
 
 source:
   git_url: git@github.com:PCMSolver/pcmsolver.git
@@ -12,7 +12,7 @@ build:
 
 requirements:
   build:
-    - cmake >=2.8.8
+    - cmake >=2.8.10
     - zlib
   run:
     - zlib

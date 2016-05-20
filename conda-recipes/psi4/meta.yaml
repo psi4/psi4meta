@@ -16,7 +16,7 @@ build:
     - share/psi4/scripts/setenv.py
     - share/psi4/python/pcm_placeholder.py
     - bin/psi4-config
-    - share/psi4/plugin/Makefile.conda.template
+    - share/psi4/plugin/Makefile.template
 
 requirements:
   build:
@@ -29,7 +29,7 @@ requirements:
   run:
     - python 2.7*
     - gsl
-    - hdf5
+    - hdf5 1.8.16  # runtim hdf5 must match compiled-against hdf5 for chemps2
     - pcmsolver  # lib baked in but pkg needed for py module
     - ncurses
     - numpy

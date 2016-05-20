@@ -3,17 +3,17 @@ package:
   version: 0.2
 
 build:
-  number: 1
+  number: 3
 
 requirements:
   run:
     - python 2.7*
     - boost 1.57.0 0      # pre-built core non-qc dependency
-    - chemps2             # pre-built qc add-on
+    - chemps2 1.5         # pre-built qc add-on
     - pcmsolver           # pre-built qc add-on
     - zlib                # non-qc dependency for add-ons chemps2 & pcmsolver
     - gsl                 # non-qc dependency for add-on chemps2
-    - hdf5                # non-qc dependency for add-on chemps2
+    - hdf5 1.8.16         # non-qc dependency for add-on chemps2 (hdf5 version must match chemps2 built one)
 #    - mkl-rt              # all mkl runtime libs. supplied by anaconda. we can't get in trouble for license agreements
 #    - libgcc              # gcc_s for linking non-qc add-on dependencies
 
