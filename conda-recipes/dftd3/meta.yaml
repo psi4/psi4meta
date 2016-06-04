@@ -1,15 +1,15 @@
+{% set version = "3.1.1" %}
+
 package:
   name: dftd3
-  version: "3.1.1"
+  version: {{ version }}
 
 source:
   fn: dftd3.tgz
   url: http://www.thch.uni-bonn.de/tc/downloads/DFT-D3/data/dftd3.tgz
-  patches:
-    - osx_less_static.patch  # [osx]
 
 build:
-  number: 1
+  number: 2
   binary_relocation: false   # [linux]
 
 requirements:
@@ -17,6 +17,11 @@ requirements:
     - gcc              # [osx]  # build w/conda gfortran
   run:
     - libgcc           # [osx]  # link against lgfortran, lquadmath, lgcc_s
+
+test:
+  commands:
+    # Verify executable.
+    - test -f $PREFIX/bin/dftd3
 
 about:
   home: "http://www.thch.uni-bonn.de/tc/index.php?section=downloads&subsection=DFT-D3&lang=english"
