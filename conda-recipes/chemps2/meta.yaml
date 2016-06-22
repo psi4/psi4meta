@@ -1,25 +1,35 @@
+{% set version = "1.7" %}
+
 package:
   name: chemps2
-  version: "1.5"
+  version: {{ version }}
 
 source:
-  git_url: git@github.com:SebWouters/CheMPS2.git
-  git_tag: "v1.5"
+  git_url: git@github.com:SebWouters/CheMPS2.git      # [linux]
+  git_url: https://github.com/SebWouters/CheMPS2.git  # [osx]
+  git_tag: v{{ version }}
 
 build:
-  number: 9
+  number: 13
   binary_relocation: true
+  skip: true                                           # [win]
 
 requirements:
   build:
     - cmake >=2.8.11
-    - iomp5
+    - gcc              # [osx]    # build w/conda gcc, libstdc++
     - hdf5
-    - gsl
   run:
-    - iomp5
     - hdf5
-    - gsl
+    - libgcc           # [osx]    # link w/conda libstdc++, libgcc_s, libgomp
+
+test:
+  commands:
+    # Verify libraries and executable.
+    - test -f $PREFIX/lib/libchemps2.a
+    - test -f $PREFIX/lib/libchemps2.so     # [linux]
+    - test -f $PREFIX/lib/libchemps2.dylib  # [osx]
+    - test -f $PREFIX/bin/chemps2
 
 about:
   home: http://sebwouters.github.io/CheMPS2
@@ -27,8 +37,3 @@ about:
   summary: "a spin-adapted implementation of DMRG for ab initio quantum chemistry"
   readme: README.md
 
-# to conda build package from local source rather than github, substitute like below
-#package/version: 0.1.6
-#source/path: ../../psi4mangle/psi4
-#build/number: 1
-#build/string: abc

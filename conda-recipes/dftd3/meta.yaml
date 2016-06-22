@@ -1,26 +1,32 @@
+{% set version = "3.2.0" %}
+
 package:
   name: dftd3
-  version: "3.1.1"
+  version: {{ version }}
 
 source:
   fn: dftd3.tgz
   url: http://www.thch.uni-bonn.de/tc/downloads/DFT-D3/data/dftd3.tgz
-  patches:
-    - osx_less_static.patch  # [osx]
 
 build:
   number: 1
-  binary_relocation: false   # [linux]
+  binary_relocation: false                             # [linux]
+  skip: true                                           # [win]
 
 requirements:
   build:
     - gcc              # [osx]  # build w/conda gfortran
   run:
-    - libgcc           # [osx]  # link against lgfortran, lquadmath, lgcc_s
+    - libgcc           # [osx]  # link w/conda libgfortran, libquadmath, libgcc_s
+
+test:
+  commands:
+    # Verify executable.
+    - test -f $PREFIX/bin/dftd3
 
 about:
   home: "http://www.thch.uni-bonn.de/tc/index.php?section=downloads&subsection=DFT-D3&lang=english"
-  license: "custom"
+  license: GNU General Public License v1 or later (GPLv1+)
   summary: "S. Grimme's dispersion correction for DFT, Hartree–Fock, and semi-empirical quantum chemical methods"
 
 # Anaconda.org description

@@ -1,0 +1,40 @@
+{% set version = "1.7" %}
+
+package:
+  name: pychemps2
+  version: {{ version }}
+
+source:
+  git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
+  git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
+  git_tag: v{{ version }}
+
+build:
+  number: 13
+  binary_relocation: true
+  skip: true                                           # [win]
+
+requirements:
+  build:
+    - chemps2
+    - cython
+    - gcc              # [osx]    # build w/conda gcc, libstdc++
+    - numpy
+    - python 2.7*
+  run:
+    - chemps2                     # link w/conda libchemps2
+    - libgcc           # [osx]    # link w/conda libstdc++, libgcc_s
+    - numpy
+    - python 2.7*
+
+test:
+  commands:
+    # Verify python module.
+    - test -f ${PREFIX}/lib/python2.7/site-packages/PyCheMPS2.so
+
+about:
+  home: http://sebwouters.github.io/CheMPS2
+  license: GNU General Public License v2 or later (GPLv2+)
+  summary: "python interface to S. Wouters' spin-adapted implementation of DMRG for ab initio quantum chemistry"
+  readme: README.md
+

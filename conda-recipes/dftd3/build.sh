@@ -1,16 +1,17 @@
 
 if [ "$(uname)" == "Darwin" ]; then
 
-    echo ''
-
-else
-
-    # load Intel compilers and mkl
-    source /theoryfs2/common/software/intel2015/bin/compilervars.sh intel64
-
+    make FC='gfortran' LINKER='gfortran'
 fi
 
-make
+if [ "$(uname)" == "Linux" ]; then
+
+    # load Intel compilers and mkl
+    source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+
+    make FC='ifort' LINKER='ifort -static'
+fi
+
 # pseudo "make install"
 mkdir -p ${PREFIX}/bin
 cp dftd3 ${PREFIX}/bin

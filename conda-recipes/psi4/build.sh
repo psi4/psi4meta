@@ -15,8 +15,14 @@ if [ "$(uname)" == "Darwin" ]; then
         -DENABLE_STATIC_LINKING=OFF \
         -DENABLE_CONDA_DEST=ON \
         -DENABLE_PLUGINS=OFF \
-        -DENABLE_CHEMPS2=OFF \
-        -DENABLE_PCMSOLVER=OFF \
+        -DENABLE_CHEMPS2=ON \
+        -DENABLE_PCMSOLVER=ON \
+        -DENABLE_AMBIT=ON \
+        -DZLIB_ROOT=${PREFIX} \
+        -DHDF5_ROOT=${PREFIX} \
+        -DCHEMPS2_ROOT=${PREFIX} \
+        -DPCMSOLVER_ROOT=${PREFIX} \
+        -DAMBIT_ROOT=${PREFIX} \
         -DCMAKE_BUILD_TYPE=debug \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DEXECUTABLE_SUFFIX= \
@@ -30,8 +36,27 @@ if [ "$(uname)" == "Darwin" ]; then
         -DENABLE_UNIT_TESTS=OFF \
         -DENABLE_CXX11_SUPPORT=ON \
         ${SRC_DIR}
+
+    # build
     make
-    install_name_tool -change libpython2.7.dylib ${PREFIX}/lib/libpython2.7.dylib bin/psi4
+    make psi4so
+
+    # install
+    make install
+
+    # test
+    install_name_tool -change libpython2.7.dylib @rpath/libpython2.7.dylib ${PREFIX}/bin/psi4
+    install_name_tool -change libpython2.7.dylib @rpath/libpython2.7.dylib ${PREFIX}/lib/python2.7/site-packages/psi4.so
+    sed -i.bak "s|/opt/anaconda1anaconda2anaconda3|${PREFIX}|g" ${PREFIX}/share/psi4/python/pcm_placeholder.py
+#    PYTHONPATH=${PREFIX}/bin:$PYTHONPATH ctest -L quick
+    DYLD_LIBRARY_PATH=${PREFIX}/lib:$DYLD_LIBRARY_PATH \
+           PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
+                 PATH=${PREFIX}/bin:$PATH \
+        ctest -L quick
+
+#        -DLIBINT_OPT_AM=6 \
+#        -DENABLE_CHEMPS2=OFF \
+#        -DENABLE_PCMSOLVER=OFF \
 
 else
 
@@ -68,8 +93,8 @@ else
     make -j3  #-j${CPU_COUNT}  # get incomplete build at full throttle
     make sphinxman
     make ghfeed
+    make install
 fi
 
-make install
 
 #    -DBUILD_CUSTOM_BOOST=ON \
