@@ -24,6 +24,11 @@ test:
     # Verify executable.
     - test -f $PREFIX/bin/dftd3
 
+test:
+  commands:
+    # Verify executable.
+    - test -f $PREFIX/bin/dftd3
+
 about:
   home: "http://www.thch.uni-bonn.de/tc/index.php?section=downloads&subsection=DFT-D3&lang=english"
   license: GNU General Public License v1 or later (GPLv1+)
