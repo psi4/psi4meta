@@ -9,7 +9,7 @@ source:
   url: http://www.thch.uni-bonn.de/tc/downloads/DFT-D3/data/dftd3.tgz
 
 build:
-  number: 1
+  number: 2
   binary_relocation: false                             # [linux]
   skip: true                                           # [win]
 
@@ -24,11 +24,6 @@ test:
     # Verify executable.
     - test -f $PREFIX/bin/dftd3
 
-test:
-  commands:
-    # Verify executable.
-    - test -f $PREFIX/bin/dftd3
-
 about:
   home: "http://www.thch.uni-bonn.de/tc/index.php?section=downloads&subsection=DFT-D3&lang=english"
   license: GNU General Public License v1 or later (GPLv1+)
@@ -36,10 +31,4 @@ about:
 
 # Anaconda.org description
 #**Site:** <a href="http://www.thch.uni-bonn.de/tc/index.php?section=downloads&subsection=DFT-D3&lang=english">http://www.thch.uni-bonn.de/tc/index.php?section=downloads&subsection=DFT-D3&lang=english</a><br>**License:** <a href="http://www.thch.uni-bonn.de/tc/index.php?section=impressum&lang=english">http://www.thch.uni-bonn.de/tc/index.php?section=impressum&lang=english</a>
-
-# to conda build package from local source rather than github, substitute like below
-#package/version: 0.1.6
-#source/path: ../../psi4mangle/psi4
-#build/number: 1
-#build/string: abc
 
