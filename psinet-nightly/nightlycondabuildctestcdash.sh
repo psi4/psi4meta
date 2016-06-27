@@ -28,6 +28,10 @@
 # fake the pcmsolver link to make those test cases pass
 # [LAB, 12 Mar 2016]
 # can't do ctest -LE multiple times so awkward regex instead to catch pcmsolver & dmrcc
+# [LAB, 24 Jun 2016]
+# remove local dftd3 testing path
+# testing moved off to recipe (now that test suite clean)
+# restricted channel build
 
 # Make a restricted path and ld_library_path that includes conda's cmake
 #   (3.1) and python (2.7). This forcible inclusion of conda's python in the
@@ -35,15 +39,17 @@
 #   arrangments conda provides are for the *installed* entity whereas the ctest
 #   facilities needed for a CDash submission are present in the *build* entity.
 #export PATH=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/bin:/theoryfs2/ds/cdsgroup/psi4-install/miniconda/envs/p4env/bin:/theoryfs2/ds/cdsgroup/psi4-compile/mrcc:/theoryfs2/ds/cdsgroup/scripts/bin:/theoryfs2/common/software/libexec/git-core:/usr/lib64/qt-3.3/bin:/theoryfs2/ds/cdsgroup/perl5/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin
-export PATH=/theoryfs2/ds/cdsgroup/miniconda/bin:/theoryfs2/ds/cdsgroup/psi4-compile/mrcc:/theoryfs2/ds/cdsgroup/scripts/bin:/theoryfs2/common/software/libexec/git-core:/usr/lib64/qt-3.3/bin:/theoryfs2/ds/cdsgroup/perl5/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+export PATH=/theoryfs2/ds/cdsgroup/miniconda/bin:/theoryfs2/ds/cdsgroup/psi4-compile/mrcc:/theoryfs2/common/software/libexec/git-core:/usr/lib64/qt-3.3/bin:/theoryfs2/ds/cdsgroup/perl5/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin
 #export LD_LIBRARY_PATH=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/envs/p4env/lib
 #export LD_LIBRARY_PATH=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/lib
-source /theoryfs2/common/software/intel2015/bin/compilervars.sh intel64
-export PYTHONIOENCODING="UTF-8"  # fix for temp bug https://github.com/conda/conda-build/issues/636
+#source /theoryfs2/common/software/intel2015/bin/compilervars.sh intel64
+#source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+#export PYTHONIOENCODING="UTF-8"  # fix for temp bug https://github.com/conda/conda-build/issues/636
 #newconda export LD_LIBRARY_PATH=/theoryfs2/ds/cdsgroup/psi4-install/miniconda/envs/analibgcc/lib:$LD_LIBRARY_PATH
 
 # CDash tag according to RDR pattern
-TAG=LAB-intel15.0-mkl-release-conda
+#TAG=LAB-intel15.0-mkl-release-conda
+TAG=LAB-intel16.3-mkl-release-conda
 
 # Directory containing this script itself. Moreover, contains a directory
 #   psi4 containing the conda-build recipe files meta.yaml and build.sh
@@ -77,7 +83,7 @@ CONDAINSTALLDIR=$MINICONDA/envs/_build_placehold_placehold_placehold_place
 #   following line in ~/.condarc:
 #       binstar_upload: yes
 cd $NIGHTLYDIR
-conda build psi4
+conda build --override-channels -c file:///theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/conda-recipes/localchannel/ psi4
 #binstar upload /path/to/conda-package-2.0.tar.bz2 --channel test
 #binstar channel --copy test main
 
@@ -115,27 +121,27 @@ if [ -d "$CONDABUILDDIR/doc/sphinxman/feed" ]; then
     done
 fi
 
-# <<<  Dashboard Tests  >>>
-
-# Form links to enable misuse of conda (conda wants to run from installed pkg, 
-#   ctest wants git repo)
-mkdir -p $CONDAINSTALLDIR/bin
-ln -s $MINICONDA/bin/python $CONDAINSTALLDIR/bin/python
-
-# Runs test cases and hopefully communicates results with CDash.
-#   Communication details in psi4/CTestConfig.cmake in repo.
-#   Intel sourced b/c mrcc depends on it, not psi4
-#   Installed conda package gets the pcmsolver substitution right,
-#   but testdir doesn't, hence the sed.
-#   -LE command excludes pcmsolver and dmrcc categories
-cd $CONDABUILDDIR
-export LD_LIBRARY_PATH=$CONDAINSTALLDIR/share
-ctest -M Nightly -T Test -T Submit -LE ^[pd][mc][rm][cs] -j$NPROCS
-source /theoryfs2/common/software/intel2015/bin/compilervars.sh intel64
-ctest -M Nightly -T Test -T Submit -L dmrcc -j$NPROCS
-sed -i "s|/opt/anaconda1anaconda2anaconda3|$CONDAINSTALLDIR|g" $CONDAINSTALLDIR/share/psi4/python/pcm_placeholder.py
-export PYTHONPATH=$CONDAINSTALLDIR/bin:$PYTHONPATH
-ctest -M Nightly -T Test -T Submit -L pcmsolver -j$NPROCS
+## <<<  Dashboard Tests  >>>
+#
+## Form links to enable misuse of conda (conda wants to run from installed pkg, 
+##   ctest wants git repo)
+#mkdir -p $CONDAINSTALLDIR/bin
+#ln -s $MINICONDA/bin/python $CONDAINSTALLDIR/bin/python
+#
+## Runs test cases and hopefully communicates results with CDash.
+##   Communication details in psi4/CTestConfig.cmake in repo.
+##   Intel sourced b/c mrcc depends on it, not psi4
+##   Installed conda package gets the pcmsolver substitution right,
+##   but testdir doesn't, hence the sed.
+##   -LE command excludes pcmsolver and dmrcc categories
+#cd $CONDABUILDDIR
+#export LD_LIBRARY_PATH=$CONDAINSTALLDIR/share
+#ctest -M Nightly -T Test -T Submit -LE ^[pd][mc][rm][cs] -j$NPROCS
+#source /theoryfs2/common/software/intel2015/bin/compilervars.sh intel64
+#ctest -M Nightly -T Test -T Submit -L dmrcc -j$NPROCS
+#sed -i "s|/opt/anaconda1anaconda2anaconda3|$CONDAINSTALLDIR|g" $CONDAINSTALLDIR/share/psi4/python/pcm_placeholder.py
+#export PYTHONPATH=$CONDAINSTALLDIR/bin:$PYTHONPATH
+#ctest -M Nightly -T Test -T Submit -L pcmsolver -j$NPROCS
 
 cd $NIGHTLYDIR
 exit 0

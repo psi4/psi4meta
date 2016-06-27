@@ -5,6 +5,8 @@ if [ "$(uname)" == "Darwin" ]; then
 
     export DYLD_LIBRARY_PATH=${PREFIX}/lib:${DYLD_LIBRARY_PATH}
     rm ${PREFIX}/lib/libsqlite3*
+
+    # configure
     ${PREFIX}/bin/cmake \
         -DCMAKE_C_COMPILER=${PREFIX}/bin/gcc \
         -DCMAKE_CXX_COMPILER=${PREFIX}/bin/g++ \
@@ -48,22 +50,26 @@ if [ "$(uname)" == "Darwin" ]; then
     install_name_tool -change libpython2.7.dylib @rpath/libpython2.7.dylib ${PREFIX}/bin/psi4
     install_name_tool -change libpython2.7.dylib @rpath/libpython2.7.dylib ${PREFIX}/lib/python2.7/site-packages/psi4.so
     sed -i.bak "s|/opt/anaconda1anaconda2anaconda3|${PREFIX}|g" ${PREFIX}/share/psi4/python/pcm_placeholder.py
-#    PYTHONPATH=${PREFIX}/bin:$PYTHONPATH ctest -L quick
     DYLD_LIBRARY_PATH=${PREFIX}/lib:$DYLD_LIBRARY_PATH \
            PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
                  PATH=${PREFIX}/bin:$PATH \
         ctest -L quick
 
-#        -DLIBINT_OPT_AM=6 \
-#        -DENABLE_CHEMPS2=OFF \
-#        -DENABLE_PCMSOLVER=OFF \
+fi
 
-else
+if [ "$(uname)" == "Linux" ]; then
 
-    source /theoryfs2/common/software/intel2015/bin/compilervars.sh intel64
-    export TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
+    # load Intel compilers and mkl
+    set -x
+    source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+    set +x
 
-    cmake \
+    # link against older libc for generic linux
+    TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
+    LIBC_INTERJECT="-L${TLIBC}/usr/lib64 ${TLIBC}/lib64/libpthread.so.0 ${TLIBC}/lib64/libc.so.6"
+
+    # configure
+    ${PREFIX}/bin/cmake \
         -DCMAKE_C_COMPILER=icc \
         -DCMAKE_CXX_COMPILER=icpc \
         -DCMAKE_Fortran_COMPILER=ifort \
@@ -71,30 +77,43 @@ else
         -DLIBINT_OPT_AM=6 \
         -DENABLE_STATIC_LINKING=ON \
         -DENABLE_XHOST=OFF \
-        -DDETECT_EXTERNAL_STATIC=ON \
+        -DDETECT_EXTERNAL_STATIC=OFF \
         -DENABLE_CONDA_DEST=ON \
         -DENABLE_PLUGINS=OFF \
-        -DBOOST_INCLUDEDIR=${PREFIX}/include \
-        -DBOOST_LIBRARYDIR=${PREFIX}/lib \
+        -DBUILD_CUSTOM_BOOST=ON \
         -DENABLE_CHEMPS2=ON \
         -DCHEMPS2_ROOT=${PREFIX} \
         -DZLIB_ROOT=${PREFIX} \
-        -DGSL_ROOT_DIR=${PREFIX} \
         -DHDF5_ROOT=${PREFIX} \
         -DENABLE_PCMSOLVER=ON \
         -DPCMSOLVER_ROOT=${PREFIX} \
         -DSPHINX_ROOT=${PREFIX} \
         -DCMAKE_BUILD_TYPE=release \
-        -DLIBC_INTERJECT="-L${TLIBC}/usr/lib64 ${TLIBC}/lib64/libpthread.so.0 ${TLIBC}/lib64/libc.so.6" \
-        -DBUILDNAME=LAB-RHEL7-gcc4.8.2-intel15.0.3-mkl-release-conda \
+        -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
+        -DBUILDNAME=LAB-RHEL7-gcc4.8.5-intel16.0.2-mkl-release-conda \
         -DSITE=gatech-conda \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         ${SRC_DIR}
-    make -j3  #-j${CPU_COUNT}  # get incomplete build at full throttle
-    make sphinxman
+    sed -i 's/-lifport -lifcore -lpthread/-lifport -lifcore_pic -lpthread -Wl,-Bdynamic -liomp5/g'  src/bin/psi4/CMakeFiles/psi4so.dir/link.txt
+
+    # build
+    make -j3  # get incomplete build at full throttle
+    make psi4so
     make ghfeed
+    make sphinxman -j${CPU_COUNT}
+
+    # install
     make install
+
+    # test
+    sed -i "s|/opt/anaconda1anaconda2anaconda3|${PREFIX}|g" ${PREFIX}/share/psi4/python/pcm_placeholder.py
+    LD_LIBRARY_PATH=${PREFIX}/lib:$LD_LIBRARY_PATH \
+         PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
+               PATH=${PREFIX}/bin:$PATH \
+      ctest -M Nightly -T Test -T Submit -j${CPU_COUNT}
+
+    # test-running env on psinet
+    #LD_LIBRARY_PATH=/theoryfs2/ds/cdsgroup/miniconda/envs/_build_placehold_placehold_placehold_place/lib PYTHONPATH=/theoryfs2/ds/cdsgroup/miniconda/envs/_build_placehold_placehold_placehold_place/bin:/theoryfs2/ds/cdsgroup/miniconda/envs/_build_placehold_placehold_placehold_place/lib/python2.7/site-packages PATH=/theoryfs2/ds/cdsgroup/miniconda/envs/_build_placehold_placehold_placehold_place/bin:$PATH
+
 fi
 
-
-#    -DBUILD_CUSTOM_BOOST=ON \
