@@ -10,18 +10,17 @@ source:
   git_tag: v{{ version }}
 
 build:
-  number: 13
+  number: 15
   binary_relocation: true
   skip: true                                           # [win]
 
 requirements:
   build:
-    - boost >=1.54
     - cmake >=2.8.10
-    - gcc              # [osx]    # build w/conda gcc, gfortran
+    - gcc              # [osx]    # build w/ gcc, gfortran
     - zlib
   run:
-    - libgcc           # [osx]    # link w/conda libgfortran, libquadmath, libstdc++, libgcc_s
+    - libgcc           # [osx]    # link libgfortran, libquadmath, libstdc++, libgcc_s
     - zlib
 
 test:

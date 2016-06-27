@@ -10,7 +10,7 @@ source:
   git_tag: v{{ version }}
 
 build:
-  number: 13
+  number: 15
   binary_relocation: true
   skip: true                                           # [win]
 
@@ -18,12 +18,12 @@ requirements:
   build:
     - chemps2
     - cython
-    - gcc              # [osx]    # build w/conda gcc, libstdc++
+    - gcc              # [osx]    # build w/ gcc,
     - numpy
     - python 2.7*
   run:
-    - chemps2                     # link w/conda libchemps2
-    - libgcc           # [osx]    # link w/conda libstdc++, libgcc_s
+    - chemps2                     # link libchemps2
+    - libgcc           # [osx]    # link libstdc++, libgcc_s
     - numpy
     - python 2.7*
 

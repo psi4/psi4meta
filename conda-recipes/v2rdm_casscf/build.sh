@@ -19,12 +19,14 @@ fi
 if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers and mkl
+    set -x
     source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+    set +x
     F90=ifort
     CXX=icpc
     
     # link against older libc for generic linux
-    export TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
+    TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
     LIBC_INTERJECT="-L${TLIBC}/usr/lib64 ${TLIBC}/lib64/libpthread.so.0 ${TLIBC}/lib64/libc.so.6"
     LDFLAGS="-Wl,--as-needed -static-libstdc++ -static-libgcc -static-intel -wd10237 -static-intel ${LIBC_INTERJECT}"
     
@@ -36,7 +38,7 @@ if [ "$(uname)" == "Linux" ]; then
     FFLAGS="-heap-arrays -qopenmp -O2 -fPIC -DOMP"
 fi
 
-# make (in subdir so plugin gets correct name)
+# build (in subdir so plugin gets correct name)
 PLUG="v2rdm_casscf"
 mkdir ${PLUG}
 cd ${PLUG}
@@ -72,4 +74,8 @@ mkdir -p ${INSTALLSITE}tests/v2rdm2
 cp tests/v2rdm2/input.dat ${INSTALLSITE}tests/v2rdm2
 mkdir -p ${INSTALLSITE}tests/v2rdm3
 cp tests/v2rdm3/input.dat ${INSTALLSITE}tests/v2rdm3
+mkdir -p ${INSTALLSITE}tests/v2rdm4
+cp tests/v2rdm4/input.dat ${INSTALLSITE}tests/v2rdm4
+mkdir -p ${INSTALLSITE}tests/v2rdm5
+cp tests/v2rdm5/input.dat ${INSTALLSITE}tests/v2rdm5
 

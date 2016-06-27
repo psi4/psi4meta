@@ -10,18 +10,18 @@ source:
 #  git_tag: v{{ version }}
 
 build:
-  number: 13
+  number: 15
   binary_relocation: true
   skip: true                                           # [win]
 
 requirements:
   build:
     - boost            # [osx]    # for headers
-    - gcc              # [osx]    # build w/conda gcc, gfortran
-    - psi4                        # for headers
+    - gcc              # [osx]    # build w/ gcc, gfortran
+    - psi4                        # for headers (psi4 & boost)
     - python 2.7*                 # for install location at python2.7/site-packages
   run:
-    - libgcc           # [osx]    # link w/conda libstdc++, libgcc_s
+    - libgcc           # [osx]    # link libstdc++, libgcc_s
     - psi4
 
 test:

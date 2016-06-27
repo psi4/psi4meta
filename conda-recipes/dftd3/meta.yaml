@@ -9,15 +9,15 @@ source:
   url: http://www.thch.uni-bonn.de/tc/downloads/DFT-D3/data/dftd3.tgz
 
 build:
-  number: 2
+  number: 3
   binary_relocation: false                             # [linux]
   skip: true                                           # [win]
 
 requirements:
   build:
-    - gcc              # [osx]  # build w/conda gfortran
+    - gcc              # [osx]  # build w/ gfortran
   run:
-    - libgcc           # [osx]  # link w/conda libgfortran, libquadmath, libgcc_s
+    - libgcc           # [osx]  # link libgfortran, libquadmath, libgcc_s
 
 test:
   commands:
