@@ -30,23 +30,24 @@ fi
 
 if [ "$(uname)" == "Linux" ]; then
 
-
     # load Intel compilers and mkl
-    source /theoryfs2/common/software/intel2015/bin/compilervars.sh intel64
+    source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+
     # force static link to Intel mkl, except for openmp
-    MKLROOT=/theoryfs2/common/software/intel2015/composer_xe_2015.3.187/mkl/lib/intel64
-    LAPACK_INTERJECT="${MKLROOT}/libmkl_intel_lp64.a ${MKLROOT}/libmkl_intel_thread.a ${MKLROOT}/libmkl_core.a -liomp5 -lm"
+    MKLROOT=/theoryfs2/common/software/intel2016/compilers_and_libraries_2016.2.181/linux/mkl/lib/intel64
+    LAPACK_INTERJECT="-Wl,--start-group ${MKLROOT}/libmkl_cdft_core.a ${MKLROOT}/libmkl_intel_lp64.a ${MKLROOT}/libmkl_core.a ${MKLROOT}/libmkl_intel_thread.a ${MKLROOT}/libmkl_blacs_intelmpi_lp64.a -Wl,--end-group -lpthread -liomp5 -lm -ldl"
+
     # link against older libc for generic linux
-    TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/psi4cmake/psi4/glibc2.12rpm
-    LIBC_INTERJECT="-L${TLIBC}/usr/lib64 ${TLIBC}/lib64/libpthread.so.0 ${TLIBC}/lib64/libc.so.6"
+    TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
+    LIBC_INTERJECT="-lrt -L${TLIBC}/usr/lib64 ${TLIBC}/lib64/libpthread.so.0 ${PREFIX}/lib/libgcc_s.so ${TLIBC}/lib64/libc.so.6"
+
     # round off with pre-detected dependencies
-    MCONDA=${PREFIX}/lib
-    GSL_INTERJECT="-L${MCONDA};-lhdf5;-lhdf5_hl;-lhdf5;-lpthread;-lz;-lrt;-ldl;-lm"
-    HDF5_INTERJECT="-L${MCONDA};-lgsl;-lgslcblas;-lm"
-    
-    cmake \
-        -DCMAKE_CXX_COMPILER=icpc \
+    HDF5_INTERJECT="${PREFIX}/lib/libhdf5.so;${PREFIX}/lib/libhdf5_hl.so;${PREFIX}/lib/libhdf5.so;-lrt;-lz;-ldl;-lm"
+
+    # configure
+    ${PREFIX}/bin/cmake \
         -DCMAKE_C_COMPILER=icc \
+        -DCMAKE_CXX_COMPILER=icpc \
         -DEXTRA_C_FLAGS=" " \
         -DEXTRA_CXX_FLAGS=" " \
         -DMKL=ON \
@@ -55,23 +56,37 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_TESTS=OFF \
         -DENABLE_GENERIC=ON \
         -DENABLE_XHOST=OFF \
-        -DLAPACK_LIBRARIES="${LIBC_INTERJECT} ${LAPACK_INTERJECT}" \
+        -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
+        -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}" \
         -DHDF5_LIBRARIES="${HDF5_INTERJECT}" \
-        -DHDF5_INCLUDE_DIRS="${MCONDA}/../include" \
+        -DHDF5_INCLUDE_DIRS="${PREFIX}/include" \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_INSTALL_LIBDIR=lib \
         ${SRC_DIR}
 fi
 
+# build
 make -j${CPU_COUNT}
+#make VERBOSE=1
+
+# install
 make install
 
-#cd ../PyCheMPS2
-#export CPATH=${CPATH}:${PREFIX}/include
-#${PYTHON} setup.py build_ext -L ${PREFIX}/lib
-#${PYTHON} setup.py install --prefix=${PREFIX}
+# test
+#if [ "$(uname)" == "Darwin" ]; then
+#
+#    DYLD_LIBRARY_PATH=${PREFIX}/lib:$DYLD_LIBRARY_PATH \
+#           PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
+#                 PATH=${PREFIX}/bin:$PATH \
+#        ctest -j${CPU_COUNT}
+#fi
 
-
-#    -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
-#    -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}" \
+#if [ "$(uname)" == "Linux" ]; then
+#
+#      LD_LIBRARY_PATH=${PREFIX}/lib:$LD_LIBRARY_PATH \
+#           PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
+#                 PATH=${PREFIX}/bin:$PATH \
+#        make test
+#fi
+# tests just segfault
 

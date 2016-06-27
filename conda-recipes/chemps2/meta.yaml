@@ -5,23 +5,30 @@ package:
   version: {{ version }}
 
 source:
-  git_url: git@github.com:SebWouters/CheMPS2.git      # [linux]
-  git_url: https://github.com/SebWouters/CheMPS2.git  # [osx]
-  git_tag: v{{ version }}
+  #git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
+  git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
+  git_tag: v{{ version }}                              # [osx]
+  git_url: git@github.com:loriab/CheMPS2.git           # [linux]
+  git_tag: prep1p7                                     # [linux]
+  #path: ../../../nightly/CheMPS2
 
 build:
-  number: 13
+  number: 16
   binary_relocation: true
   skip: true                                           # [win]
 
 requirements:
   build:
     - cmake >=2.8.11
-    - gcc              # [osx]    # build w/conda gcc, libstdc++
+    - gcc              # [osx]    # build w/conda gcc
     - hdf5
+    - libgcc           # [linux]
+    - mkl              # [linux]
   run:
     - hdf5
-    - libgcc           # [osx]    # link w/conda libstdc++, libgcc_s, libgomp
+    - libgcc           # [osx]    # link libstdc++, libgcc_s, libgomp
+    - libgcc           # [linux]  # link libgcc_s
+    - mkl              # [linux]  # link iomp5
 
 test:
   commands:
