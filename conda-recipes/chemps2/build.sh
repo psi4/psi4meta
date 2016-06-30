@@ -7,6 +7,7 @@ if [ "$(uname)" == "Darwin" ]; then
     HDF5_INTERJECT="-L${PREFIX}/lib;-lhdf5;-lhdf5_hl;-lhdf5;-lpthread;-lz;-ldl;-lm"
 #/Users/loriab/anaconda/envs/_build/lib/libhdf5.dylib;/Users/loriab/anaconda/envs/_build/lib/libhdf5_hl.dylib;/Users/loriab/anaconda/envs/_build/lib/libhdf5.dylib;/Users/loriab/anaconda/envs/_build/lib/libz.dylib;/usr/lib/libdl.dylib;/usr/lib/libm.dylib
 
+    # configure
     cmake \
         -DCMAKE_CXX_COMPILER="${PREFIX}/bin/g++" \
         -DCMAKE_C_COMPILER="${PREFIX}/bin/gcc" \
@@ -73,20 +74,5 @@ make -j${CPU_COUNT}
 make install
 
 # test
-#if [ "$(uname)" == "Darwin" ]; then
-#
-#    DYLD_LIBRARY_PATH=${PREFIX}/lib:$DYLD_LIBRARY_PATH \
-#           PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
-#                 PATH=${PREFIX}/bin:$PATH \
-#        ctest -j${CPU_COUNT}
-#fi
-
-#if [ "$(uname)" == "Linux" ]; then
-#
-#      LD_LIBRARY_PATH=${PREFIX}/lib:$LD_LIBRARY_PATH \
-#           PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
-#                 PATH=${PREFIX}/bin:$PATH \
-#        make test
-#fi
 # tests just segfault
 
