@@ -1,0 +1,67 @@
+name: psi4conda
+version: 0.9.7
+
+channels:
+  - http://repo.continuum.io/pkgs/free/
+  - http://conda.anaconda.org/psi4
+
+specs:
+  # driver (updated Miniconda +)
+  #- anaconda-client
+  #- conda
+  #- conda-build
+  #- constructor
+  # build
+  #- cmake >3
+  #- cython
+  #- openssl 1.0.2d  # ???
+  #- sphinx 1.3*
+  # qc
+  - dftd3
+  - pcmsolver
+  - psi4
+  - pychemps2
+  - v2rdm_casscf  # new
+  # run
+  - conda
+  - hdf5
+  - libgcc 4.8.5
+  - ncurses
+  - numpy
+  - python 2.7*
+#  - v2rdm_casscf  # old
+  - zlib 1.2.8
+  # develop
+  #- gcc
+
+#packages:
+#  - https://conda.anaconda.org/conda-forge/linux-64/hdf5-1.8.17-0.tar.bz2   
+
+## bash Miniconda.sh
+## conda update --all
+## conda install conda conda-build constructor anaconda-client  # install (driver)
+## (build) and (run) active, keep_pkgs true
+## conda 4.0.9 & constructor 1.2.0
+## constructor installer
+## bash psi4conda.sh
+## symlink new channel
+## conda 4.1.3
+## conda index
+## bump build nos
+## conda build --override-channels -c file:///theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/conda-recipes/localchannel95/ dftd3 pcmsolver chemps2 pychemps2 v2rdm_casscf
+## have to prevent psi4 build b4 v2rdm above
+## conda 4.0.9 & constructor 1.2.0
+## (qc) and (run) active. add psi4 to channels. keep_pkgs false
+## constructor installer
+## install to try out
+## scp -r psi4conda-0.9.5-Linux-x86_64.sh psicode@www.psicode.org:~/html/downloads/psi4conda-0.9.5-Linux-x86_64.sh
+
+conda_default_channels:
+  - http://conda.anaconda.org/psi4
+  - http://repo.continuum.io/pkgs/free/
+
+#keep_pkgs: true
+keep_pkgs: false
+
+post_install: post_install.sh
+
