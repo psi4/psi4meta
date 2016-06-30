@@ -4,6 +4,9 @@
 
 {% if gittag.endswith('rc') %}
     {% set version = "%s%s" % (gittag, gitmicro) %}
+{% elif gittag == "1.0rc2" %}
+    {% set offset = 200 + gitmicro|int %}
+    {% set version = "%s%s" % ("1.0rc", offset) %}
 {% else %}
     {% set version = "%s.%s" % (gittag, gitmicro) %}
 {% endif %}
