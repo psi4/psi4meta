@@ -2,10 +2,11 @@
 
 # [LAB, 28 Jun 2016]
 
-# minicondatoss --> minicondadrive
-
 if [ $# -ne 1 ]; then
-    echo $0: usage: kitandkaboodle.sh stage1/2
+    echo $0: usage: kitandkaboodle.sh stage1     # setup from scratch
+    echo $0: usage: kitandkaboodle.sh stage12    # setup from scratch and build all
+    echo $0: usage: kitandkaboodle.sh stage2psi  # build psi4 only
+    echo $0: usage: kitandkaboodle.sh stage3     # package up installer
     exit 1
 fi
 stage=$1
@@ -22,22 +23,22 @@ MINIINSTALLER=Miniconda-latest-Linux-x86_64.sh
 NIGHTLYDIR=/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/conda-recipes
 export CONDA_BLD_PATH=/scratch/cdsgroup/conda-builds
 
-VERSION=0.9.6
+VERSION=0.9.8
 CHANNEL="localchannel-$VERSION"
-VERSION2=0.9.7
+VERSION3=0.9.8
 
 
 #############
 #  STAGE 1  #
 #############
 
-if [ $stage == "stage1" ]; then
+if [[ $stage == "stage1" || $stage == "stage12" ]]; then
 
 # <<<  Prepare Throwaway Conda Installation w/ Driver  >>>
 
 cd $MINIBUILDDIR
-bash $MINIINSTALLER -b -p $MINIBUILDDIR/minicondatoss
-export PATH=$MINIBUILDDIR/minicondatoss/bin:$PATH
+bash $MINIINSTALLER -b -p $MINIBUILDDIR/minicondadrive
+export PATH=$MINIBUILDDIR/minicondadrive/bin:$PATH
 conda update --yes --all
     # install packages from installer/construct.yaml "driver" section
 conda install --yes conda conda-build constructor anaconda-client
@@ -61,19 +62,28 @@ cd $MINIBUILDDIR
 mkdir -p "$CHANNEL/linux-64"
 cd "$CHANNEL/linux-64"
 ln -s $MINIBUILDDIR/minicondastore-$VERSION/pkgs/*bz2 .
-    # only do this to skip the psi4 build UNTESTED
-#ln -s $CONDA_BLD_PATH/linux-64/psi4-1.0rc147-py27_g8cc70ea.tar.bz2 .
-conda install --yes conda conda-build
 conda index
+
+fi
+
+#############
+#  STAGE 2  #
+#############
+
+if [[ $stage == "stage2" || $stage == "stage12" ]]; then
+
+# <<<  Prep  >>>
+
+export PATH=$MINIBUILDDIR/minicondadrive/bin:$PATH
 
 # <<<  Run Conda-Build on QC Set  >>>
 
     # recipe build #s should be incremented by here
 
-cd $NIGHTLYDIR
+conda install --yes conda conda-build
 conda list
-pwd
 
+cd $NIGHTLYDIR
 conda build --override-channels \
     -c file://$MINIBUILDDIR/$CHANNEL \
     dftd3 \
@@ -82,27 +92,84 @@ conda build --override-channels \
     psi4 \
     v2rdm_casscf
 
-    #--skip-existing \
+fi
+
+################
+#  STAGE 2PSI  #
+################
+
+if [ $stage == "stage2psi" ]; then
+
+# <<<  Prep  >>>
+
+export PATH=$MINIBUILDDIR/minicondadrive/bin:$PATH
+CONDABUILDDIR=$CONDA_BLD_PATH/work/build
+
+# <<<  Run Conda-Build on QC Set  >>>
+
+    # recipe build #s should be incremented by here
+
+conda install --yes conda conda-build
+conda list
+
+cd $NIGHTLYDIR
+conda build --override-channels \
+    -c file://$MINIBUILDDIR/$CHANNEL \
+    psi4
+
+# <<<  Docs Feed  >>>
+
+# Upon sucessful docs build, tars it up here and sends to psicode
+#   uses double scp because single often fails, even command-line
+# The godaddy site keeps changing identities so circumventing check
+if [ -d "$CONDABUILDDIR/doc/sphinxman/html" ]; then
+    cd $CONDABUILDDIR/doc/sphinxman
+    mv html master
+    tar -zcf cb-sphinxman.tar.gz master/
+
+    scp -rv -o 'StrictHostKeyChecking no' cb-sphinxman.tar.gz psicode@www.psicode.org:~/machinations/cb-sphinxman.tar.gz
+    while [ $? -ne 0 ]; do
+        sleep 6
+        echo "trying to upload sphinxman"
+        scp -rv -o 'StrictHostKeyChecking no' cb-sphinxman.tar.gz psicode@www.psicode.org:~/machinations/cb-sphinxman.tar.gz
+    done
+fi
+
+# <<<  PSICODE Feed  >>>
+
+# Upon sucessful feed build, tars it up here and sends to psicode
+#   uses double scp because single often fails, even command-line
+if [ -d "$CONDABUILDDIR/doc/sphinxman/feed" ]; then
+    cd $CONDABUILDDIR/doc/sphinxman
+    tar -zcf cb-feed.tar.gz feed/
+
+    scp -rv -o 'StrictHostKeyChecking no' cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
+    while [ $? -ne 0 ]; do
+        sleep 6
+        echo "trying to upload ghfeed"
+        scp -rv -o 'StrictHostKeyChecking no' cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
+    done
+fi
 
 fi
 
 #############
-#  STAGE 2  #
+#  STAGE 3  #
 #############
 
-if [ $stage == "stage2" ]; then
+if [ $stage == "stage3" ]; then
 
 # <<<  Prep  >>>
 
-export PATH=$MINIBUILDDIR/minicondatoss/bin:$PATH
-conda list
+export PATH=$MINIBUILDDIR/minicondadrive/bin:$PATH
 
 # <<<  Run Constructor of QC/Run  >>>
 
 conda install --yes conda=4.0.9 constructor=1.2.0
+conda list
 
     # items in $NIGHTLYDIR/installer/construct.yaml
-    # - match above VERSION2 in "version" (usually VERSION == VERSION2)
+    # - match above VERSION3 in "version" (usually VERSION == VERSION3)
     # - add psi4 to "channels"
     # - uncomment qc/run
     # - false "keep_pkgs"
@@ -110,36 +177,17 @@ conda install --yes conda=4.0.9 constructor=1.2.0
 
 cd $NIGHTLYDIR
 constructor installer
-bash psi4conda-$VERSION2-Linux-x86_64.sh -b -p $MINIBUILDDIR/minicondatest-$VERSION2
+bash psi4conda-$VERSION3-Linux-x86_64.sh -b -p $MINIBUILDDIR/minicondatest-$VERSION3
 
-scp -r psi4conda-$VERSION2-Linux-x86_64.sh psicode@www.psicode.org:~/html/downloads/psi4conda-$VERSION2-Linux-x86_64.sh
+scp -r psi4conda-$VERSION3-Linux-x86_64.sh psicode@www.psicode.org:~/html/downloads/psi4conda-$VERSION3-Linux-x86_64.sh
 
+set +x
+echo TODO:
 echo ssh psicode@www.psicode.org
-echo cd html/downloads
-echo ln -sf psi4conda-$VERSION2-Linux-x86_64.sh Psi4conda2-latest-Linux.sh
+echo cd html/downloads && ln -sf psi4conda-$VERSION3-Linux-x86_64.sh Psi4conda2-latest-Linux.sh
+echo * Add versions to download page pill buttons
 
 fi
-
-exit 0
-
-
-
-
-## <<<  PSICODE Feed  >>>
-#
-## Upon sucessful feed build, tars it up here and sends to psicode
-##   uses double scp because single often fails, even command-line
-#if [ -d "$CONDABUILDDIR/doc/sphinxman/feed" ]; then
-#    cd $CONDABUILDDIR/doc/sphinxman
-#    tar -zcf cb-feed.tar.gz feed/
-#
-#    scp -rv -o 'StrictHostKeyChecking no' cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
-#    while [ $? -ne 0 ]; do
-#        sleep 6
-#        echo "trying to upload ghfeed"
-#        scp -rv -o 'StrictHostKeyChecking no' cb-feed.tar.gz psicode@www.psicode.org:~/machinations/cb-feed.tar.gz
-#    done
-#fi
 
 cd $NIGHTLYDIR
 exit 0

@@ -1,5 +1,5 @@
 name: psi4conda
-version: 0.9.7
+version: 0.9.8
 
 channels:
   - http://repo.continuum.io/pkgs/free/
@@ -21,7 +21,7 @@ specs:
   - pcmsolver
   - psi4
   - pychemps2
-  - v2rdm_casscf  # new
+  - v2rdm_casscf
   # run
   - conda
   - hdf5
@@ -29,7 +29,6 @@ specs:
   - ncurses
   - numpy
   - python 2.7*
-#  - v2rdm_casscf  # old
   - zlib 1.2.8
   # develop
   #- gcc
