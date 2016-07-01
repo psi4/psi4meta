@@ -18,7 +18,11 @@ echo "    unsetenv PSIDATADIR" >> .messages.txt
 echo "    setenv PATH ${PREFIX}/bin:\$PATH" >> .messages.txt
 echo "    setenv PSI_SCRATCH /path/to/existing/writable/local-not-network/disk/for/scratch/files" >> .messages.txt
 echo "" >> .messages.txt
+if [ "$(uname)" == "Darwin" ]; then
+echo "  For sh/bash command-line use, add to shell or ~/.bash_profile file:" >> .messages.txt
+elif [ "$(uname)" == "Linux" ]; then
 echo "  For sh/bash command-line use, add to shell or ~/.bashrc file:" >> .messages.txt
+fi
 echo "    unset PSIDATADIR" >> .messages.txt
 echo "    export PATH=${PREFIX}/bin:\$PATH" >> .messages.txt
 echo "    export PSI_SCRATCH=/path/to/existing/writable/local-not-network/disk/for/scratch/files" >> .messages.txt
