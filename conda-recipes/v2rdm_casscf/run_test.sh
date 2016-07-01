@@ -1,4 +1,4 @@
-set +x off
+set +x
 
 # create input file
 cat > linktest.in << EOL

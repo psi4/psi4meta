@@ -1,4 +1,4 @@
-set +x off
+set +x
 
 echo "" >> .messages.txt
 echo "  Thank you for installing PCMSolver." >> .messages.txt
