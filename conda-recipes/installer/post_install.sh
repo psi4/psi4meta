@@ -281,7 +281,7 @@ PSIOUT=`unset PSIDATADIR; PSI_SCRATCH=/tmp; PATH=$PREFIX/bin:$PATH; psi4 -i link
 fi
 PSIOUT=`unset PSIDATADIR; PSI_SCRATCH=/tmp; PATH=$PREFIX/bin:$PATH; python linktest-psi4so.py >> .messages.txt`
 # remove temporary files
-rm -f linktest.* cavity.* timer.dat PEDRA.* *pcmsolver.inp
+rm -f ${PREFIX}/linktest.* ${PREFIX}/cavity.* ${PREFIX}/timer.dat ${PREFIX}/PEDRA.* ${PREFIX}/*pcmsolver.inp
 
 
 # repeat configuration message since psi4 isn't last package installed

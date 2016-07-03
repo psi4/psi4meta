@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # [LAB, 28 Jun 2016]
+# execute as >>> bash -x -e kitandkaboodle.sh args
 
 if [ $# -ne 1 ]; then
     echo $0: usage: kitandkaboodle.sh stage1     # setup from scratch
@@ -25,12 +26,21 @@ export CONDA_BLD_PATH=/scratch/cdsgroup/conda-builds
 
 VERSION=0.9.8
 CHANNEL="localchannel-$VERSION"
-VERSION3=0.9.8
+VERSION3=0.9.9
 
 
 #############
 #  STAGE 1  #
 #############
+
+# * set VERSION above
+# * clear PIN-TO-BUILD in recipes
+# * prepare items in $NIGHTLYDIR/installer/construct.yaml
+#   - increment and match above VERSION in "version"
+#   - free only in "channels"
+#   - uncomment build/run
+#   - true "keep_pkgs"
+#   - comment "post_install"
 
 if [[ $stage == "stage1" || $stage == "stage12" ]]; then
 
@@ -45,13 +55,6 @@ conda install --yes conda conda-build constructor anaconda-client
 conda list
 
 # <<<  Run Constructor of Build/Run  >>>
-
-    # items in $NIGHTLYDIR/installer/construct.yaml
-    # - increment and match above VERSION in "version"
-    # - free only in "channels"
-    # - uncomment build/run
-    # - true "keep_pkgs"
-    # - comment "post_install"
 
 conda install --yes conda=4.0.9 constructor=1.2.0
 
@@ -70,6 +73,12 @@ fi
 #  STAGE 2  #
 #############
 
+# * check VERSION above is the pkg repo want recipes built from
+# * set PIN-TO-BUILD in recipes (e.g., hdf5 and chemps2) to detected one from stage 1
+# * installer/construct.yaml irrelevant
+# * leave the ordering, but can choose the built packages
+# * increment recipe build numbers if want to upload
+
 if [[ $stage == "stage2" || $stage == "stage12" ]]; then
 
 # <<<  Prep  >>>
@@ -77,8 +86,6 @@ if [[ $stage == "stage2" || $stage == "stage12" ]]; then
 export PATH=$MINIBUILDDIR/minicondadrive/bin:$PATH
 
 # <<<  Run Conda-Build on QC Set  >>>
-
-    # recipe build #s should be incremented by here
 
 conda install --yes conda conda-build
 conda list
@@ -106,8 +113,6 @@ export PATH=$MINIBUILDDIR/minicondadrive/bin:$PATH
 CONDABUILDDIR=$CONDA_BLD_PATH/work/build
 
 # <<<  Run Conda-Build on QC Set  >>>
-
-    # recipe build #s should be incremented by here
 
 conda install --yes conda conda-build
 conda list
@@ -157,6 +162,14 @@ fi
 #  STAGE 3  #
 #############
 
+# * set VERSION3 above to installer desired version (usually VERSION == VERSION3)
+# * items in $NIGHTLYDIR/installer/construct.yaml
+#   - match above VERSION3 in "version"
+#   - add psi4 to "channels"
+#   - uncomment qc/run
+#   - false "keep_pkgs"
+#   - uncomment "post_install"
+
 if [ $stage == "stage3" ]; then
 
 # <<<  Prep  >>>
@@ -168,12 +181,6 @@ export PATH=$MINIBUILDDIR/minicondadrive/bin:$PATH
 conda install --yes conda=4.0.9 constructor=1.2.0
 conda list
 
-    # items in $NIGHTLYDIR/installer/construct.yaml
-    # - match above VERSION3 in "version" (usually VERSION == VERSION3)
-    # - add psi4 to "channels"
-    # - uncomment qc/run
-    # - false "keep_pkgs"
-    # - uncomment "post_install"
 
 cd $NIGHTLYDIR
 constructor installer
