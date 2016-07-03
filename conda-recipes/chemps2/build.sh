@@ -25,6 +25,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSTALL_LIBDIR=lib \
         ${SRC_DIR}
 
+# try        -DSHARED_ONLY=ON \
 #chemps2               -DENABLE_XHOST=ON
 
 fi
@@ -51,6 +52,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_CXX_COMPILER=icpc \
         -DEXTRA_C_FLAGS=" " \
         -DEXTRA_CXX_FLAGS=" " \
+        -DSHARED_ONLY=ON \
         -DMKL=ON \
         -DBUILD_DOXYGEN=OFF \
         -DBUILD_SPHINX=OFF \

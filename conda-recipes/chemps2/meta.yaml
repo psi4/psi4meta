@@ -10,7 +10,7 @@ source:
   git_tag: v{{ version }}
 
 build:
-  number: 1
+  number: 2
   binary_relocation: true
   skip: true                                           # [win]
 
@@ -22,7 +22,7 @@ requirements:
     - libgcc           # [linux]
     - mkl              # [linux]
   run:
-    - hdf5
+    - hdf5 1.8.16                 # PIN-TO-BUILD 
     - libgcc           # [osx]    # link libstdc++, libgcc_s, libgomp
     - libgcc           # [linux]  # link libgcc_s
     - mkl              # [linux]  # link iomp5
@@ -30,7 +30,6 @@ requirements:
 test:
   commands:
     # Verify libraries and executable.
-    - test -f $PREFIX/lib/libchemps2.a
     - test -f $PREFIX/lib/libchemps2.so     # [linux]
     - test -f $PREFIX/lib/libchemps2.dylib  # [osx]
     - test -f $PREFIX/bin/chemps2

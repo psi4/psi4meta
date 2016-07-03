@@ -1,5 +1,5 @@
 name: psi4conda
-version: 0.9.8
+version: 0.9.9
 
 channels:
   - http://repo.continuum.io/pkgs/free/

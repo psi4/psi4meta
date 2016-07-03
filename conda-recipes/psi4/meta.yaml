@@ -35,29 +35,29 @@ build:
 
 requirements:
   build:
-    - ambit            # [osx]
+    - ambit 0.2        # [osx]
     - boost >=1.57     # [osx]
     - cmake >3
     - dftd3            # [linux]  # for test dashboard
     - gcc              # [osx]    # build w/ gcc, gfortran
-    - hdf5
+#    - hdf5
     - libgcc           # [linux]
     - numpy                       # for psi4 execution w/i ctest and sphinxman
-    - pcmsolver
-    - pychemps2
+    - pcmsolver 1.1.2
+    - pychemps2 1.7.1
     - python 2.7*
     - sphinx 1.3*      # [linux]  # for docs
     - zlib
   run:
-    - ambit            # [osx]    # link libambit
-    - hdf5                        # link libhdf5, libhdf5_hl
+    - ambit 0.2        # [osx]    # link libambit
+    # hdf5                        # link libhdf5, libhdf5_hl (implicit w/ libchemp2)
     - libgcc           # [osx]    # link libgfortran, libquadmath, libstdc++, libgcc_s, libgomp
     - libgcc           # [linux]  # link libgcc_s
     - ncurses                     # for psi4 interactive
     - mkl                         # link libiomp5 (psi4.so)
     - numpy
-    - pcmsolver                   # link libpcm
-    - pychemps2                   # link libchemps2
+    - pcmsolver 1.1.2             # link libpcm
+    - pychemps2 1.7.1             # link libchemps2
     - python 2.7*                 # link libpython2.7
     - zlib                        # link libz
 
