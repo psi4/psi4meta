@@ -12,7 +12,6 @@ if [ "$(uname)" == "Darwin" ]; then
     F90="${PREFIX}/bin/gfortran"
     GENERIC=OFF
     LIBC_INTERJECT="''"
-    LAPACK_INTERJECT="''"
 
 fi
 
@@ -33,6 +32,7 @@ if [ "$(uname)" == "Linux" ]; then
     # link against older libc for generic linux
     TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/psi4cmake/psi4/glibc2.12rpm
     LIBC_INTERJECT="-L${TLIBC}/usr/lib64 ${TLIBC}/lib64/libpthread.so.0 ${TLIBC}/lib64/libc.so.6"
+    LIBC_INTERJECT="${LIBC_INTERJECT} ${LAPACK_INTERJECT}"
 
 fi
 
@@ -62,7 +62,7 @@ cmake \
  -DCMAKE_BUILD_TYPE=release \
  -G "Unix Makefiles" \
  -DENABLE_GENERIC=${GENERIC} \
- -DLIBC_INTERJECT="${LIBC_INTERJECT} ${LAPACK_INTERJECT}" \
+ -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
  -DENABLE_CXX11_SUPPORT=ON \
  -DENABLE_TIMER=OFF \
  -DBUILD_STANDALONE=OFF \
