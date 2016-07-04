@@ -43,9 +43,9 @@ if [ "$(uname)" == "Linux" ]; then
     export CONDA_BLD_PATH=/scratch/cdsgroup/conda-builds
 fi
 
-VERSION=0.9.10
+VERSION=1.0.0
 CHANNEL="localchannel-$VERSION"
-VERSION3=0.9.10
+VERSION3=1.0.0
 
 
 #############
