@@ -16,17 +16,36 @@ stage=$1
 #   PREP    #
 #############
 
-export PATH=/theoryfs2/common/software/libexec/git-core:/theoryfs2/ds/cdsgroup/perl5/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+# MINIINSTALLER file is only thing in MINIBUILDDIR
 
-    # MINIINSTALLER file is only thing in MINIBUILDDIR
-MINIBUILDDIR=/theoryfs2/ds/cdsgroup/psi4-build
-MINIINSTALLER=Miniconda-latest-Linux-x86_64.sh
-NIGHTLYDIR=/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/conda-recipes
-export CONDA_BLD_PATH=/scratch/cdsgroup/conda-builds
+if [ "$(uname)" == "Darwin" ]; then
+    unset PYTHONHOME PYTHONPATH DYLD_LIBRARY_PATH PSIDATADIR
+    export PATH=/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/texbin
 
-VERSION=0.9.8
+    PLATFORM=osx-64
+    PLATFORM2=MacOSX
+
+    MINIBUILDDIR=/Users/loriab/linux/psi4-build
+    MINIINSTALLER=Miniconda-latest-MacOSX-x86_64.sh
+    NIGHTLYDIR=/Users/loriab/linux/psi4meta/conda-recipes
+    #CONDA_BLD_PATH none b/c no hard drive difference on laptop
+fi
+
+if [ "$(uname)" == "Linux" ]; then
+    export PATH=/theoryfs2/common/software/libexec/git-core:/theoryfs2/ds/cdsgroup/perl5/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+
+    PLATFORM=linux-64
+    PLATFORM2=Linux
+
+    MINIBUILDDIR=/theoryfs2/ds/cdsgroup/psi4-build
+    MINIINSTALLER=Miniconda-latest-Linux-x86_64.sh
+    NIGHTLYDIR=/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/conda-recipes
+    export CONDA_BLD_PATH=/scratch/cdsgroup/conda-builds
+fi
+
+VERSION=0.9.10
 CHANNEL="localchannel-$VERSION"
-VERSION3=0.9.9
+VERSION3=0.9.10
 
 
 #############
@@ -60,10 +79,10 @@ conda install --yes conda=4.0.9 constructor=1.2.0
 
 cd $NIGHTLYDIR
 constructor installer
-bash psi4conda-$VERSION-Linux-x86_64.sh -b -p $MINIBUILDDIR/minicondastore-$VERSION
+bash psi4conda-$VERSION-$PLATFORM2-x86_64.sh -b -p $MINIBUILDDIR/minicondastore-$VERSION
 cd $MINIBUILDDIR
-mkdir -p "$CHANNEL/linux-64"
-cd "$CHANNEL/linux-64"
+mkdir -p "$CHANNEL/$PLATFORM"
+cd "$CHANNEL/$PLATFORM"
 ln -s $MINIBUILDDIR/minicondastore-$VERSION/pkgs/*bz2 .
 conda index
 
@@ -184,14 +203,15 @@ conda list
 
 cd $NIGHTLYDIR
 constructor installer
-bash psi4conda-$VERSION3-Linux-x86_64.sh -b -p $MINIBUILDDIR/minicondatest-$VERSION3
+bash psi4conda-$VERSION3-$PLATFORM2-x86_64.sh -b -p $MINIBUILDDIR/minicondatest-$VERSION3
 
-scp -r psi4conda-$VERSION3-Linux-x86_64.sh psicode@www.psicode.org:~/html/downloads/psi4conda-$VERSION3-Linux-x86_64.sh
+scp -r psi4conda-$VERSION3-$PLATFORM2-x86_64.sh psicode@www.psicode.org:~/html/downloads/psi4conda-$VERSION3-$PLATFORM2-x86_64.sh
 
 set +x
 echo TODO:
 echo ssh psicode@www.psicode.org
-echo cd html/downloads && ln -sf psi4conda-$VERSION3-Linux-x86_64.sh Psi4conda2-latest-Linux.sh
+echo cd html/downloads
+echo ln -sf psi4conda-$VERSION3-$PLATFORM2-x86_64.sh Psi4conda2-latest-$PLATFORM2.sh
 echo * Add versions to download page pill buttons
 
 fi
