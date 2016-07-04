@@ -56,6 +56,8 @@ if [ "$(uname)" == "Darwin" ]; then
                  PATH=${PREFIX}/bin:$PATH \
         ctest -L quick
 
+    # test debug line
+    #DYLD_LIBRARY_PATH=/Users/loriab/linux/psi4-build/minicondadrive/envs/_build_placehold_placehold_pl/lib PATH=/Users/loriab/linux/psi4-build/minicondadrive/envs/_build_placehold_placehold_pl/bin:$PATH PYTHONPATH=/Users/loriab/linux/psi4-build/minicondadrive/envs/_build_placehold_placehold_pl/lib/python2.7/site-packages/:$PYTHONPATH
 fi
 
 if [ "$(uname)" == "Linux" ]; then

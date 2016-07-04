@@ -9,7 +9,7 @@ source:
   url: http://www.thch.uni-bonn.de/tc/downloads/DFT-D3/data/dftd3.tgz
 
 build:
-  number: 5
+  number: 6
   binary_relocation: false                             # [linux]
   skip: true                                           # [win]
 

@@ -22,7 +22,7 @@ requirements:
     - zlib
   run:
     - libgcc           # [osx]    # link libgfortran, libquadmath, libstdc++, libgcc_s
-    - zlib
+    - zlib                        # link libz
 
 test:
   commands:

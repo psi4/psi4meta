@@ -16,13 +16,13 @@ build:
 
 requirements:
   build:
-    - boost >=1.53                # works w/ 1.59 from channel menpo
+    - boost >=1.53     # [osx]    # works w/ 1.59 from channel menpo
     - cmake >=2.8.11
     - gcc              # [osx]    # build w/ gcc
     - hdf5
     - python 2.7*
   run:
-    - boost >=1.53
+    - boost >=1.53     # [osx]
     - hdf5
     - libgcc           # [osx]    # link libstdc++, libgcc_s, libgomp
     - python 2.7*
