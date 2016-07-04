@@ -13,7 +13,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_C_COMPILER="${PREFIX}/bin/gcc" \
         -DEXTRA_C_FLAGS="''" \
         -DEXTRA_CXX_FLAGS="''" \
-        -DSTATIC_ONLY=OFF \
+        -DSHARED_ONLY=ON \
         -DENABLE_GENERIC=OFF \
         -DMKL=OFF \
         -DBUILD_DOXYGEN=OFF \
@@ -25,7 +25,6 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSTALL_LIBDIR=lib \
         ${SRC_DIR}
 
-# try        -DSHARED_ONLY=ON \
 #chemps2               -DENABLE_XHOST=ON
 
 fi

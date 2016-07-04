@@ -4,7 +4,7 @@ unset CFLAGS
 
 if [ "$(uname)" == "Darwin" ]; then
 
-    rm ${PREFIX}/lib/libsqlite3*
+    rm -f ${PREFIX}/lib/libsqlite3*
 
     # conda gnu compilers
     CC="${PREFIX}/bin/gcc"

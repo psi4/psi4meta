@@ -17,6 +17,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DENABLE_STATIC_LINKING=OFF \
         -DENABLE_CONDA_DEST=ON \
         -DENABLE_PLUGINS=OFF \
+        -DBUILD_CUSTOM_BOOST=ON \
         -DENABLE_CHEMPS2=ON \
         -DENABLE_PCMSOLVER=ON \
         -DENABLE_AMBIT=ON \

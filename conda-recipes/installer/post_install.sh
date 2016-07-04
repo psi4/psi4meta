@@ -5,13 +5,13 @@ if [ "$(uname)" == "Darwin" ]; then
         echo "post-install: Fixing linking of lib/libpython2.7.dylib" >> .messages.txt
         install_name_tool -id @rpath/libpython2.7.dylib lib/libpython2.7.dylib
 
-        echo "post-install: Fixing linking of lib/libboost*.dylib" >> .messages.txt
-        for f in lib/libboost*.dylib; do
-            if [ -f $f ] && ! [ -h $f ]; then
-                #echo "post-install: Fixing linking of $f" >> .messages.txt
-                install_name_tool -change /usr/lib/libstdc++.6.dylib @rpath/libstdc++.6.dylib $f
-            fi
-        done
+        #echo "post-install: Fixing linking of lib/libboost*.dylib" >> .messages.txt
+        #for f in lib/libboost*.dylib; do
+        #    if [ -f $f ] && ! [ -h $f ]; then
+        #        #echo "post-install: Fixing linking of $f" >> .messages.txt
+        #        install_name_tool -change /usr/lib/libstdc++.6.dylib @rpath/libstdc++.6.dylib $f
+        #    fi
+        #done
     else
         echo "For developers only: install_name_tool is not installed." >> .messages.txt
         echo "  If you build against this python library, you'll need to adjust the id of this" >> .messages.txt
@@ -65,7 +65,7 @@ set {
 }
 
 energy('sapt0', molecule=ethene_ethyne)
-compare_values(-0.00230683391, psi4.get_variable("SAPT SAPT0 ENERGY"), 6, "Psi4")  #TEST
+compare_values(-0.00230683391, psi4.get_variable("SAPT0 TOTAL ENERGY"), 6, "Psi4")  #TEST
 EOL
 
 # ==> [1] Psi4 + DFTD3 executable <==
@@ -273,15 +273,11 @@ PSIOUT=`unset PSIDATADIR; PSI_SCRATCH=/tmp; PATH=$PREFIX/bin:$PATH; psi4 -i link
 PSIOUT=`unset PSIDATADIR; PSI_SCRATCH=/tmp; PATH=$PREFIX/bin:$PATH; psi4 -i linktest-dftd3.in -o linktest-dftd3.out >> .messages.txt`
 PSIOUT=`unset PSIDATADIR; PSI_SCRATCH=/tmp; PATH=$PREFIX/bin:$PATH; psi4 -i linktest-chemps2.in -o linktest-chemps2.out >> .messages.txt`
 PSIOUT=`unset PSIDATADIR; PSI_SCRATCH=/tmp; PATH=$PREFIX/bin:$PATH; psi4 -i linktest-pcmsolver.in -o linktest-pcmsolver.out >> .messages.txt`
-if [ "$(uname)" == "Linux" ]; then
 PSIOUT=`unset PSIDATADIR; PSI_SCRATCH=/tmp; PATH=$PREFIX/bin:$PATH; psi4 -i linktest-v2rdm_casscf.in -o linktest-v2rdm_casscf.out >> .messages.txt`
-fi
-if [ "$(uname)" == "Darwin" ]; then
-PSIOUT=`unset PSIDATADIR; PSI_SCRATCH=/tmp; PATH=$PREFIX/bin:$PATH; psi4 -i linktest-ambit.in -o linktest-ambit.out >> .messages.txt`
-fi
+#PSIOUT=`unset PSIDATADIR; PSI_SCRATCH=/tmp; PATH=$PREFIX/bin:$PATH; psi4 -i linktest-ambit.in -o linktest-ambit.out >> .messages.txt`
 PSIOUT=`unset PSIDATADIR; PSI_SCRATCH=/tmp; PATH=$PREFIX/bin:$PATH; python linktest-psi4so.py >> .messages.txt`
 # remove temporary files
-rm -f ${PREFIX}/linktest.* ${PREFIX}/cavity.* ${PREFIX}/timer.dat ${PREFIX}/PEDRA.* ${PREFIX}/*pcmsolver.inp
+PSIOUT=`rm -f linktest* cavity.* timer.dat PEDRA.* *pcmsolver.inp >> .messages.txt`
 
 
 # repeat configuration message since psi4 isn't last package installed

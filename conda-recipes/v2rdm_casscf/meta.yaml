@@ -16,7 +16,6 @@ build:
 
 requirements:
   build:
-    - boost            # [osx]    # for headers
     - gcc              # [osx]    # build w/ gcc, gfortran
     - psi4                        # for headers (psi4 & boost)
     - python 2.7*                 # for install location at python2.7/site-packages
