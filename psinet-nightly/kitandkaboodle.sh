@@ -212,7 +212,7 @@ echo TODO:
 echo ssh psicode@www.psicode.org
 echo cd html/downloads
 echo ln -sf psi4conda-$VERSION3-$PLATFORM2-x86_64.sh Psi4conda2-latest-$PLATFORM2.sh
-echo * Add versions to download page pill buttons
+echo TODO: Add versions to download page pill buttons
 
 fi
 
