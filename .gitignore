@@ -1,1 +1,3 @@
 psinet-nightly/cb-psinet*.log
+stallo/*.o*
+stallo/*.e*
