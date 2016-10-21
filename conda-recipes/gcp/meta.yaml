@@ -15,9 +15,9 @@ build:
 
 requirements:
   build:
-    - gcc              ## [osx]  # build w/ gfortran
+    - gcc              # [osx]  # build w/ gfortran
   run:
-    - libgcc           ## [osx]  # link libgfortran, libquadmath, libgcc_s
+    - libgcc           # [osx]  # link libgfortran, libquadmath, libgcc_s
 
 test:
   commands:
