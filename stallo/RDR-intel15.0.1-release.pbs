@@ -1,0 +1,64 @@
+#!/bin/bash
+#PBS -lnodes=1:ppn=16:localwork
+#PBS -lwalltime=4:00:00
+#PBS -A nn4654k
+
+ml notur
+source mod_setup.sh
+
+module load intel/2015a
+module load python/2.7.3
+module load cmake/3.5.1
+
+echo "Software stack loaded"
+export fortran=`type -P ifort`
+echo "Fortran compiler: ${fortran}"
+${fortran} --version
+export c=`type -P icc`
+echo "C compiler: ${c}"
+${c} --version
+export cpp=`type -P icpc`
+echo "C++ compiler: ${cpp}"
+${cpp} --version
+export python=`type -P python`
+echo "Python interpreter: ${python}"
+${python} --version
+type -P cmake
+cmake --version
+
+export build_type=Release
+export build_name=RDR-CentOS-6.6-intel15.0.1-${build_type}
+export site_name=stallo.uit.no
+PSI4_TMPDIR=/local/work/roberto/scratch-${build_name}
+mkdir -p $PSI4_TMPDIR
+export PSI4_TMPDIR
+export NPROCS=`lscpu -p | egrep -v '^#' | wc -l`
+export CTEST_MAKE_NUM_PROCS=$NPROCS
+
+TMP_DIR=/global/work/roberto/tmprunpsi4/${build_name}
+mkdir -p $TMP_DIR
+
+git clone git@github.com:psi4/psi4.git $TMP_DIR
+
+cd $TMP_DIR
+
+cmake -B build -D CMAKE_C_COMPILER=${c}             \
+               -D CMAKE_CXX_COMPILER=${cpp}         \
+               -D CMAKE_Fortran_COMPILER=${fortran} \
+               -D CMAKE_BUILD_TYPE=${build_type}    \
+               -D PYTHON_EXECUTABLE=${python}       \
+               -D CTEST_BUILD_NAME=${build_name}    \
+               -D CTEST_SITE=${site_name}
+
+cd $TMP_DIR/build
+
+mkdir -p $PSI4_TMPDIR/psi4scr
+export PSI4_SCRATCH=$PSI4_TMPDIR/psi4scr
+
+ctest -D Nightly -j$NPROCS
+
+cd
+rm -rf $PSI4_TMPDIR $TMP_DIR
+
+exit 0
+
