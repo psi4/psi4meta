@@ -1,0 +1,37 @@
+{% set version = "1.3.0" %}
+
+package:
+  name: libefp
+  version: {{ version }}
+
+source:
+  #git_url: git@github.com:ilyak/libefp.git             # [linux]
+  git_url: git@github.com:psi4/libefp.git              # [linux]
+  git_url: https://github.com/psi4/libefp.git          # [osx]
+  git_tag: config2
+  #git_tag: v{{ version }}
+
+build:
+  number: 0
+  binary_relocation: true
+  skip: true                                           # [win]
+
+requirements:
+  build:
+    - cmake >=3.0
+    - gcc              # [osx]    # build w/conda gcc
+  run:
+    - libgcc           # [osx]    # link libgcc_s
+
+test:
+  commands:
+    # Verify libraries and executable.
+    - test -f $PREFIX/lib/libefp.so       # [linux]
+    - test -f $PREFIX/lib/libefp.dylib    # [osx]
+
+about:
+  home: https://github.com/ilyak/libefp
+  license: BSD 2-clause
+  summary: "parallel implementation of the Effective Fragment Potential (EFP) method"
+  readme: README.md
+
