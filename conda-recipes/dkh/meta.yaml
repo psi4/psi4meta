@@ -1,0 +1,35 @@
+{% set version = "1.2" %}
+
+package:
+  name: dkh
+  version: {{ version }}
+
+source:
+  git_url: git@github.com:psi4/dkh.git                 # [linux]
+  git_url: https://github.com/psi4/dkh.git             # [osx]
+  #git_tag: v{{ version }}
+
+build:
+  number: 0
+  binary_relocation: true
+  skip: true                                           # [win]
+
+requirements:
+  build:
+    - cmake >=3.0
+    - gcc              # [osx]    # build w/conda gcc, gfortran
+  run:
+    - libgcc           # [osx]    # link libgfortran, libquadmath, libgcc_s
+
+test:
+  commands:
+    # Verify libraries.
+    - test -f $PREFIX/lib/libdkh.so       # [linux]
+    - test -f $PREFIX/lib/libdkh.dylib    # [osx]
+
+about:
+  home: https://github.com/psi4/dkh
+  #license: BSD 2-clause
+  summary: "Wolf, Reiher, and Hess's Douglas-Kroll-Hess (DKH) relativistic correction"
+  readme: README.md
+

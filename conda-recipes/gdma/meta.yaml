@@ -1,0 +1,35 @@
+{% set version = "2.2.06" %}
+
+package:
+  name: gdma
+  version: {{ version }}
+
+source:
+  git_url: git@github.com:psi4/gdma.git                # [linux]
+  git_url: https://github.com/psi4/gdma.git            # [osx]
+  #git_tag: v{{ version }}
+
+build:
+  number: 0
+  binary_relocation: true
+  skip: true                                           # [win]
+
+requirements:
+  build:
+    - cmake >=3.0
+    - gcc              # [osx]    # build w/conda gcc, gfortran
+  run:
+    - libgcc           # [osx]    # link libgfortran, libquadmath, libgcc_s
+
+test:
+  commands:
+    # Verify libraries.
+    - test -f $PREFIX/lib/libgdma.so      # [linux]
+    - test -f $PREFIX/lib/libgdma.dylib   # [osx]
+
+about:
+  home: https://github.com/psi4/gdma
+  #license: BSD 2-clause
+  summary: "A. Stone's Gaussian distributed multipole analysis (GDMA)"
+  readme: README.md
+
