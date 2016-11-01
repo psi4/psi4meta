@@ -7,13 +7,13 @@ package:
 source:
   git_url: git@github.com:loriab/CheMPS2.git       # [linux]
   git_url: https://github.com/loriab/CheMPS2.git   # [osx]
-  git_tag: config
+  git_tag: configpy2
   #git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
   #git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
   #git_tag: v{{ version }}
 
 build:
-  number: 0
+  number: 2
   binary_relocation: true
   skip: true                                           # [win]
 
@@ -26,7 +26,7 @@ requirements:
     - mkl              # [linux]
     - zlib
   run:
-    - hdf5 1.8.16                 # PIN-TO-BUILD 
+    - hdf5 1.8.17                 # PIN-TO-BUILD
     - libgcc           # [osx]    # link libstdc++, libgcc_s, libgomp
     - libgcc           # [linux]  # link libgcc_s
     - mkl              # [linux]  # link iomp5

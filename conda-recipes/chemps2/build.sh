@@ -1,5 +1,3 @@
-mkdir build
-cd build
 
 if [ "$(uname)" == "Darwin" ]; then
 
@@ -24,25 +22,6 @@ if [ "$(uname)" == "Darwin" ]; then
         -DENABLE_TESTS=OFF \
         -DHDF5_LIBRARIES="${HDF5_INTERJECT}" \
         -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
-
-#chemps2               -DENABLE_XHOST=ON
-
-
-#           CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}/external/chemps2
-#                       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-#                       -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-#                       -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-#                       -DCMAKE_INSTALL_LIBDIR=${CMAKE_INSTALL_LIBDIR}
-#?                       -DSTATIC_ONLY=${_a_only}
-#                       -DSHARED_ONLY=${_so_only}
-#                       -DENABLE_OPENMP=${ENABLE_OPENMP}  # relevant
-#                       -DENABLE_XHOST=${ENABLE_XHOST}
-#?                       -DBUILD_FPIC=${BUILD_FPIC}
-#                       -DENABLE_GENERIC=${ENABLE_GENERIC}
-#?                       -DCMAKE_RANLIB=${CMAKE_RANLIB}
-#?                       -DCMAKE_AR=${CMAKE_AR}
-#?                       -DCMAKE_NM=${CMAKE_NM}
-#?                       -DENABLE_TESTS=OFF
 fi
 
 if [ "$(uname)" == "Linux" ]; then
@@ -55,19 +34,25 @@ if [ "$(uname)" == "Linux" ]; then
     LAPACK_INTERJECT="-Wl,--start-group ${MKLROOT}/libmkl_cdft_core.a ${MKLROOT}/libmkl_intel_lp64.a ${MKLROOT}/libmkl_core.a ${MKLROOT}/libmkl_intel_thread.a ${MKLROOT}/libmkl_blacs_intelmpi_lp64.a -Wl,--end-group -lpthread -liomp5 -lm -ldl"
 
     # link against older libc for generic linux
+    #   PREFIX needs to contain a libgcc_s.so of libc <2.14
     TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
     LIBC_INTERJECT="-lrt -L${TLIBC}/usr/lib64 ${TLIBC}/lib64/libpthread.so.0 ${PREFIX}/lib/libgcc_s.so ${TLIBC}/lib64/libc.so.6"
+    LIBC_INTERJECT="-liomp5 ${LIBC_INTERJECT}"
 
-    # round off with pre-detected dependencies
-    HDF5_INTERJECT="${PREFIX}/lib/libhdf5.so;${PREFIX}/lib/libhdf5_hl.so;${PREFIX}/lib/libhdf5.so;-lrt;-lz;-ldl;-lm"
+    ## link against older (pre-2.14 libc-based) hdf5 & zlib either:
+    ## (a) explicitly
+    #HDF5_INTERJECT="${PREFIX}/lib/libhdf5.so;${PREFIX}/lib/libhdf5_hl.so;${PREFIX}/lib/libhdf5.so;-lrt;${PREFIX}/lib/libz.so;-ldl;-lm"
+    #    -DHDF5_LIBRARIES="${HDF5_INTERJECT}"
+    #    -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
+    ## (b) by having them detectable, probably through a "source activate hdf5zlibenv"
+    #source activate py2basics
 
-# linux not retested
     # configure
     ${PREFIX}/bin/cmake \
         -H${SRC_DIR} \
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
-        -DCMAKE_BUILD_TYPE=Release
+        -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=icc \
         -DCMAKE_CXX_COMPILER=icpc \
         -DCMAKE_INSTALL_LIBDIR=lib \
@@ -80,9 +65,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DBUILD_SPHINX=OFF \
         -DENABLE_TESTS=ON \
         -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
-        -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}" \
-        -DHDF5_LIBRARIES="${HDF5_INTERJECT}" \
-        -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
+        -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}"
 fi
 
 # build
@@ -94,6 +77,5 @@ make -j${CPU_COUNT}
 make install
 
 # test
-# tests just segfault
+# tests segfault on mac, hence off
 make test
-# tests segfault on mac
