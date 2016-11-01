@@ -15,22 +15,18 @@ if [ "$(uname)" == "Darwin" ]; then
         -DFRAGLIB_DEEP=OFF
 fi
 
-# * usual flags yield minimal dependency library
-#   -DENABLE_XHOST=OFF
-#   -DENABLE_GENERIC=ON
-#   -DCMAKE_C_FLAGS="-liomp5" \
-#   -DLIBC_INTERJECT="/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12/lib64/libc.so.6" \
-# linux not tested
-
 if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers and mkl
     source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
 
-#    # link against older libc for generic linux
-#    TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
-#    LIBC_INTERJECT="${TLIBC}/lib64/libc.so.6"
-#        -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
+    # force static link to Intel mkl, except for openmp
+    MKLROOT=/theoryfs2/common/software/intel2016/compilers_and_libraries_2016.2.181/linux/mkl/lib/intel64
+    LAPACK_INTERJECT="${MKLROOT}/libmkl_lapack95_lp64.a;-Wl,--start-group;${MKLROOT}/libmkl_intel_lp64.a;${MKLROOT}/libmkl_sequential.a;${MKLROOT}/libmkl_core.a;-Wl,--end-group;-lpthread;-lm;-ldl"
+
+    # link against older libc for generic linux
+    TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
+    LIBC_INTERJECT="${TLIBC}/lib64/libc.so.6"
 
     # configure
     ${PREFIX}/bin/cmake \
@@ -45,7 +41,9 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
         -DFRAGLIB_UNDERSCORE_L=OFF \
-        -DFRAGLIB_DEEP=OFF
+        -DFRAGLIB_DEEP=OFF \
+        -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
+        -DLAPACK_INTERJECT=${LAPACK_INTERJECT}
 fi
 
 # build
@@ -59,3 +57,4 @@ make install
 # test
 # no independent library tests
 
+# Note: add -DCMAKE_C_FLAGS="-liomp5" for static link w/o mkl

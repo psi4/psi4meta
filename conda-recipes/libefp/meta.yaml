@@ -8,11 +8,11 @@ source:
   #git_url: git@github.com:ilyak/libefp.git             # [linux]
   git_url: git@github.com:psi4/libefp.git              # [linux]
   git_url: https://github.com/psi4/libefp.git          # [osx]
-  git_tag: config2
+  git_tag: config3
   #git_tag: v{{ version }}
 
 build:
-  number: 0
+  number: 3
   binary_relocation: true
   skip: true                                           # [win]
 
