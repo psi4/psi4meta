@@ -64,8 +64,11 @@ if [ "$(uname)" == "Linux" ]; then
         -DBUILD_DOXYGEN=OFF \
         -DBUILD_SPHINX=OFF \
         -DENABLE_TESTS=ON \
+        -DCMAKE_CXX_FLAGS="-std=c++11" \
         -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
         -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}"
+#        -DHDF5_LIBRARIES="${HDF5_INTERJECT}" \
+#        -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
 fi
 
 # build
