@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 import re
+import os
 import sys
 import time
 import subprocess
+
+distelli_num = os.getenv('DISTELLI_BUILDNUM', 'local_build')
+#logfile = "/Users/github/psi_logs/" + str(distelli_num) + "build_log.log"
+#f = open(logfile, 'w')
 
 # <<<  run ctest  >>>
 cores = '-j2'
@@ -33,9 +38,10 @@ while True:
     if not data:
         break
     sys.stdout.write(data)  # screen
-    #tciout.write(data)  # file
-    #tciout.flush()
+    sys.stdout.flush()
     ctestout += data  # string
+#    f.write(data + '\n')
+
 while True:
     retcode.poll()
     exstat = retcode.returncode
@@ -44,19 +50,28 @@ while True:
         break
     time.sleep(0.1)
 
+#f.close()
 ctime = time.time() - t
-sys.stdout.write('\n  <<<  Ran test suite in %.3f seconds on %d cores.  >>>\n' % (ctime, sys.argv[2]))
+sys.stdout.write('\n  <<<  Ran test suite in %.3f seconds on %s cores.  >>>\n' % (ctime, str(sys.argv[1])))
+
+# Everything passed woo!
+if ctest_exit_status == 0:
+    sys.stdout.write("""\n  <<<  All tests passed!  >>>\n\n""")
+    sys.exit(ctest_exit_status)
 
 # <<<  identify failed tests and cat their output  >>>
-sys.stdout.write("""\n  <<<  CTest complete with status %d. Failing outputs follow.  >>>\n\n""" %
-                 (ctest_exit_status))
 badtests = []
 testfail = re.compile(r'^\s*(?P<num>\d+) - (?P<name>\w+(?:-\w+)*) \(Failed\)\s*$')
+
+# Print out failing
+sys.stdout.write("""\n  <<<  CTest complete with status %d. Failing outputs follow.  >>>\n\n""" %
+                 (ctest_exit_status))
 
 for line in ctestout.split('\n'):
     linematch = testfail.match(line)
     if linematch:
         bad = linematch.group('name')
+        badtests.append(bad)
         sys.stdout.write("""\n%s failed. Here is the output:\n""" % (bad))
 
         badoutfile = bad
@@ -68,5 +83,4 @@ for line in ctestout.split('\n'):
         with open(badoutfile, 'r') as ofile:
             sys.stdout.write(ofile.read())
 
-# <<<  return ctest error code  >>>
 sys.exit(ctest_exit_status)

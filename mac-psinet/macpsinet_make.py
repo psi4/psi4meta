@@ -12,6 +12,7 @@ t = time.time()
 retcode = sp.Popen(['make', '-j' + str(cores)], bufsize=0, stderr=sp.STDOUT,
                             stdout=sp.PIPE, universal_newlines=True)
 
+print_phrases = ['Built', 'Completed', 'Perform']
 # Parse the output
 ctestout = ''
 while True:
@@ -20,8 +21,9 @@ while True:
         break
 
     # Only print a bit out
-    if 'Built' in data:
+    if any(x in data for x in print_phrases):
         sys.stdout.write(data)  # screen
+        sys.stdout.flush()
 
     ctestout += data  # string
 
@@ -48,7 +50,7 @@ if ctest_exit_status:
 # Celebrate and set the rpath because I suck
 else:
     sys.stdout.write('\n  <<<  Psi4 has built successfully!!  >>>\n\n\n')
-    sp.call('install_name_tool -change "@rpath/libpython2.7.dylib" "/Users/github/anaconda/lib/libpython2.7.dylib" bin/psi4', shell=True)
+#    sp.call('install_name_tool -change "@rpath/libpython2.7.dylib" "/Users/github/anaconda/lib/libpython2.7.dylib" bin/psi4', shell=True)
 
 # <<<  return ctest error code  >>>
 sys.exit(ctest_exit_status)
