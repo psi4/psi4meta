@@ -60,8 +60,8 @@ make install
 #     file called with network path DESTINATION.  This does not make sense when
 #     using DESTDIR.  Specify local absolute path or remove DESTDIR environment
 #     variable.
-#   
+#
 #     DESTINATION=
-#   
+#
 #     //anaconda/envs/_build/bin
 

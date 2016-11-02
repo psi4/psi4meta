@@ -198,6 +198,7 @@ export PATH=$MINIBUILDDIR/minicondadrive/bin:$PATH
 # <<<  Run Constructor of QC/Run  >>>
 
 conda install --yes conda=4.0.9 constructor=1.2.0
+#conda install --yes conda=4.1.6 constructor=1.3.0  # max works  # ready to test
 conda list
 
 
@@ -218,3 +219,24 @@ fi
 
 cd $NIGHTLYDIR
 exit 0
+
+# channel notes c. early Nov 2016
+# ----
+# below getting some from local
+#conda build psi4 --keep-old-work -c psi4;psi4/local/test
+#anaconda upload /theoryfs2/ds/cdsgroup/buildingminiconda/conda-bld/linux-64/psi4-1.1a1.dev582-py27_0.tar.bz2 --label test
+# finds latest
+#NOPE conda install psi4 -c psi4/label/test
+# gets stuff from both channels
+# conda install psi4=1.1a1* -c psi4/label/test -c psi4
+#anaconda upload /theoryfs2/ds/cdsgroup/buildingminiconda/conda-bld/linux-64/psi4-1.1a1.dev584+2e796d0-py27_0.tar.bz2 --label test
+# w/o trents pkg in way
+# conda create -n thrownov3 psi4 -c psi4/label/test -c psi4
+
+#conda env remove -n thrownov3clone
+
+#conda create -n thrownov3clone --file thrownov3-spec.txt 
+#psi4 ~/buildingminiconda/envs/thrownov3clone/share/psi4/samples/tu1-h2o-energy/test.in 
+#
+#LD_PRELOAD=/theoryfs2/ds/cdsgroup/miniconda/envs/thrownov2/lib/libmkl_rt.so stage/theoryfs2/ds/loriab/psi4-compile/install-testnov/bin/psi4 ../tests/tu3-h2o-opt/input.dat 
+#
