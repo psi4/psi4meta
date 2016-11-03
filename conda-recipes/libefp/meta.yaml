@@ -12,16 +12,16 @@ source:
   #git_tag: v{{ version }}
 
 build:
-  number: 3
+  number: 4
   binary_relocation: true
   skip: true                                           # [win]
 
 requirements:
   build:
     - cmake >=3.0
-    - gcc              # [osx]    # build w/conda gcc
-  run:
-    - libgcc           # [osx]    # link libgcc_s
+#    - gcc              # [osx]    # build w/conda gcc
+#  run:
+#    - libgcc           # [osx]    # link libgcc_s
 
 test:
   commands:

@@ -8,8 +8,9 @@ if [ "$(uname)" == "Darwin" ]; then
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER="${PREFIX}/bin/gcc" \
-        -DCMAKE_CXX_COMPILER="${PREFIX}/bin/g++" \
+        -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_CXX_COMPILER=clang++ \
+        -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DBUILD_SHARED_LIBS=ON

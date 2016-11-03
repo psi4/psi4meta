@@ -7,7 +7,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER="${PREFIX}/bin/gcc" \
+        -DCMAKE_C_COMPILER=clang \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_OPENMP=OFF \
