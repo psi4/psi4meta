@@ -19,7 +19,7 @@ source:
 build:
   skip: true                                           # [win]
 #  string: {{ buildno }}
-  number: 0
+  number: 1
   binary_relocation: true
 #  binary_has_prefix_files:
 #    - bin/psi4
@@ -32,6 +32,15 @@ build:
 
 requirements:
   build:
+    - cmake >3.1       # [osx]
+    - dftd3            # [osx]  # for testing
+    - libefp           # [osx]
+    - gcc             # [osx]  # after working for gfortran
+#    - gcc-5 5.3.0       # [osx]
+    - gdma             # [osx]
+    - libint           # [osx]
+    - numpy            # [osx]  # for psi4 execution w/i ctest and sphinxman
+    - python 2.7*      # [osx]
     - cmake >3.1       # [linux]
     - dftd3            # [linux]  # for testing
     - libefp           # [linux]
@@ -42,6 +51,14 @@ requirements:
     - python 2.7*      # [linux]
     - sphinx 1.4*      # [linux]  # for docs
   run:
+    - libefp           # [osx]  # link libefp
+#    - gcc-5            # [osx]  # link libgcc_s
+    - libgcc           # [osx]  # after working for libgfortran
+    - gdma             # [osx]  # link libgdma
+    - libint           # [osx]  # link libderiv, libint
+#    - mkl              # [osx]  # link libiomp5
+    - numpy            # [osx]
+    - python 2.7*      # [osx]  # link libpython2.7
     - libefp           # [linux]  # link libefp
     - gcc-5            # [linux]  # link libgcc_s
     - gdma             # [linux]  # link libgdma
