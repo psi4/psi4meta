@@ -75,7 +75,7 @@ for line in ctestout.split('\n'):
         sys.stdout.write("""\n%s failed. Here is the output:\n""" % (bad))
 
         badoutfile = bad
-        for oddity in ['pcmsolver', 'cfour', 'libefp', 'dmrg', 'dftd3', 'mrcc']:
+        for oddity in ['pcmsolver', 'cfour', 'libefp', 'dmrg', 'dftd3', 'mrcc', 'python', 'psi4numpy']:
             if bad.startswith(oddity):
                 badoutfile = oddity + '/' + bad
         badoutfile = 'tests/' + badoutfile + '/output.dat'
