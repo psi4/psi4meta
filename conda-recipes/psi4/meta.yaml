@@ -1,25 +1,19 @@
 
-#{% set data = load_setup_py_data(setup_file='_conda_vers.py') %}
-{% set data = load_setup_py_data(setup_file='_setup.py') %}
+{% set data = load_setup_py_data(setup_file='_conda_vers.py') %}
 
 package:
   name: psi4
-  #version: {{ version }}
-  #version: "1.1a1.dev582"
   version: {{ data.get('version') }}
 
 source:
-  git_url: https://github.com/loriab/psi4.git
-  git_tag: nov_cmake
-  #git_url: git@github.com:tparker36/psi4.git           # [linux]
+  git_url: https://github.com/psi4/psi4.git
+  git_tag: master
 #  git_url: git@github.com:psi4/psi4.git                # [linux]
 #  git_url: https://github.com/psi4/psi4.git            # [osx]
-#  git_tag: master
 
 build:
   skip: true                                           # [win]
-#  string: {{ buildno }}
-  number: 1
+  number: 0
   binary_relocation: true
 #  binary_has_prefix_files:
 #    - bin/psi4
@@ -48,7 +42,7 @@ requirements:
     - gdma             # [linux]
     - libint           # [linux]
     - numpy            # [linux]  # for psi4 execution w/i ctest and sphinxman
-    - python 2.7*      # [linux]
+    - python x.x       # [linux]
     - sphinx 1.4*      # [linux]  # for docs
   run:
     - libefp           # [osx]  # link libefp
@@ -65,7 +59,7 @@ requirements:
     - libint           # [linux]  # link libderiv, libint
     - mkl              # [linux]  # link libiomp5
     - numpy            # [linux]
-    - python 2.7*      # [linux]  # link libpython2.7
+    - python x.x       # [linux]  # link libpython
 
 #    #- ambit 0.2       # [osx]
 #    #- boost >=1.57    # [osx]
@@ -102,7 +96,8 @@ test:
     # Verify executable.
     - test -f $PREFIX/bin/psi4
     # Verify python module.
-    - test -f $PREFIX/lib/python2.7/site-packages/psi4/core.so
+    - test -f $PREFIX/lib/python2.7/site-packages/psi4/core.so  # [py27]
+    - test -f $PREFIX/lib/python3.5/site-packages/psi4/core.so  # [py35]
     # Verify execution.
     - $PREFIX/bin/psi4 --version
 

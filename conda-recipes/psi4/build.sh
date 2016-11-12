@@ -1,4 +1,10 @@
 
+if [ "${CONDA_PY}" == "27" ]; then
+    PYMOD_INSTALL_LIBDIR="/python2.7/site-packages"
+elif [ "${CONDA_PY}" == "35" ]; then
+    PYMOD_INSTALL_LIBDIR="/python3.5/site-packages"
+fi
+
 if [ "$(uname)" == "Darwin" ]; then
 
     #export DYLD_LIBRARY_PATH=${PREFIX}/lib:${DYLD_LIBRARY_PATH}
@@ -105,7 +111,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_CXX_COMPILER=icpc \
         -DCMAKE_Fortran_COMPILER=ifort \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="/python2.7/site-packages" \
+        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
         -DMAX_AM_ERI=6 \
         -DPYTHON_EXECUTABLE=${PYTHON} \
         -DENABLE_gdma=ON \
@@ -134,7 +140,7 @@ if [ "$(uname)" == "Linux" ]; then
     # test
     #sed -i "s|/opt/anaconda1anaconda2anaconda3|${PREFIX}|g" ${PREFIX}/share/psi4/python/pcm_placeholder.py
     LD_LIBRARY_PATH=${PREFIX}/lib:$LD_LIBRARY_PATH \
-         PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
+         PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib${PYMOD_INSTALL_LIBDIR}:$PYTHONPATH \
                PATH=${PREFIX}/bin:$PATH \
       ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} -L quick
       # TODO drop quick when all passing again
