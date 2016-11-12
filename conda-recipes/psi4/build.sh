@@ -1,14 +1,13 @@
 
 if [ "${CONDA_PY}" == "27" ]; then
     PYMOD_INSTALL_LIBDIR="/python2.7/site-packages"
+    PY_ABBR="python2.7"
 elif [ "${CONDA_PY}" == "35" ]; then
     PYMOD_INSTALL_LIBDIR="/python3.5/site-packages"
+    PY_ABBR="python3.5m"
 fi
 
 if [ "$(uname)" == "Darwin" ]; then
-
-    #export DYLD_LIBRARY_PATH=${PREFIX}/lib:${DYLD_LIBRARY_PATH}
-    #rm ${PREFIX}/lib/libsqlite3*
 
     # configure
     ${PREFIX}/bin/cmake \
@@ -21,52 +20,21 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
         -DCMAKE_Fortran_COMPILER=${PREFIX}/bin/gfortran \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="/python2.7/site-packages" \
+        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_gdma=ON \
         -DMAX_AM_ERI=6 \
         -DPYTHON_EXECUTABLE=${PYTHON} \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.dylib" \
+        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
-        -DBUILDNAME=LAB-OSX-clang7.3.0-accelerate-release-conda \
+        -DBUILDNAME="LAB-OSX-clang7.3.0-accelerate-py${CONDA_PY}-release-conda" \
         -DSITE=gatech-mac-conda \
         -DCMAKE_OSX_DEPLOYMENT_TARGET=''
 
-#    @rpath/core.so (compatibility version 0.0.0, current version 0.0.0)
-#    @rpath/libpython2.7.dylib (compatibility version 2.7.0, current version 2.7.0)
-#    /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1226.10.1)
-#    @rpath/libgdma.dylib (compatibility version 0.0.0, current version 0.0.0)
-#    @rpath/libderiv.dylib (compatibility version 0.0.0, current version 0.0.0)
-#    @rpath/libint.dylib (compatibility version 0.0.0, current version 0.0.0)
-#    @rpath/libefp.dylib (compatibility version 0.0.0, current version 0.0.0)
-#    /System/Library/Frameworks/Accelerate.framework/Versions/A/Accelerate (compatibility version 1.0.0, current version 4.0.0)
-#    /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libLAPACK.dylib (compatibility version 1.0.0, current version 1.0.0)
-#    /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib (compatibility version 1.0.0, current version 1.0.0)
-#    /usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 120.1.0)
-
-        #-DCMAKE_INSTALL_PREFIX=${PREFIX} \
-        #-DCMAKE_BUILD_TYPE=Release \
-        #-DCMAKE_CXX_FLAGS="-stdlib=libc++" \
-        #-DCMAKE_INSTALL_LIBDIR=lib \
-        #-DPYMOD_INSTALL_LIBDIR="/python2.7/site-packages" \
-        #-DMAX_AM_ERI=4 \
-        #-DPYTHON_EXECUTABLE=${PYTHON} \
-        #-DCMAKE_PREFIX_PATH="${PREFIX}" \
-        #-DBUILDNAME=LAB-OSX-clang7.3.0-accelerate-release-conda \
-        #-DSITE=gatech-mac-conda \
-        #-DCMAKE_OSX_DEPLOYMENT_TARGET='' \
         #-DLAPACK_LIBRARIES="/System/Library/Frameworks/Accelerate.framework/Accelerate" \
         #-DBLAS_LIBRARIES="/System/Library/Frameworks/Accelerate.framework/Accelerate"
-
-
         #-DENABLE_OPENMP=ON \
-        #-DCMAKE_C_COMPILER=cc \
-        #-DCMAKE_CXX_COMPILER=c++ \
-#        -DBUILD_SHARED_LIBS=ON \
-
-#        -DCMAKE_Fortran_COMPILER=${PREFIX}/bin/gfortran \
-#        -DMAX_AM_ERI=6 \
-#        -DPYTHON_EXECUTABLE=${PYTHON} \
-#        -DENABLE_gdma=ON \
 
     # build
     cd build
@@ -114,13 +82,15 @@ if [ "$(uname)" == "Linux" ]; then
         -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
         -DMAX_AM_ERI=6 \
         -DPYTHON_EXECUTABLE=${PYTHON} \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.dylib" \
+        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
         -DENABLE_gdma=ON \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
         -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
-        -DBUILDNAME=LAB-RHEL7-gcc5.2-intel16.0.3-mkl-release-conda \
+        -DBUILDNAME="LAB-RHEL7-gcc5.2-intel16.0.3-mkl-py${CONDA_PY}-release-conda" \
         -DSITE=gatech-conda \
         -DSPHINX_ROOT=${PREFIX}
 

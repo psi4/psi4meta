@@ -34,7 +34,7 @@ requirements:
     - gdma             # [osx]
     - libint           # [osx]
     - numpy            # [osx]  # for psi4 execution w/i ctest and sphinxman
-    - python 2.7*      # [osx]
+    - python x.x       # [osx]
     - cmake >3.1       # [linux]
     - dftd3            # [linux]  # for testing
     - libefp           # [linux]
@@ -52,7 +52,7 @@ requirements:
     - libint           # [osx]  # link libderiv, libint
 #    - mkl              # [osx]  # link libiomp5
     - numpy            # [osx]
-    - python 2.7*      # [osx]  # link libpython2.7
+    - python x.x       # [osx]  # link libpython
     - libefp           # [linux]  # link libefp
     - gcc-5            # [linux]  # link libgcc_s
     - gdma             # [linux]  # link libgdma
