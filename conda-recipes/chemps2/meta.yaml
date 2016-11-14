@@ -13,26 +13,30 @@ source:
   #git_tag: v{{ version }}
 
 build:
-  number: 2
+  number: 5
   binary_relocation: true
   skip: true                                           # [win]
 
 requirements:
   build:
-    - cmake >=2.8.11
+    - cmake >=3.0
     - gcc              # [osx]    # build w/conda gcc
     - hdf5
-    - libgcc           # [linux]
-#    - gcc-5            # [linux]
-    - mkl              # [linux]
+    - gcc-5            # [linux]
     - zlib
   run:
-    - hdf5 1.8.17                 # PIN-TO-BUILD
-    - libgcc           # [osx]    # link libstdc++, libgcc_s, libgomp
-    - libgcc           # [linux]  # link libgcc_s
-#    - gcc5             # [linux]  # link libgcc_s PIN-TO-BUILD
-    - mkl              # [linux]  # link iomp5
-    - zlib                        # link libz
+    - gcc-5            # [linux]  # link libgcc_s
+    - hdf5             # [linux]  # link libhdf5, libhdf5_hl
+    - mkl              # [linux]  # link libiomp5
+    - zlib             # [linux]  # link libz
+
+#    - hdf5 1.8.17                 # PIN-TO-BUILD
+##    - libgcc           # [osx]    # link libstdc++, libgcc_s, libgomp
+##    - libgcc           # [linux]  # link libgcc_s
+###    - gcc5             # [linux]  # link libgcc_s PIN-TO-BUILD
+#    - gcc-5           # [linux]  # link libgcc_s
+##    - mkl              # [linux]  # link iomp5
+##    - zlib                        # link libz
 
 test:
   commands:

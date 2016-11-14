@@ -29,19 +29,18 @@ if [ "$(uname)" == "Linux" ]; then
     # load Intel compilers and mkl
     source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
 
-    # force static link to Intel mkl, except for openmp
-    MKLROOT=/theoryfs2/common/software/intel2016/compilers_and_libraries_2016.2.181/linux/mkl/lib/intel64
-    LAPACK_INTERJECT="-Wl,--start-group ${MKLROOT}/libmkl_cdft_core.a ${MKLROOT}/libmkl_intel_lp64.a ${MKLROOT}/libmkl_core.a ${MKLROOT}/libmkl_intel_thread.a ${MKLROOT}/libmkl_blacs_intelmpi_lp64.a -Wl,--end-group -lpthread -liomp5 -lm -ldl"
-
     # link against older libc for generic linux
     #   PREFIX needs to contain a libgcc_s.so of libc <2.14
     TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
-    LIBC_INTERJECT="-lrt -L${TLIBC}/usr/lib64 ${TLIBC}/lib64/libpthread.so.0 ${PREFIX}/lib/libgcc_s.so ${TLIBC}/lib64/libc.so.6"
-    LIBC_INTERJECT="-liomp5 ${LIBC_INTERJECT}"
+    LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/librt.so.1;${TLIBC}/lib64/libpthread.so.0;${PREFIX}/lib/libgcc_s.so;${TLIBC}/lib64/libc.so.6"
+
+    # force static link to Intel mkl, except for openmp
+    MKLROOT=/theoryfs2/common/software/intel2016/compilers_and_libraries_2016.2.181/linux/mkl/lib/intel64
+    LAPACK_INTERJECT="-Wl,--start-group;${MKLROOT}/libmkl_cdft_core.a;${MKLROOT}/libmkl_intel_lp64.a;${MKLROOT}/libmkl_intel_thread.a;${MKLROOT}/libmkl_core.a;${MKLROOT}/libmkl_blacs_intelmpi_lp64.a;-Wl,--end-group;-liomp5;-lpthread;${TLIBC}/lib64/libm.so.6;-ldl"
 
     ## link against older (pre-2.14 libc-based) hdf5 & zlib either:
     ## (a) explicitly
-    #HDF5_INTERJECT="${PREFIX}/lib/libhdf5.so;${PREFIX}/lib/libhdf5_hl.so;${PREFIX}/lib/libhdf5.so;-lrt;${PREFIX}/lib/libz.so;-ldl;-lm"
+    HDF5_INTERJECT="${PREFIX}/lib/libhdf5.so;${PREFIX}/lib/libhdf5_hl.so;${PREFIX}/lib/libhdf5.so;-lrt;${PREFIX}/lib/libz.so.1.2.8;-ldl;-lm"
     #    -DHDF5_LIBRARIES="${HDF5_INTERJECT}"
     #    -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
     ## (b) by having them detectable, probably through a "source activate hdf5zlibenv"
@@ -63,13 +62,15 @@ if [ "$(uname)" == "Linux" ]; then
         -DMKL=ON \
         -DBUILD_DOXYGEN=OFF \
         -DBUILD_SPHINX=OFF \
-        -DENABLE_TESTS=ON \
-        -DCMAKE_CXX_FLAGS="-std=c++11" \
-        -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
-        -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}"
-#        -DHDF5_LIBRARIES="${HDF5_INTERJECT}" \
-#        -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
+        -DENABLE_TESTS=OFF \
+        -DLIBC_INTERJECT=${LIBC_INTERJECT} \
+        -DLAPACK_LIBRARIES=${LAPACK_INTERJECT} \
+        -DHDF5_LIBRARIES=${HDF5_INTERJECT} \
+        -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
 fi
+
+#        -DCMAKE_C_FLAGS="-gcc-name=${PREFIX}/bin/gcc" \
+#        -DCMAKE_CXX_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++" \
 
 # build
 cd build
@@ -80,5 +81,12 @@ make -j${CPU_COUNT}
 make install
 
 # test
-# tests segfault on mac, hence off
-make test
+# tests segfault on mac, hence off. some path issue on Linux, I think
+#make test
+
+#add_library(s::hdf5 INTERFACE IMPORTED)
+#set_property(TARGET s::hdf5 PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${HDF5_INCLUDE_DIRS})
+#set_property(TARGET s::hdf5 PROPERTY INTERFACE_LINK_LIBRARIES ${HDF5_LIBRARIES})
+
+#   '-Wl,-Bstatic;ifport;ifcore;imf;svml;     m;ipgo;                       irc;pthread;svml;c;irc_s;dl;c'
+#                              'imf;svml;irng;m;ipgo;decimal;cilkrts;stdc++;irc;        svml;c;irc_s;dl;c')
