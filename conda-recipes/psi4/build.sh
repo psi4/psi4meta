@@ -82,8 +82,9 @@ if [ "$(uname)" == "Linux" ]; then
         -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
         -DMAX_AM_ERI=6 \
         -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.dylib" \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.so" \
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
+        -DENABLE_CheMPS2=ON \
         -DENABLE_gdma=ON \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DENABLE_OPENMP=ON \
@@ -114,9 +115,5 @@ if [ "$(uname)" == "Linux" ]; then
                PATH=${PREFIX}/bin:$PATH \
       ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} -L quick
       # TODO drop quick when all passing again
-
-    # test-running env on psinet
-    #LD_LIBRARY_PATH=/theoryfs2/ds/cdsgroup/miniconda/envs/_build_placehold_placehold_placehold_place/lib PYTHONPATH=/theoryfs2/ds/cdsgroup/miniconda/envs/_build_placehold_placehold_placehold_place/bin:/theoryfs2/ds/cdsgroup/miniconda/envs/_build_placehold_placehold_placehold_place/lib/python2.7/site-packages PATH=/theoryfs2/ds/cdsgroup/miniconda/envs/_build_placehold_placehold_placehold_place/bin:$PATH
-
 fi
 
