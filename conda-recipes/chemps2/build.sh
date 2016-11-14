@@ -40,7 +40,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     ## link against older (pre-2.14 libc-based) hdf5 & zlib either:
     ## (a) explicitly
-    HDF5_INTERJECT="${PREFIX}/lib/libhdf5.so;${PREFIX}/lib/libhdf5_hl.so;${PREFIX}/lib/libhdf5.so;-lrt;${PREFIX}/lib/libz.so.1.2.8;-ldl;-lm"
+    HDF5_INTERJECT="${PREFIX}/lib/libhdf5.so;${PREFIX}/lib/libhdf5_hl.so;${PREFIX}/lib/libhdf5.so;-lrt;${PREFIX}/lib/libz.so.1.2.8;-ldl;${TLIBC}/lib64/libm.so.6"
     #    -DHDF5_LIBRARIES="${HDF5_INTERJECT}"
     #    -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
     ## (b) by having them detectable, probably through a "source activate hdf5zlibenv"
@@ -64,11 +64,12 @@ if [ "$(uname)" == "Linux" ]; then
         -DBUILD_SPHINX=OFF \
         -DENABLE_TESTS=OFF \
         -DLIBC_INTERJECT=${LIBC_INTERJECT} \
-        -DLAPACK_LIBRARIES=${LAPACK_INTERJECT} \
+        -DLAPACK_INTERJECT=${LAPACK_INTERJECT} \
         -DHDF5_LIBRARIES=${HDF5_INTERJECT} \
         -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
 fi
 
+        #-DLAPACK_LIBRARIES=${LAPACK_INTERJECT} \
 #        -DCMAKE_C_FLAGS="-gcc-name=${PREFIX}/bin/gcc" \
 #        -DCMAKE_CXX_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++" \
 
@@ -79,6 +80,10 @@ make -j${CPU_COUNT}
 
 # install
 make install
+# generalize the interface_link_libraries for export where overly specified
+#   during compilation just to suppress glibc 2.14 dependence
+sed -i "s|${TLIBC}/lib64/libm.so.6|-lm|g" ${PREFIX}/share/cmake/CheMPS2/CheMPS2Targets-shared.cmake
+sed -i "s|libz.so.1.2.8|libz.so|g" ${PREFIX}/share/cmake/CheMPS2/CheMPS2Targets-shared.cmake
 
 # test
 # tests segfault on mac, hence off. some path issue on Linux, I think
