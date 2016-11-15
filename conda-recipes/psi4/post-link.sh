@@ -1,9 +1,9 @@
 set +x
 
 echo "" >> .messages.txt
-echo "  Thank you for installing psi4." >> .messages.txt
+echo "  Thank you for installing Psi4." >> .messages.txt
 echo "    Website: psicode.org" >> .messages.txt
-echo "    Forum:   forum.psi4code.org" >> .messages.txt
+echo "    Forum:   forum.psicode.org" >> .messages.txt
 echo "    Manual:  psicode.org/psi4manual/master/index.html" >> .messages.txt
 echo "    GitHub:  github.com/psi4/psi4" >> .messages.txt
 echo "    Binary:  anaconda.org/psi4/psi4" >> .messages.txt

@@ -25,6 +25,7 @@ build:
 
 requirements:
   build:
+    - chemps2          # [osx]
     - cmake >3.1       # [osx]
     - dftd3            # [osx]  # for testing
     - libefp           # [osx]
@@ -45,6 +46,7 @@ requirements:
     - python x.x       # [linux]
     - sphinx 1.4*      # [linux]  # for docs
   run:
+    - chemps2          # [osx]  # link libchemps2
     - libefp           # [osx]  # link libefp
 #    - gcc-5            # [osx]  # link libgcc_s
     - libgcc           # [osx]  # after working for libgfortran

@@ -22,6 +22,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
         -DBUILD_SHARED_LIBS=ON \
+        -DENABLE_CheMPS2=ON \
         -DENABLE_gdma=ON \
         -DMAX_AM_ERI=6 \
         -DPYTHON_EXECUTABLE=${PYTHON} \
