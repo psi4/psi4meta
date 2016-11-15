@@ -5,11 +5,12 @@ package:
   version: {{ version }}
 
 source:
-  git_url: git@github.com:loriab/CheMPS2.git       # [linux]
+  git_url: https://github.com/loriab/CheMPS2.git       # [osx]
+  git_url: git@github.com:loriab/CheMPS2.git           # [linux]
   git_tag: configpy2
-#  #git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
-#  git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
-#  #git_tag: v{{ version }}
+  #git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
+  #git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
+  #git_tag: v{{ version }}
 
 build:
   number: 5
@@ -20,12 +21,10 @@ requirements:
   build:
     - chemps2 {{ version }}
     - cython
-    - gcc              # [osx]    # build w/ gcc
     - numpy
     - python x.x
   run:
     - chemps2 {{ version }}       # link libchemps2
-    - libgcc           # [osx]    # link libstdc++, libgcc_s
     - numpy
     - python x.x
 
@@ -33,7 +32,8 @@ test:
   commands:
     # Verify python module.
     - test -f ${PREFIX}/lib/python2.7/site-packages/PyCheMPS2.so  # [py27]
-    - test -f ${PREFIX}/lib/python3.5/site-packages/PyCheMPS2.cpython-35m-x86_64-linux-gnu.so  # [py35]
+    - test -f ${PREFIX}/lib/python3.5/site-packages/PyCheMPS2.cpython-35m-x86_64-linux-gnu.so  # [py35 and linux]
+    - test -f ${PREFIX}/lib/python3.5/site-packages/PyCheMPS2.cpython-35m-darwin.so  # [py35 and osx]
 
 about:
   home: http://sebwouters.github.io/CheMPS2

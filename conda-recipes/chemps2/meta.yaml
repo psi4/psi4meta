@@ -20,15 +20,14 @@ build:
 requirements:
   build:
     - cmake >=3.0
-    - gcc              # [osx]    # build w/conda gcc
     - hdf5
     - gcc-5            # [linux]
     - zlib
   run:
     - gcc-5            # [linux]  # link libgcc_s
-    - hdf5             # [linux]  # link libhdf5, libhdf5_hl
+    - hdf5                        # link libhdf5, libhdf5_hl
     - mkl              # [linux]  # link libiomp5
-    - zlib             # [linux]  # link libz
+    - zlib             #          # link libz
 
 #    - hdf5 1.8.17                 # PIN-TO-BUILD
 ##    - libgcc           # [osx]    # link libstdc++, libgcc_s, libgomp

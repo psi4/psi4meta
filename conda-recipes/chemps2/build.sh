@@ -11,8 +11,9 @@ if [ "$(uname)" == "Darwin" ]; then
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER="${PREFIX}/bin/gcc" \
-        -DCMAKE_CXX_COMPILER="${PREFIX}/bin/g++" \
+        -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_CXX_COMPILER=clang++ \
+        -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DSHARED_ONLY=ON \
         -DENABLE_OPENMP=ON \
@@ -22,6 +23,9 @@ if [ "$(uname)" == "Darwin" ]; then
         -DENABLE_TESTS=OFF \
         -DHDF5_LIBRARIES="${HDF5_INTERJECT}" \
         -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
+
+        #-DCMAKE_C_COMPILER="${PREFIX}/bin/gcc" \
+        #-DCMAKE_CXX_COMPILER="${PREFIX}/bin/g++" \
 fi
 
 if [ "$(uname)" == "Linux" ]; then
@@ -80,10 +84,13 @@ make -j${CPU_COUNT}
 
 # install
 make install
-# generalize the interface_link_libraries for export where overly specified
-#   during compilation just to suppress glibc 2.14 dependence
-sed -i "s|${TLIBC}/lib64/libm.so.6|-lm|g" ${PREFIX}/share/cmake/CheMPS2/CheMPS2Targets-shared.cmake
-sed -i "s|libz.so.1.2.8|libz.so|g" ${PREFIX}/share/cmake/CheMPS2/CheMPS2Targets-shared.cmake
+
+if [ "$(uname)" == "Linux" ]; then
+    # generalize the interface_link_libraries for export where overly specified
+    #   during compilation just to suppress glibc 2.14 dependence
+    sed -i "s|${TLIBC}/lib64/libm.so.6|-lm|g" ${PREFIX}/share/cmake/CheMPS2/CheMPS2Targets-shared.cmake
+    sed -i "s|libz.so.1.2.8|libz.so|g" ${PREFIX}/share/cmake/CheMPS2/CheMPS2Targets-shared.cmake
+fi
 
 # test
 # tests segfault on mac, hence off. some path issue on Linux, I think
