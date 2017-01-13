@@ -38,7 +38,7 @@ requirements:
     - cmake >3.1       # [linux]
     - dftd3            # [linux]  # for testing
     - libefp           # [linux]
-    - gcc-5            # [linux]
+    - gcc-5-mp         # [linux]
     - gdma             # [linux]
     - libint           # [linux]
     - numpy            # [linux]  # for psi4 execution w/i ctest and sphinxman
@@ -55,7 +55,7 @@ requirements:
     - python x.x       # [osx]  # link libpython
     - chemps2          # [linux]  # link libchemps2
     - libefp           # [linux]  # link libefp
-    - gcc-5            # [linux]  # link libgcc_s
+    - gcc-5-mp         # [linux]  # link libgcc_s
     - gdma             # [linux]  # link libgdma
     - libint           # [linux]  # link libderiv, libint
     - mkl              # [linux]  # link libiomp5
