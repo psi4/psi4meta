@@ -2,3 +2,4 @@ psinet-nightly/cb-psinet*.log
 stallo/*.o*
 stallo/*.e*
 conda-recipes/.messages.txt
+nohup.out
