@@ -1,0 +1,44 @@
+{% set version = "0.1" %}
+
+package:
+  name: v2rdm_casscf
+  version: {{ version }}
+
+source:
+  git_url: git@github.com:loriab/v2rdm_casscf.git      # [linux]
+  git_url: https://github.com/loriab/v2rdm_casscf.git  # [osx]
+  git_tag: CMakeRewrite
+  #git_url: git@github.com:edeprince3/v2rdm_casscf.git      # [linux]
+  #git_url: https://github.com/edeprince3/v2rdm_casscf.git  # [osx]
+#  git_tag: v{{ version }}
+
+build:
+  number: 1
+  binary_relocation: true
+  skip: true                                           # [win]
+
+requirements:
+  build:
+    - cmake >=3.1
+    - gcc-5-mp         # [linux]
+    - psi4                        # for psi4OptionsTools to initiate plugin
+    - python x.x                  # for site-packages location
+  run:
+    - gcc-5-mp         # [linux]  # link libgcc_s
+    - mkl              # [linux]  # link libiomp5
+    - psi4                        # load and support plugin
+    - python x.x                  # interpreter
+
+test:
+  commands:
+    # Verify plugin module.
+    - test -f $PREFIX/lib/python2.7/site-packages/v2rdm_casscf/v2rdm_casscf.so  # [py27]
+    - test -f $PREFIX/lib/python3.5/site-packages/v2rdm_casscf/v2rdm_casscf.so  # [py35]
+    # run_test executes tests/v2rdm1
+
+about:
+  home: https://github.com/edeprince3/v2rdm_casscf
+  license: GNU General Public License v2 or later (GPLv2+)
+  summary: "a variational 2-RDM-driven CASSCF plugin to Psi4"
+  readme: README.md
+
