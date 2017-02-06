@@ -18,7 +18,7 @@ build:
 requirements:
   build:
     - cmake >=3.0
-    - gcc              # [osx]    # build w/conda gcc, gfortran
+    - gcc              # [osx]    # build w/conda gfortran
   run:
     - libgcc           # [osx]    # link libgfortran, libquadmath, libgcc_s
 

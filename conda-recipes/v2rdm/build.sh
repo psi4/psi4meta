@@ -1,3 +1,18 @@
+if [ "$(uname)" == "Darwin" ]; then
+
+    # configure
+    ${PREFIX}/bin/cmake \
+        -H${SRC_DIR} \
+        -B. \
+        -DCMAKE_INSTALL_PREFIX=${SP_DIR} \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_CXX_COMPILER=clang++ \
+        -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
+        -DCMAKE_Fortran_COMPILER="${PREFIX}/bin/gfortran" \
+        -DBUILD_SHARED_LIBS=ON
+fi
+
 if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers and mkl
@@ -9,6 +24,7 @@ if [ "$(uname)" == "Linux" ]; then
     TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
     LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/libc.so.6;-Wl,-Bstatic;-Wl,--whole-archive;-lifport;-lifcoremt_pic;-Wl,--no-whole-archive;-Wl,-Bdynamic"
 
+    # configure
     ${PREFIX}/bin/cmake \
         -H${SRC_DIR} \
         -B. \

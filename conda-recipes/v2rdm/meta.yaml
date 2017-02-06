@@ -20,11 +20,13 @@ build:
 requirements:
   build:
     - cmake >=3.1
+    - gcc              # [osx]    # build w/conda gfortran
     - gcc-5-mp         # [linux]
     - psi4                        # for psi4OptionsTools to initiate plugin
     - python x.x                  # for site-packages location
   run:
     - gcc-5-mp         # [linux]  # link libgcc_s
+    - libgcc           # [osx]    # link libgfortran, libquadmath, libgcc_s
     - mkl              # [linux]  # link libiomp5
     - psi4                        # load and support plugin
     - python x.x                  # interpreter
