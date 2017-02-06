@@ -17,7 +17,9 @@ fi
 if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers and mkl
+    set +x
     source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+    set -x
 
     # link against older libc for generic linux
     TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
