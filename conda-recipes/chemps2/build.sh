@@ -36,7 +36,7 @@ if [ "$(uname)" == "Linux" ]; then
     # link against older libc for generic linux
     #   PREFIX needs to contain a libgcc_s.so of libc <2.14
     TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
-    LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/librt.so.1;${TLIBC}/lib64/libpthread.so.0;${PREFIX}/lib/libgcc_s.so;${TLIBC}/lib64/libc.so.6"
+    LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/librt.so.1;${TLIBC}/lib64/libpthread.so.0;${TLIBC}/lib64/libm.so.6;dl;${PREFIX}/lib/libgcc_s.so;${TLIBC}/lib64/libc.so.6"
 
     # force static link to Intel mkl, except for openmp
     MKLROOT=/theoryfs2/common/software/intel2016/compilers_and_libraries_2016.2.181/linux/mkl/lib/intel64
@@ -68,12 +68,13 @@ if [ "$(uname)" == "Linux" ]; then
         -DBUILD_SPHINX=OFF \
         -DENABLE_TESTS=OFF \
         -DLIBC_INTERJECT=${LIBC_INTERJECT} \
-        -DLAPACK_INTERJECT=${LAPACK_INTERJECT} \
+        -DLAPACK_LIBRARIES=${LAPACK_INTERJECT} \
         -DHDF5_LIBRARIES=${HDF5_INTERJECT} \
-        -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
+        -DHDF5_INCLUDE_DIRS="${PREFIX}/include" \
+        -DHDF5_VERSION="1.8.17"  # NOTICE PIN!
 fi
 
-        #-DLAPACK_LIBRARIES=${LAPACK_INTERJECT} \
+        #-DLAPACK_INTERJECT=${LAPACK_INTERJECT} \
 #        -DCMAKE_C_FLAGS="-gcc-name=${PREFIX}/bin/gcc" \
 #        -DCMAKE_CXX_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++" \
 
@@ -94,6 +95,7 @@ fi
 
 # test
 # tests segfault on mac, hence off. some path issue on Linux, I think
+# on Linux, loader and glibc mismatch at build time. remedied by test environment.
 #make test
 
 #add_library(s::hdf5 INTERFACE IMPORTED)

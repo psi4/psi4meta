@@ -33,6 +33,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_Fortran_COMPILER=ifort \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DBUILD_SHARED_LIBS=ON \
+        -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
         -DLIBC_INTERJECT="${LIBC_INTERJECT}"

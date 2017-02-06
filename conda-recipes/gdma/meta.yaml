@@ -29,7 +29,7 @@ test:
 
 about:
   home: https://github.com/psi4/gdma
-  #license: BSD 2-clause
+  license: GNU General Public License v2 or later (GPLv2+)
   summary: "A. Stone's Gaussian distributed multipole analysis (GDMA)"
   readme: README.md
 

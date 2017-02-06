@@ -23,7 +23,6 @@ if [ "$(uname)" == "Linux" ]; then
     # link against older libc for generic linux
     TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
     LIBC_INTERJECT="${TLIBC}/lib64/libc.so.6"
-        -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
 
     # configure
     ${PREFIX}/bin/cmake \
@@ -35,6 +34,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_Fortran_COMPILER=ifort \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DBUILD_SHARED_LIBS=ON \
+        -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
         -DLIBC_INTERJECT=${LIBC_INTERJECT}

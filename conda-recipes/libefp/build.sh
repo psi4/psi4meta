@@ -43,7 +43,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DFRAGLIB_UNDERSCORE_L=OFF \
         -DFRAGLIB_DEEP=OFF \
         -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
-        -DLAPACK_INTERJECT=${LAPACK_INTERJECT}
+        -DLAPACK_LIBRARIES=${LAPACK_INTERJECT}
 fi
 
 # build

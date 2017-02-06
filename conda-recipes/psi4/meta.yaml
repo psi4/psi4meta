@@ -45,6 +45,7 @@ requirements:
     - numpy            # [linux]  # for psi4 execution w/i ctest and sphinxman
     - python x.x       # [linux]
     - sphinx 1.4*      # [linux]  # for docs
+    - docutils 0.12*   # [linux]  # for docs sphinx pinning
   run:
     - chemps2          # [osx]  # link libchemps2
     - libefp           # [osx]  # link libefp
