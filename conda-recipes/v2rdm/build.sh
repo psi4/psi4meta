@@ -34,11 +34,9 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_CXX_COMPILER=icpc \
         -DCMAKE_Fortran_COMPILER=ifort \
         -DBUILD_SHARED_LIBS=ON \
-        -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
         -DLIBC_INTERJECT=${LIBC_INTERJECT} \
-        -DCMAKE_C_FLAGS=" -qopenmp -static-libgcc -static-intel -wd10237" \
         -DCMAKE_CXX_FLAGS=" -qopenmp -Wl,--as-needed -static-libstdc++ -static-libgcc -static-intel -wd10237" \
         -DCMAKE_Fortran_FLAGS=" -qopenmp -static-libgcc -static-intel -wd10006"
 fi

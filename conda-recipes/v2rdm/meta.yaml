@@ -1,19 +1,16 @@
-{% set version = "0.1" %}
+{% set version = "0.2" %}
 
 package:
   name: v2rdm_casscf
   version: {{ version }}
 
 source:
-  git_url: git@github.com:loriab/v2rdm_casscf.git      # [linux]
-  git_url: https://github.com/loriab/v2rdm_casscf.git  # [osx]
-  git_tag: CMakeRewrite
-  #git_url: git@github.com:edeprince3/v2rdm_casscf.git      # [linux]
-  #git_url: https://github.com/edeprince3/v2rdm_casscf.git  # [osx]
-#  git_tag: v{{ version }}
+  git_url: git@github.com:edeprince3/v2rdm_casscf.git      # [linux]
+  git_url: https://github.com/edeprince3/v2rdm_casscf.git  # [osx]
+  git_tag: v{{ version }}
 
 build:
-  number: 1
+  number: 0
   binary_relocation: true
   skip: true                                           # [win]
 
@@ -28,7 +25,7 @@ requirements:
     - gcc-5-mp         # [linux]  # link libgcc_s
     - libgcc           # [osx]    # link libgfortran, libquadmath, libgcc_s
     - mkl              # [linux]  # link libiomp5
-    - psi4                        # load and support plugin
+    #- psi4                        # load and support plugin
     - python x.x                  # interpreter
 
 test:

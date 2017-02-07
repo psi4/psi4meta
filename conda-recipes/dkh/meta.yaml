@@ -18,6 +18,7 @@ requirements:
   build:
     - cmake >=3.0
     - gcc              # [osx]    # build w/conda gcc, gfortran
+    - gcc-5-mp         # [linux]  # detect Fortran/C module mangling
   run:
     - libgcc           # [osx]    # link libgfortran, libquadmath, libgcc_s
 
