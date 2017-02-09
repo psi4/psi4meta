@@ -1,34 +1,43 @@
-{% set version = "1.1.4" %}
+{% set version = "1.8" %}
 
 package:
   name: pcmsolver
   version: {{ version }}
 
 source:
-  git_url: git@github.com:PCMSolver/pcmsolver.git      # [linux]
-  git_url: https://github.com/PCMSolver/pcmsolver.git  # [osx]
-  git_tag: v{{ version }}
+  git_url: git@github.com:loriab/pcmsolver.git      # [linux]
+  git_url: https://github.com/loriab/pcmsolver.git  # [osx]
+  git_tag: config6
+  #git_url: git@github.com:PCMSolver/pcmsolver.git      # [linux]
+  #git_url: https://github.com/PCMSolver/pcmsolver.git  # [osx]
+  #git_tag: v{{ version }}
 
 build:
-  number: 0
+  number: 1
   binary_relocation: true
   skip: true                                           # [win]
 
 requirements:
   build:
+    - cmake >=3.1
     - boost >=1.53     # [osx]
-    - cmake >=2.8.10
     - gcc              # [osx]    # build w/ gcc, gfortran
+    - gcc-5-mp         # [linux]
+    - python x.x
     - zlib
   run:
     - libgcc           # [osx]    # link libgfortran, libquadmath, libstdc++, libgcc_s
     - zlib                        # link libz
+    - python x.x
 
 test:
   commands:
     # Verify library.
     - test -f $PREFIX/lib/libpcm.so     # [linux]
     - test -f $PREFIX/lib/libpcm.dylib  # [osx]
+    # Verify python module.
+    - test -f $PREFIX/lib/python2.7/site-packages/pcmsolver/pcmsolver.py  # [py27]
+    - test -f $PREFIX/lib/python3.5/site-packages/pcmsolver/pcmsolver.py  # [py35]
 
 about:
   home: http://pcmsolver.readthedocs.org/en/latest/
