@@ -54,6 +54,9 @@ if [ "$(uname)" == "Linux" ]; then
     TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
     LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/libpthread.so.0;${TLIBC}/lib64/libc.so.6;-Wl,-Bstatic;-lifport;-lifcoremt_pic;-Wl,-Bdynamic"
 
+    # force Intel compilers to find 5.2 gcc headers
+    export GXX_INCLUDE="${PREFIX}/gcc/include/c++"
+
     # configure
     ${PREFIX}/bin/cmake \
         -H${SRC_DIR} \
@@ -76,9 +79,11 @@ if [ "$(uname)" == "Linux" ]; then
         -DBUILD_STANDALONE=OFF \
         -DENABLE_FORTRAN_API=OFF \
         -DENABLE_CXX11_SUPPORT=ON \
-        -DLIBC_INTERJECT=${LIBC_INTERJECT} \
-        -DCMAKE_CXX_FLAGS="-gcc-name=${PFXC}/bin/gcc -gxx-name=${PFXC}/bin/g++" \
-        -DCMAKE_Fortran_FLAGS="-gcc-name=${PFXC}/bin/gcc -gxx-name=${PFXC}/bin/g++"
+        -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
+        -DCMAKE_CXX_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++" \
+        -DCMAKE_Fortran_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++"
+        #-DCMAKE_CXX_FLAGS="-cxxlib=${PREFIX}" \
+        #-DCMAKE_Fortran_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++"
 fi
 
 #cmake \
