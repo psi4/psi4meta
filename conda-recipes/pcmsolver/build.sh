@@ -1,6 +1,8 @@
 # conda's setting of CFLAGS interferes with PCMSolver CMake settings, so clear
 KEEPCFLAGS=$CFLAGS
+KEEPCXXFLAGS=$CXXFLAGS
 unset CFLAGS
+unset CXXFLAGS
 
 # collect the py-dep path pieces
 if [ "${CONDA_PY}" == "27" ]; then
@@ -13,7 +15,7 @@ fi
 
 if [ "$(uname)" == "Darwin" ]; then
 
-#    rm -f ${PREFIX}/lib/libsqlite3*
+    rm -f ${PREFIX}/lib/libsqlite3*
 
     # configure
     ${PREFIX}/bin/cmake \
@@ -36,10 +38,8 @@ if [ "$(uname)" == "Darwin" ]; then
         -DENABLE_LOGGER=OFF \
         -DBUILD_STANDALONE=OFF \
         -DENABLE_FORTRAN_API=OFF \
-        -DENABLE_CXX11_SUPPORT=ON
-#        -DLIBC_INTERJECT=${LIBC_INTERJECT} \
-#        -DCMAKE_CXX_FLAGS="-gcc-name=${PFXC}/bin/gcc -gxx-name=${PFXC}/bin/g++" \
-#        -DCMAKE_Fortran_FLAGS="-gcc-name=${PFXC}/bin/gcc -gxx-name=${PFXC}/bin/g++"
+        -DENABLE_CXX11_SUPPORT=ON \
+        -DCMAKE_CXX_FLAGS="-stdlib=libc++"
 fi
 
 if [ "$(uname)" == "Linux" ]; then
@@ -109,6 +109,7 @@ if [ "$(uname)" == "Linux" ]; then
         ctest -j${CPU_COUNT}
 fi
 
-export CFLAGS=KEEPFLAGS
+export CFLAGS=KEEPCFLAGS
+export CXXFLAGS=KEEPCXXFLAGS
 
 # Note: Alternative to gcc/gxx-name for CXX:  #-DCMAKE_CXX_FLAGS="-cxxlib=${PREFIX}" \

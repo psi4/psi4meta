@@ -18,15 +18,14 @@ build:
 requirements:
   build:
     - cmake >=3.1
-    - boost >=1.53     # [osx]
-    - gcc              # [osx]    # build w/ gcc, gfortran
+    - gcc              # [osx]    # build w/ gfortran
     - gcc-5-mp         # [linux]
-    - python x.x
+    - python x.x                  # for site-packages location, install selection
     - zlib
   run:
-    - libgcc           # [osx]    # link libgfortran, libquadmath, libstdc++, libgcc_s
+    - libgcc           # [osx]    # link libgfortran, libquadmath
     - zlib                        # link libz
-    - python x.x
+    - python x.x                  # interpreter
 
 test:
   commands:
