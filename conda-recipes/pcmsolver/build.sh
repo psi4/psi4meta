@@ -82,40 +82,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
         -DCMAKE_CXX_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++" \
         -DCMAKE_Fortran_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++"
-        #-DCMAKE_CXX_FLAGS="-cxxlib=${PREFIX}" \
-        #-DCMAKE_Fortran_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++"
 fi
-
-#cmake \
-# -DEXTRA_CXXFLAGS="''" \
-# -DEXTRA_CFLAGS="''" \
-# -DEXTRA_FCFLAGS="''" \
-# -DCMAKE_OSX_DEPLOYMENT_TARGET='' \
-# -DENABLE_EXTENDED_DIAGNOSTICS=False \
-# -DUSE_CCACHE="OFF" \
-# -DENABLE_CODE_COVERAGE=False \
-# -DENABLE_64BIT_INTEGERS=False \
-# -DENABLE_OPENMP=ON \
-# -DPYTHON_INTERPRETER=${PYTHON} \
-# -DBOOST_INCLUDEDIR="${PREFIX}/include" \
-# -DBOOST_LIBRARYDIR="${PREFIX}/lib" \
-# -DFORCE_CUSTOM_BOOST="OFF" \
-# -DBOOST_MINIMUM_REQUIRED="1.54.0" \
-# -DBOOST_COMPONENTS_REQUIRED="" \
-# -DSTATIC_LIBRARY_ONLY=False \
-# -DCMAKE_BUILD_TYPE=release \
-# -G "Unix Makefiles" \
-# -DENABLE_GENERIC=${GENERIC} \
-# -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
-# -DENABLE_CXX11_SUPPORT=ON \
-# -DENABLE_TIMER=OFF \
-# -DBUILD_STANDALONE=OFF \
-# -DZLIB_ROOT=${PREFIX} \
-# -DENABLE_DOCS=OFF \
-# -DENABLE_TESTS=ON \
-# -DCMAKE_INSTALL_PREFIX=${PREFIX} \
-# -DCMAKE_INSTALL_LIBDIR=lib \
-# ${SRC_DIR}
 
 # build
 cd build
@@ -144,3 +111,4 @@ fi
 
 export CFLAGS=KEEPFLAGS
 
+# Note: Alternative to gcc/gxx-name for CXX:  #-DCMAKE_CXX_FLAGS="-cxxlib=${PREFIX}" \
