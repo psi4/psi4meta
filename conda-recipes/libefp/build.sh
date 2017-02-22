@@ -18,7 +18,9 @@ fi
 if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers and mkl
+    set +x
     source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+    set -x
 
     # force static link to Intel mkl, except for openmp
     MKLROOT=/theoryfs2/common/software/intel2016/compilers_and_libraries_2016.2.181/linux/mkl/lib/intel64
@@ -58,3 +60,4 @@ make install
 # no independent library tests
 
 # Note: add -DCMAKE_C_FLAGS="-liomp5" for static link w/o mkl
+# Note: gcc4.8.5 just fine; using 5.2 for consistency.

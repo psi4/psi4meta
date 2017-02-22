@@ -13,26 +13,33 @@ source:
   #git_tag: v{{ version }}
 
 build:
-  number: 0
+  number: 1
   binary_relocation: true
   skip: true                                           # [win]
 
 requirements:
   build:
     - cmake >=3.0
+    - gcc-5-mp         # [linux]
 #    - gcc              # [osx]    # build w/conda gcc
-#  run:
+  run:
+    - mkl              # [linux]  # link libiomp5
+    - gcc-5-mp         # [linux]  # link libgcc_s
 #    - libgcc           # [osx]    # link libgcc_s
 
 test:
   commands:
     # Verify libraries and executable.
-    - test -f $PREFIX/lib/libefp.so       # [linux]
-    - test -f $PREFIX/lib/libefp.dylib    # [osx]
+    - test -f $PREFIX/lib/libefp.so      # [linux]
+    - test -f $PREFIX/lib/libefp.dylib   # [osx]
+    # Inspect linkage
+    - ldd -r -u $PREFIX/lib/libefp.so && return 0   # [linux]
+    - ldd -v $PREFIX/lib/libefp.so       # [linux]
+    - otool -L $PREFIX/lib/libefp.dylib  # [osx]
+    - conda-inspect linkages libefp --show-files
 
 about:
   home: https://github.com/ilyak/libefp
   license: BSD 2-clause
   summary: "parallel implementation of the Effective Fragment Potential (EFP) method"
   readme: README.md
-
