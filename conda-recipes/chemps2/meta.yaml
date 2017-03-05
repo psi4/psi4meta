@@ -12,7 +12,7 @@ source:
 #  git_tag: v{{ version }}
 
 build:
-  number: 2
+  number: 3
   binary_relocation: true
   skip: true                                           # [win]
 
@@ -39,9 +39,14 @@ requirements:
 test:
   commands:
     # Verify libraries and executable.
-    - test -f $PREFIX/lib/libchemps2.so     # [linux]
-    - test -f $PREFIX/lib/libchemps2.dylib  # [osx]
+    - test -f $PREFIX/lib/libchemps2.so                # [linux]
+    - test -f $PREFIX/lib/libchemps2.dylib             # [osx]
     - test -f $PREFIX/bin/chemps2
+    # Inspect linkage
+    - ldd -r -u $PREFIX/lib/libchemps2.so && return 0  # [linux]
+    - ldd -v $PREFIX/lib/libchemps2.so                 # [linux]
+    - otool -L $PREFIX/lib/libchemps2.dylib            # [osx]
+    - conda-inspect linkages chemps2 --show-files
 
 about:
   home: http://sebwouters.github.io/CheMPS2

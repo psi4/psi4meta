@@ -35,17 +35,21 @@ requirements:
     - libint           # [osx]
     - numpy            # [osx]  # for psi4 execution w/i ctest and sphinxman
     - python x.x       # [osx]
-    - chemps2          # [linux]
-    - cmake >3.1       # [linux]
-    - dftd3            # [linux]  # for testing
-    - libefp           # [linux]
+    # non-qc
+    - cmake >3.3       # [linux]
+    - docutils 0.12*   # [linux]  # for docs sphinx pinning
     - gcc-5-mp         # [linux]
-    - gdma             # [linux]
-    - libint           # [linux]
     - numpy            # [linux]  # for psi4 execution w/i ctest and sphinxman
     - python x.x       # [linux]
     - sphinx 1.4*      # [linux]  # for docs
-    - docutils 0.12*   # [linux]  # for docs sphinx pinning
+    # qc
+    - chemps2          # [linux]
+    - dftd3            # [linux]  # for testing
+    - libefp           # [linux]
+    - erd              # [linux]
+    - gdma             # [linux]
+    - libint           # [linux]
+    - pcmsolver        # [linux]
   run:
     - chemps2          # [osx]  # link libchemps2
     - libefp           # [osx]  # link libefp
@@ -56,14 +60,20 @@ requirements:
 #    - mkl              # [osx]  # link libiomp5
     - numpy            # [osx]
     - python x.x       # [osx]  # link libpython
-    - chemps2          # [linux]  # link libchemps2
-    - libefp           # [linux]  # link libefp
+    # non-qc
     - gcc-5-mp         # [linux]  # link libgcc_s
-    - gdma             # [linux]  # link libgdma
-    - libint           # [linux]  # link libderiv, libint
     - mkl              # [linux]  # link libiomp5
     - numpy            # [linux]
     - python x.x       # [linux]  # link libpython
+    # qc
+    - chemps2          # [linux]  # link libchemps2
+    - libefp           # [linux]  # link libefp
+    - erd              # [linux]  # link liberd
+    - gdma             # [linux]  # link libgdma
+    - libint           # [linux]  # link libderiv, libint
+    - pcmsolver        # [linux]  # link libpcm
+    #- mpc 1.0.1        # [linux]  # "
+    #- mpfr 3.1.2       # [linux]  # "
 
 #    #- ambit 0.2       # [osx]
 #    #- boost >=1.57    # [osx]
@@ -100,10 +110,15 @@ test:
     # Verify executable.
     - test -f $PREFIX/bin/psi4
     # Verify python module.
-    - test -f $PREFIX/lib/python2.7/site-packages/psi4/core.so  # [py27]
-    - test -f $PREFIX/lib/python3.5/site-packages/psi4/core.so  # [py35]
+    - test -f $SP_DIR/psi4/core.so
     # Verify execution.
     - $PREFIX/bin/psi4 --version
+    # Inspect linkage
+    - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
+    - ldd -v $SP_DIR/psi4/core.so     # [linux]
+    - otool -L $SP_DIR/psi4/core.so   # [osx]
+    - conda-inspect linkages --show-files --groupby=dependency chemps2 libefp erd gdma libint pcmsolver psi4
+    # psi4.test()
 
 about:
   home: http://www.psicode.org
@@ -117,3 +132,5 @@ about:
 #source/path: ../../../psi4mangle/psi4
 #build/number: 1
 #build/string: abc
+
+#conda-inspect linkages  pcmsolver chemps2 --show-files --groupby dependency

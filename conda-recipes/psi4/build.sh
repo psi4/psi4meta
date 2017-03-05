@@ -62,9 +62,9 @@ fi
 if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers and mkl
-    set -x
-    source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
     set +x
+    source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+    set -x
 
     # link against older libc for generic linux
     TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
@@ -86,7 +86,10 @@ if [ "$(uname)" == "Linux" ]; then
         -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.so" \
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
         -DENABLE_CheMPS2=ON \
+        -DENABLE_libefp=ON \
+        -DENABLE_erd=ON \
         -DENABLE_gdma=ON \
+        -DENABLE_PCMSolver=ON \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF \

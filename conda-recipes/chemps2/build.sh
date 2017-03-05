@@ -31,7 +31,9 @@ fi
 if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers and mkl
+    set +x
     source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+    set -x
 
     # link against older libc for generic linux
     #   PREFIX needs to contain a libgcc_s.so of libc <2.14
