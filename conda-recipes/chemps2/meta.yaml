@@ -6,6 +6,7 @@ package:
 
 source:
   git_url: https://github.com/loriab/CheMPS2.git       # [linux]
+  git_url: https://github.com/loriab/CheMPS2.git   # [osx]
   git_tag: config6
 #  git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
 #  git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]

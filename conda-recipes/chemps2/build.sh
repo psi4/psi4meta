@@ -22,7 +22,8 @@ if [ "$(uname)" == "Darwin" ]; then
         -DBUILD_SPHINX=OFF \
         -DENABLE_TESTS=OFF \
         -DHDF5_LIBRARIES="${HDF5_INTERJECT}" \
-        -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
+        -DHDF5_INCLUDE_DIRS="${PREFIX}/include" \
+        -DHDF5_VERSION="1.8.17"  # NOTICE PIN!
 
         #-DCMAKE_C_COMPILER="${PREFIX}/bin/gcc" \
         #-DCMAKE_CXX_COMPILER="${PREFIX}/bin/g++" \

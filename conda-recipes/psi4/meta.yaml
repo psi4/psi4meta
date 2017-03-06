@@ -25,16 +25,19 @@ build:
 
 requirements:
   build:
-    - chemps2          # [osx]
-    - cmake >3.1       # [osx]
-    - dftd3            # [osx]  # for testing
-    - libefp           # [osx]
+    # non-qc
+    - cmake >3.3       # [osx]
     - gcc             # [osx]  # after working for gfortran
-#    - gcc-5 5.3.0       # [osx]
-    - gdma             # [osx]
-    - libint           # [osx]
     - numpy            # [osx]  # for psi4 execution w/i ctest and sphinxman
     - python x.x       # [osx]
+    # qc
+    - chemps2          # [osx]
+    - dftd3            # [osx]  # for testing
+    - libefp           # [osx]
+    - erd              # [osx]
+    - gdma             # [osx]
+    - libint           # [osx]
+    - pcmsolver        # [osx]
     # non-qc
     - cmake >3.3       # [linux]
     - docutils 0.12*   # [linux]  # for docs sphinx pinning
@@ -51,20 +54,22 @@ requirements:
     - libint           # [linux]
     - pcmsolver        # [linux]
   run:
+    # non-qc
+    - libgcc           # [osx]  # after working for libgfortran
+    - numpy            # [osx]
+    - python x.x       # [osx]  # interpreter python
+    # qc
     - chemps2          # [osx]  # link libchemps2
     - libefp           # [osx]  # link libefp
-#    - gcc-5            # [osx]  # link libgcc_s
-    - libgcc           # [osx]  # after working for libgfortran
+    - erd              # [osx]  # link liberd
     - gdma             # [osx]  # link libgdma
     - libint           # [osx]  # link libderiv, libint
-#    - mkl              # [osx]  # link libiomp5
-    - numpy            # [osx]
-    - python x.x       # [osx]  # link libpython
+    - pcmsolver        # [osx]  # link libpcm
     # non-qc
     - gcc-5-mp         # [linux]  # link libgcc_s
     - mkl              # [linux]  # link libiomp5
     - numpy            # [linux]
-    - python x.x       # [linux]  # link libpython
+    - python x.x       # [linux]  # interpreter python
     # qc
     - chemps2          # [linux]  # link libchemps2
     - libefp           # [linux]  # link libefp
