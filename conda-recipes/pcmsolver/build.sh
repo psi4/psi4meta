@@ -11,6 +11,9 @@ if [ "${CONDA_PY}" == "27" ]; then
 elif [ "${CONDA_PY}" == "35" ]; then
     PYMOD_INSTALL_LIBDIR="/python3.5/site-packages"
     PY_ABBR="python3.5m"
+elif [ "${CONDA_PY}" == "36" ]; then
+    PYMOD_INSTALL_LIBDIR="/python3.6/site-packages"
+    PY_ABBR="python3.6m"
 fi
 
 if [ "$(uname)" == "Darwin" ]; then

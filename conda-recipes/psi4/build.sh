@@ -5,6 +5,9 @@ if [ "${CONDA_PY}" == "27" ]; then
 elif [ "${CONDA_PY}" == "35" ]; then
     PYMOD_INSTALL_LIBDIR="/python3.5/site-packages"
     PY_ABBR="python3.5m"
+elif [ "${CONDA_PY}" == "36" ]; then
+    PYMOD_INSTALL_LIBDIR="/python3.6/site-packages"
+    PY_ABBR="python3.6m"
 fi
 
 if [ "$(uname)" == "Darwin" ]; then
@@ -47,19 +50,14 @@ if [ "$(uname)" == "Darwin" ]; then
     # install
     make install
 
-    # test
-    #install_name_tool -change libpython2.7.dylib @rpath/libpython2.7.dylib ${PREFIX}/bin/psi4
-    #install_name_tool -change libpython2.7.dylib @rpath/libpython2.7.dylib ${PREFIX}/lib/python2.7/site-packages/psi4.so
+    # test (full suite too stressful for macpsinet)
+    ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} -L quick
+
+    # notes
     #sed -i.bak "s|/opt/anaconda1anaconda2anaconda3|${PREFIX}|g" ${PREFIX}/share/psi4/python/pcm_placeholder.py
     #DYLD_LIBRARY_PATH=${PREFIX}/lib:$DYLD_LIBRARY_PATH \
     #       PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
     #             PATH=${PREFIX}/bin:$PATH \
-    ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} -L quick
-      # TODO drop quick when all passing again
-        #ctest -L quick
-
-    # test debug line
-    #DYLD_LIBRARY_PATH=/Users/loriab/linux/psi4-build/minicondadrive/envs/_build_placehold_placehold_pl/lib PATH=/Users/loriab/linux/psi4-build/minicondadrive/envs/_build_placehold_placehold_pl/bin:$PATH PYTHONPATH=/Users/loriab/linux/psi4-build/minicondadrive/envs/_build_placehold_placehold_pl/lib/python2.7/site-packages/:$PYTHONPATH
 fi
 
 if [ "$(uname)" == "Linux" ]; then
