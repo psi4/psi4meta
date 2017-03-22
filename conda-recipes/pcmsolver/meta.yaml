@@ -28,10 +28,8 @@ requirements:
 
 test:
   commands:
-    # Verify library.
-    - test -f $PREFIX/lib/libpcm.so      # [linux]
-    - test -f $PREFIX/lib/libpcm.dylib   # [osx]
-    # Verify python module.
+    # Verify library and python module
+    - test -f $PREFIX/lib/libpcm$SHLIB_EXT
     - test -f $SP_DIR/pcmsolver/pcmsolver.py
     # Inspect linkage
     - ldd -v $PREFIX/lib/libpcm.so       # [linux]
