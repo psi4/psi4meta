@@ -1,5 +1,5 @@
 
-{% set data = load_setup_py_data(setup_file='_conda_vers.py') %}
+{% set data = load_setup_py_data(setup_file='conda/_conda_vers.py') %}
 
 package:
   name: psi4
@@ -14,14 +14,6 @@ build:
   skip: true                                           # [win]
   number: 0
   binary_relocation: true
-#  binary_has_prefix_files:
-#    - bin/psi4
-#    - lib/python2.7/site-packages/psi4.so
-#  has_prefix_files:
-#    - bin/psi4-config
-#    - share/psi4/scripts/setenv.py
-#    - share/psi4/plugin/Makefile.template
-#    - share/psi4/python/pcm_placeholder.py
 
 requirements:
   build:
@@ -40,11 +32,9 @@ requirements:
     - pcmsolver        # [osx]
     # non-qc
     - cmake >3.3       # [linux]
-    - docutils 0.12*   # [linux]  # for docs sphinx pinning
     - gcc-5-mp         # [linux]
     - numpy            # [linux]  # for psi4 execution w/i ctest and sphinxman
     - python x.x       # [linux]
-    - sphinx 1.4*      # [linux]  # for docs
     # qc
     - chemps2          # [linux]
     - dftd3            # [linux]  # for testing
@@ -53,6 +43,13 @@ requirements:
     - gdma             # [linux]
     - libint           # [linux]
     - pcmsolver        # [linux]
+    # docs
+    - docutils 0.12*   # [linux]  # for docs (verno avoids sphinx bug)
+    - ipykernel        # [linux]  # for psiapi docs
+    - jupyter_client   # [linux]  # for psiapi docs
+    - nbsphinx         # [linux]  # for psiapi docs
+    - pandoc 1.19*     # [linux]  # for psiapi docs (verno forces conda-forge that gets headers right)
+    - sphinx 1.5*      # [linux]  # for docs
   run:
     # non-qc
     - libgcc           # [osx]  # after working for libgfortran
@@ -77,53 +74,31 @@ requirements:
     - gdma             # [linux]  # link libgdma
     - libint           # [linux]  # link libderiv, libint
     - pcmsolver        # [linux]  # link libpcm
+
     #- mpc 1.0.1        # [linux]  # "
     #- mpfr 3.1.2       # [linux]  # "
-
-#    #- ambit 0.2       # [osx]
-#    #- boost >=1.57    # [osx]
-#    - cmake >3.1
-#    - dftd3                       # for testing
-#    - gcc              # [osx]    # build w/ gcc, gfortran
-##    - libgcc           # [linux]
-#    - gcc-5
-#    - numpy                       # for psi4 execution w/i ctest and sphinxman
-##    - pcmsolver >=1.1.2
-##    - pychemps2 >=1.7.1
-#    - python 2.7*
-#    - sphinx 1.4*      # [linux]  # for docs
-##    - zlib
-#    - libint
-#    - gdma
-#    - libefp
-#  run:
-#    #- ambit 0.2       # [osx]    # link libambit
-#    # hdf5                        # link libhdf5, libhdf5_hl (implicit w/ libchemp2)
-#    - libgcc           # [osx]    # link libgfortran, libquadmath, libstdc++, libgcc_s, libgomp
-##    - libgcc           # [linux]  # link libgcc_s
-#    - gcc-5
-##    - ncurses                     # for psi4 interactive
-#    - mkl                         # link libiomp5 (psi4.so)
-#    - numpy
 ##    - pcmsolver >=1.1.2           # link libpcm
 ##    - pychemps2 >=1.7.1           # link libchemps2
-#    - python 2.7*                 # link libpython2.7
-##    - zlib                        # link libz
 
 test:
+  requires:
+    - pytest
+    - dftd3
+    - gcp
+    #- v2rdm_casscf
   commands:
-    # Verify executable.
+    # Verify existence and execution
     - test -f $PREFIX/bin/psi4
-    # Verify python module.
     - test -f $SP_DIR/psi4/core.so
-    # Verify execution.
     - $PREFIX/bin/psi4 --version
     # Inspect linkage
     - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
     - ldd -v $SP_DIR/psi4/core.so     # [linux]
     - otool -L $SP_DIR/psi4/core.so   # [osx]
     - conda-inspect linkages --show-files --groupby=dependency chemps2 libefp erd gdma libint pcmsolver psi4
-    # psi4.test()
+    # Actually test
+    - conda list
+    - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
 
 about:
   home: http://www.psicode.org
@@ -134,8 +109,6 @@ about:
 
 # to conda build package from local source rather than github, substitute like below
 #package/version: 0.1.6
-#source/path: ../../../psi4mangle/psi4
+#source/path: ../../../hrw-conda
 #build/number: 1
 #build/string: abc
-
-#conda-inspect linkages  pcmsolver chemps2 --show-files --groupby dependency

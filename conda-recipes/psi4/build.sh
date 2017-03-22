@@ -5,6 +5,9 @@ if [ "${CONDA_PY}" == "27" ]; then
 elif [ "${CONDA_PY}" == "35" ]; then
     PYMOD_INSTALL_LIBDIR="/python3.5/site-packages"
     PY_ABBR="python3.5m"
+elif [ "${CONDA_PY}" == "36" ]; then
+    PYMOD_INSTALL_LIBDIR="/python3.6/site-packages"
+    PY_ABBR="python3.6m"
 fi
 
 if [ "$(uname)" == "Darwin" ]; then
@@ -102,25 +105,45 @@ if [ "$(uname)" == "Linux" ]; then
         -DSITE=gatech-conda \
         -DSPHINX_ROOT=${PREFIX}
 
-        #-D LAPACK_INTERJECT=${LAPACK_INTERJECT}
-                    #-DLAPACKBLAS_LIBRARIES:LIST=${LAPACKBLAS_LIBRARIES}
-                    #-DLAPACKBLAS_INCLUDE_DIRS:LIST=${LAPACKBLAS_INCLUDE_DIRS}
-
     # build
     cd build
     make -j${CPU_COUNT}
-    make ghfeed
-    make sphinxman -j${CPU_COUNT}
 
     # install
     make install
 
     # test
-    #sed -i "s|/opt/anaconda1anaconda2anaconda3|${PREFIX}|g" ${PREFIX}/share/psi4/python/pcm_placeholder.py
-    LD_LIBRARY_PATH=${PREFIX}/lib:$LD_LIBRARY_PATH \
-         PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib${PYMOD_INSTALL_LIBDIR}:$PYTHONPATH \
-               PATH=${PREFIX}/bin:$PATH \
-      ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} -L quick
-      # TODO drop quick when all passing again
+    ctest -M Nightly -T Test -T Submit -j${CPU_COUNT}
 fi
 
+# docs build (1/6 nightly builds)
+if [[ "$(uname)" == "Linux" ]] && [[ "${CONDA_PY}" == "35" ]] ; then
+    make ghfeed
+    make doxyman
+    make sphinxman -j${CPU_COUNT}
+
+    if [[ -d "doc/sphinxman/html" ]] && [[ -d "doc/sphinxman/feed" ]] && [[ -d "doc/doxygen/html" ]]; then
+        # Upon sucessful docs build, tar 'em up and mv to dir to await beaming up to psicode.org
+
+        cd doc/sphinxman
+        mv html master
+        tar -zcf cb-sphinxman.tar.gz master/
+        mv -f cb-sphinxman.tar.gz /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psicode_dropbox/
+
+        tar -zcf cb-feed.tar.gz feed/
+        mv -f cb-feed.tar.gz /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psicode_dropbox/
+
+        cd ../doxygen
+        mv html doxymaster
+        tar -zcf cb-doxyman.tar.gz doxymaster/
+        mv -f cb-doxyman.tar.gz /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psicode_dropbox/
+
+        cd ../..
+    fi
+fi
+
+    # notes
+    #sed -i "s|/opt/anaconda1anaconda2anaconda3|${PREFIX}|g" ${PREFIX}/share/psi4/python/pcm_placeholder.py
+    #LD_LIBRARY_PATH=${PREFIX}/lib:$LD_LIBRARY_PATH \
+    #     PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib${PYMOD_INSTALL_LIBDIR}:$PYTHONPATH \
+    #           PATH=${PREFIX}/bin:$PATH \
