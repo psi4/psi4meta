@@ -1,0 +1,37 @@
+{% set version = "0.7" %}
+
+package:
+  name: simint
+  #version: {{ version }}
+  version: "0.6"
+
+source:
+  url: http://www.bennyp.org/research/simint/download/simint-v{{ version }}.tar.bz2
+
+build:
+  number: 0
+  binary_relocation: true
+  skip: true                                           # [win]
+
+requirements:
+  build:
+    - cmake >=3.0
+    #- gcc              # [osx]    # build w/conda gfortran
+    - gcc-5-mp         # [linux]  ## detect Fortran/C module mangling
+  #run:
+  #  - libgcc           # [osx]    # link libgfortran, libquadmath, libgcc_s
+
+test:
+  commands:
+    # Verify libraries
+    - test -f $PREFIX/lib/libsimint$SHLIB_EXT
+    # Inspect linkage
+    - ldd -v $PREFIX/lib/libsimint.so       # [linux]
+    - otool -L $PREFIX/lib/libsimint.dylib  # [osx]
+
+about:
+  home: http://www.bennyp.org/research/simint/
+  license: BSD 3-clause
+  summary: "Vectorized Obara-Saika electron repulsion integrals"
+  #readme: README.md
+
