@@ -5,12 +5,12 @@ psinet nightly
 
 Assume everything below this section marker is out of date.
 
-* [psinet-nightly/handle_sphinxman.sh](psinet-nightly/handle_sphinxman.sh)
+* [psinet-nightly/handle_sphinxman.sh](handle_sphinxman.sh)
 
   * The Linux+Py35 conda build deposits sphinxman, feed, and doxygen tarballs into folder `psicode_dropbox/` on psinet.
   * The above script checks for those tarballs every 7 min, then sends them to psicode.org (sshkey auth) and upon success deletes them.
   * psinet crontab: `*/7 * * * * bash /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psinet-nightly/handle_sphinxman.sh >/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psinet-nightly/psicode-dropbox.log 2>&1`
-  * On psicode.org, [psicode-feedsfrom-psinet/handle_sphinxman.sh](psicode-feedsfrom-psinet/handle_sphinxman.sh) checks for tarballs every 15 min and unpacks them into position.
+  * On psicode.org, [psicode-feedsfrom-psinet/handle_sphinxman.sh](../psicode-feedsfrom-psinet/handle_sphinxman.sh) checks for tarballs every 15 min and unpacks them into position.
 
 -----
 
