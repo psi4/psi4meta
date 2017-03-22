@@ -1,17 +1,21 @@
+MAX_AM_ERI=5
 
-#if [ "$(uname)" == "Darwin" ]; then
-#
-#    # configure
-#    ${PREFIX}/bin/cmake \
-#        -H${SRC_DIR} \
-#        -Bbuild \
-#        -DCMAKE_INSTALL_PREFIX=${PREFIX} \
-#        -DCMAKE_BUILD_TYPE=Release \
-#        -DCMAKE_C_COMPILER="${PREFIX}/bin/gcc" \
-#        -DCMAKE_Fortran_COMPILER="${PREFIX}/bin/gfortran" \
-#        -DCMAKE_INSTALL_LIBDIR=lib \
-#        -DBUILD_SHARED_LIBS=ON
-#fi
+if [ "$(uname)" == "Darwin" ]; then
+
+    # configure
+    ${PREFIX}/bin/cmake \
+        -H${SRC_DIR} \
+        -Bbuild \
+        -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_C_COMPILER=clang \
+        -DSIMINT_MAXAM=${MAX_AM_ERI} \
+        -DCMAKE_INSTALL_LIBDIR=lib \
+        -DBUILD_SHARED_LIBS=ON \
+        -DSIMINT_VECTOR=sse \
+        -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+        -DENABLE_TESTS=OFF
+fi
 
 if [ "$(uname)" == "Linux" ]; then
 
@@ -31,7 +35,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=icc \
-        -DSIMINT_MAXAM=5 \
+        -DSIMINT_MAXAM=${MAX_AM_ERI} \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DBUILD_SHARED_LIBS=ON \
         -DSIMINT_VECTOR=sse \
@@ -53,5 +57,4 @@ make -j${CPU_COUNT}
 make install
 
 # test
-# no independent tests
-
+# turned off to avoid CXX
