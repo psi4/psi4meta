@@ -1,16 +1,29 @@
 psinet nightly
 --------------
 
-21 March 2017
+[LAB 23 March 2017]
 
-Assume everything below this section marker is out of date.
+* [psinet-nightly/kitandkapoodle.py](kitandkapoodle.py)
+
+  * Uses a dedicated py36 miniconda installation for builds.
+  * Always builds in scratch ``CONDA_BLD_PATH=/scratch/cdsgroup/conda-builds/``
+  * Has setup to build most of the ecosystem packages, but by default builds the 3 psi4 ones, incl. docs build with py35.
+  * Reports back package build status:
+    * `NoBuild` --- conda-build failed in build or test
+    * `Success` --- conda package built and uploaded to anaconda.org
+    * `NoUpload` --- conda package built but upload rejected b/c already posted
+    * `NoFile` --- conda package built but package file not found
+
+[LAB 21 March 2017]
 
 * [psinet-nightly/handle_sphinxman.sh](handle_sphinxman.sh)
 
   * The Linux+Py35 conda build deposits sphinxman, feed, and doxygen tarballs into folder `psicode_dropbox/` on psinet.
   * The above script checks for those tarballs every 7 min, then sends them to psicode.org (sshkey auth) and upon success deletes them.
-  * psinet crontab: `*/7 * * * * bash /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psinet-nightly/handle_sphinxman.sh >/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psinet-nightly/psicode-dropbox.log 2>&1`
+  * psinet crontab: `11,26,41,56 * * * * bash /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psinet-nightly/handle_sphinxman.sh >>/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psinet-nightly/psicode-dropbox.log 2>&1`
   * On psicode.org, [psicode-feedsfrom-psinet/handle_sphinxman.sh](../psicode-feedsfrom-psinet/handle_sphinxman.sh) checks for tarballs every 15 min and unpacks them into position.
+
+Assume everything below this section marker is out of date (i.e., 1.0-era).
 
 -----
 
