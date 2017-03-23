@@ -24,9 +24,11 @@ requirements:
 
 test:
   commands:
-    # Verify libraries.
-    - test -f $PREFIX/lib/libgdma.so      # [linux]
-    - test -f $PREFIX/lib/libgdma.dylib   # [osx]
+    # Verify library
+    - test -f $PREFIX/lib/libgdma$SHLIB_EXT
+    # Inspect linkage
+    - ldd -v $PREFIX/lib/libgdma.so       # [linux]
+    - otool -L $PREFIX/lib/libgdma.dylib  # [osx]
 
 about:
   home: https://github.com/psi4/gdma

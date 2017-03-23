@@ -29,7 +29,7 @@ requirements:
 
 test:
   commands:
-    # Verify python module.
+    # Verify python module
     - test -f ${PREFIX}/lib/python2.7/site-packages/PyCheMPS2.so  # [py27]
     - test -f ${PREFIX}/lib/python3.5/site-packages/PyCheMPS2.cpython-35m-x86_64-linux-gnu.so  # [py35 and linux]
     - test -f ${PREFIX}/lib/python3.5/site-packages/PyCheMPS2.cpython-35m-darwin.so  # [py35 and osx]

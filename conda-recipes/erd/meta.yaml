@@ -24,9 +24,11 @@ requirements:
 
 test:
   commands:
-    # Verify libraries and executable.
-    - test -f $PREFIX/lib/liberd.so       # [linux]
-    - test -f $PREFIX/lib/liberd.dylib    # [osx]
+    # Verify library
+    - test -f $PREFIX/lib/liberd$SHLIB_EXT
+    # Inspect linkage
+    - ldd -v $PREFIX/lib/liberd.so       # [linux]
+    - otool -L $PREFIX/lib/liberd.dylib  # [osx]
 
 about:
   home: https://github.com/psi4/erd

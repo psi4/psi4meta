@@ -19,12 +19,12 @@ requirements:
   build:
     # non-qc
     - cmake >3.3       # [osx]
-    - gcc             # [osx]  # after working for gfortran
-    - numpy            # [osx]  # for psi4 execution w/i ctest and sphinxman
+    - gcc              # [osx]    # after working for gfortran
+    - numpy            # [osx]    # for psi4 execution w/i ctest and sphinxman
     - python x.x       # [osx]
     # qc
     - chemps2          # [osx]
-    - dftd3            # [osx]  # for testing
+    - dftd3            # [osx]    # for testing
     - libefp           # [osx]
     - erd              # [osx]
     - gdma             # [osx]
@@ -52,16 +52,16 @@ requirements:
     - sphinx 1.5*      # [linux]  # for docs
   run:
     # non-qc
-    - libgcc           # [osx]  # after working for libgfortran
+    - libgcc           # [osx]    # after working for libgfortran
     - numpy            # [osx]
-    - python x.x       # [osx]  # interpreter python
+    - python x.x       # [osx]    # interpreter python
     # qc
-    - chemps2          # [osx]  # link libchemps2
-    - libefp           # [osx]  # link libefp
-    - erd              # [osx]  # link liberd
-    - gdma             # [osx]  # link libgdma
-    - libint           # [osx]  # link libderiv, libint
-    - pcmsolver        # [osx]  # link libpcm
+    - chemps2          # [osx]    # link libchemps2
+    - libefp           # [osx]    # link libefp
+    - erd              # [osx]    # link liberd
+    - gdma             # [osx]    # link libgdma
+    - libint           # [osx]    # link libderiv, libint
+    - pcmsolver        # [osx]    # link libpcm
     # non-qc
     - gcc-5-mp         # [linux]  # link libgcc_s
     - mkl              # [linux]  # link libiomp5

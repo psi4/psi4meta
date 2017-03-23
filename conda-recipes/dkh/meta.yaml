@@ -24,9 +24,11 @@ requirements:
 
 test:
   commands:
-    # Verify libraries.
-    - test -f $PREFIX/lib/libdkh.so       # [linux]
-    - test -f $PREFIX/lib/libdkh.dylib    # [osx]
+    # Verify library
+    - test -f $PREFIX/lib/libdkh$SHLIB_EXT
+    # Inspect linkage
+    - ldd -v $PREFIX/lib/libdkh.so       # [linux]
+    - otool -L $PREFIX/lib/libdkh.dylib  # [osx]
 
 about:
   home: https://github.com/psi4/dkh

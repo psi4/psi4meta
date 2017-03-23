@@ -29,13 +29,12 @@ requirements:
 
 test:
   commands:
-    # Verify libraries and executable.
-    - test -f $PREFIX/lib/libefp.so      # [linux]
-    - test -f $PREFIX/lib/libefp.dylib   # [osx]
+    # Verify library
+    - test -f $PREFIX/lib/libefp$SHLIB_EXT
     # Inspect linkage
-    - ldd -r -u $PREFIX/lib/libefp.so && return 0   # [linux]
-    - ldd -v $PREFIX/lib/libefp.so       # [linux]
-    - otool -L $PREFIX/lib/libefp.dylib  # [osx]
+    - ldd -r -u $PREFIX/lib/libefp.so && return 0  # [linux]
+    - ldd -v $PREFIX/lib/libefp.so                 # [linux]
+    - otool -L $PREFIX/lib/libefp.dylib            # [osx]
     - conda-inspect linkages libefp --show-files
 
 about:

@@ -40,8 +40,7 @@ requirements:
 test:
   commands:
     # Verify libraries and executable.
-    - test -f $PREFIX/lib/libchemps2.so                # [linux]
-    - test -f $PREFIX/lib/libchemps2.dylib             # [osx]
+    - test -f $PREFIX/lib/libchemps2$SHLIB_EXT
     - test -f $PREFIX/bin/chemps2
     # Inspect linkage
     - ldd -r -u $PREFIX/lib/libchemps2.so && return 0  # [linux]
