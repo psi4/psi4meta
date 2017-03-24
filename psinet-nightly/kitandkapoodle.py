@@ -50,13 +50,16 @@ def _run_command(command, env=None, cwd=None):
     return rc
 
 
-recipe_box = """/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/conda-recipes"""
-lenv = {
-    #'PATH': """/theoryfs2/ds/cdsgroup/buildingminiconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin""",
-    'PATH': """/theoryfs2/ds/cdsgroup/bldmconda3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin""",
-    'CONDA_BLD_PATH': """/scratch/cdsgroup/conda-builds""",  # fixed in conda 4.2.13
-    'CPU_COUNT': '4',
-    }
+if sys.platform in ["linux", "linux2"]:
+    recipe_box = """/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/conda-recipes"""
+    lenv = {'CPU_COUNT': '4',
+            'CONDA_BLD_PATH': """/scratch/cdsgroup/conda-builds""",
+            'PATH': """/theoryfs2/ds/cdsgroup/bldmconda3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"""}
+elif sys.platform == "darwin":
+    recipe_box = """/Users/github/Git/psi4meta/conda-recipes"""
+    lenv = {'CPU_COUNT': '2',
+            'PATH': """/Users/github/bldmconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"""}
+
 
 
 def build_it(recipe, python=None, keep=False, verbose=True,
