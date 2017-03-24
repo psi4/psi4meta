@@ -2,6 +2,10 @@
 
 #/usr/bin/env python3
 
+# [LAB 24 Mar 2017]
+# Confirmed a nightly build set
+# Outputs stdout in real time
+
 # [LAB 22 Mar 2017]
 # Translated accumulated notes and aspects of kitandkaboodle to python
 # Started new bld miniconda with shorter prefix and py36 (<-- py27)
@@ -38,23 +42,23 @@ def _run_command(command, env=None, cwd=None):
         kw['env'] = env
     if cwd is not None:
         kw['cwd'] = cwd
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, **kw)
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, **kw)
 
     while True:
         output = process.stdout.readline()
         if output == b'' and process.poll() is not None:
             break
         if output:
-            print(output.decode('utf-8').strip())
+            sys.stdout.write(output.decode('utf-8'))
+            sys.stdout.flush()
     rc = process.poll()
     return rc
 
 
 recipe_box = """/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/conda-recipes"""
 lenv = {
-    #'PATH': """/theoryfs2/ds/cdsgroup/buildingminiconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin""",
     'PATH': """/theoryfs2/ds/cdsgroup/bldmconda3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin""",
-    'CONDA_BLD_PATH': """/scratch/cdsgroup/conda-builds""",  # fixed in conda 4.2.13
+    'CONDA_BLD_PATH': """/scratch/cdsgroup/conda-builds""",
     'CPU_COUNT': '4',
     }
 
@@ -70,7 +74,7 @@ def build_it(recipe, python=None, keep=False, verbose=True,
     command.extend(pyxx)
     build_product = subprocess.Popen(command, env=lenv, cwd=recipe_box,
                                      stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-    print("""\n  <<<  {} commencing: {}  >>>""".format(recipe, build_product))
+    print("""\n  <<<  {} anticipating: {}  >>>""".format(recipe, build_product))
 
     # Build conda package
     command = ['conda', 'build', recipe]
@@ -97,9 +101,9 @@ def build_it(recipe, python=None, keep=False, verbose=True,
 
 
 candidates = [
-{'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4/label/test', 'psi4', 'defaults']},
+{'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4/label/test', 'psi4']},
 {'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4/label/test', 'psi4', 'defaults', 'conda-forge']},
-{'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4/label/test', 'psi4', 'defaults']},
+{'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4/label/test', 'psi4']},
 ###{'recipe': 'chemps2', 'build_channels': ['psi4']},
 ###{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4']},
 ###{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4']},
@@ -112,6 +116,10 @@ candidates = [
 ###{'recipe': 'pcmsolver', 'python': '2.7', 'build_channels': 'psi4'},
 ###{'recipe': 'pcmsolver', 'python': '3.5', 'build_channels': 'psi4'},
 ###{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4'},
+###{'recipe': 'dftd3'},
+###{'recipe': 'gcp'},
+# libint
+# v2rdm
 ]
 
 for kw in candidates:
