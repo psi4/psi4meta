@@ -16,7 +16,7 @@ build:
 requirements:
   build:
     - cmake >=3.0
-    - gcc-5-mp         # [linux]  # really need this? ## detect Fortran/C module mangling
+#    - gcc-5-mp         # [linux]  # really need this? ## detect Fortran/C module mangling
 
 test:
   commands:

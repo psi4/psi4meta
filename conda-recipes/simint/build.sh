@@ -40,12 +40,12 @@ if [ "$(uname)" == "Linux" ]; then
         -DBUILD_SHARED_LIBS=ON \
         -DSIMINT_VECTOR=sse \
         -DSIMINT_STANDALONE=ON \
-        -DCMAKE_C_FLAGS="-qopenmp -static-libgcc -static-intel -wd10237" \
         -DLIBC_INTERJECT=${LIBC_INTERJECT} \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DENABLE_TESTS=OFF
         # OpenMP always ON
         # SIMINT_VECTOR=sse == DENABLE_XHOST=OFF
+        #-DCMAKE_C_FLAGS="-qopenmp -static-libgcc -static-intel -wd10237" \
 fi
 
 # build

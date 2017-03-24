@@ -44,12 +44,12 @@ requirements:
     - libint           # [linux]
     - pcmsolver        # [linux]
     # docs
-    - docutils 0.12*   # [linux]  # for docs (verno avoids sphinx bug)
-    - ipykernel        # [linux]  # for psiapi docs
-    - jupyter_client   # [linux]  # for psiapi docs
-    - nbsphinx         # [linux]  # for psiapi docs
-    - pandoc 1.19*     # [linux]  # for psiapi docs (verno forces conda-forge that gets headers right)
-    - sphinx 1.5*      # [linux]  # for docs
+    - docutils 0.12*   # [linux and py35]  # for docs (verno avoids sphinx bug)
+    - ipykernel        # [linux and py35]  # for psiapi docs
+    - jupyter_client   # [linux and py35]  # for psiapi docs
+    - nbsphinx         # [linux and py35]  # for psiapi docs
+    - pandoc 1.19*     # [linux and py35]  # for psiapi docs (verno forces conda-forge that gets headers right)
+    - sphinx 1.5*      # [linux and py35]  # for docs
   run:
     # non-qc
     - libgcc           # [osx]    # after working for libgfortran
