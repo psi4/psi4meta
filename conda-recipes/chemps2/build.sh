@@ -23,7 +23,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DENABLE_TESTS=OFF \
         -DHDF5_LIBRARIES="${HDF5_INTERJECT}" \
         -DHDF5_INCLUDE_DIRS="${PREFIX}/include" \
-        -DHDF5_VERSION="1.8.17"  # NOTICE PIN!
+        -DHDF5_VERSION="1.8.17"  # NOTICE PIN-TO-BUILD!
 
         #-DCMAKE_C_COMPILER="${PREFIX}/bin/gcc" \
         #-DCMAKE_CXX_COMPILER="${PREFIX}/bin/g++" \

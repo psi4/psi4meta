@@ -20,16 +20,15 @@ build:
 requirements:
   build:
     - cmake >=3.0
-    - hdf5
+    - hdf5 1.8.17                 # PIN-TO-BUILD
     - gcc-5-mp         # [linux]
     - zlib
   run:
-    - gcc-5-mp         # [linux]  # link libgcc_s
-    - hdf5                        # link libhdf5, libhdf5_hl
+#    - gcc-5-mp         # [linux]  # link libgcc_s  # trying not incl@rt on same grounds as libefp
+    - hdf5 1.8.17                  # link libhdf5, libhdf5_hl  PIN-TO-BUILD
     - mkl              # [linux]  # link libiomp5
     - zlib             #          # link libz
 
-#    - hdf5 1.8.17                 # PIN-TO-BUILD
 ##    - libgcc           # [osx]    # link libstdc++, libgcc_s, libgomp
 ##    - libgcc           # [linux]  # link libgcc_s
 ###    - gcc5             # [linux]  # link libgcc_s PIN-TO-BUILD
