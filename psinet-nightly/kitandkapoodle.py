@@ -120,6 +120,9 @@ candidates = [
 ###{'recipe': 'gcp'},
 # libint
 # v2rdm
+{'recipe': 'psi4-deps', 'python': '2.7', 'build_channels': 'psi4'},
+{'recipe': 'psi4-deps', 'python': '3.5', 'build_channels': 'psi4'},
+{'recipe': 'psi4-deps', 'python': '3.6', 'build_channels': 'psi4'},
 ]
 
 for kw in candidates:
@@ -132,9 +135,12 @@ for kw in candidates:
 
 #conda build v2rdm -c http://conda.anaconda.org/psi4/label/test -c http://conda.anaconda.org/psi4 --python 3.5
 #conda build pdoc -c conda-forge -c psi4/label/test -c psi4 --python 3.5
-# CONDA_BLD_PATH=/scratch/cdsgroup/conda-builds/ conda build purge
+# CONDA_BLD_PATH=/scratch/cdsgroup/conda-builds/ /theoryfs2/ds/cdsgroup/bldmconda3/bin/conda build purge
 
         #upload_process = subprocess.Popen(command,
         #                                  stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
         #for data in iter(upload_process.stdout.readline, ""):
         #    sys.stdout.write(data)
+
+#conda create -n tp4deps35 python=3.5 psi4-deps -c psi4/label/test -c psi4
+#conda create -n tp4deps35 python=3.5 psi4-deps -c psi4
