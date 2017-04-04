@@ -9,11 +9,11 @@ source:
   #git_tag: config6
   git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
   git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
-  git_tag: master  # 782430f
+  git_tag: 55d6b38  # v1.8.3-12
   #git_tag: v{{ version }}
 
 build:
-  number: 8
+  number: 9  # 55d6 incr 8-->9 but unbuild
   binary_relocation: true
   skip: true                                           # [win]
 
@@ -32,11 +32,11 @@ requirements:
 test:
   commands:
     # Verify python module
-    - test -f ${PREFIX}/lib/python2.7/site-packages/PyCheMPS2.so  # [py27]
-    - test -f ${PREFIX}/lib/python3.5/site-packages/PyCheMPS2.cpython-35m-x86_64-linux-gnu.so  # [py35 and linux]
-    - test -f ${PREFIX}/lib/python3.5/site-packages/PyCheMPS2.cpython-35m-darwin.so  # [py35 and osx]
-    - test -f ${PREFIX}/lib/python3.6/site-packages/PyCheMPS2.cpython-36m-x86_64-linux-gnu.so  # [py36 and linux]
-    - test -f ${PREFIX}/lib/python3.6/site-packages/PyCheMPS2.cpython-36m-darwin.so  # [py36 and osx]
+    - test -f ${SP_DIR}/PyCheMPS2.so                               # [py27]
+    - test -f ${SP_DIR}/PyCheMPS2.cpython-35m-x86_64-linux-gnu.so  # [py35 and linux]
+    - test -f ${SP_DIR}/PyCheMPS2.cpython-35m-darwin.so            # [py35 and osx]
+    - test -f ${SP_DIR}/PyCheMPS2.cpython-36m-x86_64-linux-gnu.so  # [py36 and linux]
+    - test -f ${SP_DIR}/PyCheMPS2.cpython-36m-darwin.so            # [py36 and osx]
 
 about:
   home: http://sebwouters.github.io/CheMPS2
