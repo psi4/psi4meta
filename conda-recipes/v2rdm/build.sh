@@ -21,7 +21,7 @@ if [ "$(uname)" == "Linux" ]; then
     set -x
 
     # link against older libc for generic linux
-    TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
+    TLIBC=/home/psilocaluser/installs/glibc2.12
     LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/libc.so.6;-Wl,-Bstatic;-Wl,--whole-archive;-lifport;-lifcoremt_pic;-Wl,--no-whole-archive;-Wl,-Bdynamic"
 
     # configure

@@ -54,7 +54,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # link against older libc for generic linux
     # force static link to Intel libs, except for openmp
-    TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
+    TLIBC=/home/psilocaluser/installs/glibc2.12
     LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/libpthread.so.0;${TLIBC}/lib64/libc.so.6;-Wl,-Bstatic;-lifport;-lifcoremt_pic;-Wl,-Bdynamic"
 
     # force Intel compilers to find 5.2 gcc headers

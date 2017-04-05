@@ -1,6 +1,14 @@
 psinet nightly
 --------------
 
+[LAB 4 April 2017]
+
+Duties of build script in entry below unchanged, but moved to (nu)psinet which we're handling out-of-networked-disk
+
+00 02 * * * /home/psilocaluser/gits/psi4meta/psinet-nightly/kitandkapoodle.py > /home/psilocaluser/gits/psi4meta/psinet-nightly/kpd-norm.log 2>&1
+30 18 * * * /home/psilocaluser/gits/psi4meta/psinet-nightly/kitandkapoodle.py > /home/psilocaluser/gits/psi4meta/psinet-nightly/kpd-anom.log 2>&1
+11,26,41,56 * * * * bash /home/psilocaluser/gits/psi4meta/psinet-nightly/handle_sphinxman.sh >>/home/psilocaluser/gits/psi4meta/psinet-nightly/psicode-dropbox.log 2>&1
+
 [LAB 23 March 2017]
 
 * [psinet-nightly/kitandkapoodle.py](kitandkapoodle.py)

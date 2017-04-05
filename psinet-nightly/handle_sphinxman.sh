@@ -1,8 +1,8 @@
 #!/bin/sh  
 
-cd /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psicode_dropbox/
+cd /home/psilocaluser/gits/psi4meta/psicode_dropbox/
 
-# */7 * * * * bash /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psinet-nightly/handle_sphinxman.sh >/theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psinet-nightly/psicode-dropbox.log 2>&1
+# 11,26,41,56 * * * * bash /home/psilocaluser/gits/psi4meta/psinet-nightly/handle_sphinxman.sh >>/home/psilocaluser/gits/psi4meta/psinet-nightly/psicode-dropbox.log 2>&1
 
 # This continually looks in a folder for tarball byproducts from the Linux py35 conda build.
 # Uses double scp because single often fails, even command-line

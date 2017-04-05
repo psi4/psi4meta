@@ -68,7 +68,7 @@ if [ "$(uname)" == "Linux" ]; then
     set -x
 
     # link against older libc for generic linux
-    TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
+    TLIBC=/home/psilocaluser/installs/glibc2.12
     LIBC_INTERJECT="-L${TLIBC}/usr/lib64 ${TLIBC}/lib64/libpthread.so.0 ${TLIBC}/lib64/libc.so.6"
 
     # configure
@@ -91,6 +91,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_erd=ON \
         -DENABLE_gdma=ON \
         -DENABLE_PCMSolver=ON \
+        -DENABLE_simint=ON \
+        -DSIMINT_VECTOR=sse \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF \
@@ -123,15 +125,15 @@ if [[ "$(uname)" == "Linux" ]] && [[ "${CONDA_PY}" == "35" ]] ; then
         cd doc/sphinxman
         mv html master
         tar -zcf cb-sphinxman.tar.gz master/
-        mv -f cb-sphinxman.tar.gz /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psicode_dropbox/
+        mv -f cb-sphinxman.tar.gz /home/psilocaluser/gits/psi4meta/psicode_dropbox/
 
         tar -zcf cb-feed.tar.gz feed/
-        mv -f cb-feed.tar.gz /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psicode_dropbox/
+        mv -f cb-feed.tar.gz /home/psilocaluser/gits/psi4meta/psicode_dropbox/
 
         cd ../doxygen
         mv html doxymaster
         tar -zcf cb-doxyman.tar.gz doxymaster/
-        mv -f cb-doxyman.tar.gz /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psicode_dropbox/
+        mv -f cb-doxyman.tar.gz /home/psilocaluser/gits/psi4meta/psicode_dropbox/
 
         cd ../..
     fi

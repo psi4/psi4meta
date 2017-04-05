@@ -1,0 +1,17 @@
+package:
+  name: gcc-5-mp
+  version: 5.2.0
+
+build:
+  number: 0
+
+requirements:
+  run:
+    - gcc-5            # [linux]  # msarahan's gcc-5 that needs some pinning
+    - isl 0.12.2       # [linux]
+    - mpc 1.0.1        # [linux]
+    - mpfr 3.1.2       # [linux]
+
+test:
+  commands:
+    - gcc --version

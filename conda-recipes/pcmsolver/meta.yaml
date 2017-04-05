@@ -1,4 +1,4 @@
-{% set version = "1.1.9" %}
+{% set version = "1.1.10" %}
 
 package:
   name: pcmsolver
@@ -8,6 +8,8 @@ source:
   git_url: git@github.com:PCMSolver/pcmsolver.git      # [linux]
   git_url: https://github.com/PCMSolver/pcmsolver.git  # [osx]
   git_tag: v{{ version }}
+  #git_url: git@github.com:loriab/pcmsolver.git      # [linux]
+  #git_tag: config8
 
 build:
   number: 0
@@ -34,6 +36,7 @@ test:
     # Inspect linkage
     - ldd -v $PREFIX/lib/libpcm.so       # [linux]
     - otool -L $PREFIX/lib/libpcm.dylib  # [osx]
+    - conda-inspect linkages pcmsolver --show-files
 
 about:
   home: http://pcmsolver.readthedocs.org/en/latest/

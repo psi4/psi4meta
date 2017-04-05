@@ -1,0 +1,50 @@
+package:
+  name: psi4-deps
+  version: "1.0"
+
+source:
+  path: ../psi4-deps-src
+
+build:
+  skip: true                                           # [win]
+  number: 1
+
+requirements:
+  build:
+    - python x.x                  # define site-packages install dir
+  run:
+    # non-qc
+    - cmake >3.3
+    - gcc-5-mp         # [linux]
+    - gcc              # [osx]    # gfortran
+    - numpy
+    - python x.x
+    # link-time qc
+    - chemps2
+    - libefp
+    - erd
+    - gdma
+    - libint
+    - pcmsolver
+    - simint
+    # run-time qc
+    - dftd3
+    - gcp
+    - v2rdm_casscf
+    # docs
+    - pytest
+    - docutils 0.12*
+    - sphinx 1.5*
+
+test:
+  commands:
+    # Verify existence and execution
+    - test -f $PREFIX/bin/psi4-path-advisor
+    - test -f $PREFIX/share/cmake/psi4/psi4DepsCache.cmake
+    # Actually test
+    - conda list
+
+about:
+  home: http://www.psicode.org
+  license: GNU General Public License v2 or later (GPLv2+)
+  summary: "dependency and cache metapackage for Psi4: open-source quantum chemistry"
