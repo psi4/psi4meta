@@ -5,12 +5,9 @@ package:
   version: {{ version }}
 
 source:
-  #git_url: git@github.com:psi4/libefp.git              # [linux]
-  #git_url: https://github.com/psi4/libefp.git          # [osx]
-  #git_tag: config6
   git_url: git@github.com:ilyak/libefp.git             # [linux]
   git_url: https://github.com/ilyak/libefp.git          # [osx]
-  git_tag: master  # 985ad0f
+  git_tag: master  # 985ad0f post 1.4.1
   #git_tag: v{{ version }}
 
 build:

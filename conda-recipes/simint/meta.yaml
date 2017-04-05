@@ -2,8 +2,7 @@
 
 package:
   name: simint
-  #version: {{ version }}
-  version: "0.6"
+  version: {{ version }}
 
 source:
   url: http://www.bennyp.org/research/simint/download/simint-v{{ version }}.tar.bz2
@@ -31,4 +30,3 @@ about:
   license: BSD 3-clause
   summary: "Vectorized Obara-Saika electron repulsion integrals"
   #readme: README.md
-

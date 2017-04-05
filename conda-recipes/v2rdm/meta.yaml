@@ -1,20 +1,16 @@
-{% set version = "0.2" %}
+{% set version = "0.2.1" %}
 
 package:
   name: v2rdm_casscf
   version: {{ version }}
 
 source:
-  #git_url: git@github.com:edeprince3/v2rdm_casscf.git      # [linux]
-  #git_url: https://github.com/edeprince3/v2rdm_casscf.git  # [osx]
-  #git_tag: v{{ version }}
-  git_url: https://github.com/loriab/v2rdm_casscf.git  # [osx]
-  #git_tag: proc
-  git_tag: 9d65563
+  git_url: git@github.com:edeprince3/v2rdm_casscf.git      # [linux]
+  git_url: https://github.com/edeprince3/v2rdm_casscf.git  # [osx]
+  git_tag: v{{ version }}
 
 build:
-  #number: 5
-  number: 6
+  number: 0
   binary_relocation: true
   skip: true                                           # [win]
 
@@ -26,22 +22,20 @@ requirements:
     - psi4                        # for psi4OptionsTools to initiate plugin
     - python x.x                  # for site-packages location
   run:
-    - gcc-5-mp         # [linux]  # link libgcc_s
+    #- gcc-5-mp        # [linux]  # link libgcc_s - not require at rt b/c to avoid interfering with other gcc
     - libgcc           # [osx]    # link libgfortran, libquadmath, libgcc_s
     - mkl              # [linux]  # link libiomp5
-    #- psi4                        # load and support plugin
+    #- psi4                       # load and support plugin
     - python x.x                  # interpreter
 
 test:
   commands:
     # Verify plugin module.
-    #- test -f $PREFIX/lib/python2.7/site-packages/v2rdm_casscf/v2rdm_casscf.so  # [py27]
-    #- test -f $PREFIX/lib/python3.5/site-packages/v2rdm_casscf/v2rdm_casscf.so  # [py35]
     - test -f $SP_DIR/v2rdm_casscf/v2rdm_casscf.so
     # Inspect linkage
     - ldd -r -u $SP_DIR/v2rdm_casscf/v2rdm_casscf.so && return 0  # [linux]
-    - ldd -v $SP_DIR/v2rdm_casscf/v2rdm_casscf.so  # [linux]
-    - otool -L $SP_DIR/v2rdm_casscf/v2rdm_casscf.so  # [osx]
+    - ldd -v $SP_DIR/v2rdm_casscf/v2rdm_casscf.so                 # [linux]
+    - otool -L $SP_DIR/v2rdm_casscf/v2rdm_casscf.so               # [osx]
     - conda-inspect linkages v2rdm_casscf --show-files
 
 about:
@@ -49,4 +43,3 @@ about:
   license: GNU General Public License v2 or later (GPLv2+)
   summary: "a variational 2-RDM-driven CASSCF plugin to Psi4"
   readme: README.md
-

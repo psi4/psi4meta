@@ -38,7 +38,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # link against older libc for generic linux
     #   PREFIX needs to contain a libgcc_s.so of libc <2.14
-    TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
+    TLIBC=/home/psilocaluser/installs/glibc2.12
     LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/librt.so.1;${TLIBC}/lib64/libpthread.so.0;${TLIBC}/lib64/libm.so.6;dl;${PREFIX}/lib/libgcc_s.so;${TLIBC}/lib64/libc.so.6"
 
     # force static link to Intel mkl, except for openmp

@@ -1,4 +1,4 @@
-{% set version = "1.1.9" %}
+{% set version = "1.1.10" %}
 
 package:
   name: pcmsolver
@@ -12,7 +12,7 @@ source:
   #git_tag: config8
 
 build:
-  number: 1
+  number: 0
   binary_relocation: true
   skip: true                                           # [win]
 
