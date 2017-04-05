@@ -3,3 +3,5 @@ stallo/*.o*
 stallo/*.e*
 conda-recipes/.messages.txt
 nohup.out
+mac-psinet/coverage-norm.log
+mac-psinet/kpd-anom.log

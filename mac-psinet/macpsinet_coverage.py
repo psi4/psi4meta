@@ -103,11 +103,13 @@ for name in failures:
 
 print("\n\n ==> Combining Python data <== \n")
 
+cnt = 0
 for n, f in files:
-    if (n % 50) == 0:
-        print("%3d/%3d files parsed" % (n, total_files))
+    if (cnt % 50) == 0:
+        print("%3d/%3d files parsed" % (cnt, total_files))
     path = os.path.dirname(f)
     sp.call([cov_path, "combine", "--append",  path])
+    cnt += 1
 sp.call([cov_path, "report"])
 
 print("\n\n ==> Uploading CodeCov data <== \n")
@@ -118,8 +120,7 @@ with open("/Users/github/.tokens/codecov", "r") as infile:
 sp.call(["/Users/github/anaconda/bin/codecov",
                   "--token", coverage_token], stdout=outfile)
 
-os.chdir(start_path)
-for f in glob.glob('*.gcov'):
+for f in glob.glob(base_path + '/psi4/*.gcov'):
     os.remove(f)
 
 outfile.close()

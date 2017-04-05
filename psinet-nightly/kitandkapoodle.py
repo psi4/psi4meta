@@ -1,10 +1,11 @@
-#!/theoryfs2/ds/cdsgroup/bldmconda3/bin/python
+#!/Users/github/bldmconda3/bin/python
 
 #/usr/bin/env python3
 
 # [LAB 24 Mar 2017]
 # Confirmed a nightly build set
 # Outputs stdout in real time
+# Working for Mac now too
 
 # [LAB 22 Mar 2017]
 # Translated accumulated notes and aspects of kitandkaboodle to python
@@ -104,7 +105,8 @@ def build_it(recipe, python=None, keep=False, verbose=True,
         return 'NoFile'
 
 
-candidates = [
+if host == "psinet":
+    candidates = [
 {'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4/label/test', 'psi4']},
 {'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4/label/test', 'psi4', 'defaults', 'conda-forge']},
 {'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4/label/test', 'psi4']},
@@ -124,7 +126,14 @@ candidates = [
 ###{'recipe': 'gcp'},
 # libint
 # v2rdm
-]
+                 ]
+if host == "macpsinet":
+    candidates = [
+{'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4/label/clang', 'psi4']},
+{'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4/label/clang', 'psi4']},
+{'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4/label/clang', 'psi4']},
+#{'recipe': 'gdma', 'build_channels': 'psi4'},
+                 ]
 
 for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
@@ -142,3 +151,15 @@ for kw in candidates:
         #                                  stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
         #for data in iter(upload_process.stdout.readline, ""):
         #    sys.stdout.write(data)
+
+
+# # packages in environment at /Users/github/bldmconda3:
+# anaconda-client           1.6.2                    py36_0    defaults
+# conda                     4.3.14                   py36_0    defaults
+# conda-build               2.1.8                    py36_0    defaults
+# conda-env                 2.6.0                         0    defaults
+# conda-verify              2.0.0                    py36_0    defaults
+# constructor               1.5.4                    py36_0    defaults
+# libconda                  4.0.0                    py36_0    defaults
+# python                    3.6.0                         0    defaults
+# python-dateutil           2.6.0                    py36_0    defaults
