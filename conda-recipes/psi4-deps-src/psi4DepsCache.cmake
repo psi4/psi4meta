@@ -4,12 +4,13 @@
 # This module sets some likely variable values to initialize the CMake
 #   cache for dependencies to build your Psi4 source.
 #
-# See ``help-psi4-deps`` (or cmake command below) for use.
+# See ``psi4-path-advisor`` (or cmake command below) for use.
 #
 # >>> /opt/anaconda1anaconda2anaconda3/bin/cmake \
 #       -H. \
 #       -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsCache.cmake \
 #       -Bobjdir
+#
 
 set(PYTHON_EXECUTABLE      "/opt/anaconda1anaconda2anaconda3/bin/python" CACHE STRING "")
 set(PYTHON_LIBRARY         "/opt/anaconda1anaconda2anaconda3/lib/lib@PY_ABBR@.so" CACHE STRING "")
@@ -33,50 +34,9 @@ set(libint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/libint"
 set(ENABLE_PCMSolver       ON CACHE BOOL "")
 set(PCMSolver_DIR          "/opt/anaconda1anaconda2anaconda3/share/cmake/PCMSolver" CACHE PATH "")
 
+set(ENABLE_simint          ON CACHE BOOL "")
+set(simint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/simint" CACHE PATH "")
+
 set(SPHINX_ROOT            "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
 set(CMAKE_PROGRAM_PATH     "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
-#set(CMAKE_INSTALL_PREFIX   "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
 
-
-# for runtime, may want to activate for psiapi python, dftd3
-
-# ZLIB_ROOT="${PFXC}" \
-# CMAKE_PREFIX_PATH="${PREFIX}" \
-# >>> ${PREFIX}/bin/cmake \
-
-
-
-# Below are compiler and flags snippets for use or adaptation.
-#   Remember the line continuance character "\" tolerates no
-#   spaces afterwards or comments interspersed.
-
-# Mac Clang
-# ---------
-#    -DCMAKE_C_COMPILER=clang \
-#    -DCMAKE_CXX_COMPILER=clang++ \
-#    -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
-
-# Mac GCC
-# -------
-    # Conda packages on the psi4 channel osx-64 arch are built with
-    # clang/libc++, not gcc/libstdc++. They are therefore unsuited for
-    # linking with a gcc-built Psi4, though the simplest ones (e.g.,
-    # C-only libint) may work.
-
-# Mac or Linux gfortran (independent of C/CXX compiler family)
-# ---------------------
-#    -DCMAKE_Fortran_COMPILER="/opt/anaconda1anaconda2anaconda3/bin/gfortran" \
-
-# Linux GCC
-# ---------
-#    -DCMAKE_C_COMPILER="/opt/anaconda1anaconda2anaconda3/bin/gcc" \
-#    -DCMAKE_CXX_COMPILER="/opt/anaconda1anaconda2anaconda3/bin/g++" \
-
-# Linux Intel
-# -----------
-#    -DCMAKE_C_COMPILER=icc \
-#    -DCMAKE_C_FLAGS="-gcc-name=/opt/anaconda1anaconda2anaconda3/bin/gcc" \
-#    -DCMAKE_CXX_COMPILER=icpc \
-#    -DCMAKE_CXX_FLAGS="-gcc-name=/opt/anaconda1anaconda2anaconda3/bin/gcc -gxx-name=/opt/anaconda1anaconda2anaconda3/bin/g++" \
-#    -DCMAKE_Fortran_COMPILER=ifort \
-#    -DCMAKE_Fortran_FLAGS="-gcc-name=/opt/anaconda1anaconda2anaconda3/bin/gcc -gxx-name=/opt/anaconda1anaconda2anaconda3/bin/g++" \

@@ -7,6 +7,12 @@ elif [[ "${CONDA_PY}" == "36" ]]; then
 fi
 
 # install
-mkdir -p ${PREFIX}/share/cmake/psi4/
-sed "s/@PY_ABBR@/${PY_ABBR}/g" psi4DepsCache.cmake > ${PREFIX}/share/cmake/psi4/psi4DepsCache.cmake
-cp help_psi4_deps.py ${SP_DIR}
+SHARE=${PREFIX}/share/cmake/psi4/
+mkdir -p ${SHARE}
+cp psi4-path-advisor.py ${PREFIX}/bin/psi4-path-advisor
+sed "s/@PY_ABBR@/${PY_ABBR}/g" psi4DepsCache.cmake > ${SHARE}/psi4DepsCache.cmake
+cp psi4DepsAppleClangCache.cmake ${SHARE}
+cp psi4DepsDisableCache.cmake ${SHARE}
+cp psi4DepsIntelCache.cmake ${SHARE}
+cp psi4DepsGNUCache.cmake ${SHARE}
+
