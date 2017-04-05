@@ -91,6 +91,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_erd=ON \
         -DENABLE_gdma=ON \
         -DENABLE_PCMSolver=ON \
+        -DENABLE_simint=ON \
+        -DSIMINT_VECTOR=sse \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF \
