@@ -125,15 +125,15 @@ if [[ "$(uname)" == "Linux" ]] && [[ "${CONDA_PY}" == "35" ]] ; then
         cd doc/sphinxman
         mv html master
         tar -zcf cb-sphinxman.tar.gz master/
-        mv -f cb-sphinxman.tar.gz /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psicode_dropbox/
+        mv -f cb-sphinxman.tar.gz /home/psilocaluser/gits/psi4meta/psicode_dropbox/
 
         tar -zcf cb-feed.tar.gz feed/
-        mv -f cb-feed.tar.gz /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psicode_dropbox/
+        mv -f cb-feed.tar.gz /home/psilocaluser/gits/psi4meta/psicode_dropbox/
 
         cd ../doxygen
         mv html doxymaster
         tar -zcf cb-doxyman.tar.gz doxymaster/
-        mv -f cb-doxyman.tar.gz /theoryfs2/ds/cdsgroup/psi4-compile/psi4meta/psicode_dropbox/
+        mv -f cb-doxyman.tar.gz /home/psilocaluser/gits/psi4meta/psicode_dropbox/
 
         cd ../..
     fi

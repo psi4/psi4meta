@@ -1,5 +1,7 @@
-psinet-nightly/cb-psinet*.log
 stallo/*.o*
 stallo/*.e*
 conda-recipes/.messages.txt
 nohup.out
+psinet-nightly/kpd-anom.log
+psinet-nightly/kpd-norm.log
+psinet-nightly/psicode-dropbox.log
