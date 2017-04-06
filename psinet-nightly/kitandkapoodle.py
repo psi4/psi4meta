@@ -73,7 +73,7 @@ if sys.platform.startswith('linux'):
 
 elif sys.platform == 'darwin':
     host = "macpsinet"
-    dest_subchannel = 'clang'
+    dest_subchannel = 'main'
     psi4_dest_subchannel = 'devel'
     recipe_box = '/Users/github/Git/psi4meta/conda-recipes'
     lenv = {
@@ -87,7 +87,7 @@ else:
 
 
 def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
-             dest_subchannel='main', build_channels='defaults'):
+                        dest_subchannel='main', build_channels='defaults'):
 
     pyxx = _form_python_command(python)
     chnls = _form_channel_command(build_channels)
@@ -153,10 +153,25 @@ if host == "psinet":
 
 if host == "macpsinet":
     candidates = [
-{'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4/label/clang', 'psi4']},
-{'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4/label/clang', 'psi4']},
-{'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4/label/clang', 'psi4']},
+{'recipe': 'psi4-core', 'python': '2.7', 'build_channels': 'psi4'},
+{'recipe': 'psi4-core', 'python': '3.5', 'build_channels': 'psi4'},
+{'recipe': 'psi4-core', 'python': '3.6', 'build_channels': 'psi4'},
 #{'recipe': 'gdma', 'build_channels': 'psi4'},
+#{'recipe': 'chemps2', 'build_channels': ['psi4']},
+#{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4']},
+#{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4']},
+#{'recipe': 'pychemps2', 'python': '3.6', 'build_channels': ['psi4']},
+#{'recipe': 'libefp'},
+#{'recipe': 'pcmsolver', 'python': '2.7'},
+#{'recipe': 'pcmsolver', 'python': '3.5'},
+#{'recipe': 'pcmsolver', 'python': '3.6'},
+#{'recipe': 'simint'},
+#{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/clang', 'psi4']},  # change to devel
+#{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/clang', 'psi4']},
+#{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/clang', 'psi4']},
+#{'recipe': 'psi4-deps', 'python': '2.7', 'build_channels': 'psi4'},
+#{'recipe': 'psi4-deps', 'python': '3.5', 'build_channels': 'psi4'},
+#{'recipe': 'psi4-deps', 'python': '3.6', 'build_channels': 'psi4'},
                  ]
 
 for kw in candidates:

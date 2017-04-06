@@ -30,6 +30,8 @@ if [ "$(uname)" == "Darwin" ]; then
         -DENABLE_erd=ON \
         -DENABLE_gdma=ON \
         -DENABLE_PCMSolver=ON \
+        -DENABLE_simint=ON \
+        -DSIMINT_VECTOR=sse \
         -DMAX_AM_ERI=6 \
         -DPYTHON_EXECUTABLE=${PYTHON} \
         -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.dylib" \

@@ -5,14 +5,21 @@ version: "1.1a2.dev417"  # TODO EDIT
 installer_filename: psi4conda-1.1a2.dev417-py27-Linux-x86_64.sh
 #installer_filename: psi4conda-1.1a2.dev417-py35-Linux-x86_64.sh
 #installer_filename: psi4conda-1.1a2.dev417-py36-Linux-x86_64.sh
+#installer_filename: psi4conda-1.1a2.dev417-py27-MacOSX-x86_64.sh
+#installer_filename: psi4conda-1.1a2.dev417-py35-MacOSX-x86_64.sh
+#installer_filename: psi4conda-1.1a2.dev417-py36-MacOSX-x86_64.sh
 
 # TODO EDIT & TOGGLE
 packages:
   - https://conda.anaconda.org/psi4/label/devel/linux-64/psi4-1.1a2.dev417+d3beb8f-py27_0.tar.bz2
 #  - https://conda.anaconda.org/psi4/label/devel/linux-64/psi4-1.1a2.dev417+d3beb8f-py35_0.tar.bz2
 #  - https://conda.anaconda.org/psi4/label/devel/linux-64/psi4-1.1a2.dev417+d3beb8f-py36_0.tar.bz2
+#  - https://conda.anaconda.org/psi4/label/devel/osx-64/psi4-1.1a2.dev417+cbee32b-py27_0.tar.bz2
+#  - https://conda.anaconda.org/psi4/label/devel/osx-64/psi4-1.1a2.dev417+cbee32b-py35_0.tar.bz2
+#  - https://conda.anaconda.org/psi4/label/devel/osx-64/psi4-1.1a2.dev417+cbee32b-py36_0.tar.bz2
 
 specs:
+  - conda
   - psi4-deps
 # TODO TOGGLE
   - python 2.7*                 # PIN-TO-BUILD

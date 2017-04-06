@@ -30,6 +30,7 @@ requirements:
     - gdma             # [osx]
     - libint           # [osx]
     - pcmsolver        # [osx]
+    - simint           # [osx]
     # non-qc
     - cmake >3.3       # [linux]
     - gcc-5-mp         # [linux]
@@ -63,6 +64,7 @@ requirements:
     - gdma             # [osx]    # link libgdma
     - libint           # [osx]    # link libderiv, libint
     - pcmsolver        # [osx]    # link libpcm
+    - simint           # [osx]    # link libsimint
     # non-qc
     - gcc-5-mp         # [linux]  # link libgcc_s
     - mkl              # [linux]  # link libiomp5
