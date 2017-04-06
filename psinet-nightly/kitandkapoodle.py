@@ -125,9 +125,9 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
 
 if host == "psinet":
     candidates = [
-{'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4/label/test', 'psi4']},
-{'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4/label/test', 'psi4', 'defaults', 'conda-forge']},
-{'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4/label/test', 'psi4']},
+{'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4']},  # psi4/label/test
+{'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4', 'defaults', 'conda-forge']},
+{'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4']},
 #{'recipe': 'chemps2', 'build_channels': ['psi4']},
 #{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4']},
 #{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4']},
@@ -210,3 +210,7 @@ for kw in candidates:
 # libconda                  4.0.0                    py36_0    defaults
 # python                    3.6.0                         0    defaults
 # python-dateutil           2.6.0                    py36_0    defaults
+
+# constructor --platform linux-64 psi4-installer/
+# constructor --platform osx-64 psi4-installer/
+# scp -r psi4conda-1.1rc1-py* root@vergil.chemistry.gatech.edu:/var/www/html/download/
