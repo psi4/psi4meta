@@ -200,6 +200,10 @@ for kw in candidates:
 # python                    3.6.1                         0
 # python-dateutil           2.6.0                    py36_0
 
+# 8 May 2017
+#    anaconda-client: 1.6.2-py36_0  --> 1.6.3-py36_0 
+#    conda:           4.3.16-py36_0 --> 4.3.17-py36_0
+
 # # packages in environment at /Users/github/bldmconda3:
 # anaconda-client           1.6.2                    py36_0    defaults
 # conda                     4.3.14                   py36_0    defaults

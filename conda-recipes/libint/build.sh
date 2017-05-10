@@ -13,13 +13,16 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
-        -DBUILD_SHARED_LIBS=ON
+        -DBUILD_SHARED_LIBS=ON \
+        -DMERGE_LIBDERIV_INCLUDEDIR=ON
 fi
 
 if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers and mkl
+    set +x
     source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+    set -x
 
     # link against older libc for generic linux
     TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
@@ -33,9 +36,10 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=icc \
         -DCMAKE_CXX_COMPILER=icpc \
-        -DCMAKE_INSTALL_LIBDIR=lib
+        -DCMAKE_INSTALL_LIBDIR=lib \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DBUILD_SHARED_LIBS=ON \
+        -DMERGE_LIBDERIV_INCLUDEDIR=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
         -DLIBC_INTERJECT="${LIBC_INTERJECT}"

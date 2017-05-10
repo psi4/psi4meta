@@ -1,16 +1,22 @@
-{% set version = "1.1.6" %}
+{% set version = "1.2.0" %}
 
 package:
   name: libint
   version: {{ version }}
 
 source:
-  git_url: git@github.com:psi4/libint.git              # [linux]
-  git_url: https://github.com/psi4/libint.git          # [osx]
-  #git_tag: v{{ version }}
+  #git_url: git@github.com:evaleev/libint.git           # [linux]
+  #git_url: https://github.com/evaleev/libint.git       # [osx]
+  #git_tag: release-1-2-0
+  #git_url: git@github.com:loriab/libint.git           # [linux]
+  #git_url: https://github.com/loriab/libint.git       # [osx]
+  #git_tag: v1cmake
+  path: ../../../libint
+#Copying /home/psilocaluser/gits/psi4meta/libint to /scratch/psilocaluser/conda-builds/libint_1494372545401/work
+
 
 build:
-  number: 3
+  number: 1
   binary_relocation: true
   skip: true                                           # [win]
 
@@ -23,15 +29,22 @@ requirements:
 
 test:
   commands:
-    # Verify libraries and executable.
-    - test -f $PREFIX/lib/libint.so       # [linux]
-    - test -f $PREFIX/lib/libderiv.so     # [linux]
-    - test -f $PREFIX/lib/libint.dylib    # [osx]
-    - test -f $PREFIX/lib/libderiv.dylib  # [osx]
+    # Verify library
+    - test -f $PREFIX/lib/libint$SHLIB_EXT
+    - test -f $PREFIX/lib/libderiv$SHLIB_EXT
+    # Inspect linkage
+    - ldd -r -u $PREFIX/lib/libint.so && return 0  # [linux]
+    - ldd -v $PREFIX/lib/libint.so                 # [linux]
+    - otool -L $PREFIX/lib/libint.dylib            # [osx]
+    - conda-inspect linkages libint --show-files
 
 about:
-  home: https://github.com/psi4/libint
-  license: GNU General Public License v2 or later (GPLv2+)
-  summary: "two-body molecular integrals over Gaussian functions library"
-  readme: README.md
-
+  home: https://github.com/evaleev/libint/tree/v1
+  dev_url: https://github.com/evaleev/libint
+  doc_url: http://evaleev.github.io/libint/
+  license: LGPL-3.0+
+  license_url: https://opensource.org/licenses/LGPL-3.0+
+  license_file: LICENSE
+  license_family: LGPL
+  summary: E. Valeev and J. Fermann's two-body Gaussian molecular integrals
+  #description:
