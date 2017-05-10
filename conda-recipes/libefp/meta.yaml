@@ -34,8 +34,20 @@ test:
     - otool -L $PREFIX/lib/libefp.dylib            # [osx]
     - conda-inspect linkages libefp --show-files
 
+#about:
+#  home: https://github.com/ilyak/libefp
+#  license: BSD 2-clause
+#  summary: "parallel implementation of the Effective Fragment Potential (EFP) method"
+#  readme: README.md
+
 about:
   home: https://github.com/ilyak/libefp
-  license: BSD 2-clause
-  summary: "parallel implementation of the Effective Fragment Potential (EFP) method"
-  readme: README.md
+  dev_url: https://github.com/ilyak/libefp/blob/master/README.md
+  doc_url: https://libefp.github.io/
+  license: BSD-2-Clause
+  license_url: https://opensource.org/licenses/BSD-2-Clause
+  license_file: LICENSE
+  summary: I. Kaliman's parallel implementation of the Effective Fragment Potential (EFP) method
+  description: some stuff
+  license_family: BSD
+

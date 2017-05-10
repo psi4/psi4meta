@@ -1,4 +1,4 @@
-{% set version = "0.2.1" %}
+{% set version = "0.3" %}
 
 package:
   name: v2rdm_casscf

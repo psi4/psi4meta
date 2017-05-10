@@ -63,7 +63,7 @@ def _run_command(command, env=None, cwd=None):
 if sys.platform.startswith('linux'):
     host = "psinet"
     dest_subchannel = 'main'
-    psi4_dest_subchannel = 'devel'
+    psi4_dest_subchannel = 'dev'
     recipe_box = '/home/psilocaluser/gits/psi4meta/conda-recipes'
     lenv = {
         'CPU_COUNT': '8',
@@ -74,7 +74,7 @@ if sys.platform.startswith('linux'):
 elif sys.platform == 'darwin':
     host = "macpsinet"
     dest_subchannel = 'main'
-    psi4_dest_subchannel = 'devel'
+    psi4_dest_subchannel = 'dev'
     recipe_box = '/Users/github/Git/psi4meta/conda-recipes'
     lenv = {
         'CPU_COUNT': '2',
@@ -142,7 +142,7 @@ if host == "psinet":
 #{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4'},
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
-# libint
+{'recipe': 'libint'},
 #{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/test', 'psi4']},
 #{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/test', 'psi4']},
 #{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/test', 'psi4']},
