@@ -15,6 +15,10 @@
 # Translated accumulated notes and aspects of kitandkaboodle to python
 # Started new bld miniconda with shorter prefix and py36 (<-- py27)
 
+# [LAB 9 May 2017]
+# Switched nightly build channel to dev (<-- devel)
+# merged mac/linux targets
+
 import os
 import sys
 import datetime
@@ -123,56 +127,38 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
         return 'NoFile'
 
 
-if host == "psinet":
-    candidates = [
-{'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4']},  # psi4/label/test
-{'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4', 'defaults', 'conda-forge']},
-{'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4']},
+candidates = [
 #{'recipe': 'chemps2', 'build_channels': ['psi4']},
 #{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4']},
 #{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4']},
 #{'recipe': 'pychemps2', 'python': '3.6', 'build_channels': ['psi4']},
-#{'recipe': 'libefp', 'build_channels': 'psi4'},
-#{'recipe': 'erd', 'build_channels': 'psi4'},
-#{'recipe': 'dkh', 'build_channels': 'psi4'},
+#{'recipe': 'libefp', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
+#{'recipe': 'erd', 'build_channels': 'psi4'},  # not yet built on mac
+#{'recipe': 'dkh', 'build_channels': 'psi4'},  # not yet built on mac
 #{'recipe': 'gdma', 'build_channels': 'psi4'},
 #{'recipe': 'simint'},
-#{'recipe': 'pcmsolver', 'python': '2.7', 'build_channels': 'psi4'},
-#{'recipe': 'pcmsolver', 'python': '3.5', 'build_channels': 'psi4'},
-#{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4'},
-#{'recipe': 'dftd3'},
-#{'recipe': 'gcp'},
-{'recipe': 'libint'},
-#{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/test', 'psi4']},
-#{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/test', 'psi4']},
-#{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/test', 'psi4']},
+#{'recipe': 'pcmsolver', 'python': '2.7', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
+#{'recipe': 'pcmsolver', 'python': '3.5', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
+#{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
+#{'recipe': 'dftd3'},  # not yet built on mac
+#{'recipe': 'gcp'},  # not yet built on mac
+#{'recipe': 'libint'},
+#{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # had been test/clang
+#{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # had been test/clang
+#{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # had been test/clang
 #{'recipe': 'psi4-deps', 'python': '2.7', 'build_channels': 'psi4'},
 #{'recipe': 'psi4-deps', 'python': '3.5', 'build_channels': 'psi4'},
 #{'recipe': 'psi4-deps', 'python': '3.6', 'build_channels': 'psi4'},
                  ]
 
+if host == "psinet":
+    candidates.append({'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4']})  # psi4/label/test
+    candidates.append({'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4', 'defaults', 'conda-forge']})
+    candidates.append({'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4']})
 if host == "macpsinet":
-    candidates = [
-{'recipe': 'psi4-core', 'python': '2.7', 'build_channels': 'psi4'},
-{'recipe': 'psi4-core', 'python': '3.5', 'build_channels': 'psi4'},
-{'recipe': 'psi4-core', 'python': '3.6', 'build_channels': 'psi4'},
-#{'recipe': 'gdma', 'build_channels': 'psi4'},
-#{'recipe': 'chemps2', 'build_channels': ['psi4']},
-#{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4']},
-#{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4']},
-#{'recipe': 'pychemps2', 'python': '3.6', 'build_channels': ['psi4']},
-#{'recipe': 'libefp'},
-#{'recipe': 'pcmsolver', 'python': '2.7'},
-#{'recipe': 'pcmsolver', 'python': '3.5'},
-#{'recipe': 'pcmsolver', 'python': '3.6'},
-#{'recipe': 'simint'},
-#{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/clang', 'psi4']},  # change to devel
-#{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/clang', 'psi4']},
-#{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/clang', 'psi4']},
-#{'recipe': 'psi4-deps', 'python': '2.7', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-deps', 'python': '3.5', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-deps', 'python': '3.6', 'build_channels': 'psi4'},
-                 ]
+    candidates.append({'recipe': 'psi4-core', 'python': '2.7', 'build_channels': 'psi4'})
+    candidates.append({'recipe': 'psi4-core', 'python': '3.5', 'build_channels': 'psi4'})
+    candidates.append({'recipe': 'psi4-core', 'python': '3.6', 'build_channels': 'psi4'})
 
 for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
@@ -201,8 +187,11 @@ for kw in candidates:
 # python-dateutil           2.6.0                    py36_0
 
 # 8 May 2017
+#    Linux
 #    anaconda-client: 1.6.2-py36_0  --> 1.6.3-py36_0 
 #    conda:           4.3.16-py36_0 --> 4.3.17-py36_0
+#    Mac
+#    anaconda-client: 1.6.2-py36_0 defaults --> 1.6.3-py36_0 defaults
 
 # # packages in environment at /Users/github/bldmconda3:
 # anaconda-client           1.6.2                    py36_0    defaults
