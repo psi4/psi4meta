@@ -25,6 +25,7 @@ requirements:
     # qc
     - chemps2          # [osx]
     - dftd3            # [osx]    # for testing
+    - dkh              # [osx]
     - libefp           # [osx]
     - erd              # [osx]
     - gdma             # [osx]
@@ -39,6 +40,7 @@ requirements:
     # qc
     - chemps2          # [linux]
     - dftd3            # [linux]  # for testing
+    - dkh              # [linux]
     - libefp           # [linux]
     - erd              # [linux]
     - gdma             # [linux]
@@ -59,6 +61,7 @@ requirements:
     - python x.x       # [osx]    # interpreter python
     # qc
     - chemps2          # [osx]    # link libchemps2
+    - dkh              # [osx]    # link dkh
     - libefp           # [osx]    # link libefp
     - erd              # [osx]    # link liberd
     - gdma             # [osx]    # link libgdma
@@ -72,6 +75,7 @@ requirements:
     - python x.x       # [linux]  # interpreter python
     # qc
     - chemps2          # [linux]  # link libchemps2
+    - dkh              # [linux]  # link dkh
     - libefp           # [linux]  # link libefp
     - erd              # [linux]  # link liberd
     - gdma             # [linux]  # link libgdma
@@ -99,7 +103,7 @@ test:
     - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
     - ldd -v $SP_DIR/psi4/core.so     # [linux]
     - otool -L $SP_DIR/psi4/core.so   # [osx]
-    - conda-inspect linkages --show-files --groupby=dependency chemps2 libefp erd gdma libint pcmsolver psi4
+    - conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gdma libint pcmsolver psi4
     # Actually test
     - conda list
     - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
