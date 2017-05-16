@@ -1,0 +1,7 @@
+package:
+  name: am7
+  version: 0.1
+
+build:
+  track_features:
+    - am7

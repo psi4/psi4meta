@@ -1,31 +1,28 @@
-{% set version = "1.2.0" %}
+{% set version = "1.2.1" %}
 
 package:
   name: libint
   version: {{ version }}
 
 source:
-  #git_url: git@github.com:evaleev/libint.git           # [linux]
-  #git_url: https://github.com/evaleev/libint.git       # [osx]
-  #git_tag: release-1-2-0
-  #git_url: git@github.com:loriab/libint.git           # [linux]
-  #git_url: https://github.com/loriab/libint.git       # [osx]
-  #git_tag: v1cmake
-  path: ../../../libint
-#Copying /home/psilocaluser/gits/psi4meta/libint to /scratch/psilocaluser/conda-builds/libint_1494372545401/work
-
+  git_url: git@github.com:evaleev/libint.git           # [linux]
+  git_url: https://github.com/evaleev/libint.git       # [osx]
+  git_tag: 3f14ff0  # v1, ~1.2.1
+  #git_tag: release-1-2-1
 
 build:
-  number: 1
+  number: 0
   binary_relocation: true
   skip: true                                           # [win]
+  features:
+    - am7
 
 requirements:
   build:
     - cmake >=3.0
-#    - gcc              # [osx]    # build w/conda gcc
-#  run:
-#    - libgcc           # [osx]    # link libstdc++, libgcc_s
+    - am7
+  run:
+    - am7
 
 test:
   commands:
