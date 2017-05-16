@@ -1,5 +1,8 @@
 #!/home/psilocaluser/bldmconda3/bin/python
 
+#!/home/psilocaluser/bldmconda3/bin/python
+#!/Users/github/bldmconda3/bin/python
+
 #/usr/bin/env python3
 
 # [LAB 4 Apr 2017]
