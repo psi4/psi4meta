@@ -145,7 +145,12 @@ candidates = [
 #{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
 #{'recipe': 'dftd3'},  # not yet built on mac
 #{'recipe': 'gcp'},  # not yet built on mac
-#{'recipe': 'libint'},
+{'recipe': 'am7-mp'},
+#{'recipe': 'am8-mp'},
+{'recipe': 'libint'},  # toggle recipes for AM feature
+#{'recipe': 'addon-libs-mp', 'python': '2.7', 'build_channels': ['psi4']},
+#{'recipe': 'addon-libs-mp', 'python': '3.5', 'build_channels': ['psi4']},
+#{'recipe': 'addon-libs-mp', 'python': '3.6', 'build_channels': ['psi4']},
 #{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # had been test/clang
 #{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # had been test/clang
 #{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # had been test/clang

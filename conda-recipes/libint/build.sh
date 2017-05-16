@@ -1,4 +1,6 @@
+#MAX_AM_ERI=6
 MAX_AM_ERI=7
+#MAX_AM_ERI=8
 
 if [ "$(uname)" == "Darwin" ]; then
 
