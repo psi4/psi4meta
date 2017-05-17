@@ -132,28 +132,33 @@ candidates = [
 #{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4']},
 #{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4']},
 #{'recipe': 'pychemps2', 'python': '3.6', 'build_channels': ['psi4']},
+#{'recipe': 'dkh', 'build_channels': 'psi4'},  # not yet built on mac
 #{'recipe': 'libefp', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
 #{'recipe': 'erd', 'build_channels': 'psi4'},  # not yet built on mac
-#{'recipe': 'dkh', 'build_channels': 'psi4'},  # not yet built on mac
 #{'recipe': 'gdma', 'build_channels': 'psi4'},
-#{'recipe': 'simint'},
+#{'recipe': 'am7-mp'},
+#{'recipe': 'am8-mp'},
+#{'recipe': 'libint'},  # toggle recipes for AM feature
 #{'recipe': 'pcmsolver', 'python': '2.7', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
 #{'recipe': 'pcmsolver', 'python': '3.5', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
 #{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
+#{'recipe': 'simint'},
+
 #{'recipe': 'dftd3'},  # not yet built on mac
 #{'recipe': 'gcp'},  # not yet built on mac
-{'recipe': 'am7-mp'},
-#{'recipe': 'am8-mp'},
-{'recipe': 'libint'},  # toggle recipes for AM feature
-#{'recipe': 'addon-libs-mp', 'python': '2.7', 'build_channels': ['psi4']},
-#{'recipe': 'addon-libs-mp', 'python': '3.5', 'build_channels': ['psi4']},
-#{'recipe': 'addon-libs-mp', 'python': '3.6', 'build_channels': ['psi4']},
 #{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # had been test/clang
 #{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # had been test/clang
 #{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # had been test/clang
-#{'recipe': 'psi4-deps', 'python': '2.7', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-deps', 'python': '3.5', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-deps', 'python': '3.6', 'build_channels': 'psi4'},
+
+#{'recipe': 'psi4-rt', 'python': '2.7', 'build_channels': 'psi4'},
+#{'recipe': 'psi4-rt', 'python': '3.5', 'build_channels': 'psi4'},
+#{'recipe': 'psi4-rt', 'python': '3.6', 'build_channels': 'psi4'},
+#{'recipe': 'psi4-lt-mp', 'python': '2.7', 'build_channels': 'psi4'},
+#{'recipe': 'psi4-lt-mp', 'python': '3.5', 'build_channels': 'psi4'},
+#{'recipe': 'psi4-lt-mp', 'python': '3.6', 'build_channels': 'psi4'},
+#{'recipe': 'psi4-dev', 'python': '2.7', 'build_channels': 'psi4'},
+#{'recipe': 'psi4-dev', 'python': '3.5', 'build_channels': 'psi4'},
+#{'recipe': 'psi4-dev', 'python': '3.6', 'build_channels': 'psi4'},
                  ]
 
 if host == "psinet":

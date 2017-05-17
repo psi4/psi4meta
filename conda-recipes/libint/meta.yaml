@@ -14,15 +14,15 @@ build:
   number: 0
   binary_relocation: true
   skip: true                                           # [win]
-  features:
-    - am7
+  #features:
+  #  - am7
 
 requirements:
   build:
     - cmake >=3.0
-    - am7
-  run:
-    - am7
+  #  - am7
+  #run:
+  #  - am7
 
 test:
   commands:
