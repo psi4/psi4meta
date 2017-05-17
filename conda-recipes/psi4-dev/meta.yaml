@@ -1,13 +1,16 @@
+{% set version = "1.1" %}
+
 package:
   name: psi4-dev
-  version: 1.1rc2
+  version: {{ version }}
 
 source:
   path: ../psi4-dev-src
 
 build:
-  skip: true                                           # [win]
-  number: 1
+  skip: true           # [win]
+  number: 0            # [osx]
+  number: 1            # [linux]
 
 requirements:
   build:
@@ -15,25 +18,13 @@ requirements:
   run:
     # non-qc
     - cmake >3.3
-    - gcc-5-mp         # [linux]
     - gcc              # [osx]    # gfortran
-#    - numpy
-    - python x.x
-    # link-time qc
-    - psi4-lt-mp
-    #- chemps2
-    #- libefp
-    #- erd
-    #- gdma
-    #- libint
-    #- pcmsolver
-    #- simint
-    # run-time qc
-#    - dftd3
-#    - gcp
-#    - v2rdm_casscf
-    # docs
+    - gcc-5-mp         # [linux]
     - pytest
+    - python x.x
+    # qc
+    - psi4-lt-mp {{ version }}
+    # docs
     - docutils 0.12*
     - sphinx 1.5*
 

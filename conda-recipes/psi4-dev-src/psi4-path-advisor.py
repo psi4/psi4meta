@@ -11,11 +11,11 @@ parser = argparse.ArgumentParser(description="Build and Run path advisor for Psi
 
 parser.add_argument('--psi4-compile', action='store_true', help="""\
 (Command Default) Generates a minimal CMake command for building Psi4 against
-    this psi4-deps conda metapackage.
+    this psi4-dev conda metapackage.
 >>> git clone https://github.com/psi4/psi4.git
 >>> cd {top-level-psi4-dir}
->>> conda create -n p4deps python={3.5} psi4-dev -c psi4
->>> source activate p4deps
+>>> conda create -n p4dev python={3.5} psi4-dev -c psi4
+>>> source activate p4dev
 >>> psi4-path-advisor
 # execute or adapt `cmake` commands above; DepsCache handles python & addons;
 #   Further psi4-path-advisor options handle compilers; BLAS is on you.
@@ -23,17 +23,17 @@ parser.add_argument('--psi4-compile', action='store_true', help="""\
 >>> make install""")
 
 parser.add_argument('--disable-addons', action='store_true',
-                    help="""Disengage building against the psi4-deps-provided link-time Add-Ons like CheMPS2.""")
+                    help="""Disengage building against the psi4-dev-provided link-time Add-Ons like CheMPS2.""")
 
 if sys.platform.startswith('linux'):
     parser.add_argument('--intel', action='store_true',
-                        help="""Engage self-provided icc/icpc/ifort compilers backed by psi4-deps-provided gcc/g++.""")
+                        help="""Engage self-provided icc/icpc/ifort compilers backed by psi4-dev-provided gcc/g++.""")
     parser.add_argument('--gcc', action='store_true',
-                        help="""Engage psi4-deps-provided gcc/g++/gfortran compilers.""")
+                        help="""Engage psi4-dev-provided gcc/g++/gfortran compilers.""")
 
 elif sys.platform == 'darwin':
     parser.add_argument('--clang', action='store_true',
-                        help="""Engage system-provided clang/clang++ compilers and psi4-deps-provided gfortran.""")
+                        help="""Engage system-provided clang/clang++ compilers and psi4-dev-provided gfortran.""")
 
 # duplicates from `bin/psi4`
 psi4 = os.path.abspath(os.path.dirname(__file__)) + os.path.sep + 'psi4'
