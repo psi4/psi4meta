@@ -5,8 +5,8 @@
 #   cache for dependencies to build your Psi4 source.
 # Note for Mac: Due to packages from the psi4 conda channel osx-64 arch
 #   being built with clang/libc++ (rather than gcc/libstdc++), these lines
-#   are **not appropriate** for linking with a gcc-build Psi4, thouth the
-#   simplest ones (e.g., C-only libint) may work.
+#   are **not appropriate** for linking with a gcc-build Psi4, though the
+#   simplest ones (e.g., C-only Libint) may work.
 #
 # See ``psi4-path-advisor`` (or cmake command below) for use.
 #

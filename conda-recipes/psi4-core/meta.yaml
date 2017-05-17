@@ -18,35 +18,14 @@ build:
 requirements:
   build:
     # non-qc
-    - cmake >3.3       # [osx]
-    - gcc              # [osx]    # after working for gfortran
-    - numpy            # [osx]    # for psi4 execution w/i ctest and sphinxman
-    - python x.x       # [osx]
-    # qc
-    - chemps2          # [osx]
-    - dftd3            # [osx]    # for testing
-    - dkh              # [osx]
-    - libefp           # [osx]
-    - erd              # [osx]
-    - gdma             # [osx]
-    - libint           # [osx]
-    - pcmsolver        # [osx]
-    - simint           # [osx]
-    # non-qc
-    - cmake >3.3       # [linux]
+    - cmake >3.3
+    - gcc              # [osx]    # for gfortran
     - gcc-5-mp         # [linux]
-    - numpy            # [linux]  # for psi4 execution w/i ctest and sphinxman
-    - python x.x       # [linux]
+    - numpy                       # for psi4 execution w/i ctest and sphinxman
+    - python x.x
     # qc
-    - chemps2          # [linux]
-    - dftd3            # [linux]  # for testing
-    - dkh              # [linux]
-    - libefp           # [linux]
-    - erd              # [linux]
-    - gdma             # [linux]
-    - libint           # [linux]
-    - pcmsolver        # [linux]
-    - simint           # [linux]
+    - psi4-lt-mp
+    - psi4-rt                     # for cmake testing
     # docs
     - docutils 0.12*   # [linux and py35]  # for docs (verno avoids sphinx bug)
     - ipykernel        # [linux and py35]  # for psiapi docs
@@ -56,44 +35,20 @@ requirements:
     - sphinx 1.5*      # [linux and py35]  # for docs
   run:
     # non-qc
-    - libgcc           # [osx]    # after working for libgfortran
-    - numpy            # [osx]
-    - python x.x       # [osx]    # interpreter python
-    # qc
-    - chemps2          # [osx]    # link libchemps2
-    - dkh              # [osx]    # link dkh
-    - libefp           # [osx]    # link libefp
-    - erd              # [osx]    # link liberd
-    - gdma             # [osx]    # link libgdma
-    - libint           # [osx]    # link libderiv, libint
-    - pcmsolver        # [osx]    # link libpcm
-    - simint           # [osx]    # link libsimint
-    # non-qc
+    - libgcc           # [osx]    # link libgfortran
     - gcc-5-mp         # [linux]  # link libgcc_s
     - mkl              # [linux]  # link libiomp5
-    - numpy            # [linux]
-    - python x.x       # [linux]  # interpreter python
+    - numpy                       # linalg python
+    - pytest                      # drive psi4 --test
+    - python x.x                  # interpreter python
     # qc
-    - chemps2          # [linux]  # link libchemps2
-    - dkh              # [linux]  # link dkh
-    - libefp           # [linux]  # link libefp
-    - erd              # [linux]  # link liberd
-    - gdma             # [linux]  # link libgdma
-    - libint           # [linux]  # link libderiv, libint
-    - pcmsolver        # [linux]  # link libpcm
-    - simint           # [linux]  # link libsimint
-
-    #- mpc 1.0.1        # [linux]  # "
-    #- mpfr 3.1.2       # [linux]  # "
-##    - pcmsolver >=1.1.2           # link libpcm
-##    - pychemps2 >=1.7.1           # link libchemps2
+    - psi4-lt-mp                  # link libchemps2, libdkh, libefp, liberd
+                                  #      libgdma, libint, libderiv, libpcm,
+                                  #      libsimint, libxc (in 1.2)
 
 test:
   requires:
-    - pytest
-    - dftd3
-    - gcp
-    - v2rdm_casscf
+    - psi4-rt                     # load dftd3, gcp, v2rdm_casscf
   commands:
     # Verify existence and execution
     - test -f $PREFIX/bin/psi4
@@ -103,17 +58,21 @@ test:
     - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
     - ldd -v $SP_DIR/psi4/core.so     # [linux]
     - otool -L $SP_DIR/psi4/core.so   # [osx]
-    - conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gdma libint pcmsolver psi4
+    - conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gdma libint pcmsolver simint libxc psi4
     # Actually test
     - conda list
     - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
 
 about:
-  home: http://www.psicode.org
-  license: GNU General Public License v2 or later (GPLv2+)
-  #license_file: LICENSE
-  summary: "open-source quantum chemistry"
-  #readme: README.md
+  home: http://psicode.org
+  dev_url: https://github.com/psi4/psi4
+  doc_url: http://psicode.org/psi4manual/master/index.html
+  license: LGPL-3.0
+  license_url: https://opensource.org/licenses/LGPL-3.0
+  license_file: COPYING.LESSER
+  license_family: LGPL
+  summary: Open-Source Quantum Chemistry - an electronic structure package in C++ driven by Python
+  #description:
 
 # to conda build package from local source rather than github, substitute like below
 #package/version: 0.1.6

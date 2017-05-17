@@ -14,7 +14,7 @@ parser.add_argument('--psi4-compile', action='store_true', help="""\
     this psi4-deps conda metapackage.
 >>> git clone https://github.com/psi4/psi4.git
 >>> cd {top-level-psi4-dir}
->>> conda create -n p4deps python={3.5} psi4-deps -c psi4
+>>> conda create -n p4deps python={3.5} psi4-dev -c psi4
 >>> source activate p4deps
 >>> psi4-path-advisor
 # execute or adapt `cmake` commands above; DepsCache handles python & addons;

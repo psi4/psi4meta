@@ -1,9 +1,9 @@
 package:
-  name: psi4-deps
-  version: "1.0"
+  name: psi4-dev
+  version: 1.1rc2
 
 source:
-  path: ../psi4-deps-src
+  path: ../psi4-dev-src
 
 build:
   skip: true                                           # [win]
@@ -17,20 +17,21 @@ requirements:
     - cmake >3.3
     - gcc-5-mp         # [linux]
     - gcc              # [osx]    # gfortran
-    - numpy
+#    - numpy
     - python x.x
     # link-time qc
-    - chemps2
-    - libefp
-    - erd
-    - gdma
-    - libint
-    - pcmsolver
-    - simint
+    - psi4-lt-mp
+    #- chemps2
+    #- libefp
+    #- erd
+    #- gdma
+    #- libint
+    #- pcmsolver
+    #- simint
     # run-time qc
-    - dftd3
-    - gcp
-    - v2rdm_casscf
+#    - dftd3
+#    - gcp
+#    - v2rdm_casscf
     # docs
     - pytest
     - docutils 0.12*
@@ -45,6 +46,6 @@ test:
     - conda list
 
 about:
-  home: http://www.psicode.org
-  license: GNU General Public License v2 or later (GPLv2+)
-  summary: "dependency and cache metapackage for Psi4: open-source quantum chemistry"
+  home: http://psicode.org
+  summary: development metapackage for Psi4 including CMake cache, documentation, & compiler tools
+  #description:
