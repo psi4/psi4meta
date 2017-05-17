@@ -19,6 +19,9 @@ set(PYTHON_INCLUDE_DIR     "/opt/anaconda1anaconda2anaconda3/include/@PY_ABBR@" 
 set(ENABLE_CheMPS2         ON CACHE BOOL "")
 set(CheMPS2_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/CheMPS2" CACHE PATH "")
 
+set(ENABLE_dkh             ON CACHE BOOL "")
+set(dkh_DIR                "/opt/anaconda1anaconda2anaconda3/share/cmake/dkh" CACHE PATH "")
+
 set(ENABLE_libefp          ON CACHE BOOL "")
 set(libefp_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/libefp" CACHE PATH "")
 
@@ -29,13 +32,15 @@ set(ENABLE_gdma            ON CACHE BOOL "")
 set(gdma_DIR               "/opt/anaconda1anaconda2anaconda3/share/cmake/gdma" CACHE PATH "")
 
 set(MAX_AM_ERI             "6" CACHE STRING "")
-set(libint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/libint" CACHE PATH "")
+set(Libint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/Libint" CACHE PATH "")
 
 set(ENABLE_PCMSolver       ON CACHE BOOL "")
 set(PCMSolver_DIR          "/opt/anaconda1anaconda2anaconda3/share/cmake/PCMSolver" CACHE PATH "")
 
 set(ENABLE_simint          ON CACHE BOOL "")
 set(simint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/simint" CACHE PATH "")
+
+set(Libxc_DIR              "/opt/anaconda1anaconda2anaconda3/share/cmake/Libxc" CACHE PATH "")
 
 set(SPHINX_ROOT            "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
 set(CMAKE_PROGRAM_PATH     "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")

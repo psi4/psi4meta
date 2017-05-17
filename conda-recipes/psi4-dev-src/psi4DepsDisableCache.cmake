@@ -14,6 +14,7 @@
 #
 
 set(ENABLE_CheMPS2         OFF CACHE BOOL "" FORCE)
+set(ENABLE_dkh             OFF CACHE BOOL "" FORCE)
 set(ENABLE_libefp          OFF CACHE BOOL "" FORCE)
 set(ENABLE_erd             OFF CACHE BOOL "" FORCE)
 set(ENABLE_gdma            OFF CACHE BOOL "" FORCE)

@@ -1,0 +1,24 @@
+package:
+  name: psi4-lt-mp
+  version: 1.1rc2
+
+build:
+  number: 0
+
+requirements:
+  run:
+    - python x.x                  # for build string tracking
+    # qc
+    - chemps2   >=1.8.3
+    - dkh       >=1.2
+    - libefp    >=1.4.2
+    - erd       >=3.0.6
+    - gdma      >=2.2.6
+    - libint    >=1.2.0           # required
+    - pcmsolver >=1.1.10
+    - simint    >=0.7
+    - libxc     >=3.0.0           # required >=1.2
+
+about:
+  summary: link-time quantum chemistry add-ons for Psi4
+  #description:

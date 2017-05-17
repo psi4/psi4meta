@@ -1,0 +1,18 @@
+package:
+  name: psi4-rt
+  version: 1.1rc2
+
+build:
+  number: 0
+
+requirements:
+  run:
+    - python x.x                  # for build string tracking
+    # qc
+    - dftd3        >=3.2.0
+    - gcp          >=2.0.1
+    - v2rdm_casscf >=0.3
+
+about:
+  summary: run-time quantum chemistry add-ons for Psi4
+  #description:
