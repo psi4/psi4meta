@@ -8,7 +8,8 @@ package:
 source:
   git_url: git@github.com:psi4/psi4.git                # [linux]
   git_url: https://github.com/psi4/psi4.git            # [osx]
-  git_tag: master
+  #git_tag: master
+  git_tag: v1.1  # explicit tag when you don't want tag.dev1
 
 build:
   skip: true                                           # [win]
@@ -24,8 +25,8 @@ requirements:
     - numpy                       # for psi4 execution w/i ctest and sphinxman
     - python x.x
     # qc
-    - psi4-lt-mp
-    - psi4-rt                     # for cmake testing
+    - psi4-lt-mp 1.1
+    - psi4-rt 1.1                 # for cmake testing
     # docs
     - docutils 0.12*   # [linux and py35]  # for docs (verno avoids sphinx bug)
     - ipykernel        # [linux and py35]  # for psiapi docs
@@ -42,13 +43,13 @@ requirements:
     - pytest                      # drive psi4 --test
     - python x.x                  # interpreter python
     # qc
-    - psi4-lt-mp                  # link libchemps2, libdkh, libefp, liberd
+    - psi4-lt-mp 1.1              # link libchemps2, libdkh, libefp, liberd
                                   #      libgdma, libint, libderiv, libpcm,
                                   #      libsimint, libxc (in 1.2)
 
 test:
   requires:
-    - psi4-rt                     # load dftd3, gcp, v2rdm_casscf
+    - psi4-rt 1.1                 # load dftd3, gcp, v2rdm_casscf
   commands:
     # Verify existence and execution
     - test -f $PREFIX/bin/psi4

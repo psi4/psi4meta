@@ -1,6 +1,6 @@
 package:
   name: psi4-rt
-  version: 1.1rc2
+  version: 1.1
 
 build:
   number: 0
