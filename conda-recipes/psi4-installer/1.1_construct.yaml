@@ -19,17 +19,20 @@ packages:
 #  - https://conda.anaconda.org/psi4/label/dev/osx-64/psi4-1.1+add49b9-py36_0.tar.bz2
 
 specs:
-  - conda
+  # psi4 non-qc
   - libgcc           # [osx]
   - gcc-5-mp         # [linux]
   - mkl              # [linux]
   - numpy
-  - psi4-lt-mp 1.1
-  - psi4-rt 1.1
   - pytest
   - python 2.7*                 # TODO TOGGLE
   #- python 3.5*
   #- python 3.6*
+  # psi4 qc
+  - psi4-lt-mp 1.1
+  - psi4-rt 1.1
+  # addl
+  - conda
 
 channels: &id1
   - http://conda.anaconda.org/psi4
