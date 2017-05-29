@@ -162,13 +162,16 @@ candidates = [
                  ]
 
 if host == "psinet":
-    candidates.append({'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4']})  # psi4/label/test
-    candidates.append({'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4', 'defaults', 'conda-forge']})
-    candidates.append({'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4']})
+    candidates.append({'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']})
+    candidates.append({'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge']})
+    candidates.append({'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']})
+    pass
 if host == "macpsinet":
-    candidates.append({'recipe': 'psi4-core', 'python': '2.7', 'build_channels': 'psi4'})
-    candidates.append({'recipe': 'psi4-core', 'python': '3.5', 'build_channels': 'psi4'})
-    candidates.append({'recipe': 'psi4-core', 'python': '3.6', 'build_channels': 'psi4'})
+    candidates.append({'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']})
+    candidates.append({'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']})
+    candidates.append({'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']})
+    pass
+# psi4/label/dev above catches addon updates not suitable for 1.1 release (i.e., v2rdm)
 
 for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
