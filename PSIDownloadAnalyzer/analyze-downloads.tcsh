@@ -21,6 +21,7 @@ cd $MYDIR
 
 # now run the parser to make graphs, etc.
 ./parse-psi-dl.py -i downloads.txt -o downloads_analysis.txt
+./parse-psi-dl-ospy.py -i downloads.txt -o downloads_analysis_pyos.txt
 
 rm -f psitmp.png
 rm -f psitmp2.png

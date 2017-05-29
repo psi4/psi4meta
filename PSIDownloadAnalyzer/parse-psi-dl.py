@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import cartopy.crs as ccrs
 import cartopy.io.shapereader as shpreader
+import datetime
+import collections
 
 # conda install PIL
 # conda install -c scitools cartopy
@@ -84,7 +86,7 @@ def main(argv):
     ip_list = []
     os_list = []
     country_list = []
-    dl_by_cc = {}
+    dl_by_cc = collections.defaultdict(int)
 
 
     for line in lines:
@@ -102,10 +104,7 @@ def main(argv):
                 print "Can't find country code cc = ", cc
                 countryname = cc
             country_list.append(countryname)
-            if cc in dl_by_cc:
-                dl_by_cc[cc] = dl_by_cc[cc]+1
-            else:
-                dl_by_cc[cc] = 1 
+            dl_by_cc[cc] += 1 
 
     count = len(date_list)
     if (unique):
@@ -225,10 +224,11 @@ def main(argv):
         p.set_edgecolor('white')
     for t in texts:
         t.set_size('smaller')
+    now = datetime.datetime.now().strftime("%Y-%m-%d")
     if (unique):
-        outline = "Unique Psi4 installer downloads (> 7/13/16)\n"
+        outline = "Unique Psi4 installer downloads\n2016-07-13 to {}\n".format(now)
     else:
-        outline = "Psi4 installer downloads (> 7/13/16)\n"
+        outline = "Psi4 installer downloads\n2016-07-13 to {}\n".format(now)
     ax.set_title(outline)
     ax.set_xlabel('Not including conda updates or github clones')
     ax.axis('equal') # enforce circular shape, no distortion of plot area
