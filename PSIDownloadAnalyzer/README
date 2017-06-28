@@ -1,0 +1,22 @@
+Copy over the access_log every night before 3am before it might get zipped
+up
+
+as root, 'crontab -e' and enter:
+
+# vergil daily: every day at 1:00am 
+0 1 * * * /usr/bin/cp -f /etc/httpd/logs/access_log /home/cdsgroup/psi4meta/PSIDownloadAnalyzer/access_log
+# vergil daily: every day at 1:05am 
+5 1 * * * /usr/bin/cp -f /home/cdsgroup/psi4meta/PSIDownloadAnalyzer/psi-downloads-map.png /var/www/html/psicode-download/psi-downloads-map.png
+# vergil daily: every day at 1:06am 
+6 1 * * * /usr/bin/cp -f /home/cdsgroup/psi4meta/PSIDownloadAnalyzer/psi-downloads-pie.png /var/www/html/psicode-download/psi-downloads-pie.png
+7 1 * * * /usr/bin/cp -f /home/cdsgroup/psi4meta/PSIDownloadAnalyzer/psi-downloads-pie-pyos.png /var/www/html/psicode-download/psi-downloads-pie-pyos.png
+
+----
+
+Run the analyzer script every night
+
+as cdsgroup, 'crontab -e' and enter:
+
+# vergil daily: every day at 1:10am
+10 1 * * * /home/cdsgroup/psi4meta/PSIDownloadAnalyzer/analyze-downloads.tcsh
+
