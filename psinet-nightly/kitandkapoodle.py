@@ -135,9 +135,9 @@ candidates = [
 #{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4']},
 #{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4']},
 #{'recipe': 'pychemps2', 'python': '3.6', 'build_channels': ['psi4']},
-#{'recipe': 'dkh', 'build_channels': 'psi4'},  # not yet built on mac
+#{'recipe': 'dkh', 'build_channels': 'psi4'},
 #{'recipe': 'libefp', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
-#{'recipe': 'erd', 'build_channels': 'psi4'},  # not yet built on mac
+#{'recipe': 'erd', 'build_channels': 'psi4'},
 #{'recipe': 'gdma', 'build_channels': 'psi4'},
 #{'recipe': 'am7-mp'},
 #{'recipe': 'am8-mp'},
