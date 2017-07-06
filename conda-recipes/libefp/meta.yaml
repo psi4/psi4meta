@@ -1,6 +1,9 @@
 {% set version = "1.4.2" %}
 
 {% set mklver = "2017.0.3" %}
+{% set defisa = "avx2" %}
+{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+
 
 package:
   name: libefp
@@ -8,23 +11,36 @@ package:
 
 source:
   git_url: git@github.com:ilyak/libefp.git             # [linux]
-  git_url: https://github.com/ilyak/libefp.git          # [osx]
+  git_url: https://github.com/ilyak/libefp.git         # [osx]
   git_tag: {{ version }}
 
 build:
   number: 1                                            # [linux]
-  number: 0                                            # [osx]
+  number: 1                                            # [osx]
   binary_relocation: true
   skip: true                                           # [win]
+  script_env:
+    - PSI_BUILD_ISA                                    # [osx]
+  {% if isa != defisa %}
+  features:
+    - {{ isa }}                                        # [osx]
+  {% endif %}
 
 requirements:
   build:
     - cmake >=3.0
     - gcc-5-mp         # [linux]
+    - mkl {{ mklver }} # [osx]
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # for oldmac selection
+    {% endif %}
 #    - gcc              # [osx]    # build w/conda gcc
     - mkl {{ mklver }} # [linux]
   run:
-    - mkl {{ mklver }} # [linux]  # link libiomp5
+    - mkl {{ mklver }}            # link mkl_rt. L: link libiomp5
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
 #    - gcc-5-mp         # [linux]  # link libgcc_s don't include at rt b/c interferes with using other gcc. can usually count on a libgcc_s to link to somewhere
 #    - libgcc           # [osx]    # link libgcc_s
 

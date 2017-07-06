@@ -1,6 +1,13 @@
+if [ "${PSI_BUILD_ISA}" == "sse41" ]; then
+    ISA="-msse4.1"
+elif [ "${PSI_BUILD_ISA}" == "avx2" ]; then
+    ISA="-march=native"
+fi
+
 
 if [ "$(uname)" == "Darwin" ]; then
 
+    LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt.dylib"
     #HDF5_INTERJECT="-L${PREFIX}/lib;-lhdf5;-lhdf5_hl;-lhdf5;-lz;-ldl;-lm"
     HDF5_INTERJECT="-L${PREFIX}/lib;-lhdf5;-lhdf5_hl;-lhdf5;-lpthread;-lz;-ldl;-lm"
 #/Users/loriab/anaconda/envs/_build/lib/libhdf5.dylib;/Users/loriab/anaconda/envs/_build/lib/libhdf5_hl.dylib;/Users/loriab/anaconda/envs/_build/lib/libhdf5.dylib;/Users/loriab/anaconda/envs/_build/lib/libz.dylib;/usr/lib/libdl.dylib;/usr/lib/libm.dylib
@@ -12,21 +19,21 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_C_FLAGS="${ISA}" \
         -DCMAKE_CXX_COMPILER=clang++ \
-        -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
+        -DCMAKE_CXX_FLAGS="-stdlib=libc++ ${ISA}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DSHARED_ONLY=ON \
+        -DENABLE_XHOST=OFF \
         -DENABLE_OPENMP=ON \
-        -DMKL=OFF \
+        -DMKL=ON \
         -DBUILD_DOXYGEN=OFF \
         -DBUILD_SPHINX=OFF \
         -DENABLE_TESTS=OFF \
+        -DLAPACK_LIBRARIES=${LAPACK_INTERJECT} \
         -DHDF5_LIBRARIES="${HDF5_INTERJECT}" \
         -DHDF5_INCLUDE_DIRS="${PREFIX}/include" \
         -DHDF5_VERSION="1.8.17"  # NOTICE PIN-TO-BUILD!
-
-        #-DCMAKE_C_COMPILER="${PREFIX}/bin/gcc" \
-        #-DCMAKE_CXX_COMPILER="${PREFIX}/bin/g++" \
 fi
 
 if [ "$(uname)" == "Linux" ]; then

@@ -16,6 +16,13 @@ elif [ "${CONDA_PY}" == "36" ]; then
     PY_ABBR="python3.6m"
 fi
 
+if [ "${PSI_BUILD_ISA}" == "sse41" ]; then
+    ISA="-msse4.1"
+elif [ "${PSI_BUILD_ISA}" == "avx2" ]; then
+    ISA="-march=native"
+fi
+
+
 if [ "$(uname)" == "Darwin" ]; then
 
     rm -f ${PREFIX}/lib/libsqlite3*
@@ -27,12 +34,15 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_C_FLAGS="${ISA}" \
         -DCMAKE_CXX_COMPILER=clang++ \
         -DCMAKE_Fortran_COMPILER=${PREFIX}/bin/gfortran \
+        -DCMAKE_Fortran_FLAGS="${ISA}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DPYMOD_INSTALL_LIBDIR=${PYMOD_INSTALL_LIBDIR} \
         -DPYTHON_INTERPRETER=${PYTHON} \
         -DSHARED_LIBRARY_ONLY=ON \
+        -DENABLE_XHOST=OFF \
         -DENABLE_OPENMP=ON \
         -DENABLE_GENERIC=OFF \
         -DENABLE_DOCS=OFF \
@@ -42,7 +52,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DBUILD_STANDALONE=OFF \
         -DENABLE_FORTRAN_API=OFF \
         -DENABLE_CXX11_SUPPORT=ON \
-        -DCMAKE_CXX_FLAGS="-stdlib=libc++"
+        -DCMAKE_CXX_FLAGS="-stdlib=libc++ ${ISA}"
 fi
 
 if [ "$(uname)" == "Linux" ]; then

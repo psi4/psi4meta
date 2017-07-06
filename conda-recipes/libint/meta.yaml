@@ -1,5 +1,10 @@
 {% set version = "1.2.1" %}
 
+{% set defam = "6" %}
+{% set am = environ.get("MAX_AM_ERI", defam) %}
+{% set defisa = "avx2" %}
+{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+
 package:
   name: libint
   version: {{ version }}
@@ -11,18 +16,39 @@ source:
   #git_tag: release-1-2-1
 
 build:
-  number: 0
+  number: 0                                            # [linux]
+  number: 0                                            # [osx]
   binary_relocation: true
   skip: true                                           # [win]
-  #features:
-  #  - am7
+  script_env:
+    - MAX_AM_ERI
+    - PSI_BUILD_ISA                                    # [osx]
+  {% if (am != defam) or (isa != defisa) %}
+  features:
+    {% if am != defam %}
+    - am{{ am }}
+    {% endif %}
+    {% if isa != defisa %}
+    - {{ isa }}                                        # [osx]
+    {% endif %}
+  {% endif %}
 
 requirements:
   build:
     - cmake >=3.0
-  #  - am7
-  #run:
-  #  - am7
+    {% if am != defam %}
+    - am{{ am }}
+    {% endif %}
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # for oldmac selection
+    {% endif %}
+  run:
+    {% if am != defam %}
+    - am{{ am }}
+    {% endif %}
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
 
 test:
   commands:

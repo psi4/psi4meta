@@ -1,6 +1,9 @@
 {% set version = "1.8.3" %}
 
 {% set mklver = "2017.0.3" %}
+{% set defisa = "avx2" %}
+{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+
 
 package:
   name: chemps2
@@ -16,10 +19,16 @@ source:
   #git_tag: v{{ version }}
 
 build:
-  number: 6  # 55d6 incr 4-->5 but unbuild             # [linux]
-  number: 5  # 55d6 incr 4-->5 but unbuild             # [osx]
+  number: 6                                            # [linux]  # 55d6 incr 4-->5 but unbuild
+  number: 6                                            # [osx]
   binary_relocation: true
   skip: true                                           # [win]
+  script_env:
+    - PSI_BUILD_ISA                                    # [osx]
+  {% if isa != defisa %}
+  features:
+    - {{ isa }}                                        # [osx]
+  {% endif %}
 
 requirements:
   build:
@@ -27,13 +36,20 @@ requirements:
     - hdf5 1.8.17                 # PIN-TO-BUILD
     - gcc-5-mp         # [linux]
     - zlib
-    - mkl {{ mklver }} # [linux]
+    - mkl {{ mklver }}
     - mkl-static {{ mklver }}  # [linux]
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # for oldmac selection
+    {% endif %}
   run:
 #    - gcc-5-mp         # [linux]  # link libgcc_s  # trying not incl@rt on same grounds as libefp
     - hdf5 1.8.17                  # link libhdf5, libhdf5_hl  PIN-TO-BUILD
     - mkl {{ mklver }}  # [linux]  # link libiomp5, MKL
     - zlib             #          # link libz
+    - mkl {{ mklver }} # [osx]
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
 
 ##    - libgcc           # [osx]    # link libstdc++, libgcc_s, libgomp
 ##    - libgcc           # [linux]  # link libgcc_s

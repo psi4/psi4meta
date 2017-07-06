@@ -1,3 +1,9 @@
+if [ "${PSI_BUILD_ISA}" == "sse41" ]; then
+    ISA="-msse4.1"
+elif [ "${PSI_BUILD_ISA}" == "avx2" ]; then
+    ISA="-march=native"
+fi
+
 
 if [ "$(uname)" == "Darwin" ]; then
 
@@ -7,10 +13,13 @@ if [ "$(uname)" == "Darwin" ]; then
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER="${PREFIX}/bin/gcc" \
+        -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_C_FLAGS="${ISA}" \
         -DCMAKE_Fortran_COMPILER="${PREFIX}/bin/gfortran" \
+        -DCMAKE_Fortran_FLAGS="${ISA}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DBUILD_SHARED_LIBS=ON
+        -DBUILD_SHARED_LIBS=ON \
+        -DENABLE_XHOST=OFF
 fi
 
 # linux not tested
