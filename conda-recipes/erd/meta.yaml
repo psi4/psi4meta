@@ -1,5 +1,8 @@
 {% set version = "3.0.6" %}
 
+{% set defisa = "avx2" %}
+{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+
 package:
   name: erd
   version: {{ version }}
@@ -11,17 +14,29 @@ source:
 
 build:
   number: 0                                            # [linux]
-  number: 1                                            # [osx]
+  number: 3                                            # [osx]
   binary_relocation: true
   skip: true                                           # [win]
+  script_env:
+    - PSI_BUILD_ISA                                    # [osx]
+  {% if isa != defisa %}
+  features:
+    - {{ isa }}                                        # [osx]
+  {% endif %}
 
 requirements:
   build:
     - cmake >=3.0
     - gcc              # [osx]    # build w/conda gfortran
     - gcc-5-mp         # [linux]  # detect Fortran/C module mangling
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # for oldmac selection
+    {% endif %}
   run:
     - libgcc           # [osx]    # link libgfortran, libquadmath, libgcc_s
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
 
 test:
   commands:

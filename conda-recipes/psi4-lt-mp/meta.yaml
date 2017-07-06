@@ -1,9 +1,17 @@
+{% set defisa = "avx2" %}
+{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+
+
 package:
   name: psi4-lt-mp
   version: 1.1
 
 build:
   number: 0
+  {% if isa != defisa %}
+  features:
+    - {{ isa }}                                        # [osx]
+  {% endif %}
 
 requirements:
   run:
@@ -18,6 +26,9 @@ requirements:
     - pcmsolver >=1.1.10
     - simint    >=0.7
     - libxc     >=3.0.0           # required >=1.2
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
 
 about:
   summary: link-time quantum chemistry add-ons for Psi4

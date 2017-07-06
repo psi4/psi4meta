@@ -1,5 +1,12 @@
 MAX_AM_ERI=7
 
+if [ "${PSI_BUILD_ISA}" == "sse41" ]; then
+    ISA="sse"
+elif [ "${PSI_BUILD_ISA}" == "avx2" ]; then
+    ISA="avxfma"
+fi
+
+
 if [ "$(uname)" == "Darwin" ]; then
 
     # configure
@@ -12,7 +19,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DSIMINT_MAXAM=${MAX_AM_ERI} \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DBUILD_SHARED_LIBS=ON \
-        -DSIMINT_VECTOR=sse \
+        -DSIMINT_VECTOR="${ISA}" \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DENABLE_TESTS=OFF
 fi

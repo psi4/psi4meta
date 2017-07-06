@@ -1,3 +1,9 @@
+if [ "${PSI_BUILD_ISA}" == "sse41" ]; then
+    ISA="-msse4.1"
+elif [ "${PSI_BUILD_ISA}" == "avx2" ]; then
+    ISA="-march=native"
+fi
+
 
 if [ "$(uname)" == "Darwin" ]; then
 
@@ -8,11 +14,14 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_C_FLAGS="${ISA}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DBUILD_SHARED_LIBS=ON \
+        -DENABLE_XHOST=OFF \
         -DENABLE_OPENMP=OFF \
         -DFRAGLIB_UNDERSCORE_L=OFF \
-        -DFRAGLIB_DEEP=OFF
+        -DFRAGLIB_DEEP=OFF \
+        -DLAPACK_LIBRARIES="${PREFIX}/lib/libmkl_rt.dylib"
 fi
 
 if [ "$(uname)" == "Linux" ]; then

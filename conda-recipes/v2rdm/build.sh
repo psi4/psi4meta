@@ -1,3 +1,12 @@
+if [ "${PSI_BUILD_ISA}" == "sse41" ]; then
+    ISA="-msse4.1"
+elif [ "${PSI_BUILD_ISA}" == "avx2" ]; then
+    ISA="-march=native"
+fi
+
+psi4 --version
+
+
 if [ "$(uname)" == "Darwin" ]; then
 
     # configure
@@ -8,9 +17,11 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=clang \
         -DCMAKE_CXX_COMPILER=clang++ \
-        -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
+        -DCMAKE_CXX_FLAGS="-stdlib=libc++ ${ISA}" \
         -DCMAKE_Fortran_COMPILER="${PREFIX}/bin/gfortran" \
-        -DBUILD_SHARED_LIBS=ON
+        -DCMAKE_Fortran_FLAGS="${ISA}" \
+        -DBUILD_SHARED_LIBS=ON \
+        -DENABLE_XHOST=OFF
 fi
 
 if [ "$(uname)" == "Linux" ]; then
