@@ -9,9 +9,11 @@ package:
   version: {{ version }}
 
 source:
-  git_url: git@github.com:edeprince3/v2rdm_casscf.git      # [linux]
-  git_url: https://github.com/edeprince3/v2rdm_casscf.git  # [osx]
-  git_tag: v{{ version }}
+  #git_url: git@github.com:edeprince3/v2rdm_casscf.git      # [linux]
+  #git_url: https://github.com/edeprince3/v2rdm_casscf.git  # [osx]
+  #git_tag: v{{ version }}
+  git_url: https://github.com/loriab/v2rdm_casscf.git
+  git_tag: 833b18f  # post_genmaint
 
 build:
                                                        # 1 works 1.1, 2 works w/libxc, 3 works w/general maint.
