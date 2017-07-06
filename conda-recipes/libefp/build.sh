@@ -23,12 +23,16 @@ if [ "$(uname)" == "Linux" ]; then
     set -x
 
     # force static link to Intel mkl, except for openmp
-    MKLROOT=/theoryfs2/common/software/intel2016/compilers_and_libraries_2016.2.181/linux/mkl/lib/intel64
-    LAPACK_INTERJECT="${MKLROOT}/libmkl_lapack95_lp64.a;-Wl,--start-group;${MKLROOT}/libmkl_intel_lp64.a;${MKLROOT}/libmkl_sequential.a;${MKLROOT}/libmkl_core.a;-Wl,--end-group;-lpthread;-lm;-ldl"
+    #MKLROOT=/theoryfs2/common/software/intel2016/compilers_and_libraries_2016.2.181/linux/mkl/lib/intel64
+    #LAPACK_INTERJECT="${MKLROOT}/libmkl_lapack95_lp64.a;-Wl,--start-group;${MKLROOT}/libmkl_intel_lp64.a;${MKLROOT}/libmkl_sequential.a;${MKLROOT}/libmkl_core.a;-Wl,--end-group;-lpthread;-lm;-ldl"
+    LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt.so"
 
     # link against older libc for generic linux
     TLIBC=/home/psilocaluser/installs/glibc2.12
     LIBC_INTERJECT="${TLIBC}/lib64/libc.so.6"
+
+    # build multi-instruction-set library
+    OPTS="-msse2 -axCORE-AVX2,AVX"
 
     # configure
     ${PREFIX}/bin/cmake \
@@ -37,6 +41,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=icc \
+        -DCMAKE_C_FLAGS="${OPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_OPENMP=OFF \

@@ -1,5 +1,7 @@
 {% set version = "1.8.3" %}
 
+{% set mklver = "2017.0.3" %}
+
 package:
   name: chemps2
   version: {{ version }}
@@ -14,7 +16,8 @@ source:
   #git_tag: v{{ version }}
 
 build:
-  number: 5  # 55d6 incr 4-->5 but unbuild
+  number: 6  # 55d6 incr 4-->5 but unbuild             # [linux]
+  number: 5  # 55d6 incr 4-->5 but unbuild             # [osx]
   binary_relocation: true
   skip: true                                           # [win]
 
@@ -24,10 +27,12 @@ requirements:
     - hdf5 1.8.17                 # PIN-TO-BUILD
     - gcc-5-mp         # [linux]
     - zlib
+    - mkl {{ mklver }} # [linux]
+    - mkl-static {{ mklver }}  # [linux]
   run:
 #    - gcc-5-mp         # [linux]  # link libgcc_s  # trying not incl@rt on same grounds as libefp
     - hdf5 1.8.17                  # link libhdf5, libhdf5_hl  PIN-TO-BUILD
-    - mkl              # [linux]  # link libiomp5
+    - mkl {{ mklver }}  # [linux]  # link libiomp5, MKL
     - zlib             #          # link libz
 
 ##    - libgcc           # [osx]    # link libstdc++, libgcc_s, libgomp

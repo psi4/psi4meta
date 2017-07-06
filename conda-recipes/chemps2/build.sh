@@ -42,16 +42,21 @@ if [ "$(uname)" == "Linux" ]; then
     LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/librt.so.1;${TLIBC}/lib64/libpthread.so.0;${TLIBC}/lib64/libm.so.6;dl;${PREFIX}/lib/libgcc_s.so;${TLIBC}/lib64/libc.so.6"
 
     # force static link to Intel mkl, except for openmp
-    MKLROOT=/theoryfs2/common/software/intel2016/compilers_and_libraries_2016.2.181/linux/mkl/lib/intel64
-    LAPACK_INTERJECT="-Wl,--start-group;${MKLROOT}/libmkl_cdft_core.a;${MKLROOT}/libmkl_intel_lp64.a;${MKLROOT}/libmkl_intel_thread.a;${MKLROOT}/libmkl_core.a;${MKLROOT}/libmkl_blacs_intelmpi_lp64.a;-Wl,--end-group;-liomp5;-lpthread;${TLIBC}/lib64/libm.so.6;-ldl"
+    #MKLROOT=/theoryfs2/common/software/intel2016/compilers_and_libraries_2016.2.181/linux/mkl/lib/intel64
+    #LAPACK_INTERJECT="-Wl,--start-group;${MKLROOT}/libmkl_cdft_core.a;${MKLROOT}/libmkl_intel_lp64.a;${MKLROOT}/libmkl_intel_thread.a;${MKLROOT}/libmkl_core.a;${MKLROOT}/libmkl_blacs_intelmpi_lp64.a;-Wl,--end-group;-liomp5;-lpthread;${TLIBC}/lib64/libm.so.6;-ldl"
+    MKLROOT="${PREFIX}/lib"
+    LAPACK_INTERJECT="-Wl,--start-group;${MKLROOT}/libmkl_cdft_core.a;${MKLROOT}/libmkl_rt.so;${MKLROOT}/libmkl_blacs_intelmpi_lp64.a;-Wl,--end-group;-liomp5;-lpthread;${TLIBC}/lib64/libm.so.6;-ldl"
 
     ## link against older (pre-2.14 libc-based) hdf5 & zlib either:
     ## (a) explicitly
-    HDF5_INTERJECT="${PREFIX}/lib/libhdf5.so;${PREFIX}/lib/libhdf5_hl.so;${PREFIX}/lib/libhdf5.so;-lrt;${PREFIX}/lib/libz.so.1.2.8;-ldl;${TLIBC}/lib64/libm.so.6"
+    HDF5_INTERJECT="${PREFIX}/lib/libhdf5.so;${PREFIX}/lib/libhdf5_hl.so;${PREFIX}/lib/libhdf5.so;-lrt;${PREFIX}/lib/libz.so.1.2.11;-ldl;${TLIBC}/lib64/libm.so.6"
     #    -DHDF5_LIBRARIES="${HDF5_INTERJECT}"
     #    -DHDF5_INCLUDE_DIRS="${PREFIX}/include"
     ## (b) by having them detectable, probably through a "source activate hdf5zlibenv"
     #source activate py2basics
+
+    # build multi-instruction-set library
+    OPTS="-msse2 -axCORE-AVX2,AVX"
 
     # configure
     ${PREFIX}/bin/cmake \
@@ -61,6 +66,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=icc \
         -DCMAKE_CXX_COMPILER=icpc \
+        -DCMAKE_C_FLAGS="${OPTS}" \
+        -DCMAKE_CXX_FLAGS="${OPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DSHARED_ONLY=ON \
         -DENABLE_OPENMP=ON \
@@ -93,7 +100,7 @@ if [ "$(uname)" == "Linux" ]; then
     # generalize the interface_link_libraries for export where overly specified
     #   during compilation just to suppress glibc 2.14 dependence
     sed -i "s|${TLIBC}/lib64/libm.so.6|-lm|g" ${PREFIX}/share/cmake/CheMPS2/CheMPS2Targets-shared.cmake
-    sed -i "s|libz.so.1.2.8|libz.so|g" ${PREFIX}/share/cmake/CheMPS2/CheMPS2Targets-shared.cmake
+    sed -i "s|libz.so.1.2.11|libz.so|g" ${PREFIX}/share/cmake/CheMPS2/CheMPS2Targets-shared.cmake
 fi
 
 # test
