@@ -10,6 +10,13 @@ elif [ "${CONDA_PY}" == "36" ]; then
     PY_ABBR="python3.6m"
 fi
 
+if [ "${PSI_BUILD_ISA}" == "sse41" ]; then
+    ISA="-msse4.1"
+elif [ "${PSI_BUILD_ISA}" == "avx2" ]; then
+    ISA="-march=native"
+fi
+
+
 if [ "$(uname)" == "Darwin" ]; then
 
     # configure
@@ -19,9 +26,11 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_C_FLAGS="${ISA}" \
         -DCMAKE_CXX_COMPILER=clang++ \
-        -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
+        -DCMAKE_CXX_FLAGS="-stdlib=libc++ ${ISA}" \
         -DCMAKE_Fortran_COMPILER=${PREFIX}/bin/gfortran \
+        -DCMAKE_Fortran_FLAGS="${ISA}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
         -DBUILD_SHARED_LIBS=ON \
@@ -38,6 +47,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.dylib" \
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
+        -DENABLE_XHOST=OFF \
         -DBUILDNAME="LAB-OSX-clang7.3.0-accelerate-py${CONDA_PY}-release-conda" \
         -DSITE=gatech-mac-conda \
         -DCMAKE_OSX_DEPLOYMENT_TARGET=''
@@ -49,6 +59,7 @@ if [ "$(uname)" == "Darwin" ]; then
     # build
     cd build
     make -j${CPU_COUNT}
+    #make VERBOSE=1
 
     # install
     make install
