@@ -7,6 +7,7 @@ build:
 
 requirements:
   run:
+    - gcc-5            # [osx]    # salford_systems's gcc-5 that needs some pinning
     - gcc-5            # [linux]  # msarahan's gcc-5 that needs some pinning
     - isl 0.12.2       # [linux]
     - mpc 1.0.1        # [linux]
