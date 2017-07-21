@@ -1,6 +1,12 @@
 
 {% set data = load_setup_py_data(setup_file='conda/_conda_vers.py') %}
 
+{% set mklver = "2017.0.3" %}
+{% set defisa = "avx2" %}
+{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+{% set docs = environ.get("PSI_BUILD_DOCS", "0") %}
+
+
 package:
   name: psi4
   version: {{ data.get('version') }}
@@ -15,6 +21,13 @@ build:
   skip: true                                           # [win]
   number: 0
   binary_relocation: true
+  script_env:
+    - PSI_BUILD_DOCS                                   # [linux]
+    - PSI_BUILD_ISA                                    # [osx]
+  {% if isa != defisa %}
+  features:
+    - {{ isa }}                                        # [osx]
+  {% endif %}
 
 requirements:
   build:
@@ -22,23 +35,27 @@ requirements:
     - cmake >3.3
     - gcc              # [osx]    # for gfortran
     - gcc-5-mp         # [linux]
-    - numpy                       # for psi4 execution w/i ctest and sphinxman
+    - numpy                       # for psi4 execution w/i ctest and sphinxman (intel channel so mkl_rt-linked)
+    - mkl-include {{ mklver }}    # for mkl.h (intel channel)
+    - mkl {{ mklver }}
     - python x.x
     # qc
     - psi4-lt-mp 1.1
     - psi4-rt 1.1                 # for cmake testing
     # docs
-    - docutils 0.12*   # [linux and py35]  # for docs (verno avoids sphinx bug)
-    - ipykernel        # [linux and py35]  # for psiapi docs
-    - jupyter_client   # [linux and py35]  # for psiapi docs
-    - nbsphinx         # [linux and py35]  # for psiapi docs
-    - pandoc 1.19*     # [linux and py35]  # for psiapi docs (verno forces conda-forge that gets headers right)
-    - sphinx 1.5*      # [linux and py35]  # for docs
+    {% if docs == "1" %}
+    - docutils 0.12*   # [linux]  # for docs (verno avoids sphinx bug)
+    - ipykernel        # [linux]  # for psiapi docs
+    - jupyter_client   # [linux]  # for psiapi docs
+    - nbsphinx         # [linux]  # for psiapi docs
+    - pandoc 1.19*     # [linux]  # for psiapi docs (verno forces conda-forge that gets headers right)
+    - sphinx 1.5*      # [linux]  # for docs
+    {% endif %}
   run:
     # non-qc
     - libgcc           # [osx]    # link libgfortran
     - gcc-5-mp         # [linux]  # link libgcc_s
-    - mkl              # [linux]  # link libiomp5
+    - mkl {{ mklver }}            # link libmkl_rt, libiomp5
     - numpy                       # linalg python
     - pytest                      # drive psi4 --test
     - python x.x                  # interpreter python
