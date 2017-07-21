@@ -15,4 +15,5 @@ psicode feeds from psinet
   * If so, discard backup, copy existing to backup, and untar new into existing, delete tarballs
   * Does this for docs and for github feed
   * Files then in place for website to reference
+  * 21 Mar 2017 --- Now does this for doxygen also
 

@@ -1,0 +1,102 @@
+
+{% set data = load_setup_py_data(setup_file='conda/_conda_vers.py') %}
+
+{% set mklver = "2017.0.3" %}
+{% set defisa = "avx2" %}
+{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+
+
+package:
+  name: psi4
+  version: {{ data.get('version') }}
+
+source:
+  git_url: git@github.com:psi4/psi4.git                # [linux]
+  git_url: https://github.com/psi4/psi4.git            # [osx]
+  git_tag: master
+  #git_tag: v1.1  # explicit tag when you don't want tag.dev1
+
+build:
+  skip: true                                           # [win]
+  number: 0
+  binary_relocation: true
+  script_env:
+    - PSI_BUILD_ISA                                    # [osx]
+  {% if isa != defisa %}
+  features:
+    - {{ isa }}                                        # [osx]
+  {% endif %}
+
+requirements:
+  build:
+    # non-qc
+    - cmake >3.3
+    - gcc              # [osx]    # for gfortran
+    - gcc-5-mp         # [linux]
+    - mkl-include {{ mklver }}    # [osx]   # for mkl.h (intel channel)
+    - mkl {{ mklver }} # [osx]
+    - numpy                       # for psi4 execution w/i ctest and sphinxman
+    - python x.x
+    # qc
+    - psi4-lt-mp 1.1
+    - psi4-rt 1.1                 # for cmake testing
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # for oldmac selection
+    {% endif %}
+    # docs
+    - docutils 0.12*   # [linux and py35]  # for docs (verno avoids sphinx bug)
+    - ipykernel        # [linux and py35]  # for psiapi docs
+    - jupyter_client   # [linux and py35]  # for psiapi docs
+    - nbsphinx         # [linux and py35]  # for psiapi docs
+    - pandoc 1.19*     # [linux and py35]  # for psiapi docs (verno forces conda-forge that gets headers right)
+    - sphinx 1.5*      # [linux and py35]  # for docs
+  run:
+    # non-qc
+    - libgcc           # [osx]    # link libgfortran
+    - gcc-5-mp         # [linux]  # link libgcc_s
+    - mkl              # [linux]  # link libiomp5
+    - mkl {{ mklver }} # [osx]    # link libmkl_rt
+    - numpy                       # linalg python
+    - pytest                      # drive psi4 --test
+    - python x.x                  # interpreter python
+    # qc
+    - psi4-lt-mp 1.1              # link libchemps2, libdkh, libefp, liberd
+                                  #      libgdma, libint, libderiv, libpcm,
+                                  #      libsimint, libxc (in 1.2)
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
+
+test:
+  requires:
+    - psi4-rt 1.1                 # load dftd3, gcp, v2rdm_casscf
+  commands:
+    # Verify existence and execution
+    - test -f $PREFIX/bin/psi4
+    - test -f $SP_DIR/psi4/core.so
+    - $PREFIX/bin/psi4 --version
+    # Inspect linkage
+    - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
+    - ldd -v $SP_DIR/psi4/core.so     # [linux]
+    - otool -L $SP_DIR/psi4/core.so   # [osx]
+    - conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gdma libint pcmsolver simint libxc psi4
+    # Actually test
+    - conda list
+    - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
+
+about:
+  home: http://psicode.org
+  dev_url: https://github.com/psi4/psi4
+  doc_url: http://psicode.org/psi4manual/master/index.html
+  license: LGPL-3.0
+  license_url: https://opensource.org/licenses/LGPL-3.0
+  license_file: COPYING.LESSER
+  license_family: LGPL
+  summary: Open-Source Quantum Chemistry - an electronic structure package in C++ driven by Python
+  #description:
+
+# to conda build package from local source rather than github, substitute like below
+#package/version: 0.1.6
+#source/path: ../../../hrw-conda
+#build/number: 1
+#build/string: abc

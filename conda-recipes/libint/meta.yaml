@@ -1,37 +1,73 @@
-{% set version = "1.1.6" %}
+{% set version = "1.2.1" %}
+
+{% set defam = "6" %}
+{% set am = environ.get("MAX_AM_ERI", defam) %}
+{% set defisa = "avx2" %}
+{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
 
 package:
   name: libint
   version: {{ version }}
 
 source:
-  git_url: git@github.com:psi4/libint.git              # [linux]
-  git_url: https://github.com/psi4/libint.git          # [osx]
-  #git_tag: v{{ version }}
+  git_url: git@github.com:evaleev/libint.git           # [linux]
+  git_url: https://github.com/evaleev/libint.git       # [osx]
+  git_tag: 3f14ff0  # v1, ~1.2.1
+  #git_tag: release-1-2-1
 
 build:
-  number: 1
+  number: 0                                            # [linux]
+  number: 0                                            # [osx]
   binary_relocation: true
   skip: true                                           # [win]
+  script_env:
+    - MAX_AM_ERI
+    - PSI_BUILD_ISA                                    # [osx]
+  {% if (am != defam) or (isa != defisa) %}
+  features:
+    {% if am != defam %}
+    - am{{ am }}
+    {% endif %}
+    {% if isa != defisa %}
+    - {{ isa }}                                        # [osx]
+    {% endif %}
+  {% endif %}
 
 requirements:
   build:
     - cmake >=3.0
-    - gcc              # [osx]    # build w/conda gcc
+    {% if am != defam %}
+    - am{{ am }}
+    {% endif %}
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # for oldmac selection
+    {% endif %}
   run:
-    - libgcc           # [osx]    # link libstdc++, libgcc_s
+    {% if am != defam %}
+    - am{{ am }}
+    {% endif %}
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
 
 test:
   commands:
-    # Verify libraries and executable.
-    - test -f $PREFIX/lib/libint.so       # [linux]
-    - test -f $PREFIX/lib/libderiv.so     # [linux]
-    - test -f $PREFIX/lib/libint.dylib    # [osx]
-    - test -f $PREFIX/lib/libderiv.dylib  # [osx]
+    # Verify library
+    - test -f $PREFIX/lib/libint$SHLIB_EXT
+    - test -f $PREFIX/lib/libderiv$SHLIB_EXT
+    # Inspect linkage
+    - ldd -r -u $PREFIX/lib/libint.so && return 0  # [linux]
+    - ldd -v $PREFIX/lib/libint.so                 # [linux]
+    - otool -L $PREFIX/lib/libint.dylib            # [osx]
+    - conda-inspect linkages libint --show-files
 
 about:
-  home: https://github.com/psi4/libint
-  license: GNU General Public License v2 or later (GPLv2+)
-  summary: "two-body molecular integrals over Gaussian functions library"
-  readme: README.md
-
+  home: https://github.com/evaleev/libint/tree/v1
+  dev_url: https://github.com/evaleev/libint
+  doc_url: http://evaleev.github.io/libint/
+  license: LGPL-3.0+
+  license_url: https://opensource.org/licenses/LGPL-3.0+
+  license_file: LICENSE
+  license_family: LGPL
+  summary: E. Valeev and J. Fermann's two-body Gaussian molecular integrals
+  #description:

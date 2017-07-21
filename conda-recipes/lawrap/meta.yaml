@@ -1,0 +1,36 @@
+{% set version = "0.1" %}
+
+package:
+  name: lawrap
+  version: {{ version }}
+
+source:
+  git_url: https://github.com/loriab/lawrap.git
+  git_tag: cmake
+
+build:
+  skip: true                # [win]
+  number: 0
+  binary_relocation: true
+
+requirements:
+  build:
+    - cmake >3.3
+    - gcc
+
+test:
+  commands:
+    # Verify existence and execution
+    - test -f $PREFIX/include/lawrap/lapack.h
+
+about:
+  home: https://github.com/devinamatthews/lawrap
+  dev_url: https://github.com/devinamatthews/lawrap
+  #doc_url: http://psicode.org/psi4manual/master/index.html
+  license: BSD-3-Clause
+  license_url: https://opensource.org/licenses/BSD-3-Clause
+  license_file: LICENSE
+  license_family: BSD
+  summary: Thin C and C++ wrappers around the Fortran BLAS and LAPACK interfaces, meant to simplify usage and increase robustness while maintaining     as low-level an interface as possible
+  #description:
+

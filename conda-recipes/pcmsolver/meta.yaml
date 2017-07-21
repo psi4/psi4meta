@@ -1,4 +1,8 @@
-{% set version = "1.1.4" %}
+{% set version = "1.1.10" %}
+
+{% set defisa = "avx2" %}
+{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+
 
 package:
   name: pcmsolver
@@ -8,27 +12,48 @@ source:
   git_url: git@github.com:PCMSolver/pcmsolver.git      # [linux]
   git_url: https://github.com/PCMSolver/pcmsolver.git  # [osx]
   git_tag: v{{ version }}
+  #git_url: git@github.com:loriab/pcmsolver.git      # [linux]
+  #git_tag: config8
 
 build:
-  number: 0
+  number: 0                                            # [linux]
+  number: 1                                            # [osx]
   binary_relocation: true
   skip: true                                           # [win]
+  script_env:
+    - PSI_BUILD_ISA                                    # [osx]
+  {% if isa != defisa %}
+  features:
+    - {{ isa }}                                        # [osx]
+  {% endif %}
 
 requirements:
   build:
-    - boost >=1.53     # [osx]
-    - cmake >=2.8.10
-    - gcc              # [osx]    # build w/ gcc, gfortran
+    - cmake >=3.1
+    - gcc              # [osx]    # build w/ gfortran
+    - gcc-5-mp         # [linux]
+    - python x.x                  # for site-packages location, install selection
     - zlib
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # for oldmac selection
+    {% endif %}
   run:
-    - libgcc           # [osx]    # link libgfortran, libquadmath, libstdc++, libgcc_s
+    - libgcc           # [osx]    # link libgfortran, libquadmath
     - zlib                        # link libz
+    - python x.x                  # interpreter
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
 
 test:
   commands:
-    # Verify library.
-    - test -f $PREFIX/lib/libpcm.so     # [linux]
-    - test -f $PREFIX/lib/libpcm.dylib  # [osx]
+    # Verify library and python module
+    - test -f $PREFIX/lib/libpcm$SHLIB_EXT
+    - test -f $SP_DIR/pcmsolver/pcmsolver.py
+    # Inspect linkage
+    - ldd -v $PREFIX/lib/libpcm.so       # [linux]
+    - otool -L $PREFIX/lib/libpcm.dylib  # [osx]
+    - conda-inspect linkages pcmsolver --show-files
 
 about:
   home: http://pcmsolver.readthedocs.org/en/latest/

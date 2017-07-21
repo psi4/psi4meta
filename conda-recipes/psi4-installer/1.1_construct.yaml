@@ -1,0 +1,52 @@
+name: psi4conda
+version: "1.1"  # TODO EDIT
+
+# TODO EDIT & TOGGLE
+installer_filename: psi4conda-1.1-py27-Linux-x86_64.sh
+#installer_filename: psi4conda-1.1-py35-Linux-x86_64.sh
+#installer_filename: psi4conda-1.1-py36-Linux-x86_64.sh
+#installer_filename: psi4conda-1.1-py27-MacOSX-x86_64.sh
+#installer_filename: psi4conda-1.1-py35-MacOSX-x86_64.sh
+#installer_filename: psi4conda-1.1-py36-MacOSX-x86_64.sh
+
+# TODO EDIT & TOGGLE
+packages:
+  - https://conda.anaconda.org/psi4/label/dev/linux-64/psi4-1.1+add49b9-py27_0.tar.bz2
+#  - https://conda.anaconda.org/psi4/label/dev/linux-64/psi4-1.1+add49b9-py35_0.tar.bz2
+#  - https://conda.anaconda.org/psi4/label/dev/linux-64/psi4-1.1+add49b9-py36_0.tar.bz2
+#  - https://conda.anaconda.org/psi4/label/dev/osx-64/psi4-1.1+add49b9-py27_0.tar.bz2
+#  - https://conda.anaconda.org/psi4/label/dev/osx-64/psi4-1.1+add49b9-py35_0.tar.bz2
+#  - https://conda.anaconda.org/psi4/label/dev/osx-64/psi4-1.1+add49b9-py36_0.tar.bz2
+
+specs:
+  # psi4 non-qc
+  - libgcc           # [osx]
+  - gcc-5-mp         # [linux]
+  - mkl              # [linux]
+  - numpy
+  - pytest
+  - python 2.7*                 # TODO TOGGLE
+  #- python 3.5*
+  #- python 3.6*
+  # psi4 qc
+  - psi4-lt-mp 1.1
+  - psi4-rt 1.1
+  # addl
+  - conda
+
+channels: &id1
+  - http://conda.anaconda.org/psi4
+  - http://repo.continuum.io/pkgs/free/
+
+conda_default_channels: *id1
+
+install_in_dependency_order: True
+
+keep_pkgs: false
+
+#post_install: post_install.sh
+
+# note that run-time pkgs *not* pulled in from explicit psi4 pkg
+
+#installer_filename: psi4conda-1.1rc1-py36-MacOSX-x86_64.sh
+#  - https://conda.anaconda.org/psi4/label/dev/osx-64/psi4-1.1rc1+6db9b1f-py36_0.tar.bz2

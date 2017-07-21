@@ -1,4 +1,11 @@
-psinet-nightly/cb-psinet*.log
+*pyc
 stallo/*.o*
 stallo/*.e*
 conda-recipes/.messages.txt
+nohup.out
+mac-psinet/coverage-norm.log
+mac-psinet/kpd-anom.log
+psinet-nightly/kpd-anom.log
+psinet-nightly/kpd-norm.log
+psinet-nightly/psicode-dropbox.log
+PSIDownloadAnalyzer/*.png

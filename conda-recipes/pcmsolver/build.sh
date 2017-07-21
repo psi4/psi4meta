@@ -1,78 +1,104 @@
 # conda's setting of CFLAGS interferes with PCMSolver CMake settings, so clear
 KEEPCFLAGS=$CFLAGS
+KEEPCXXFLAGS=$CXXFLAGS
 unset CFLAGS
+unset CXXFLAGS
+
+# collect the py-dep path pieces
+if [ "${CONDA_PY}" == "27" ]; then
+    PYMOD_INSTALL_LIBDIR="/python2.7/site-packages"
+    PY_ABBR="python2.7"
+elif [ "${CONDA_PY}" == "35" ]; then
+    PYMOD_INSTALL_LIBDIR="/python3.5/site-packages"
+    PY_ABBR="python3.5m"
+elif [ "${CONDA_PY}" == "36" ]; then
+    PYMOD_INSTALL_LIBDIR="/python3.6/site-packages"
+    PY_ABBR="python3.6m"
+fi
+
+if [ "${PSI_BUILD_ISA}" == "sse41" ]; then
+    ISA="-msse4.1"
+elif [ "${PSI_BUILD_ISA}" == "avx2" ]; then
+    ISA="-march=native"
+fi
+
 
 if [ "$(uname)" == "Darwin" ]; then
 
     rm -f ${PREFIX}/lib/libsqlite3*
 
-    # conda gnu compilers
-    CC="${PREFIX}/bin/gcc"
-    CXX="${PREFIX}/bin/g++"
-    F90="${PREFIX}/bin/gfortran"
-    GENERIC=OFF
-    LIBC_INTERJECT="''"
-
+    # configure
+    ${PREFIX}/bin/cmake \
+        -H${SRC_DIR} \
+        -Bbuild \
+        -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_C_FLAGS="${ISA}" \
+        -DCMAKE_CXX_COMPILER=clang++ \
+        -DCMAKE_Fortran_COMPILER=${PREFIX}/bin/gfortran \
+        -DCMAKE_Fortran_FLAGS="${ISA}" \
+        -DCMAKE_INSTALL_LIBDIR=lib \
+        -DPYMOD_INSTALL_LIBDIR=${PYMOD_INSTALL_LIBDIR} \
+        -DPYTHON_INTERPRETER=${PYTHON} \
+        -DSHARED_LIBRARY_ONLY=ON \
+        -DENABLE_XHOST=OFF \
+        -DENABLE_OPENMP=ON \
+        -DENABLE_GENERIC=OFF \
+        -DENABLE_DOCS=OFF \
+        -DENABLE_TESTS=ON \
+        -DENABLE_TIMER=OFF \
+        -DENABLE_LOGGER=OFF \
+        -DBUILD_STANDALONE=OFF \
+        -DENABLE_FORTRAN_API=OFF \
+        -DENABLE_CXX11_SUPPORT=ON \
+        -DCMAKE_CXX_FLAGS="-stdlib=libc++ ${ISA}"
 fi
 
 if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers and mkl
+    set +x
     source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+    set -x
 
-    CC=icc
-    CXX=icpc
-    F90=ifort
-    GENERIC=ON
-
-    # force static link to Intel mkl, except for openmp
-    MKLROOT=/theoryfs2/common/software/intel2016/compilers_and_libraries_2016.2.181/linux/mkl/lib/intel64
-    COMPROOT=${MKLROOT}/../../../compiler/lib/intel64
-    LAPACK_INTERJECT="${COMPROOT}/libifport.a ${COMPROOT}/libifcore_pic.a"
     # link against older libc for generic linux
-    TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/psi4cmake/psi4/glibc2.12rpm
-    LIBC_INTERJECT="-L${TLIBC}/usr/lib64 ${TLIBC}/lib64/libpthread.so.0 ${TLIBC}/lib64/libc.so.6"
-    LIBC_INTERJECT="${LIBC_INTERJECT} ${LAPACK_INTERJECT}"
+    # force static link to Intel libs, except for openmp
+    TLIBC=/home/psilocaluser/installs/glibc2.12
+    LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/libpthread.so.0;${TLIBC}/lib64/libc.so.6;-Wl,-Bstatic;-lifport;-lifcoremt_pic;-Wl,-Bdynamic"
 
+    # force Intel compilers to find 5.2 gcc headers
+    export GXX_INCLUDE="${PREFIX}/gcc/include/c++"
+
+    # configure
+    ${PREFIX}/bin/cmake \
+        -H${SRC_DIR} \
+        -Bbuild \
+        -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_C_COMPILER=icc \
+        -DCMAKE_CXX_COMPILER=icpc \
+        -DCMAKE_Fortran_COMPILER=ifort \
+        -DCMAKE_INSTALL_LIBDIR=lib \
+        -DPYMOD_INSTALL_LIBDIR=${PYMOD_INSTALL_LIBDIR} \
+        -DPYTHON_INTERPRETER=${PYTHON} \
+        -DSHARED_LIBRARY_ONLY=ON \
+        -DENABLE_OPENMP=ON \
+        -DENABLE_GENERIC=ON \
+        -DENABLE_DOCS=OFF \
+        -DENABLE_TESTS=ON \
+        -DENABLE_TIMER=OFF \
+        -DENABLE_LOGGER=OFF \
+        -DBUILD_STANDALONE=OFF \
+        -DENABLE_FORTRAN_API=OFF \
+        -DENABLE_CXX11_SUPPORT=ON \
+        -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
+        -DCMAKE_CXX_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++" \
+        -DCMAKE_Fortran_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++"
 fi
 
-
-mkdir build
+# build
 cd build
-cmake \
- -DCMAKE_C_COMPILER=${CC} \
- -DCMAKE_CXX_COMPILER=${CXX} \
- -DCMAKE_Fortran_COMPILER=${F90} \
- -DEXTRA_CXXFLAGS="''" \
- -DEXTRA_CFLAGS="''" \
- -DEXTRA_FCFLAGS="''" \
- -DCMAKE_OSX_DEPLOYMENT_TARGET='' \
- -DENABLE_EXTENDED_DIAGNOSTICS=False \
- -DUSE_CCACHE="OFF" \
- -DENABLE_CODE_COVERAGE=False \
- -DENABLE_64BIT_INTEGERS=False \
- -DENABLE_OPENMP=False \
- -DPYTHON_INTERPRETER=${PYTHON} \
- -DBOOST_INCLUDEDIR="${PREFIX}/include" \
- -DBOOST_LIBRARYDIR="${PREFIX}/lib" \
- -DFORCE_CUSTOM_BOOST="OFF" \
- -DBOOST_MINIMUM_REQUIRED="1.54.0" \
- -DBOOST_COMPONENTS_REQUIRED="" \
- -DSTATIC_LIBRARY_ONLY=False \
- -DCMAKE_BUILD_TYPE=release \
- -G "Unix Makefiles" \
- -DENABLE_GENERIC=${GENERIC} \
- -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
- -DENABLE_CXX11_SUPPORT=ON \
- -DENABLE_TIMER=OFF \
- -DBUILD_STANDALONE=OFF \
- -DZLIB_ROOT=${PREFIX} \
- -DENABLE_DOCS=OFF \
- -DENABLE_TESTS=ON \
- -DCMAKE_INSTALL_PREFIX=${PREFIX} \
- -DCMAKE_INSTALL_LIBDIR=lib \
- ${SRC_DIR}
-
 make -j${CPU_COUNT}
 #make VERBOSE=1
 
@@ -83,7 +109,7 @@ make install
 if [ "$(uname)" == "Darwin" ]; then
 
     DYLD_LIBRARY_PATH=${PREFIX}/lib:$DYLD_LIBRARY_PATH \
-           PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
+           PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/${PYMOD_INSTALL_LIBDIR}:$PYTHONPATH \
                  PATH=${PREFIX}/bin:$PATH \
         ctest -j${CPU_COUNT}
 fi
@@ -91,10 +117,12 @@ fi
 if [ "$(uname)" == "Linux" ]; then
 
       LD_LIBRARY_PATH=${PREFIX}/lib:$LD_LIBRARY_PATH \
-           PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
+           PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/${PYMOD_INSTALL_LIBDIR}:$PYTHONPATH \
                  PATH=${PREFIX}/bin:$PATH \
         ctest -j${CPU_COUNT}
 fi
 
-export CFLAGS=KEEPFLAGS
+export CFLAGS=KEEPCFLAGS
+export CXXFLAGS=KEEPCXXFLAGS
 
+# Note: Alternative to gcc/gxx-name for CXX:  #-DCMAKE_CXX_FLAGS="-cxxlib=${PREFIX}" \

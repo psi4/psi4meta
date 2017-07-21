@@ -1,38 +1,42 @@
-{% set version = "1.8" %}
+{% set version = "1.8.3" %}
 
 package:
   name: pychemps2
   version: {{ version }}
 
 source:
-  git_url: git@github.com:loriab/CheMPS2.git       # [linux]
-  git_tag: configpy2
-  #git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
+  #git_url: https://github.com/loriab/CheMPS2.git       # [linux]
+  #git_tag: config6
+  git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
   git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
+  git_tag: 55d6b38  # v1.8.3-12
   #git_tag: v{{ version }}
 
 build:
-  number: 1
+  number: 9  # 55d6 incr 8-->9 but unbuild
   binary_relocation: true
   skip: true                                           # [win]
 
 requirements:
   build:
+    - gcc-5-mp         # [linux]  # needed since chemps2 not incl in rt
     - chemps2 {{ version }}
     - cython
-    - gcc              # [osx]    # build w/ gcc
     - numpy
-    - python 2.7*
+    - python x.x
   run:
     - chemps2 {{ version }}       # link libchemps2
-    - libgcc           # [osx]    # link libstdc++, libgcc_s
     - numpy
-    - python 2.7*
+    - python x.x
 
 test:
   commands:
-    # Verify python module.
-    - test -f ${PREFIX}/lib/python2.7/site-packages/PyCheMPS2.so
+    # Verify python module
+    - test -f ${SP_DIR}/PyCheMPS2.so                               # [py27]
+    - test -f ${SP_DIR}/PyCheMPS2.cpython-35m-x86_64-linux-gnu.so  # [py35 and linux]
+    - test -f ${SP_DIR}/PyCheMPS2.cpython-35m-darwin.so            # [py35 and osx]
+    - test -f ${SP_DIR}/PyCheMPS2.cpython-36m-x86_64-linux-gnu.so  # [py36 and linux]
+    - test -f ${SP_DIR}/PyCheMPS2.cpython-36m-darwin.so            # [py36 and osx]
 
 about:
   home: http://sebwouters.github.io/CheMPS2

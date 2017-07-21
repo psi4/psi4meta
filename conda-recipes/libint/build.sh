@@ -1,4 +1,13 @@
-MAX_AM_ERI=7
+#MAX_AM_ERI=6
+#MAX_AM_ERI=7
+#MAX_AM_ERI=8
+
+if [ "${PSI_BUILD_ISA}" == "sse41" ]; then
+    ISA="-msse4.1"
+elif [ "${PSI_BUILD_ISA}" == "avx2" ]; then
+    ISA="-march=native"
+fi
+
 
 if [ "$(uname)" == "Darwin" ]; then
 
@@ -8,17 +17,23 @@ if [ "$(uname)" == "Darwin" ]; then
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER="${PREFIX}/bin/gcc" \
-        -DCMAKE_CXX_COMPILER="${PREFIX}/bin/g++" \
+        -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_C_FLAGS="${ISA}" \
+        -DCMAKE_CXX_COMPILER=clang++ \
+        -DCMAKE_CXX_FLAGS="-stdlib=libc++ ${ISA}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
-        -DBUILD_SHARED_LIBS=ON
+        -DBUILD_SHARED_LIBS=ON \
+        -DMERGE_LIBDERIV_INCLUDEDIR=ON \
+        -DENABLE_XHOST=OFF
 fi
 
 if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers and mkl
+    set +x
     source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+    set -x
 
     # link against older libc for generic linux
     TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
@@ -32,9 +47,10 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=icc \
         -DCMAKE_CXX_COMPILER=icpc \
-        -DCMAKE_INSTALL_LIBDIR=lib
+        -DCMAKE_INSTALL_LIBDIR=lib \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DBUILD_SHARED_LIBS=ON \
+        -DMERGE_LIBDERIV_INCLUDEDIR=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
         -DLIBC_INTERJECT="${LIBC_INTERJECT}"
