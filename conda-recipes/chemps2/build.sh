@@ -19,7 +19,7 @@ if [ "$(uname)" == "Darwin" ]; then
         CXXFLAGS="-stdlib=libc++ "
     fi
 
-    LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt.dylib"  # brings along libiomp5
+    LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt.dylib;${PREFIX}/lib/libiomp5.dylib"
     #HDF5_INTERJECT="-L${PREFIX}/lib;-lhdf5;-lhdf5_hl;-lhdf5;-lz;-ldl;-lm"
     HDF5_INTERJECT="-L${PREFIX}/lib;-lhdf5;-lhdf5_hl;-lhdf5;-lpthread;-lz;-ldl;-lm"
 #/Users/loriab/anaconda/envs/_build/lib/libhdf5.dylib;/Users/loriab/anaconda/envs/_build/lib/libhdf5_hl.dylib;/Users/loriab/anaconda/envs/_build/lib/libhdf5.dylib;/Users/loriab/anaconda/envs/_build/lib/libz.dylib;/usr/lib/libdl.dylib;/usr/lib/libm.dylib

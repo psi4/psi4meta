@@ -18,9 +18,13 @@ source:
 
 build:
   number: 5                                            # [linux]  # 55d6 incr 4-->5 but unbuild
-  {% if ccfam == "gnu" %}
+  {% if (ccfam == "gnu") and (isa == defisa) %}
+  number: 1                                            # [osx]
+  {% elif (ccfam == "gnu") and (isa != defisa) %}
   number: 0                                            # [osx]
-  {% else %}
+  {% elif (ccfam != "gnu") and (isa == defisa) %}
+  number: 6                                            # [osx]
+  {% elif (ccfam != "gnu") and (isa != defisa) %}
   number: 6                                            # [osx]
   {% endif %}
   binary_relocation: true
@@ -33,7 +37,7 @@ build:
     - {{ isa }}                                        # [osx]
     {% endif %}
     {% if ccfam == "gnu" %}
-    - {{ ccfam }}                                        # [osx]
+    - {{ ccfam }}                                      # [osx]
     {% endif %}
 
 requirements:
@@ -64,13 +68,6 @@ requirements:
     {% if ccfam == "gnu" %}
     - {{ ccfam }}                                        # [osx]
     {% endif %}
-
-##    - libgcc           # [osx]    # link libstdc++, libgcc_s, libgomp
-##    - libgcc           # [linux]  # link libgcc_s
-###    - gcc5             # [linux]  # link libgcc_s PIN-TO-BUILD
-#    - gcc-5           # [linux]  # link libgcc_s
-##    - mkl              # [linux]  # link iomp5
-##    - zlib                        # link libz
 
 test:
   commands:
