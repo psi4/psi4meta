@@ -35,6 +35,9 @@ if [ "$(uname)" == "Linux" ]; then
     TLIBC=/home/psilocaluser/installs/glibc2.12
     LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/libc.so.6;-Wl,-Bstatic;-Wl,--whole-archive;-lifport;-lifcoremt_pic;-Wl,--no-whole-archive;-Wl,-Bdynamic"
 
+    # build multi-instruction-set library
+    OPTS="-msse2 -axCORE-AVX2,AVX"
+
     # configure
     ${PREFIX}/bin/cmake \
         -H${SRC_DIR} \
@@ -48,8 +51,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
         -DLIBC_INTERJECT=${LIBC_INTERJECT} \
-        -DCMAKE_CXX_FLAGS=" -qopenmp -Wl,--as-needed -static-libstdc++ -static-libgcc -static-intel -wd10237" \
-        -DCMAKE_Fortran_FLAGS=" -qopenmp -static-libgcc -static-intel -wd10006"
+        -DCMAKE_CXX_FLAGS=" -qopenmp -Wl,--as-needed -static-libstdc++ -static-libgcc -static-intel -wd10237 ${OPTS}" \
+        -DCMAKE_Fortran_FLAGS=" -qopenmp -static-libgcc -static-intel -wd10006 ${OPTS}"
 fi
 
 # build

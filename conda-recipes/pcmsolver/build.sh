@@ -70,6 +70,9 @@ if [ "$(uname)" == "Linux" ]; then
     # force Intel compilers to find 5.2 gcc headers
     export GXX_INCLUDE="${PREFIX}/gcc/include/c++"
 
+    # build multi-instruction-set library
+    OPTS="-msse2 -axCORE-AVX2,AVX"
+
     # configure
     ${PREFIX}/bin/cmake \
         -H${SRC_DIR} \
@@ -93,8 +96,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_FORTRAN_API=OFF \
         -DENABLE_CXX11_SUPPORT=ON \
         -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
-        -DCMAKE_CXX_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++" \
-        -DCMAKE_Fortran_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++"
+        -DCMAKE_CXX_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++ ${OPTS}" \
+        -DCMAKE_Fortran_FLAGS="-gcc-name=${PREFIX}/bin/gcc -gxx-name=${PREFIX}/bin/g++ ${OPTS}"
 fi
 
 # build
