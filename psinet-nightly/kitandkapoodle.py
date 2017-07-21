@@ -22,6 +22,10 @@
 # Switched nightly build channel to dev (<-- devel)
 # merged mac/linux targets
 
+# [LAB 17 Jul 2017]
+# Mac gcc conda pkg
+#   anaconda copy --to-owner psi4 salford_systems/gcc-5/5.2.0/osx-64/gcc-5-5.2.0-0.tar.bz2
+
 import os
 import sys
 import datetime
@@ -170,11 +174,19 @@ if host == "psinet":
     candidates.append({'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']})
     pass
 if host == "macpsinet":
-    candidates.append({'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']})
-    candidates.append({'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']})
-    candidates.append({'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']})
-    pass
+    for py in ['2.7', '3.5', '3.6']:
+        for isa in ['sse41', 'avx2']:
+            for ccfam in ['gnu', 'default']:
+                if (ccfam == 'gnu') and (py != '3.5'):
+                    continue
+                #continue  # commented suppresses all psi4-core builds
+                candidates.append({'recipe': 'psi4-core',
+                                   'python': py,
+                                   'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'intel'],
+                                   'envvars': {'PSI_BUILD_ISA': isa,
+                                               'PSI_BUILD_CCFAM': ccfam}})
 # psi4/label/dev above catches addon updates not suitable for 1.1 release (i.e., v2rdm)
+
 
 for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
@@ -204,7 +216,7 @@ for kw in candidates:
 
 # 8 May 2017
 #    Linux
-#    anaconda-client: 1.6.2-py36_0  --> 1.6.3-py36_0 
+#    anaconda-client: 1.6.2-py36_0  --> 1.6.3-py36_0
 #    conda:           4.3.16-py36_0 --> 4.3.17-py36_0
 #    Mac
 #    anaconda-client: 1.6.2-py36_0 defaults --> 1.6.3-py36_0 defaults
@@ -219,6 +231,9 @@ for kw in candidates:
 # libconda                  4.0.0                    py36_0    defaults
 # python                    3.6.0                         0    defaults
 # python-dateutil           2.6.0                    py36_0    defaults
+# 18 Jul 2017 - below ok but really long so back to 2.1.8
+# conda-build               3.0.6                    py36_0    defaults
+
 
 # constructor --platform linux-64 psi4-installer/
 # constructor --platform osx-64 psi4-installer/

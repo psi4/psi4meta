@@ -19,16 +19,30 @@ fi
 
 if [ "$(uname)" == "Darwin" ]; then
 
+    if [ "${PSI_BUILD_CCFAM}" == "gnu" ]; then
+        CC="${PREFIX}/bin/gcc"
+        CXX="${PREFIX}/bin/g++"
+        CCFLAGS=""
+        CXXFLAGS=""
+        OPENMP="ON"
+    else
+        CC="clang"
+        CXX="clang++"
+        CCFLAGS=""
+        CXXFLAGS="-stdlib=libc++ "
+        OPENMP="OFF"
+    fi
+
     # configure
     ${PREFIX}/bin/cmake \
         -H${SRC_DIR} \
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER=clang \
-        -DCMAKE_C_FLAGS="${ISA}" \
-        -DCMAKE_CXX_COMPILER=clang++ \
-        -DCMAKE_CXX_FLAGS="-stdlib=libc++ ${ISA}" \
+        -DCMAKE_C_COMPILER="${CC}" \
+        -DCMAKE_C_FLAGS="${CCFLAGS}${ISA}" \
+        -DCMAKE_CXX_COMPILER="${CXX}" \
+        -DCMAKE_CXX_FLAGS="${CXXFLAGS}${ISA}" \
         -DCMAKE_Fortran_COMPILER=${PREFIX}/bin/gfortran \
         -DCMAKE_Fortran_FLAGS="${ISA}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
@@ -47,6 +61,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.dylib" \
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
+        -DENABLE_OPENMP="${OPENMP}" \
         -DENABLE_XHOST=OFF \
         -DBUILDNAME="LAB-OSX-clang7.3.0-accelerate-py${CONDA_PY}-release-conda" \
         -DSITE=gatech-mac-conda \

@@ -4,6 +4,7 @@
 {% set mklver = "2017.0.3" %}
 {% set defisa = "avx2" %}
 {% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+{% set ccfam = environ.get("PSI_BUILD_CCFAM", "default") %}
 
 
 package:
@@ -22,10 +23,14 @@ build:
   binary_relocation: true
   script_env:
     - PSI_BUILD_ISA                                    # [osx]
-  {% if isa != defisa %}
+    - PSI_BUILD_CCFAM                                  # [osx]
   features:
+    {% if isa != defisa %}
     - {{ isa }}                                        # [osx]
-  {% endif %}
+    {% endif %}
+    {% if ccfam == "gnu" %}
+    - {{ ccfam }}                                      # [osx]
+    {% endif %}
 
 requirements:
   build:
@@ -43,6 +48,10 @@ requirements:
     {% if isa != defisa %}
     - {{ isa }}        # [osx]    # for oldmac selection
     {% endif %}
+    {% if ccfam == "gnu" %}
+    - gcc-5-mp         # [osx]
+    - {{ ccfam }}      # [osx]
+    {% endif %}
     # docs
     - docutils 0.12*   # [linux and py35]  # for docs (verno avoids sphinx bug)
     - ipykernel        # [linux and py35]  # for psiapi docs
@@ -52,8 +61,12 @@ requirements:
     - sphinx 1.5*      # [linux and py35]  # for docs
   run:
     # non-qc
-    - libgcc           # [osx]    # link libgfortran
     - gcc-5-mp         # [linux]  # link libgcc_s
+    {% if ccfam == "gnu" %}
+    - gcc-5-mp         # [osx]
+    {% else %}
+    - libgcc           # [osx]    # link libgfortran
+    {% endif %}
     - mkl              # [linux]  # link libiomp5
     - mkl {{ mklver }} # [osx]    # link libmkl_rt
     - numpy                       # linalg python
@@ -65,6 +78,9 @@ requirements:
                                   #      libsimint, libxc (in 1.2)
     {% if isa != defisa %}
     - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
+    {% if ccfam == "gnu" %}
+    - {{ ccfam }}      # [osx]    # track gnumac
     {% endif %}
 
 test:
@@ -79,7 +95,8 @@ test:
     - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
     - ldd -v $SP_DIR/psi4/core.so     # [linux]
     - otool -L $SP_DIR/psi4/core.so   # [osx]
-    - conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gdma libint pcmsolver simint libxc psi4
+    - conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gdma libint pcmsolver simint libxc psi4  # [linux]
+        # above commented for Mac b/c inspect bug in 2.1.8 the doesn't like libgcc 485 and gcc 52
     # Actually test
     - conda list
     - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
