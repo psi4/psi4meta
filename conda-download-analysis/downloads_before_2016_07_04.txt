@@ -1,0 +1,269 @@
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+            platform             name  downloads
+uploaded                                        
+2016-07-02  linux-64  chemps2-1.7.1-2         30
+2016-06-29  linux-64   chemps2-1.7-17         35
+2016-06-27  linux-64   chemps2-1.7-16         27
+2016-06-25  linux-64   chemps2-1.7-15         14
+2016-06-23  linux-64   chemps2-1.7-13         18
+2016-06-05  linux-64   chemps2-1.7-11         16
+2016-06-05  linux-64   chemps2-1.7-10         15
+2016-06-05  linux-64    chemps2-1.7-9         13
+2016-06-05  linux-64    chemps2-1.7-8         14
+2016-06-05  linux-64    chemps2-1.7-7         12
+2016-06-05  linux-64    chemps2-1.7-6         16
+2016-06-05  linux-64    chemps2-1.7-5         14
+2016-06-05  linux-64    chemps2-1.7-4         14
+2016-06-05  linux-64    chemps2-1.7-3         10
+2016-06-05  linux-64    chemps2-1.7-2          9
+2016-06-05  linux-64    chemps2-1.7-1         13
+2016-06-05  linux-64    chemps2-1.7-0         11
+2016-06-05  linux-64   chemps2-1.5-10         21
+2016-02-05  linux-64    chemps2-1.5-9        120
+2015-08-05  linux-64    chemps2-1.5-6        395
+2015-06-23  linux-64    chemps2-1.5-5         30
+2015-05-05  linux-64    chemps2-1.5-4         36
+           platform             name  downloads
+uploaded                                       
+2016-07-04   osx-64  chemps2-1.7.1-3          6
+2016-07-04   osx-64  chemps2-1.7.1-2         12
+2016-06-21   osx-64   chemps2-1.7-13         20
+2016-06-16   osx-64   chemps2-1.7-11         13
+2016-06-08   osx-64   chemps2-1.7-10          9
+2016-06-05   osx-64    chemps2-1.7-9         13
+            platform                name  downloads
+uploaded                                           
+2016-07-01  linux-64  pcmsolver-1.1.2-18         29
+2016-06-29  linux-64  pcmsolver-1.1.2-17         40
+2016-06-25  linux-64  pcmsolver-1.1.2-15         68
+2016-06-23  linux-64  pcmsolver-1.1.2-13         85
+2016-05-05  linux-64   pcmsolver-1.1.1-3        541
+2016-02-05  linux-64   pcmsolver-1.0.4-3        574
+2016-02-05  linux-64   pcmsolver-1.0.4-1         15
+           platform                name  downloads
+uploaded                                          
+2016-07-04   osx-64   pcmsolver-1.1.3-0         13
+2016-07-04   osx-64  pcmsolver-1.1.2-19         13
+2016-07-04   osx-64  pcmsolver-1.1.2-18         12
+2016-06-21   osx-64  pcmsolver-1.1.2-13         17
+2016-06-17   osx-64  pcmsolver-1.1.2-12         11
+2016-06-16   osx-64  pcmsolver-1.1.2-11         10
+2016-06-06   osx-64   pcmsolver-1.1.2-0         14
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+            platform                         name  downloads
+uploaded                                                    
+2016-07-04  linux-64  psi4-1.0rc213-py27_g5998649         14
+2016-07-02  linux-64  psi4-1.0rc202-py27_g40b5ef5         30
+2016-07-01  linux-64  psi4-1.0rc201-py27_gcaa7825         47
+2016-07-01  linux-64  psi4-1.0rc200-py27_g60c5324         17
+2016-06-29  linux-64  psi4-1.0rc148-py27_g9837d42         24
+2016-06-29  linux-64  psi4-1.0rc147-py27_g8cc70ea         18
+2016-06-25  linux-64  psi4-1.0rc139-py27_g864521b         69
+2016-06-05  linux-64   psi4-1.0rc47-py27_g514daad        137
+2016-06-05  linux-64   psi4-1.0rc45-py27_gfaae0ba         30
+2016-06-05  linux-64   psi4-1.0rc11-py27_gac3518e         42
+2016-06-05  linux-64    psi4-1.0rc5-py27_ga2a32a7         39
+2016-06-05  linux-64    psi4-1.0rc3-py27_g71ea2ea         63
+2016-06-05  linux-64    psi4-1.0rc1-py27_g87d264f         27
+2016-06-05  linux-64    psi4-1.0rc0-py27_g15fc63c         43
+2016-06-05  linux-64    psi4-0.9rc1-py27_g02a4ea2         19
+2016-06-05  linux-64   psi4-0.5.360-py27_g6326d37         25
+2016-05-05  linux-64   psi4-0.5.263-py27_g538ca27        103
+2016-05-05  linux-64   psi4-0.5.262-py27_g6c5bfe2         52
+2016-05-05  linux-64   psi4-0.5.253-py27_g36998ac         34
+2016-05-05  linux-64   psi4-0.5.251-py27_gd4272ac         21
+2016-05-05  linux-64   psi4-0.5.244-py27_gbf2ac02         35
+2016-05-05  linux-64   psi4-0.5.221-py27_g1ef0aec         25
+2016-05-05  linux-64   psi4-0.5.207-py27_g2d47d7c         23
+2016-05-05  linux-64   psi4-0.5.200-py27_g3a225e5         23
+2016-05-05  linux-64   psi4-0.5.194-py27_gd325294         36
+2016-05-05  linux-64   psi4-0.5.184-py27_gd3878b6         37
+2016-05-05  linux-64   psi4-0.5.161-py27_gfa74460         73
+2016-04-05  linux-64   psi4-0.5.160-py27_ge38ff50         18
+2016-04-05  linux-64   psi4-0.5.151-py27_g707c3c3         18
+2016-04-05  linux-64   psi4-0.5.149-py27_gf23a8ec         34
+2016-04-05  linux-64   psi4-0.5.145-py27_g58e8a51         20
+2016-04-05  linux-64   psi4-0.5.132-py27_g419ee5c         35
+2016-04-05  linux-64   psi4-0.5.122-py27_ga865678         58
+2016-04-05  linux-64   psi4-0.5.119-py27_g5801071         36
+2016-04-05  linux-64   psi4-0.5.110-py27_g56a2307         17
+2016-04-05  linux-64   psi4-0.5.107-py27_gf5f3275         20
+2016-04-05  linux-64    psi4-0.5.92-py27_g7783818         38
+2016-04-05  linux-64    psi4-0.5.90-py27_g7894081         29
+2016-03-05  linux-64    psi4-0.5.74-py27_gdca1026         36
+2016-03-05  linux-64    psi4-0.5.67-py27_g5601a83         30
+2016-03-05  linux-64    psi4-0.5.59-py27_ge6eb0ef         18
+2016-03-05  linux-64    psi4-0.5.57-py27_g57e8ec2         21
+2016-03-05  linux-64    psi4-0.5.52-py27_gb3939a9         10
+2016-03-05  linux-64    psi4-0.5.50-py27_g13bf41b         12
+2016-03-05  linux-64    psi4-0.5.48-py27_gace9693         20
+2016-03-05  linux-64    psi4-0.5.26-py27_gb04cdf9         34
+2016-03-05  linux-64    psi4-0.5.22-py27_ga421e87         18
+2016-03-05  linux-64    psi4-0.5.20-py27_g96d44ce         25
+2016-03-05  linux-64     psi4-0.5.8-py27_ga816e38         20
+2016-03-05  linux-64     psi4-0.5.0-py27_g8e01b1f         17
+2016-03-05  linux-64    psi4-0.4.21-py27_ge19401b         30
+2016-03-05  linux-64    psi4-0.4.16-py27_g83f16e6         32
+2016-03-05  linux-64     psi4-0.4.0-py27_geb22f22         28
+2016-03-05  linux-64   psi4-0.3.594-py27_g3884fb1         39
+2016-02-05  linux-64   psi4-0.3.593-py27_gab46761         23
+2016-02-05  linux-64   psi4-0.3.591-py27_g5450afa         33
+2016-02-05  linux-64   psi4-0.3.587-py27_g435b9f5         22
+2016-02-05  linux-64   psi4-0.3.540-py27_ge81cdba         26
+2016-02-05  linux-64   psi4-0.3.534-py27_gad20e8f         65
+2016-02-05  linux-64   psi4-0.3.533-py27_g61ce412       1033
+2016-02-05  linux-64   psi4-0.3.530-py27_gf7316ae         18
+2016-02-05  linux-64   psi4-0.3.491-py27_g9ed5047         33
+2016-02-05  linux-64   psi4-0.3.485-py27_gc876ad5         15
+2016-02-05  linux-64   psi4-0.3.425-py27_g0cd0b11         86
+2015-12-05  linux-64   psi4-0.3.283-py27_g08ffabd         37
+2015-12-05  linux-64   psi4-0.3.282-py27_g0c84308         51
+2015-12-05  linux-64   psi4-0.3.281-py27_gfa49674         32
+2015-12-05  linux-64   psi4-0.3.280-py27_gde024f8         28
+2015-12-05  linux-64   psi4-0.3.250-py27_g0081a7b         29
+2015-12-05  linux-64   psi4-0.3.235-py27_g812a655         48
+2015-11-05  linux-64   psi4-0.3.183-py27_g5427c0a         60
+2015-10-05  linux-64   psi4-0.3.141-py27_gd8d4a3e         98
+2015-10-05  linux-64   psi4-0.3.105-py27_g05dd38e         50
+2015-09-05  linux-64    psi4-0.3.74-py27_g465872a         45
+2015-09-05  linux-64    psi4-0.3.71-py27_g47c6ad3         46
+2015-09-05  linux-64    psi4-0.3.69-py27_g4be6825         65
+2015-09-05  linux-64    psi4-0.3.62-py27_g1b48d22         45
+2015-09-05  linux-64    psi4-0.3.59-py27_gf60a22e         45
+2015-09-05  linux-64    psi4-0.3.24-py27_g7baee9b         60
+2015-09-05  linux-64    psi4-0.3.12-py27_g327910d         29
+2015-09-05  linux-64     psi4-0.3.6-py27_gfc714fd         32
+2015-09-05  linux-64     psi4-0.3.5-py27_g21f4505         38
+2015-09-05  linux-64     psi4-0.3.1-py27_ge219408         40
+2015-09-05  linux-64     psi4-0.3.0-py27_g1881450         31
+2015-08-05  linux-64   psi4-0.2.311-py27_gd5faf2a         42
+2015-08-05  linux-64   psi4-0.2.209-py27_gd018810         62
+2015-08-05  linux-64    psi4-0.2.96-py27_g77699b3         33
+2015-08-05  linux-64    psi4-0.2.90-py27_g1a5af8f         25
+2015-08-05  linux-64    psi4-0.2.83-py27_g20ba238         28
+2015-08-05  linux-64    psi4-0.2.82-py27_g41cea8e         21
+2015-08-05  linux-64    psi4-0.2.79-py27_gcd6f4bd         24
+2015-07-02  linux-64    psi4-0.2.58-py27_gf06e672         31
+2015-06-29  linux-64    psi4-0.2.55-py27_g7518631         24
+2015-06-05  linux-64   psi4-0.1.189-py27_geb54861         24
+2015-06-05  linux-64   psi4-0.1.159-py27_gbd5c701         28
+2015-06-05  linux-64   psi4-0.1.158-py27_g5320f85         16
+2015-06-05  linux-64   psi4-0.1.156-py27_gb0a57ea         24
+2015-06-05  linux-64   psi4-0.1.153-py27_g53f98a0         23
+2015-06-05  linux-64   psi4-0.1.149-py27_g5297e66         18
+2015-06-05  linux-64   psi4-0.1.147-py27_g16ce789         25
+2015-06-05  linux-64   psi4-0.1.144-py27_g9b4917f         20
+2015-06-05  linux-64   psi4-0.1.143-py27_gfa27b9e         21
+2015-06-05  linux-64   psi4-0.1.139-py27_gb9291ea         25
+2015-06-05  linux-64   psi4-0.1.124-py27_g64c4600         39
+2015-06-05  linux-64   psi4-0.1.123-py27_g4275d10         27
+2015-06-05  linux-64   psi4-0.1.122-py27_gac3f179         19
+2015-06-05  linux-64   psi4-0.1.121-py27_g0a76f6f         20
+2015-06-05  linux-64   psi4-0.1.116-py27_g457ddf3         17
+2015-06-05  linux-64   psi4-0.1.101-py27_g2f894d3         20
+2015-05-05  linux-64   psi4-0.1.100-py27_gd74fe9c         22
+2015-05-05  linux-64    psi4-0.1.98-py27_g62b03c1         21
+2015-05-05  linux-64    psi4-0.1.87-py27_g0c2b01d         19
+2015-05-05  linux-64    psi4-0.1.85-py27_g8555c91         17
+2015-05-05  linux-64    psi4-0.1.81-py27_g2996acf         28
+2015-05-05  linux-64    psi4-0.1.62-py27_ga68d223         25
+2015-05-05  linux-64    psi4-0.1.49-py27_g7e1e007         18
+2015-05-05  linux-64    psi4-0.1.47-py27_g6360d8d         19
+2015-05-05  linux-64    psi4-0.1.46-py27_gf0d6f7e         19
+2015-04-05  linux-64    psi4-0.1.42-py27_gc768e06         14
+2015-04-05  linux-64    psi4-0.1.36-py27_ga990f51         17
+2015-04-05  linux-64    psi4-0.1.24-py27_gc9671af         16
+2015-04-05  linux-64    psi4-0.1.18-py27_g76a4209         18
+2015-04-05  linux-64    psi4-0.1.15-py27_g4995874         23
+2015-04-05  linux-64    psi4-0.1.14-py27_g03e65d1         19
+2015-04-05  linux-64    psi4-0.1.13-py27_gc1345e6         29
+2015-04-05  linux-64    psi4-0.1.12-py27_g60a9afd         23
+2015-04-05  linux-64           psi4-0.0.10-py27_0         32
+           platform                         name  downloads
+uploaded                                                   
+2016-07-04   osx-64  psi4-1.0rc213-py27_g5998649         14
+2016-07-04   osx-64  psi4-0.9rc167-py27_g9b07fb2         16
+2016-06-21   osx-64  psi4-1.0rc128-py27_g00a658f         26
+2016-06-05   osx-64    psi4-1.0rc0-py27_g15fc63c         31
+2016-05-05   osx-64   psi4-0.5.262-py27_g6c5bfe2         40
+            platform         name  downloads
+uploaded                                    
+2016-08-21  linux-64  gcp-2.0.1-0         64
+           platform         name  downloads
+uploaded                                   
+2016-08-21   osx-64  gcp-2.0.1-0         25
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+            platform           name  downloads
+uploaded                                      
+2016-07-01  linux-64  dftd3-3.2.0-5         14
+2016-06-29  linux-64  dftd3-3.2.0-4         14
+2016-06-25  linux-64  dftd3-3.2.0-3         18
+2016-06-23  linux-64  dftd3-3.2.0-2         17
+2016-06-05  linux-64  dftd3-3.1.1-2         12
+2016-05-05  linux-64  dftd3-3.1.1-1         26
+           platform           name  downloads
+uploaded                                     
+2016-07-04   osx-64  dftd3-3.2.0-6         14
+2016-07-04   osx-64  dftd3-3.2.0-5         15
+2016-06-18   osx-64  dftd3-3.2.0-1         20
+2016-06-05   osx-64  dftd3-3.1.1-2         12
+2016-05-05   osx-64  dftd3-3.1.1-1         20
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+Empty DataFrame
+Columns: [platform, name, downloads]
+Index: []
+erd            : linux-64   0.0    osx-64     0.0    total      0.0   
+libxc          : linux-64   0.0    osx-64     0.0    total      0.0   
+libint         : linux-64   0.0    osx-64     0.0    total      0.0   
+chemps2        : linux-64   883    osx-64     73     total      956   
+pcmsolver      : linux-64   1352   osx-64     90     total      1442  
+simint         : linux-64   0.0    osx-64     0.0    total      0.0   
+psi4           : linux-64   5117   osx-64     127    total      5244  
+gcp            : linux-64   64     osx-64     25     total      89    
+libefp         : linux-64   0.0    osx-64     0.0    total      0.0   
+v2rdm_casscf   : linux-64   0.0    osx-64     0.0    total      0.0   
+dftd3          : linux-64   101    osx-64     81     total      182   
+dkh            : linux-64   0.0    osx-64     0.0    total      0.0   
+gdma           : linux-64   0.0    osx-64     0.0    total      0.0   
+
