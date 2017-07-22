@@ -94,10 +94,13 @@ else:
 
 
 def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
-                        dest_subchannel='main', build_channels='defaults'):
+                        dest_subchannel='main', build_channels='defaults',
+                        envvars=None):
 
     pyxx = _form_python_command(python)
     chnls = _form_channel_command(build_channels)
+    if envvars:
+        lenv.update(envvars)
 
     # Predict full path with versioned name of conda package
     command = ['conda', 'build', recipe, '--output']
@@ -165,10 +168,13 @@ candidates = [
                  ]
 
 if host == "psinet":
-    candidates.append({'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']})
-    candidates.append({'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge']})
-    candidates.append({'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']})
-    pass
+    for py in ['2.7', '3.5', '3.6']:
+        continue
+        docs = '1' if py == '3.5' else '0'
+        candidates.append({'recipe': 'psi4-core',
+                           'python': py,
+                           'build_channels': ['psi4/label/dev', 'psi4', 'intel', 'defaults', 'conda-forge'],
+                           'envvars': {'PSI_BUILD_DOCS': docs}})
 if host == "macpsinet":
     candidates.append({'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']})
     candidates.append({'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']})
