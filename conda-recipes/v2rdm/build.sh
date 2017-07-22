@@ -9,17 +9,30 @@ psi4 --version
 
 if [ "$(uname)" == "Darwin" ]; then
 
+    if [ "${PSI_BUILD_CCFAM}" == "gnu" ]; then
+        CC="${PREFIX}/bin/gcc"
+        CXX="${PREFIX}/bin/g++"
+        CXXFLAGS=""
+        LIBC_INTERJECT="-fno-openmp;-liomp5"
+    else
+        CC="clang"
+        CXX="clang++"
+        CXXFLAGS="-stdlib=libc++ "
+        LIBC_INTERJECT=""
+    fi
+
     # configure
     ${PREFIX}/bin/cmake \
         -H${SRC_DIR} \
         -B. \
         -DCMAKE_INSTALL_PREFIX=${SP_DIR} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER=clang \
-        -DCMAKE_CXX_COMPILER=clang++ \
-        -DCMAKE_CXX_FLAGS="-stdlib=libc++ ${ISA}" \
+        -DCMAKE_C_COMPILER="${CC}" \
+        -DCMAKE_CXX_COMPILER="${CXX}" \
+        -DCMAKE_CXX_FLAGS="${CXXFLAGS}${ISA}" \
         -DCMAKE_Fortran_COMPILER="${PREFIX}/bin/gfortran" \
         -DCMAKE_Fortran_FLAGS="${ISA}" \
+        -DLIBC_INTERJECT=${LIBC_INTERJECT} \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_XHOST=OFF
 fi

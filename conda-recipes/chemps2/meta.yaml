@@ -3,6 +3,7 @@
 {% set mklver = "2017.0.3" %}
 {% set defisa = "avx2" %}
 {% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+{% set ccfam = environ.get("PSI_BUILD_CCFAM", "default") %}
 
 
 package:
@@ -10,9 +11,6 @@ package:
   version: {{ version }}
 
 source:
-  #git_url: https://github.com/loriab/CheMPS2.git       # [linux]
-  #git_url: https://github.com/loriab/CheMPS2.git   # [osx]
-  #git_tag: config6
   git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
   git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
   git_tag: 55d6b38  # v1.8.3-12
@@ -20,15 +18,27 @@ source:
 
 build:
   number: 6                                            # [linux]  # 55d6 incr 4-->5 but unbuild
+  {% if (ccfam == "gnu") and (isa == defisa) %}
+  number: 1                                            # [osx]
+  {% elif (ccfam == "gnu") and (isa != defisa) %}
+  number: 0                                            # [osx]
+  {% elif (ccfam != "gnu") and (isa == defisa) %}
   number: 6                                            # [osx]
+  {% elif (ccfam != "gnu") and (isa != defisa) %}
+  number: 6                                            # [osx]
+  {% endif %}
   binary_relocation: true
   skip: true                                           # [win]
   script_env:
     - PSI_BUILD_ISA                                    # [osx]
-  {% if isa != defisa %}
+    - PSI_BUILD_CCFAM                                  # [osx]
   features:
+    {% if isa != defisa %}
     - {{ isa }}                                        # [osx]
-  {% endif %}
+    {% endif %}
+    {% if ccfam == "gnu" %}
+    - {{ ccfam }}                                      # [osx]
+    {% endif %}
 
 requirements:
   build:
@@ -41,8 +51,14 @@ requirements:
     {% if isa != defisa %}
     - {{ isa }}        # [osx]    # for oldmac selection
     {% endif %}
+    {% if ccfam == "gnu" %}
+    - gcc-5-mp         # [osx]
+    {% endif %}
   run:
 #    - gcc-5-mp         # [linux]  # link libgcc_s  # trying not incl@rt on same grounds as libefp
+    {% if ccfam == "gnu" %}
+    - gcc-5-mp         # [osx]    # link libstdc++
+    {% endif %}
     - hdf5 1.8.17                  # link libhdf5, libhdf5_hl  PIN-TO-BUILD
     - mkl {{ mklver }}  # [linux]  # link libiomp5, MKL
     - zlib             #          # link libz
@@ -50,13 +66,9 @@ requirements:
     {% if isa != defisa %}
     - {{ isa }}        # [osx]    # track oldmac
     {% endif %}
-
-##    - libgcc           # [osx]    # link libstdc++, libgcc_s, libgomp
-##    - libgcc           # [linux]  # link libgcc_s
-###    - gcc5             # [linux]  # link libgcc_s PIN-TO-BUILD
-#    - gcc-5           # [linux]  # link libgcc_s
-##    - mkl              # [linux]  # link iomp5
-##    - zlib                        # link libz
+    {% if ccfam == "gnu" %}
+    - {{ ccfam }}                                        # [osx]
+    {% endif %}
 
 test:
   commands:

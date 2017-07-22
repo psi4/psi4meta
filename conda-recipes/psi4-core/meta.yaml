@@ -5,6 +5,7 @@
 {% set defisa = "avx2" %}
 {% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
 {% set docs = environ.get("PSI_BUILD_DOCS", "0") %}
+{% set ccfam = environ.get("PSI_BUILD_CCFAM", "default") %}
 
 
 package:
@@ -24,10 +25,14 @@ build:
   script_env:
     - PSI_BUILD_DOCS                                   # [linux]
     - PSI_BUILD_ISA                                    # [osx]
-  {% if isa != defisa %}
+    - PSI_BUILD_CCFAM                                  # [osx]
   features:
+    {% if isa != defisa %}
     - {{ isa }}                                        # [osx]
-  {% endif %}
+    {% endif %}
+    {% if ccfam == "gnu" %}
+    - {{ ccfam }}                                      # [osx]
+    {% endif %}
 
 requirements:
   build:
@@ -35,13 +40,20 @@ requirements:
     - cmake >3.3
     - gcc              # [osx]    # for gfortran
     - gcc-5-mp         # [linux]
-    - numpy                       # for psi4 execution w/i ctest and sphinxman (intel channel so mkl_rt-linked)
-    - mkl-include {{ mklver }}    # for mkl.h (intel channel)
     - mkl {{ mklver }}
+    - mkl-include {{ mklver }}    # for mkl.h (intel channel)
+    - numpy                       # for psi4 execution w/i ctest and sphinxman (intel channel so mkl_rt-linked)
     - python x.x
     # qc
     - psi4-lt-mp 1.1
     - psi4-rt 1.1                 # for cmake testing
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # for oldmac selection
+    {% endif %}
+    {% if ccfam == "gnu" %}
+    - gcc-5-mp         # [osx]
+    - {{ ccfam }}      # [osx]
+    {% endif %}
     # docs
     {% if docs == "1" %}
     - docutils 0.12*   # [linux]  # for docs (verno avoids sphinx bug)
@@ -53,8 +65,12 @@ requirements:
     {% endif %}
   run:
     # non-qc
-    - libgcc           # [osx]    # link libgfortran
     - gcc-5-mp         # [linux]  # link libgcc_s
+    {% if ccfam == "gnu" %}
+    - gcc-5-mp         # [osx]
+    {% else %}
+    - libgcc           # [osx]    # link libgfortran
+    {% endif %}
     - mkl {{ mklver }}            # link libmkl_rt, libiomp5
     - numpy                       # linalg python
     - pytest                      # drive psi4 --test
@@ -63,6 +79,12 @@ requirements:
     - psi4-lt-mp 1.1              # link libchemps2, libdkh, libefp, liberd
                                   #      libgdma, libint, libderiv, libpcm,
                                   #      libsimint, libxc (in 1.2)
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
+    {% if ccfam == "gnu" %}
+    - {{ ccfam }}      # [osx]    # track gnumac
+    {% endif %}
 
 test:
   requires:
@@ -76,7 +98,8 @@ test:
     - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
     - ldd -v $SP_DIR/psi4/core.so     # [linux]
     - otool -L $SP_DIR/psi4/core.so   # [osx]
-    - conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gdma libint pcmsolver simint libxc psi4
+    - conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gdma libint pcmsolver simint libxc psi4  # [linux]
+        # above commented for Mac b/c inspect bug in 2.1.8 the doesn't like libgcc 485 and gcc 52
     # Actually test
     - conda list
     - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
