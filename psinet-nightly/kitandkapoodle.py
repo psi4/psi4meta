@@ -173,8 +173,8 @@ candidates = [
 
 if host == "psinet":
     for py in ['2.7', '3.5', '3.6']:
-        continue
         docs = '1' if py == '3.5' else '0'
+        continue  # uncommented suppresses all psi4-core builds / commented allows
         candidates.append({'recipe': 'psi4-core',
                            'python': py,
                            'build_channels': ['psi4/label/dev', 'psi4', 'intel', 'defaults', 'conda-forge'],
@@ -185,7 +185,7 @@ if host == "macpsinet":
             for ccfam in ['gnu', 'default']:
                 if (ccfam == 'gnu') and (py != '3.5'):
                     continue
-                #continue  # commented suppresses all psi4-core builds
+                #continue  # uncommented suppresses all psi4-core builds / commented allows
                 candidates.append({'recipe': 'psi4-core',
                                    'python': py,
                                    'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'intel'],

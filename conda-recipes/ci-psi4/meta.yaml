@@ -1,0 +1,26 @@
+package:
+  name: ci-psi4
+  version: 0.1
+
+build:
+  number: 2
+
+requirements:
+  run:
+    - python x.x                  # for build string tracking
+    - psi4
+
+about:
+  summary: 'a continuous integration offset download counter for Psi4'
+  description: >
+    We'd like to know which of our downloads are users and which are
+    continuous integration bots. This is just a metapackage to track
+    the latter, so use it in your `travis.yml` and the like. I regret
+    that due to forces beyond my understanding, you have to specify
+    psi4 as well to get sensible version behavior for py27, so use the
+    following for 1.1 and nightly build respectively.
+
+      conda create -q -n p4env python=x.x ci-psi4 psi4 -c psi4
+
+      conda create -q -n p4env python=x.x ci-psi4 psi4 -c psi4/label/dev -c psi4
+
