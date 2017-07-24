@@ -95,7 +95,8 @@ if [ "$(uname)" == "Linux" ]; then
     set +x
     source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
     set -x
-    LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt.so;${PREFIX}/lib/libiomp5.so"
+    LAPACK_LIBRARIES="${PREFIX}/lib/libmkl_rt.so;${PREFIX}/lib/libiomp5.so;-fno-openmp;-lpthread;-lm;-ldl"
+    LAPACK_INCLUDE_DIRS="${PREFIX}/include"
 
     # link against older libc for generic linux
     TLIBC=/home/psilocaluser/installs/glibc2.12
@@ -134,7 +135,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
-        -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}" \
+        -DLAPACK_LIBRARIES="${LAPACK_LIBRARIES}" \
+        -DLAPACK_INCLUDE_DIRS="${LAPACK_INCLUDE_DIRS}" \
         -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
         -DBUILDNAME="LAB-RHEL7-gcc5.2-intel16.0.3-mkl-py${CONDA_PY}-release-conda" \
         -DSITE=gatech-conda \
