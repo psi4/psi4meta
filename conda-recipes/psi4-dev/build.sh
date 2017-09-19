@@ -11,8 +11,10 @@ SHARE=${PREFIX}/share/cmake/psi4/
 mkdir -p ${SHARE}
 cp psi4-path-advisor.py ${PREFIX}/bin/psi4-path-advisor
 sed "s/@PY_ABBR@/${PY_ABBR}/g" psi4DepsCache.cmake > ${SHARE}/psi4DepsCache.cmake
+cp psi4DepsIntelMultiarchCache.cmake ${SHARE}
 cp psi4DepsAppleClangCache.cmake ${SHARE}
 cp psi4DepsDisableCache.cmake ${SHARE}
 cp psi4DepsIntelCache.cmake ${SHARE}
 cp psi4DepsGNUCache.cmake ${SHARE}
+cp psi4DepsMKLCache.cmake ${SHARE}
 

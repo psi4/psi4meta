@@ -14,8 +14,8 @@
 #       -Bobjdir
 #
 
-set(CMAKE_C_COMPILER       "clang" CACHE STRING "")
-set(CMAKE_CXX_COMPILER     "clang++" CACHE STRING "")
+set(CMAKE_C_COMPILER       "/usr/bin/clang" CACHE STRING "")
+set(CMAKE_CXX_COMPILER     "/usr/bin/clang++" CACHE STRING "")
 set(CMAKE_CXX_FLAGS        "-stdlib=libc++" CACHE STRING "")
 set(CMAKE_Fortran_COMPILER "/opt/anaconda1anaconda2anaconda3/bin/gfortran" CACHE STRING "")
 

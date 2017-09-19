@@ -14,21 +14,27 @@ parser.add_argument('--psi4-compile', action='store_true', help="""\
     this psi4-dev conda metapackage.
 >>> git clone https://github.com/psi4/psi4.git
 >>> cd {top-level-psi4-dir}
->>> conda create -n p4dev python={3.5} psi4-dev -c psi4
+>>> conda create -n p4dev python={3.5} psi4-dev [-c psi4/label/dev] -c psi4
 >>> source activate p4dev
 >>> psi4-path-advisor
 # execute or adapt `cmake` commands above; DepsCache handles python & addons;
-#   Further psi4-path-advisor options handle compilers; BLAS is on you.
+#   DepsMKLCache handles math; further psi4-path-advisor options handle compilers.
 >>> cd objdir  && make -j`getconf _NPROCESSORS_ONLN`
 >>> make install""")
 
 parser.add_argument('--disable-addons', action='store_true',
-                    help="""Disengage building against the psi4-dev-provided link-time Add-Ons like CheMPS2.""")
+                    help="""Disengage building against the psi4-dev-provided _optional_ link-time Add-Ons like CheMPS2.""")
+
+parser.add_argument('--disable-mkl', action='store_false', dest='mkl',
+                    help="""Disengage building against the psi4-dev-provided MKL libraries (`libmkl_rt`).""")
 
 if sys.platform.startswith('linux'):
-    parser.add_argument('--intel', action='store_true',
+    group = parser.add_mutually_exclusive_group(required=False)
+    group.add_argument('--intel', action='store_true',
                         help="""Engage self-provided icc/icpc/ifort compilers backed by psi4-dev-provided gcc/g++.""")
-    parser.add_argument('--gcc', action='store_true',
+    group.add_argument('--intel-multiarch', action='store_true',
+                        help="""Engage self-provided icc/icpc/ifort compilers backed by psi4-dev-provided gcc/g++ PLUS compile for multiple architectures (useful for cluster deployments).""")
+    group.add_argument('--gcc', action='store_true',
                         help="""Engage psi4-dev-provided gcc/g++/gfortran compilers.""")
 
 elif sys.platform == 'darwin':
@@ -73,9 +79,14 @@ recc = ['/opt/anaconda1anaconda2anaconda3/bin/cmake \\',
 if args.disable_addons:
     recc.insert(-1, '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsDisableCache.cmake \\')
 
+if args.mkl:
+    recc.insert(-1, '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsMKLCache.cmake \\')
+
 if sys.platform.startswith('linux'):
     if args.intel:
         recc.insert(-1, '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsIntelCache.cmake \\')
+    if args.intel_multiarch:
+        recc.insert(-1, '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsIntelMultiarchCache.cmake \\')
     if args.gcc:
         recc.insert(-1, '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsGNUCache.cmake \\')
 

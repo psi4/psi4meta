@@ -10,7 +10,7 @@ source:
 build:
   skip: true           # [win]
   number: 0            # [osx]
-  number: 1            # [linux]
+  number: 0            # [linux]
 
 requirements:
   build:
