@@ -29,7 +29,7 @@ requirements:
     - psi4-lt-mp {{ ltrtver }}
     # docs
     - docutils 0.12*
-    - sphinx 1.5*
+    - sphinx >=1.5
 
 test:
   commands:

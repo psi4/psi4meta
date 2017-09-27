@@ -57,12 +57,17 @@ requirements:
     {% endif %}
     # docs
     {% if docs == "1" %}
+    - astropy-helpers  # [linux]  # for autoapi
+    - cloud_sptheme    # [linux]  # for docs
     - docutils 0.12*   # [linux]  # for docs (verno avoids sphinx bug)
+    - graphviz         # [linux]  # for autoapi
     - ipykernel        # [linux]  # for psiapi docs
     - jupyter_client   # [linux]  # for psiapi docs
     - nbsphinx         # [linux]  # for psiapi docs
     - pandoc 1.19*     # [linux]  # for psiapi docs (verno forces conda-forge that gets headers right)
-    - sphinx 1.5*      # [linux]  # for docs
+    - python-graphviz  # [linux]  # for autoapi
+    - sphinx >=1.5     # [linux]  # for docs
+    - sphinx-psi-theme # [linux]  # for docs
     {% endif %}
   run:
     # non-qc
