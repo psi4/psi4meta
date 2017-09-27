@@ -1,6 +1,7 @@
 
 {% set data = load_setup_py_data(setup_file='conda/_conda_vers.py') %}
 
+{% set ltrtver = "1.2a1.dev2" %}
 {% set mklver = "2017.0.3" %}
 {% set defisa = "avx2" %}
 {% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
@@ -45,8 +46,8 @@ requirements:
     - numpy                       # for psi4 execution w/i ctest and sphinxman (intel channel so mkl_rt-linked)
     - python x.x
     # qc
-    - psi4-lt-mp 1.1
-    - psi4-rt 1.1                 # for cmake testing
+    - psi4-lt-mp {{ ltrtver }}
+    - psi4-rt {{ ltrtver }}       # for cmake testing
     {% if isa != defisa %}
     - {{ isa }}        # [osx]    # for oldmac selection
     {% endif %}
@@ -71,12 +72,12 @@ requirements:
     {% else %}
     - libgcc           # [osx]    # link libgfortran
     {% endif %}
-    - mkl {{ mklver }}            # link libmkl_rt, libiomp5
+    - mkl >={{ mklver }}          # link libmkl_rt, libiomp5
     - numpy                       # linalg python
     - pytest                      # drive psi4 --test
     - python x.x                  # interpreter python
     # qc
-    - psi4-lt-mp 1.1              # link libchemps2, libdkh, libefp, liberd
+    - psi4-lt-mp {{ ltrtver }}    # link libchemps2, libdkh, libefp, liberd
                                   #      libgdma, libint, libderiv, libpcm,
                                   #      libsimint, libxc (in 1.2)
     {% if isa != defisa %}
@@ -88,7 +89,7 @@ requirements:
 
 test:
   requires:
-    - psi4-rt 1.1                 # load dftd3, gcp, v2rdm_casscf
+    - psi4-rt {{ ltrtver }}       # load dftd3, gcp, v2rdm_casscf
   commands:
     # Verify existence and execution
     - test -f $PREFIX/bin/psi4
