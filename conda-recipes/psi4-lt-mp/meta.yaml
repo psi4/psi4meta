@@ -17,7 +17,6 @@ requirements:
   run:
     - python x.x                  # for build string tracking
     # qc
-    - chemps2   >=1.8.3
     - dkh       >=1.2
     - libefp    >=1.4.2
     - erd       >=3.0.6
@@ -26,6 +25,7 @@ requirements:
     - pcmsolver >=1.1.10
     - simint    >=0.7
     - libxc     >=3.0.0           # required >=1.2
+    - chemps2   1.8.3|1.8.4
     {% if isa != defisa %}
     - {{ isa }}        # [osx]    # track oldmac
     {% endif %}
