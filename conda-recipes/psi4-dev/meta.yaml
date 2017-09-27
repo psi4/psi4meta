@@ -23,6 +23,7 @@ requirements:
     - gcc-5-mp         # [linux]
     - mkl-include >={{ mklver }}  # for mkl.h (intel channel)
     - mkl >={{ mklver }}          # link libmkl_rt, libiomp5
+    - numpy
     - pytest
     - python x.x
     # qc
