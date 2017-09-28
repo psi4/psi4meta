@@ -1,4 +1,4 @@
-{% set ltrtver = "1.2a1.dev2" %}
+{% set ltrtver = "1.2a1.dev3" %}
 {% set mklver = "2017.0.3" %}
 
 package:
