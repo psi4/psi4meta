@@ -1,4 +1,5 @@
-{% set version = "1.4.2" %}
+#{% set version = "1.4.2" %}
+{% set version = "1.5b1" %}
 
 {% set mklver = "2017.0.3" %}
 {% set defisa = "avx2" %}
@@ -12,10 +13,12 @@ package:
 source:
   git_url: git@github.com:ilyak/libefp.git             # [linux]
   git_url: https://github.com/ilyak/libefp.git         # [osx]
-  git_tag: {{ version }}
+  #git_tag: {{ version }}
+  git_tag: e772ba3
 
 build:
-  number: 3                                            # [linux]
+  number: 0  # 1.5b1
+  #number: 3  #1.4.2                                          # [linux]
   number: 1                                            # [osx]
   binary_relocation: true
   skip: true                                           # [win]
