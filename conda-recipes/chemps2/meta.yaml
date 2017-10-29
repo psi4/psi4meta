@@ -22,9 +22,9 @@ build:
   {% elif (ccfam == "gnu") and (isa != defisa) %}
   number: 0                                            # [osx]
   {% elif (ccfam != "gnu") and (isa == defisa) %}
-  number: 6                                            # [osx]
+  number: 0                                            # [osx]
   {% elif (ccfam != "gnu") and (isa != defisa) %}
-  number: 6                                            # [osx]
+  number: 0                                            # [osx]
   {% endif %}
   binary_relocation: true
   skip: true                                           # [win]

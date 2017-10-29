@@ -11,7 +11,7 @@ source:
 
 build:
   number: 0                                            # [linux]
-  number: 9  # 55d6 incr 8-->9 but unbuild             # [osx]
+  number: 0  # 55d6 incr 8-->9 but unbuild             # [osx]
   binary_relocation: true
   skip: true                                           # [win]
 
