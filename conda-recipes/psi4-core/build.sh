@@ -95,10 +95,15 @@ if [ "$(uname)" == "Linux" ]; then
     set +x
     source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
     set -x
+    LAPACK_LIBRARIES="${PREFIX}/lib/libmkl_rt.so;${PREFIX}/lib/libiomp5.so;-fno-openmp;-lpthread;-lm;-ldl"
+    LAPACK_INCLUDE_DIRS="${PREFIX}/include"
 
     # link against older libc for generic linux
     TLIBC=/home/psilocaluser/installs/glibc2.12
     LIBC_INTERJECT="-L${TLIBC}/usr/lib64 ${TLIBC}/lib64/libpthread.so.0 ${TLIBC}/lib64/libc.so.6"
+
+    # build multi-instruction-set library
+    OPTS="-msse2 -axCORE-AVX2,AVX"
 
     # configure
     ${PREFIX}/bin/cmake \
@@ -109,6 +114,9 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_C_COMPILER=icc \
         -DCMAKE_CXX_COMPILER=icpc \
         -DCMAKE_Fortran_COMPILER=ifort \
+        -DCMAKE_C_FLAGS="${OPTS}" \
+        -DCMAKE_CXX_FLAGS="${OPTS}" \
+        -DCMAKE_Fortran_FLAGS="${OPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
         -DMAX_AM_ERI=6 \
@@ -127,6 +135,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
+        -DLAPACK_LIBRARIES="${LAPACK_LIBRARIES}" \
+        -DLAPACK_INCLUDE_DIRS="${LAPACK_INCLUDE_DIRS}" \
         -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
         -DBUILDNAME="LAB-RHEL7-gcc5.2-intel16.0.3-mkl-py${CONDA_PY}-release-conda" \
         -DSITE=gatech-conda \
@@ -144,7 +154,7 @@ if [ "$(uname)" == "Linux" ]; then
 fi
 
 # docs build (1/6 nightly builds)
-if [[ "$(uname)" == "Linux" ]] && [[ "${CONDA_PY}" == "35" ]] ; then
+if [[ "$(uname)" == "Linux" ]] && [[ "${PSI_BUILD_DOCS}" == "1" ]] ; then
     make ghfeed
     make doxyman
     make sphinxman -j${CPU_COUNT}

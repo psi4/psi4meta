@@ -30,7 +30,7 @@ fi
 
 if [ "$(uname)" == "Linux" ]; then
 
-    # load Intel compilers and mkl
+    # load Intel compilers
     set +x
     source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
     set -x
@@ -38,6 +38,9 @@ if [ "$(uname)" == "Linux" ]; then
     # link against older libc for generic linux
     TLIBC=/theoryfs2/ds/cdsgroup/psi4-compile/nightly/glibc2.12
     LIBC_INTERJECT="${TLIBC}/lib64/libc.so.6"
+
+    # build multi-instruction-set library
+    OPTS="-msse2 -axCORE-AVX2,AVX"
 
     # configure
     ${PREFIX}/bin/cmake \
@@ -47,6 +50,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=icc \
         -DCMAKE_CXX_COMPILER=icpc \
+        -DCMAKE_C_FLAGS="${OPTS}" \
+        -DCMAKE_CXX_FLAGS="${OPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DBUILD_SHARED_LIBS=ON \

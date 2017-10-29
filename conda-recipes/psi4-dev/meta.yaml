@@ -1,8 +1,9 @@
-{% set version = "1.1" %}
+{% set ltrtver = "1.2a1.dev2" %}
+{% set mklver = "2017.0.3" %}
 
 package:
   name: psi4-dev
-  version: {{ version }}
+  version: {{ ltrtver }}
 
 source:
   path: ../psi4-dev-src
@@ -10,7 +11,7 @@ source:
 build:
   skip: true           # [win]
   number: 0            # [osx]
-  number: 1            # [linux]
+  number: 0            # [linux]
 
 requirements:
   build:
@@ -20,13 +21,16 @@ requirements:
     - cmake >3.3
     - gcc              # [osx]    # gfortran
     - gcc-5-mp         # [linux]
+    - mkl-include >={{ mklver }}  # for mkl.h (intel channel)
+    - mkl >={{ mklver }}          # link libmkl_rt, libiomp5
+    - numpy
     - pytest
     - python x.x
     # qc
-    - psi4-lt-mp {{ version }}
+    - psi4-lt-mp {{ ltrtver }}
     # docs
     - docutils 0.12*
-    - sphinx 1.5*
+    - sphinx >=1.5
 
 test:
   commands:

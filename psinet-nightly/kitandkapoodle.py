@@ -26,6 +26,10 @@
 # Mac gcc conda pkg
 #   anaconda copy --to-owner psi4 salford_systems/gcc-5/5.2.0/osx-64/gcc-5-5.2.0-0.tar.bz2
 
+# [LAB 15 Sep 2017]
+#   anaconda copy --to-owner psi4 intel/mkl-include/2017.0.3/linux-64/mkl-include-2017.0.3-intel_8.tar.bz2
+#   anaconda copy --to-owner psi4 intel/mkl-include/2017.0.3/osx-64/mkl-include-2017.0.3-intel_8.tar.bz2
+
 import os
 import sys
 import datetime
@@ -207,16 +211,20 @@ if host == "macpsinet":
                  ]
 
 if host == "psinet":
-    candidates.append({'recipe': 'psi4-core', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']})
-    candidates.append({'recipe': 'psi4-core', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge']})
-    candidates.append({'recipe': 'psi4-core', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']})
-    pass
+    for py in ['2.7', '3.5', '3.6']:
+        docs = '1' if py == '3.5' else '0'
+        #continue  # commented allows all psi4-core builds / uncommented suppresses
+        candidates.append({'recipe': 'psi4-core',
+                           'python': py,
+                           'build_channels': ['psi4/label/dev', 'psi4', 'intel', 'defaults', 'conda-forge', 'astropy'],
+                           'envvars': {'PSI_BUILD_DOCS': docs}})
 if host == "macpsinet":
     for py in ['2.7', '3.5', '3.6']:
         for isa in ['sse41', 'avx2']:
             for ccfam in ['gnu', 'default']:
                 if (ccfam == 'gnu') and (py != '3.5'):
-                    continue  # commented suppresses all psi4-core builds
+                    continue
+                #continue  # commented allows all psi4-core builds / uncommented suppresses
                 candidates.append({'recipe': 'psi4-core',
                                    'python': py,
                                    'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'intel'],

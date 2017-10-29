@@ -1,9 +1,11 @@
 
 {% set data = load_setup_py_data(setup_file='conda/_conda_vers.py') %}
 
+{% set ltrtver = "1.2a1.dev2" %}
 {% set mklver = "2017.0.3" %}
 {% set defisa = "avx2" %}
 {% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+{% set docs = environ.get("PSI_BUILD_DOCS", "0") %}
 {% set ccfam = environ.get("PSI_BUILD_CCFAM", "default") %}
 
 
@@ -22,6 +24,7 @@ build:
   number: 0
   binary_relocation: true
   script_env:
+    - PSI_BUILD_DOCS                                   # [linux]
     - PSI_BUILD_ISA                                    # [osx]
     - PSI_BUILD_CCFAM                                  # [osx]
   features:
@@ -38,13 +41,13 @@ requirements:
     - cmake >3.3
     - gcc              # [osx]    # for gfortran
     - gcc-5-mp         # [linux]
-    - mkl-include {{ mklver }}    # [osx]   # for mkl.h (intel channel)
-    - mkl {{ mklver }} # [osx]
-    - numpy                       # for psi4 execution w/i ctest and sphinxman
+    - mkl {{ mklver }}
+    - mkl-include {{ mklver }}    # for mkl.h (intel channel)
+    - numpy                       # for psi4 execution w/i ctest and sphinxman (intel channel so mkl_rt-linked)
     - python x.x
     # qc
-    - psi4-lt-mp 1.1
-    - psi4-rt 1.1                 # for cmake testing
+    - psi4-lt-mp {{ ltrtver }}
+    - psi4-rt {{ ltrtver }}       # for cmake testing
     {% if isa != defisa %}
     - {{ isa }}        # [osx]    # for oldmac selection
     {% endif %}
@@ -53,12 +56,19 @@ requirements:
     - {{ ccfam }}      # [osx]
     {% endif %}
     # docs
-    - docutils 0.12*   # [linux and py35]  # for docs (verno avoids sphinx bug)
-    - ipykernel        # [linux and py35]  # for psiapi docs
-    - jupyter_client   # [linux and py35]  # for psiapi docs
-    - nbsphinx         # [linux and py35]  # for psiapi docs
-    - pandoc 1.19*     # [linux and py35]  # for psiapi docs (verno forces conda-forge that gets headers right)
-    - sphinx 1.5*      # [linux and py35]  # for docs
+    {% if docs == "1" %}
+    - astropy-helpers  # [linux]  # for autoapi
+    - cloud_sptheme    # [linux]  # for docs
+    - docutils 0.12*   # [linux]  # for docs (verno avoids sphinx bug)
+    - graphviz         # [linux]  # for autoapi
+    - ipykernel        # [linux]  # for psiapi docs
+    - jupyter_client   # [linux]  # for psiapi docs
+    - nbsphinx         # [linux]  # for psiapi docs
+    - pandoc 1.19*     # [linux]  # for psiapi docs (verno forces conda-forge that gets headers right)
+    - python-graphviz  # [linux]  # for autoapi
+    - sphinx >=1.5     # [linux]  # for docs
+    - sphinx-psi-theme # [linux]  # for docs
+    {% endif %}
   run:
     # non-qc
     - gcc-5-mp         # [linux]  # link libgcc_s
@@ -67,13 +77,12 @@ requirements:
     {% else %}
     - libgcc           # [osx]    # link libgfortran
     {% endif %}
-    - mkl              # [linux]  # link libiomp5
-    - mkl {{ mklver }} # [osx]    # link libmkl_rt
+    - mkl >={{ mklver }}          # link libmkl_rt, libiomp5
     - numpy                       # linalg python
     - pytest                      # drive psi4 --test
     - python x.x                  # interpreter python
     # qc
-    - psi4-lt-mp 1.1              # link libchemps2, libdkh, libefp, liberd
+    - psi4-lt-mp {{ ltrtver }}    # link libchemps2, libdkh, libefp, liberd
                                   #      libgdma, libint, libderiv, libpcm,
                                   #      libsimint, libxc (in 1.2)
     {% if isa != defisa %}
@@ -85,7 +94,7 @@ requirements:
 
 test:
   requires:
-    - psi4-rt 1.1                 # load dftd3, gcp, v2rdm_casscf
+    - psi4-rt {{ ltrtver }}       # load dftd3, gcp, v2rdm_casscf
   commands:
     # Verify existence and execution
     - test -f $PREFIX/bin/psi4

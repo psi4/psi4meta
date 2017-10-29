@@ -1,0 +1,41 @@
+{% set version = "1.0" %}
+
+package:
+  name: sphinx-psi-theme
+  version: {{ version }}
+
+source:
+  git_url: git@github.com:psi4/sphinx-psi-theme.git      # [linux]
+  git_url: https://github.com/psi4/sphinx-psi-theme.git  # [osx]
+  git_tag: v{{ version }}
+
+build:
+  skip: true           # [win]
+  number: 0            # [osx]
+  number: 0            # [linux]
+  preserve_egg_dir: True
+  script: python setup.py install --single-version-externally-managed --record record.txt
+
+requirements:
+  build:
+    - python x.x                  # define site-packages install dir
+    - setuptools
+  run:
+    - python x.x
+    - docutils 0.12*
+    - sphinx >=1.5
+    - cloud_sptheme
+
+test:
+  imports:
+    - sphinx_psi_theme
+    - sphinx_psi_theme.ext
+
+about:
+  home: https://github.com/psi4/sphinx-psi-theme
+  license: BSD-3-Clause
+  license_url: https://opensource.org/licenses/BSD-3-Clause
+  license_file: LICENSE
+  license_family: BSD
+  summary: theme for Psi4 Sphinx docs, derived from Cloud
+

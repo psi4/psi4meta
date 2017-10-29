@@ -1,19 +1,17 @@
-{% set version = "1.8.3" %}
+{% set version = "1.8.4" %}
 
 package:
   name: pychemps2
   version: {{ version }}
 
 source:
-  #git_url: https://github.com/loriab/CheMPS2.git       # [linux]
-  #git_tag: config6
   git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
   git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
-  git_tag: 55d6b38  # v1.8.3-12
-  #git_tag: v{{ version }}
+  git_tag: v{{ version }}
 
 build:
-  number: 9  # 55d6 incr 8-->9 but unbuild
+  number: 0                                            # [linux]
+  number: 9  # 55d6 incr 8-->9 but unbuild             # [osx]
   binary_relocation: true
   skip: true                                           # [win]
 
