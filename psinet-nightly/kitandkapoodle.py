@@ -141,38 +141,55 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
         return 'NoFile'
 
 
-candidates = [
-#{'recipe': 'chemps2', 'build_channels': ['psi4']},
-#{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4']},
-#{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4']},
-#{'recipe': 'pychemps2', 'python': '3.6', 'build_channels': ['psi4']},
-#{'recipe': 'dkh', 'build_channels': 'psi4'},
-#{'recipe': 'libefp', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
-#{'recipe': 'erd', 'build_channels': 'psi4'},
-#{'recipe': 'gdma', 'build_channels': 'psi4'},
+if host == "psinet":
+    candidates = [
+#{'recipe': 'ci-psi4', 'python': '2.7'},  # linux
+#{'recipe': 'ci-psi4', 'python': '3.5'},  # linux
+#{'recipe': 'ci-psi4', 'python': '3.6'},  # linux
+#{'recipe': 'ci-psi4-lt', 'python': '2.7'},  # linux
+#{'recipe': 'ci-psi4-lt', 'python': '3.5'},  # linux
+#{'recipe': 'ci-psi4-lt', 'python': '3.6'},  # linux
+#{'recipe': 'sphinx-psi-theme', 'python': '2.7', 'build_channels': ['conda-forge']},  # linuxmkl
+#{'recipe': 'sphinx-psi-theme', 'python': '3.5', 'build_channels': ['conda-forge']},  # linuxmkl
+#{'recipe': 'sphinx-psi-theme', 'python': '3.6', 'build_channels': ['conda-forge']},  # linuxmkl
+
+#{'recipe': 'chemps2', 'build_channels': ['psi4', 'intel']},  # linuxmkl
+#{'recipe': 'lawrap'},  # linux
+#{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+#{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+#{'recipe': 'pychemps2', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+#{'recipe': 'dkh', 'build_channels': 'psi4'},  # linux
+#{'recipe': 'libefp', 'build_channels': 'psi4'},  # linuxmkl
+###{'recipe': 'pylibefp', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4', 'conda-forge']},  # linuxmkl
+###{'recipe': 'pylibefp', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4', 'conda-forge']},  # linuxmkl
+#{'recipe': 'erd', 'build_channels': 'psi4'},  # linux
+#{'recipe': 'gdma', 'build_channels': 'psi4'},  # linux
 #{'recipe': 'am7-mp'},
 #{'recipe': 'am8-mp'},
-#{'recipe': 'libint'},  # toggle recipes for AM feature
-#{'recipe': 'pcmsolver', 'python': '2.7', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
-#{'recipe': 'pcmsolver', 'python': '3.5', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
-#{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4'},  # mac doesn't need b_c:psi4
+#{'recipe': 'libint', 'envvars': {'MAX_AM_ERI': '6'}},  # linux
+#{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '7'}},  # linux
+#{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '8'}},  # linux
+#{'recipe': 'pcmsolver', 'python': '2.7', 'build_channels': 'psi4'},  # linux
+#{'recipe': 'pcmsolver', 'python': '3.5', 'build_channels': 'psi4'},  # linux
+#{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4'},  # linux
 #{'recipe': 'simint'},
+#{'recipe': 'libxc'},  # linux
 
-#{'recipe': 'dftd3'},  # not yet built on mac
-#{'recipe': 'gcp'},  # not yet built on mac
-#{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # had been test/clang
-#{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # had been test/clang
-#{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # had been test/clang
+#{'recipe': 'dftd3'},
+#{'recipe': 'gcp'},
+#{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linux
+#{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linux
+#{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linux
 
-#{'recipe': 'psi4-rt', 'python': '2.7', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-rt', 'python': '3.5', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-rt', 'python': '3.6', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-lt-mp', 'python': '2.7', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-lt-mp', 'python': '3.5', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-lt-mp', 'python': '3.6', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-dev', 'python': '2.7', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-dev', 'python': '3.5', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-dev', 'python': '3.6', 'build_channels': 'psi4'},
+#{'recipe': 'psi4-rt', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+#{'recipe': 'psi4-rt', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+#{'recipe': 'psi4-rt', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+#{'recipe': 'psi4-lt-mp', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+#{'recipe': 'psi4-lt-mp', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+#{'recipe': 'psi4-lt-mp', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+#{'recipe': 'psi4-dev', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+#{'recipe': 'psi4-dev', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+#{'recipe': 'psi4-dev', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
                  ]
 
 if host == "psinet":
