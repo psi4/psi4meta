@@ -16,5 +16,5 @@ cp psi4DepsAppleClangCache.cmake ${SHARE}
 cp psi4DepsDisableCache.cmake ${SHARE}
 cp psi4DepsIntelCache.cmake ${SHARE}
 cp psi4DepsGNUCache.cmake ${SHARE}
-cp psi4DepsMKLCache.cmake ${SHARE}
+sed "s/@SHLIB_EXT@/${SHLIB_EXT}/g" psi4DepsMKLCache.cmake > ${SHARE}/psi4DepsMKLCache.cmake
 
