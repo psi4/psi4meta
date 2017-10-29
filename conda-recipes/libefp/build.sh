@@ -21,6 +21,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DENABLE_OPENMP=OFF \
         -DFRAGLIB_UNDERSCORE_L=OFF \
         -DFRAGLIB_DEEP=OFF \
+        -DINSTALL_DEVEL_HEADERS=ON \
         -DLAPACK_LIBRARIES="${PREFIX}/lib/libmkl_rt.dylib"
 fi
 
@@ -58,6 +59,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_GENERIC=ON \
         -DFRAGLIB_UNDERSCORE_L=OFF \
         -DFRAGLIB_DEEP=OFF \
+        -DINSTALL_DEVEL_HEADERS=ON \
         -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
         -DLAPACK_LIBRARIES=${LAPACK_INTERJECT}
 fi
