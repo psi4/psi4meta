@@ -23,7 +23,7 @@ parser.add_argument('--psi4-compile', action='store_true', help="""\
 >>> make install""")
 
 parser.add_argument('--disable-addons', action='store_true',
-                    help="""Disengage building against the psi4-dev-provided link-time Add-Ons like CheMPS2.""")
+                    help="""Disengage building against the psi4-dev-provided optional link-time Add-Ons like CheMPS2.""")
 
 if sys.platform.startswith('linux'):
     parser.add_argument('--intel', action='store_true',
@@ -34,6 +34,8 @@ if sys.platform.startswith('linux'):
 elif sys.platform == 'darwin':
     parser.add_argument('--clang', action='store_true',
                         help="""Engage system-provided clang/clang++ compilers and psi4-dev-provided gfortran.""")
+    #parser.add_argument('--gcc', action='store_true',
+    #                    help="""Engage psi4-dev-provided gcc/g++/gfortran compilers.""")
 
 # duplicates from `bin/psi4`
 psi4 = os.path.abspath(os.path.dirname(__file__)) + os.path.sep + 'psi4'
@@ -64,6 +66,17 @@ if psi4alongside:
         call([psi4, '--plugin-compile'])
         sys.exit(0)
 
+#advice = {
+#    'cmake':  '/opt/anaconda1anaconda2anaconda3/bin/cmake \\',
+#    'here':   '    -H. \\',
+#    'deps':   '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsCache.cmake \\',
+#    'nooptl': '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsDisableCache.cmake \\',
+#    'Lintel': '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsIntelCache.cmake \\',
+#    'Lgnu':   '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsGNUCache.cmake \\',
+#    'Mclang': '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsAppleClangCache.cmake \\',
+#    'Mgnu':   '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsGNUCache.cmake \\',
+#    'objdir': '    -Bobjdir',
+#}
 
 recc = ['/opt/anaconda1anaconda2anaconda3/bin/cmake \\',
         '    -H. \\',
@@ -82,6 +95,8 @@ if sys.platform.startswith('linux'):
 if sys.platform == 'darwin':
     if args.clang:
         recc.insert(-1, '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsAppleClangCache.cmake \\')
+    #if args.gcc:
+    #    recc.insert(-1, '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsGNUCache.cmake \\')
 
 srecc = """\n""".join(recc)
 print(srecc)

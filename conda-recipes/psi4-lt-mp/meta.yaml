@@ -1,5 +1,6 @@
 {% set defisa = "avx2" %}
 {% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+{% set ccfam = environ.get("PSI_BUILD_CCFAM", "default") %}
 
 
 package:
@@ -28,6 +29,9 @@ requirements:
     - libxc     >=3.0.0           # required >=1.2
     {% if isa != defisa %}
     - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
+    {% if ccfam != "default" %}
+    - {{ ccfam }}      # [osx]    # track gccmac
     {% endif %}
 
 about:

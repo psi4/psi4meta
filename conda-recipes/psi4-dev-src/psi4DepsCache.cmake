@@ -42,6 +42,8 @@ set(simint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/simint"
 
 set(Libxc_DIR              "/opt/anaconda1anaconda2anaconda3/share/cmake/Libxc" CACHE PATH "")
 
+#set(TargetLAPACK_DIR       "/opt/anaconda1anaconda2anaconda3/share/cmake/TargetLAPACK" CACHE PATH "")
+
 set(SPHINX_ROOT            "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
 set(CMAKE_PROGRAM_PATH     "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
 
