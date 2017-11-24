@@ -55,7 +55,7 @@ if [ "$(uname)" == "Linux" ]; then
     ${PREFIX}/bin/cmake \
         -H${SRC_DIR} \
         -B. \
-        -DCMAKE_INSTALL_PREFIX=${SP_DIR} \
+        -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=icc \
         -DCMAKE_CXX_COMPILER=icpc \

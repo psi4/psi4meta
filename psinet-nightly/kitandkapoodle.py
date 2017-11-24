@@ -79,11 +79,16 @@ if sys.platform.startswith('linux'):
     host = "psinet"
     dest_subchannel = 'main'
     psi4_dest_subchannel = 'dev'
+    cbcy = None
+    #dest_subchannel = 'agg'
+    #psi4_dest_subchannel = 'agg'
+    #cbcy = '/home/psilocaluser/gits/psi4meta/conda-recipes/conda_build_config.yaml'
     recipe_box = '/home/psilocaluser/gits/psi4meta/conda-recipes'
     lenv = {
         'CPU_COUNT': '8',
         'CONDA_BLD_PATH': '/scratch/psilocaluser/conda-builds',
         'PATH': '/home/psilocaluser/bldmconda3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
+        #'PATH': '/home/psilocaluser/toolchainconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
         }
 
 elif sys.platform == 'darwin':
@@ -103,7 +108,7 @@ else:
 
 def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
                         dest_subchannel='main', build_channels='defaults',
-                        envvars=None):
+                        envvars=None, cbcy=None):
 
     pyxx = _form_python_command(python)
     chnls = _form_channel_command(build_channels)
@@ -123,6 +128,9 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     command.extend(chnls)
     if keep:
         command.append('--keep-old-work')
+    if cbcy:
+        command.append('--variant-config-files')
+        command.append(cbcy)
     print("""\n  <<<  {} building: {}  >>>\n""".format(recipe, ' '.join(command)))
     build_process = _run_command(command, env=lenv, cwd=recipe_box)
     if build_process != 0:
@@ -271,6 +279,7 @@ if host == "psinet":
         candidates.append({'recipe': 'psi4-core',
                            'python': py,
                            'build_channels': ['psi4/label/dev', 'psi4', 'intel', 'defaults', 'conda-forge', 'astropy'],
+                           #'build_channels': ['psi4/label/agg', 'defaults'] })
                            'envvars': {'PSI_BUILD_DOCS': docs}})
 if host == "macpsinet":
     for py in ['2.7', '3.5', '3.6']:
@@ -291,7 +300,7 @@ for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
     print("""\n  <<<  {} starting: {}  >>>""".format(kw['recipe'], time_string))
     dst = psi4_dest_subchannel if kw['recipe'] == 'psi4-core' else dest_subchannel
-    ans = wrapped_conda_build(verbose=True, keep=False, dest_subchannel=dst, **kw)
+    ans = wrapped_conda_build(verbose=True, keep=False, dest_subchannel=dst, cbcy=cbcy, **kw)
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
     print("""\n  <<<  {} finishing: {}  >>>""".format(kw['recipe'], time_string))
     print("""\n  <<<  {} final disposition: {}  >>>\n""".format(kw['recipe'], ans))

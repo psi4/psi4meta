@@ -1,4 +1,4 @@
-{% set ltrtver = "1.2a1.dev3" %}
+{% set ltrtver = "1.2a1.dev4" %}
 {% set defisa = "avx2" %}
 {% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
 {% set ccfam = environ.get("PSI_BUILD_CCFAM", "default") %}
