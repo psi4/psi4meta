@@ -1,0 +1,38 @@
+{% set name = "hungarian" %}
+{% set version = "0.3.0" %}
+#{% set sha256 = "" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  #fn: {{ name }}-{{ version }}.tar.gz
+  #url: https://github.com/hrldcpr/{{ name }}/archive/v{{ version }}.tar.gz
+  #sha256: {{ sha256 }}
+  path: ../../../hungarian
+
+build:
+  number: 2
+  script: python setup.py install  #--single-version-externally-managed --record=record.txt
+ 
+requirements:
+  build:
+    - python x.x
+    - numpy #1.10*
+    - setuptools
+
+  run:
+    - python x.x
+    - numpy #1.10*
+
+test:
+  imports:
+    - hungarian
+
+about:
+  home: https://github.com/hrldcpr/hungarian
+  license: MIT License
+  summary: 'Hungarian/Munkres algorithm for the linear assignment problem, in Python'
+  license_family: MIT
+

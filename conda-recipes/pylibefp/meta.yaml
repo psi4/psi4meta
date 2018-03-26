@@ -1,0 +1,90 @@
+
+{% set data = load_setup_py_data(setup_file='conda/_conda_vers.py') %}
+
+#{% set version = "0.1" %}
+#{% set mklver = "2017.0.3" %}
+#{% set defisa = "avx2" %}
+#{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+
+package:
+  name: pylibefp
+  version: {{ data.get('version') }}
+
+source:
+#  path: ../../../pylibefp
+  git_url: git@github.com:loriab/pylibefp.git          # [linux]
+  git_url: https://github.com/loriab/pylibefp.git      # [osx]
+  git_tag: master
+  #git_tag: v1.1  # explicit tag when you don't want tag.dev1
+
+build:
+  number: 0                                            # [linux]
+  number: 0                                            # [osx]
+  binary_relocation: true
+  skip: true                                           # [win]
+#  script_env:
+#    - PSI_BUILD_ISA                                    # [osx]
+#  {% if isa != defisa %}
+#  features:
+#    - {{ isa }}                                        # [osx]
+#  {% endif %}
+
+requirements:
+  build:
+    - cmake >=3.3
+    - gcc-5-mp         # [linux]
+    - libefp >=1.5b1
+    - python x.x
+#    - mkl {{ mklver }} # [osx]
+#    {% if isa != defisa %}
+#    - {{ isa }}        # [osx]    # for oldmac selection
+#    {% endif %}
+##    - gcc              # [osx]    # build w/conda gcc
+#    - mkl {{ mklver }} # [linux]
+  run:
+    - libefp >=1.5b1               # link libefp
+    - python x.x
+#    - mkl >={{ mklver }}          # link mkl_rt. L: link libiomp5
+#    {% if isa != defisa %}
+#    - {{ isa }}        # [osx]    # track oldmac
+#    {% endif %}
+##    - gcc-5-mp         # [linux]  # link libgcc_s don't include at rt b/c interferes with using other gcc. can usually count on a libgcc_s to link to somewhere
+##    - libgcc           # [osx]    # link libgcc_s
+
+test:
+  requires:
+    - deepdiff
+    - numpy
+    - pytest
+#    - psi4 >= 1.2a1.dev507
+  commands:
+    # Verify existence and execution
+    - test -f $SP_DIR/pylibefp/core.so
+    # Inspect linkage
+    - ldd -r -u $SP_DIR/pylibefp/core.so  # [linux]
+    - ldd -v $SP_DIR/pylibefp/core.so     # [linux]
+    - otool -L $SP_DIR/pylibefp/core.so   # [osx]
+    - conda-inspect linkages pylibefp --show-files
+    # Actually test
+    - conda list
+    #- python -m pytest -rs -v ../tests
+    - python -c "import pylibefp; pylibefp.test(); print('*** PylibEFP {} built successfully. Buy psinet a beer.'.format(pylibefp.__version__))"
+
+#make  && LD_PRELOAD=libmkl_rt.so PYTHONPATH=/home/psilocaluser/gits/pylibefp/build34/stage/usr/local/pylibefp/lib/python3.6/site-packages/ python -m pytest -rs -v ../tests/
+
+
+
+#- cd ${TRAVIS_BUILD_DIR}/build/tests && PYTHONPATH=${TRAVIS_BUILD_DIR}/build/stage/${TRAVIS_BUILD_DIR}/Install/lib/ /home/travis/miniconda/envs/tenv/bin/python -m pytest -rws -v --capture=sys ${TRAVIS_BUILD_DIR}/tests --ignore=${TRAVIS_BUILD_DIR}/build/external --cov
+#  - python -m pytest -rs -v -m "not long" --cov --durations=5
+
+about:
+  home: https://github.com/loriab/pylibefp
+  dev_url: https://github.com/loriab/pylibefp/blob/master/README.md
+  doc_url: http://psicode.org/pylibefpmanual/master/index.html
+  license: BSD-3-Clause
+  license_url: https://opensource.org/licenses/BSD-3-Clause
+  license_file: LICENSE
+  summary: L. Burns's python bindings to libefp
+  description: some stuff
+  license_family: BSD
+
