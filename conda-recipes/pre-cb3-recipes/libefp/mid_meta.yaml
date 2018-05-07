@@ -1,0 +1,57 @@
+#{% set version = "1.5.0" %}  # TODO
+{% set version = "1.5b2" %}
+
+package:
+  name: libefp
+  version: {{ version }}
+
+source:
+  git_url: git@github.com:ilyak/libefp.git             # [linux]
+  git_url: https://github.com/ilyak/libefp.git         # [osx]
+  #git_tag: {{ version }}
+  git_tag: 4cbc84c  # 1.5.0 TODO update version later when final
+
+build:
+  number: 0  # 1.5b2
+  #number: 3  #1.4.2                                          # [linux]
+  #number: 1  #1.4.2                                          # [osx]
+  binary_relocation: true
+  skip: true                                           # [win]
+  run_exports:
+    - {{ pin_subpackage('libefp', max_pin='x.x') }}
+  ignore_run_exports:
+    # gcc symbols linked statically
+    - libgcc-ng
+
+requirements:
+  build:
+    - cmake >=3.0
+    - {{ compiler('c') }}
+  host:
+    - mkl-devel {{ mkl }}
+
+#    - gcc-5-mp         # [linux]  # link libgcc_s don't include at rt b/c interferes with using other gcc. can usually count on a libgcc_s to link to somewhere
+#    - libgcc           # [osx]    # link libgcc_s
+
+test:
+  commands:
+    # Verify library
+    - test -f $PREFIX/lib/libefp$SHLIB_EXT
+    # Inspect linkage
+    - ldd -r -u $PREFIX/lib/libefp.so && return 0  # [linux]
+    - ldd -v $PREFIX/lib/libefp.so                 # [linux]
+    - otool -L $PREFIX/lib/libefp.dylib            # [osx]
+    - conda-inspect linkages libefp --show-files
+
+about:
+  home: https://github.com/ilyak/libefp
+  dev_url: https://github.com/ilyak/libefp/blob/master/README.md
+  doc_url: https://libefp.github.io/
+  #doc_source_url:
+  license: BSD-2-Clause
+  license_url: https://opensource.org/licenses/BSD-2-Clause
+  license_file: LICENSE
+  license_family: BSD
+  summary: I. Kaliman's parallel implementation of the Effective Fragment Potential (EFP) method
+  #description: >
+

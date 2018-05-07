@@ -1,0 +1,16 @@
+---
+
+extends: default
+
+rules:
+  braces:
+    max-spaces-inside: 1
+  key-duplicates: disable  # with selectors, conda yaml files have duplicates
+  document-start:
+    present: false
+  line-length:
+    max: 119
+    level: warning
+  indentation:
+    spaces: 4
+    indent-sequences: true #false

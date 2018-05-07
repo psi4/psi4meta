@@ -41,18 +41,20 @@ if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers and mkl
     set +x
-    source /theoryfs2/common/software/intel2016/bin/compilervars.sh intel64
+    source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
     set -x
 
     # link against older libc for generic linux
-    TLIBC=/home/psilocaluser/installs/glibc2.12
-    LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/libc.so.6;-Wl,-Bstatic;-Wl,--whole-archive;-lifport;-lifcoremt_pic;-Wl,--no-whole-archive;-Wl,-Bdynamic"
+    #LIBC_INTERJECT="-liomp5;-Wl,-Bstatic;-Wl,--whole-archive;-lifport;-lifcoremt_pic;-Wl,--no-whole-archive;-Wl,-Bdynamic"
+    LIBC_INTERJECT="-liomp5;-Wl,-Bstatic;-lifport;-lifcoremt_pic;-Wl,-Bdynamic"
+    #LIBC_INTERJECT="-Wl,-Bstatic;-lifport;-lifcoremt_pic;-Wl,-Bdynamic"
+    #LIBC_INTERJECT=""
 
-    # build multi-instruction-set library
-    OPTS="-msse2 -axCORE-AVX2,AVX"
+    # link against conda GCC
+    ALLOPTS="-gnu-prefix=${HOST}- ${OPTS}"
 
     # configure
-    ${PREFIX}/bin/cmake \
+    ${BUILD_PREFIX}/bin/cmake \
         -H${SRC_DIR} \
         -B. \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
@@ -60,20 +62,27 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_C_COMPILER=icc \
         -DCMAKE_CXX_COMPILER=icpc \
         -DCMAKE_Fortran_COMPILER=ifort \
+        -DCMAKE_C_FLAGS="${ALLOPTS}" \
+        -DCMAKE_CXX_FLAGS="${ALLOPTS}" \
+        -DCMAKE_Fortran_FLAGS="${ALLOPTS}" \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_XHOST=OFF \
-        -DENABLE_GENERIC=ON \
-        -DLIBC_INTERJECT=${LIBC_INTERJECT} \
-        -DCMAKE_CXX_FLAGS=" -qopenmp -Wl,--as-needed -static-libstdc++ -static-libgcc -static-intel -wd10237 ${OPTS}" \
-        -DCMAKE_Fortran_FLAGS=" -qopenmp -static-libgcc -static-intel -wd10006 ${OPTS}"
+        -DENABLE_GENERIC=OFF \
+        -DLIBC_INTERJECT=${LIBC_INTERJECT}
+
+        #-DCMAKE_CXX_FLAGS=" -qopenmp -Wl,--as-needed -static-libstdc++ -static-libgcc -static-intel -wd10237 ${ALLOPTS}" \
+        #-DCMAKE_Fortran_FLAGS=" -qopenmp -static-libgcc -static-intel -wd10006 ${ALLOPTS}" \
 fi
 
 # build
 make -j${CPU_COUNT}
-#make VERBOSE=1
 
 # install
 make install
 
-# Note: to build from psi4 package cache
+# NOTES
+# -----
+
+# * to build from psi4 package cache
 #        -C ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake \
+    #LIBC_INTERJECT="-liomp5;${TLIBC}/lib64/libc.so.6;-Wl,-Bstatic;-Wl,--whole-archive;-lifport;-lifcoremt_pic;-Wl,--no-whole-archive;-Wl,-Bdynamic"

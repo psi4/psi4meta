@@ -3,6 +3,11 @@
 # [LAB, 28 Jun 2016]
 # execute as >>> bash -x -e kitandkaboodle.sh args
 
+#
+# This is obsolete, not used anymore... check kitandkapoodle.py
+# CDS 2/1/18
+#
+
 if [ $# -ne 1 ]; then
     echo $0: usage: kitandkaboodle.sh stage1     # setup from scratch
     echo $0: usage: kitandkaboodle.sh stage12    # setup from scratch and build all
@@ -161,9 +166,18 @@ fi
 
 # <<<  PSICODE Feed  >>>
 
+CITESDIR=/home/psilocaluser/gits/psi4meta/recent-citing-articles
+
 # Upon sucessful feed build, tars it up here and sends to psicode
 #   uses double scp because single often fails, even command-line
 if [ -d "$CONDABUILDDIR/doc/sphinxman/feed" ]; then
+    if [ -e "$CITESDIR/first_article.txt" ]; then
+        cp -f $CITESDIR/first_article.txt $CONDABUILDDIR/doc/sphinxman/feed/
+    fi
+    if [ -e "$CITESDIR/articles.txt" ]; then
+        cp -f $CITESDIR/articles.txt $CONDABUILDDIR/doc/sphinxman/feed/
+    fi
+
     cd $CONDABUILDDIR/doc/sphinxman
     tar -zcf cb-feed.tar.gz feed/
 

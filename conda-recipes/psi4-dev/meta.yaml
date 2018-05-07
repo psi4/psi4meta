@@ -1,46 +1,108 @@
-{% set ltrtver = "1.2a1.dev4" %}
-{% set mklver = "2017.0.3" %}
-
 package:
-  name: psi4-dev
-  version: {{ ltrtver }}
+    name: psi4-dev-multiout
+    version: {{ ltrtver }}
 
 source:
-  path: ../psi4-dev-src
+    path: ./src
 
 build:
-  skip: true           # [win]
-  number: 0            # [osx]
-  number: 0            # [linux]
+    number: 0                                  # [linux]
+    number: 0                                  # [osx]
+    binary_relocation: true
+    skip: true                                 # [win]
 
 requirements:
-  build:
-    - python x.x                  # define site-packages install dir
-  run:
-    # non-qc
-    - cmake >3.3
-    - gcc              # [osx]    # gfortran
-    - gcc-5-mp         # [linux]
-    - mkl-include >={{ mklver }}  # for mkl.h (intel channel)
-    - mkl >={{ mklver }}          # link libmkl_rt, libiomp5
-    - numpy
-    - pytest
-    - python x.x
-    # qc
-    - psi4-lt-mp {{ ltrtver }}
-    # docs
-    - docutils 0.12*
-    - sphinx >=1.5
+    build:
+        - {{ compiler('cxx') }}           # defines ${HOST} for subst
+    host:
+        - python {{ python }}             # selects rt python
 
-test:
-  commands:
-    # Verify existence and execution
-    - test -f $PREFIX/bin/psi4-path-advisor
-    - test -f $PREFIX/share/cmake/psi4/psi4DepsCache.cmake
-    # Actually test
-    - conda list
+outputs:
+    - name: psi4-dev
+      requirements:
+          host:
+              - pybind11 {{ pybind11 }}
+              - python {{ python }}
+              # qc: libs here imposes them to run: with proper version ranges
+              - chemps2 {{ chemps2 }}
+              - dkh {{ dkh }}
+              - libefp {{ libefp }}
+              - gau2grid {{ gau2grid }}
+              - gdma {{ gdma }}
+              - libint {{ libint }}
+              - pcmsolver {{ pcmsolver }}
+              - libxc {{ libxc }}
+          run:
+              # build tools
+              - cmake >=3.3
+              - {{ compiler('c') }}
+              - {{ compiler('cxx') }}
+              - {{ compiler('fortran') }}
+              - mkl-devel {{ mkl }}
+              - {{ pin_compatible('pybind11', max_pin='x.x.x') }}
+              - {{ pin_compatible('python', max_pin='x.x') }}
+              # rt
+              - deepdiff
+              - networkx
+              - numpy
+              - pytest
+              # dev tools
+              # - docutils 0.12*
+              # - sphinx >=1.5
+      files:
+          - bin/psi4-path-advisor
+          - share/cmake/psi4
+      test:
+          commands:
+              # Verify existence and execution
+              - test -f $PREFIX/bin/psi4-path-advisor
+              - test -f $PREFIX/share/cmake/psi4/psi4DepsCache.cmake
+              # Actually test, gcc
+              - conda list
+              - PPAOUT="$(psi4-path-advisor --gcc)"
+              - git clone https://github.com/psi4/psi4.git
+              - cd psi4
+              - >
+                  ${PPAOUT}-gcc
+                  -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON
+                  #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON
+                  #-DCMAKE_INSIST_FIND_PACKAGE_simint=ON
+              # Actually test, intel
+              - PPAOUT="$(psi4-path-advisor --intel)"
+              - source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
+              - >
+                  ${PPAOUT}-intel
+                  -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON
+                  #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON
+                  #-DCMAKE_INSIST_FIND_PACKAGE_simint=ON
 
-about:
-  home: http://psicode.org
-  summary: development metapackage for Psi4 including CMake cache, documentation, & compiler tools
-  #description:
+      about:
+          home: http://psicode.org
+          dev_url: https://github.com/psi4/psi4meta/tree/master/conda-recipes/psi4-dev
+          # doc_url:
+          # doc_source_url:
+          # license:
+          # license_url:
+          # license_file:
+          # license_family:
+          summary: "development support for Psi4"
+          description: >
+            Development metapackage for Psi4 including CMake cache, documentation, & compiler tools.
+            Install into env and conda activate for compiler envvars to take effect.
+            # needs to be installed from the start not `conda install gxx_linux-64` otherwise vars don't take effect

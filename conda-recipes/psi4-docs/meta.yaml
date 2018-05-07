@@ -1,0 +1,63 @@
+{% set data = load_setup_py_data(setup_file='conda/_conda_vers.py') %}
+
+package:
+    name: psi4-docs-multiout
+    version: {{ data.get('version') }}
+
+source:
+    git_url: git@github.com:psi4/psi4.git      # [linux]
+    git_url: https://github.com/psi4/psi4.git  # [osx]
+    git_tag: master
+
+build:
+    number: 0
+    skip: true                                 # [win or osx or not py36]
+
+requirements:
+    build:
+        - cmake >=3.3
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+    host:
+        - mkl-devel {{ mkl }}
+        - pybind11 {{ pybind11 }}
+        - python {{ python }}
+        # qc
+        - libefp {{ libefp }}                              # for efp fragment autodoc
+        - gau2grid {{ gau2grid }}
+        - libint {{ libint }}
+        - libxc {{ libxc }}
+        # run: for build-time testing
+        - deepdiff
+        - networkx
+        - numpy
+        # docs
+        - astropy-helpers
+        - ipykernel
+        - jupyter_client
+        - nbsphinx
+        - python-graphviz
+        - sphinx >=1.5
+        - sphinx-psi-theme
+
+outputs:
+    - name: psi4-docs
+      files:
+          - share/doc/psi4
+      test:
+          commands:
+              - test -f $PREFIX/share/doc/psi4/html/index.html
+      about:
+          home: http://psicode.org
+          dev_url: https://github.com/psi4/psi4
+          doc_url: http://psicode.org/psi4manual/master/index.html
+          doc_source_url: https://github.com/psi4/psi4/tree/master/doc/sphinxman/source
+          license: LGPL-3.0
+          license_url: https://opensource.org/licenses/LGPL-3.0
+          license_file: COPYING.LESSER
+          license_family: LGPL
+          summary: "Psi4 HTML documentation"
+          # description: >
+
+# NOTES
+# -----

@@ -1,44 +1,62 @@
+# this version is an invention. official upstream is 1.0
 {% set version = "1.0.1" %}
 
-
 package:
-  name: snsmp2
-  version: {{ version }}
+    name: snsmp2
+    version: {{ version }}
 
 source:
-  git_url: git@github.com:loriab/sns-mp2.git   # [linux]
-  #git_url: git@github.com:DEShawResearch/sns-mp2.git   # [linux]
-  #git_url: https://github.com/DEShawResearch/sns-mp2.git # [osx]
-  #git_tag: {{ version }}
-  #git_tag: 83281dc  # 1.0.1.dev10
-  git_tag: importfixes
+    git_url: git@github.com:DEShawResearch/sns-mp2.git      # [linux]
+    git_url: https://github.com/DEShawResearch/sns-mp2.git  # [osx]
+    # git_tag: {{ version }}
+    git_tag: a70c56f  # 1.0 + 13
 
 build:
-  number: 0                                            # [linux]
-  #number: 0                                            # [osx]
-  skip: true                                           # [win]
-  script: python setup.py install --single-version-externally-managed --record=record.txt
+    number: 2                                               # [linux]
+    number: 0                                               # [osx]
+    skip: true                                              # [win]
+    script: python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
-  build:
-    - python x.x
-    - setuptools
-    - pbr >=1.9
-  run:
-    - python x.x
-    - scipy
+    build:
+        - pbr >=1.9
+        - python {{ python }}
+        - setuptools >=17.1
+    run:
+        - {{ pin_compatible('python', max_pin='x.x') }}
+        - scipy
 
 test:
-  #imports:
-  #  - snsmp2
-  commands:
-    - conda-inspect linkages snsmp2 --show-files
+    requires:
+        - psi4
+    imports:
+        - snsmp2
+        - psi4
+    files:
+        - tests/he-he.py
+        - tests/he-he.in
+        - tests/cf-o.in
+        - tests/cc-cc.in
+    commands:
+        - export PLPSP=$PREFIX/lib{{ PYMOD_INSTALL_LIBDIR }}
+        # Verify module
+        - test -f $PLPSP/snsmp2/snsmp2.py
+        # Inspect linkage
+        - conda-inspect linkages snsmp2 --show-files
+        # Actually test
+        - ${PYTHON} tests/he-he.py
+        - psi4 tests/he-he.in
+        - psi4 tests/cf-o.in -n${CPU_COUNT}
+        - psi4 tests/cc-cc.in -n${CPU_COUNT}
 
 about:
-  home: https://github.com/DEShawResearch/sns-mp2
-  license: BSD-2-Clause
-  license_url: https://opensource.org/licenses/BSD-2-Clause
-  license_file: LICENCE.txt
-  summary: "R. McGibbon's spin-network-scaled MP2 plugin to Psi4"
-  license_family: BSD
-
+    home: https://github.com/DEShawResearch/sns-mp2
+    dev_url: https://github.com/DEShawResearch/sns-mp2
+    # doc_url:
+    # doc_source_url:
+    license: BSD-2-Clause
+    license_url: https://opensource.org/licenses/BSD-2-Clause
+    license_file: LICENCE.txt
+    license_family: BSD
+    summary: "R. McGibbon's spin-network-scaled MP2 plugin to Psi4"
+    # description: >

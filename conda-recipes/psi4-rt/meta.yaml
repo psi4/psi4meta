@@ -1,20 +1,49 @@
-{% set ltrtver = "1.2a1.dev4" %}
-
 package:
-  name: psi4-rt
-  version: {{ ltrtver }}
+    name: psi4-rt
+    version: {{ ltrtver }}
 
 build:
-  number: 0
+    number: 0                                  # [linux]
+    number: 0                                  # [osx]
+    binary_relocation: true
+    skip: true                                 # [win]
 
 requirements:
-  run:
-    - python x.x                  # for build string tracking
-    # qc
-    - dftd3        >=3.2.0
-    - gcp          >=2.0.1
-    - v2rdm_casscf 0.5 py{{ py }}_0
+    host:
+        - python {{ python }}
+        - dftd3 {{ dftd3 }}
+        - gcp {{ gcp }}
+        - snsmp2 {{ snsmp2 }}
+        - v2rdm_casscf {{ v2rdm_casscf }}
+    run:
+        - {{ pin_compatible('python', max_pin='x.x') }}
+        - {{ pin_compatible('dftd3', max_pin='x.x') }}
+        - {{ pin_compatible('gcp', max_pin='x.x') }}
+        - {{ pin_compatible('snsmp2', max_pin='x.x') }}
+      {% for package in resolved_packages('host') %}
+       {% if package.startswith('v2rdm_casscf') %}
+        - {{ package }}
+       {% endif %}
+      {% endfor %}
+
+test:
+    requires:
+        - psi4
+    imports:
+        - snsmp2
+        - v2rdm_casscf
+        - psi4
+    commands:
+        - psi4 --test
 
 about:
-  summary: run-time quantum chemistry add-ons for Psi4
-  #description:
+    home: http://psicode.org
+    # dev_url:
+    # doc_url:
+    # doc_source_url:
+    # license:
+    # license_url:
+    # license_file:
+    # license_family:
+    summary: "Optional run-time add-ons to Psi4"
+    # description: >

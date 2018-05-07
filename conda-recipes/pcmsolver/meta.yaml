@@ -1,63 +1,62 @@
-{% set version = "1.1.10" %}
-
-{% set defisa = "avx2" %}
-{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
-
+{% set version = "1.2.1" %}
 
 package:
-  name: pcmsolver
-  version: {{ version }}
+    name: pcmsolver
+    version: {{ version }}
 
 source:
-  git_url: git@github.com:PCMSolver/pcmsolver.git      # [linux]
-  git_url: https://github.com/PCMSolver/pcmsolver.git  # [osx]
-  git_tag: v{{ version }}
-  #git_url: git@github.com:loriab/pcmsolver.git      # [linux]
-  #git_tag: config8
+    git_url: git@github.com:PCMSolver/pcmsolver.git      # [linux]
+    git_url: https://github.com/PCMSolver/pcmsolver.git  # [osx]
+    git_tag: v{{ version }}  # v1.2.1  fa7c826
 
 build:
-  number: 1                                            # [linux]
-  number: 1                                            # [osx]
-  binary_relocation: true
-  skip: true                                           # [win]
-  script_env:
-    - PSI_BUILD_ISA                                    # [osx]
-  {% if isa != defisa %}
-  features:
-    - {{ isa }}                                        # [osx]
-  {% endif %}
+    number: 0                                            # [linux]
+    number: 0                                            # [osx]
+    binary_relocation: true
+    skip: true                                           # [win]
+    run_exports:
+        - {{ pin_subpackage('pcmsolver', max_pin='x.x.x') }}
+    ignore_run_exports:
+        # unused libraries
+        - libgfortran-ng
 
 requirements:
-  build:
-    - cmake >=3.1
-    - gcc              # [osx]    # build w/ gfortran
-    - gcc-5-mp         # [linux]
-    - python x.x                  # for site-packages location, install selection
-    - zlib
-    {% if isa != defisa %}
-    - {{ isa }}        # [osx]    # for oldmac selection
-    {% endif %}
-  run:
-    - libgcc           # [osx]    # link libgfortran, libquadmath
-    - zlib                        # link libz
-    - python x.x                  # interpreter
-    {% if isa != defisa %}
-    - {{ isa }}        # [osx]    # track oldmac
-    {% endif %}
+    build:
+        - cmake >=3.1
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - {{ compiler('fortran') }}
+    host:
+        - python {{ python }}
+        - zlib {{ zlib }}
+    run:
+        - {{ pin_compatible('python', max_pin='x.x') }}
 
 test:
-  commands:
-    # Verify library and python module
-    - test -f $PREFIX/lib/libpcm$SHLIB_EXT
-    - test -f $SP_DIR/pcmsolver/pcmsolver.py
-    # Inspect linkage
-    - ldd -v $PREFIX/lib/libpcm.so       # [linux]
-    - otool -L $PREFIX/lib/libpcm.dylib  # [osx]
-    - conda-inspect linkages pcmsolver --show-files
+    commands:
+        - export PLPSP=$PREFIX/lib{{ PYMOD_INSTALL_LIBDIR }}
+        # Verify library
+        - test -f $PREFIX/lib/libpcm$SHLIB_EXT
+        - test -f $PREFIX/bin/go_pcm.py
+        - test -f $PLPSP/pcmsolver/pcmparser.py
+        # Inspect linkage
+        - ldd -r -u $PREFIX/lib/libpcm.so    # [linux]
+        - ldd -v $PREFIX/lib/libpcm.so       # [linux]
+        - otool -L $PREFIX/lib/libpcm.dylib  # [osx]
+        - conda-inspect linkages pcmsolver --show-files
 
 about:
-  home: http://pcmsolver.readthedocs.org/en/latest/
-  license: GNU Lesser General Public License v3 (LGPLv3)
-  summary: "Polarizable Continuum Model API"
-  readme: README.md
+    home: https://github.com/PCMSolver/pcmsolver
+    dev_url: https://github.com/PCMSolver/pcmsolver
+    doc_url: http://pcmsolver.readthedocs.org/en/latest/
+    doc_source_url: https://github.com/PCMSolver/pcmsolver/tree/master/doc
+    license: LGPL-3.0
+    license_url: https://opensource.org/licenses/LGPL-3.0
+    license_file: LICENSE
+    license_family: LGPL
+    summary: "R. di Remigio & L. Frediani's Polarizable Continuum Model (PCM) API"
+    # description: >
 
+# Notes
+# -----
+# * If `-DENABLE_OPENMP=ON`, add `intel-openmp` back to req/host and req/run

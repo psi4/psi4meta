@@ -1,4 +1,4 @@
-#!/home/psilocaluser/bldmconda3/bin/python
+#!/home/psilocaluser/toolchainconda/bin/python
 
 #!/home/psilocaluser/bldmconda3/bin/python
 #!/Users/github/bldmconda3/bin/python
@@ -30,6 +30,39 @@
 #   anaconda copy --to-owner psi4 intel/mkl-include/2017.0.3/linux-64/mkl-include-2017.0.3-intel_8.tar.bz2
 #   anaconda copy --to-owner psi4 intel/mkl-include/2017.0.3/osx-64/mkl-include-2017.0.3-intel_8.tar.bz2
 
+# [LAB 4 Jan 2018]
+# To update setuptools,
+#    conda:      4.3.17-py36_0    --> 4.3.30-py36h5d9f9f4_0
+#    setuptools: 27.2.0-py36_0    --> 36.4.0-py36_1        
+
+# [LAB 26 Mar 2018]
+# Updated all the conda stuff in toolchainconda
+#    conda:        4.3.30-py36h5d9f9f4_0 --> 4.5.0-py36_0        
+#    conda-build:  3.0.30-py36hc0a0e36_0 --> 3.7.2-py36_0        
+#    pycosat:      0.6.1-py36_1          --> 0.6.3-py36h0a5515d_0
+#    libgcc-ng:    7.2.0-h7cc24e2_2  --> 7.2.0-hdf63c60_3 
+#    libstdcxx-ng: 7.2.0-h7a57d05_2  --> 7.2.0-hdf63c60_3 
+#    openssl:      1.0.2m-h26d622b_1 --> 1.0.2n-hb7f436b_0
+
+# [LAB 9 Apr 2018]
+#   anaconda copy --to-owner psi4 conda-forge/pybind11/2.2.2/linux-64/pybind11-2.2.2-py36_0.tar.bz2
+
+# [LAB 20 Apr 2018]
+#   anaconda copy --to-owner psi4 conda-forge/deepdiff/3.3.0/noarch/deepdiff-3.3.0-py_0.tar.bz2
+
+# [LAB 21 Apr 2018]
+#   anaconda copy --to-owner psi4 conda-forge/pybind11/2.2.2/linux-64/pybind11-2.2.2-py35_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/pybind11/2.2.2/linux-64/pybind11-2.2.2-py27_0.tar.bz2
+
+# [LAB 29 Apr 2018]
+#   anaconda copy --to-owner psi4 conda-forge/pybind11/2.2.3/linux-64/pybind11-2.2.3-py36_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/pybind11/2.2.3/linux-64/pybind11-2.2.3-py35_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/pybind11/2.2.3/linux-64/pybind11-2.2.3-py27_0.tar.bz2
+
+# [LAB late Apr 2018]
+#   remove pb11 2.2.2 from psi4 channel
+#   remove mkl-include 2017 linux from psi4 channel
+
 import os
 import sys
 import datetime
@@ -56,6 +89,13 @@ def _form_python_command(py_arg):
         sys.exit(1)
 
 
+def _form_extras_command(extras_arg):
+    if extras_arg is None:
+        return []
+    else:
+        return extras_arg
+
+
 def _run_command(command, env=None, cwd=None):
     kw = {}
     if env is not None:
@@ -77,18 +117,14 @@ def _run_command(command, env=None, cwd=None):
 
 if sys.platform.startswith('linux'):
     host = "psinet"
-    dest_subchannel = 'main'
-    psi4_dest_subchannel = 'dev'
-    cbcy = None
-    #dest_subchannel = 'agg'
-    #psi4_dest_subchannel = 'agg'
-    #cbcy = '/home/psilocaluser/gits/psi4meta/conda-recipes/conda_build_config.yaml'
+    dest_subchannel = 'dev'
+    #dest_subchannel = 'main'
     recipe_box = '/home/psilocaluser/gits/psi4meta/conda-recipes'
+    cbcy = recipe_box + '/conda_build_config.yaml'
     lenv = {
-        'CPU_COUNT': '8',
+        'CPU_COUNT': '12',
         'CONDA_BLD_PATH': '/scratch/psilocaluser/conda-builds',
-        'PATH': '/home/psilocaluser/bldmconda3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
-        #'PATH': '/home/psilocaluser/toolchainconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
+        'PATH': '/home/psilocaluser/toolchainconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
         }
 
 elif sys.platform == 'darwin':
@@ -108,24 +144,28 @@ else:
 
 def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
                         dest_subchannel='main', build_channels='defaults',
-                        envvars=None, cbcy=None):
+                        envvars=None, cbcy=None, cbextras=None):
 
     pyxx = _form_python_command(python)
     chnls = _form_channel_command(build_channels)
+    extras = _form_extras_command(cbextras)
+
     if envvars:
         lenv.update(envvars)
 
     # Predict full path with versioned name of conda package
     command = ['conda', 'build', recipe, '--output']
     command.extend(pyxx)
-    build_product = subprocess.Popen(command, env=lenv, cwd=recipe_box,
+    command.extend(chnls)
+    build_products = subprocess.Popen(command, env=lenv, cwd=recipe_box,
                                      stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
-    print("""\n  <<<  {} anticipating: {}  >>>""".format(recipe, build_product))
+    print("""\n  <<<  {} anticipating: {}  >>>""".format(recipe, build_products))
 
     # Build conda package
     command = ['conda', 'build', recipe]
     command.extend(pyxx)
     command.extend(chnls)
+    command.extend(extras)
     if keep:
         command.append('--keep-old-work')
     if cbcy:
@@ -137,16 +177,19 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
         return 'NoBuild'
 
     # Upload conda package
-    if os.path.isfile(build_product):
-        command = ['anaconda', 'upload', build_product, '--label', dest_subchannel]
+    outcomes = []
+    for bp in build_products.split():
+        command = ['anaconda', 'upload', bp, '--label', dest_subchannel]
         print("""\n  <<<  {} uploading: {}  >>>\n""".format(recipe, ' '.join(command)))
-        upload_process = _run_command(command, env=lenv)
-        if upload_process == 0:
-            return 'Success'
+        if os.path.isfile(bp):
+            upload_process = _run_command(command, env=lenv)
+            if upload_process == 0:
+                outcomes.append('Success')
+            else:
+                outcomes.append('NoUpload')
         else:
-            return 'NoUpload'
-    else:
-        return 'NoFile'
+            outcomes.append('NoFile')
+    return outcomes
 
 
 if host == "macpsinet":
@@ -229,81 +272,123 @@ if host == "psinet":
 #{'recipe': 'ci-psi4-lt', 'python': '2.7'},  # linux
 #{'recipe': 'ci-psi4-lt', 'python': '3.5'},  # linux
 #{'recipe': 'ci-psi4-lt', 'python': '3.6'},  # linux
-#{'recipe': 'sphinx-psi-theme', 'python': '2.7', 'build_channels': ['conda-forge']},  # linuxmkl
-#{'recipe': 'sphinx-psi-theme', 'python': '3.5', 'build_channels': ['conda-forge']},  # linuxmkl
-#{'recipe': 'sphinx-psi-theme', 'python': '3.6', 'build_channels': ['conda-forge']},  # linuxmkl
+    #{'recipe': 'sphinx-psi-theme', 'python': '2.7', 'build_channels': ['conda-forge']},  # linuxmkl
+    #{'recipe': 'sphinx-psi-theme', 'python': '3.5', 'build_channels': ['conda-forge']},  # linuxmkl
+    #{'recipe': 'sphinx-psi-theme', 'python': '3.6', 'build_channels': ['conda-forge']},  # linuxmkl
+#{'recipe': 'hungarian', 'python': '2.7'},
+#{'recipe': 'hungarian', 'python': '3.5'},
+#{'recipe': 'hungarian', 'python': '3.6'},
 
-#{'recipe': 'chemps2', 'build_channels': ['psi4', 'intel']},  # linuxmkl
+    #{'recipe': 'chemps2', 'build_channels': ['psi4', 'intel']},  # linuxmkl
 #{'recipe': 'lawrap'},  # linux
-#{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-#{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-#{'recipe': 'pychemps2', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+    #{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+    #{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+    #{'recipe': 'pychemps2', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
 #{'recipe': 'dkh', 'build_channels': 'psi4'},  # linux
-#{'recipe': 'libefp', 'build_channels': 'psi4'},  # linuxmkl
-###{'recipe': 'pylibefp', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4', 'conda-forge']},  # linuxmkl
-###{'recipe': 'pylibefp', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4', 'conda-forge']},  # linuxmkl
+    #{'recipe': 'libefp', 'build_channels': 'psi4'},  # linuxmkl
+    ###{'recipe': 'pylibefp', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4', 'conda-forge']},  # linuxmkl
+    ###{'recipe': 'pylibefp', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4', 'conda-forge']},  # linuxmkl
 #{'recipe': 'erd', 'build_channels': 'psi4'},  # linux
 #{'recipe': 'gdma', 'build_channels': 'psi4'},  # linux
 #{'recipe': 'am7-mp'},
 #{'recipe': 'am8-mp'},
-#{'recipe': 'libint', 'envvars': {'MAX_AM_ERI': '6'}},  # linux
+    #{'recipe': 'libint', 'envvars': {'MAX_AM_ERI': '6'}},  # linux
+    #{'recipe': 'libint'},  # linux
 #{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '7'}},  # linux
 #{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '8'}},  # linux
-#{'recipe': 'pcmsolver', 'python': '2.7', 'build_channels': 'psi4'},  # linux
-#{'recipe': 'pcmsolver', 'python': '3.5', 'build_channels': 'psi4'},  # linux
-#{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4'},  # linux
+    #{'recipe': 'pcmsolver', 'python': '2.7', 'build_channels': 'psi4'},  # linux
+    #{'recipe': 'pcmsolver', 'python': '3.5', 'build_channels': 'psi4'},  # linux
+    #{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4'},  # linux
 #{'recipe': 'simint'},
 #{'recipe': 'libxc'},  # linux
+#{'recipe': 'gau2grid', 'python': '3.6'},  # linuxmkl
+    #{'recipe': 'dftd3'},
+    #{'recipe': 'gcp'},
+    #{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linux
+    #{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linux
+    #{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linux
+    #{'recipe': 'snsmp2', 'python': '2.7'},
+    #{'recipe': 'snsmp2', 'python': '3.5'},
+    #{'recipe': 'snsmp2', 'python': '3.6'},
 
-#{'recipe': 'dftd3'},
-#{'recipe': 'gcp'},
-#{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linux
-#{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linux
-#{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linux
-{'recipe': 'snsmp2', 'python': '2.7'},
-{'recipe': 'snsmp2', 'python': '3.5'},
-{'recipe': 'snsmp2', 'python': '3.6'},
-
-#{'recipe': 'psi4-rt', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-#{'recipe': 'psi4-rt', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-#{'recipe': 'psi4-rt', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+    #{'recipe': 'psi4-rt', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+    #{'recipe': 'psi4-rt', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+    #{'recipe': 'psi4-rt', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
 #{'recipe': 'psi4-lt-mp', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
 #{'recipe': 'psi4-lt-mp', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
 #{'recipe': 'psi4-lt-mp', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-#{'recipe': 'psi4-dev', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-#{'recipe': 'psi4-dev', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-#{'recipe': 'psi4-dev', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-                 ]
+    #{'recipe': 'psi4-dev', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+    #{'recipe': 'psi4-dev', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
+    #{'recipe': 'psi4-dev', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
 
-if host == "psinet":
-    for py in ['2.7', '3.5', '3.6']:
-        docs = '1' if py == '3.5' else '0'
-        #continue  # commented allows all psi4-core builds / uncommented suppresses
-        candidates.append({'recipe': 'psi4-core',
-                           'python': py,
-                           'build_channels': ['psi4/label/dev', 'psi4', 'intel', 'defaults', 'conda-forge', 'astropy'],
-                           #'build_channels': ['psi4/label/agg', 'defaults'] })
-                           'envvars': {'PSI_BUILD_DOCS': docs}})
-if host == "macpsinet":
-    for py in ['2.7', '3.5', '3.6']:
-        for isa in ['sse41', 'avx2']:
-            for ccfam in ['gnu', 'default']:
-                if (ccfam == 'gnu') and (py != '3.5'):
-                    continue
-                #continue  # commented allows all psi4-core builds / uncommented suppresses
-                candidates.append({'recipe': 'psi4-core',
-                                   'python': py,
-                                   'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'intel'],
-                                   'envvars': {'PSI_BUILD_ISA': isa,
-                                               'PSI_BUILD_CCFAM': ccfam}})
-# psi4/label/dev above catches addon updates not suitable for 1.1 release (i.e., v2rdm)
+
+# CBCY openblas --- dest_subchannel = 'nomkl'
+#{'recipe': 'chemps2-multiout', 'dest_subchannel': 'nomkl'},
+#{'recipe': 'libefp-multiout', 'build_channels': ['psi4'], 'dest_subchannel': 'nomkl'},  # deepdiff, pb11 from psi4
+#{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/nomkl', 'psi4/label/dev', 'psi4'], 'dest_subchannel': 'nomkl'},
+
+# Unplaced
+#{'recipe': 'gau2grid-multiout'},  # cb3
+#{'recipe': 'gdma'},  # cb3
+#{'recipe': 'dkh'},  # cb3
+#{'recipe': 'libxc'},  # cb3
+#{'recipe': 'erd'},
+
+# starred (***) are nightly build
+
+# MISC: order mostly doesn't matter
+# ---------------------------------
+#{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
+
+# LT: bump in recipe any upstream versions Psi means to support and rebuild
+#     upon any failure, adjust source of Psi & upstream
+# -------------------------------------------------------------------------
+#{'recipe': 'chemps2-multiout'},
+#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # deepdiff, pb11 from psi4
+#{'recipe': 'libint'},
+#{'recipe': 'pcmsolver'},
+
+# CBCY: edit "ltrtver" & "<addon>" if anything in LT changed
+# ----------------------------------------------------------
+
+# PSI4: build Psi4 w/o any RT deps or tests (***)
+# -----------------------------------------------
+{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'psi4']},
+
+# RT-MP: build RT metapackage w/existing downstreams and new Psi4 (***)
+#         upon any failure, step forward or back, adjusting source of downstream or Psi
+# -------------------------------------------------------------------------------------
+{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev', 'psi4']},
+
+# RT: if psi4-rt tests fail, build the downstream
+# -----------------------------------------------
+#{'recipe': 'dftd3'},
+#{'recipe': 'gcp'},
+#{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev', 'psi4']},  # psi4, deepdiff from psi4
+#{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev', 'psi4']},  # psi4, deepdiff from psi4
+
+# DEV: build the deps package and test `psi4-path-advisor` (***)
+# --------------------------------------------------------------
+{'recipe': 'psi4-dev', 'build_channels': ['psi4/label/dev', 'psi4']},
+
+# DOCS: build the docs, feed, and doxygen targets (***)
+# -----------------------------------------------------
+{'recipe': 'psi4-docs', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge', 'astropy'], 'cbextras': ['--prefix-length', '100']},
+
+        ]
 
 
 for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
     print("""\n  <<<  {} starting: {}  >>>""".format(kw['recipe'], time_string))
-    dst = psi4_dest_subchannel if kw['recipe'] == 'psi4-core' else dest_subchannel
-    ans = wrapped_conda_build(verbose=True, keep=False, dest_subchannel=dst, cbcy=cbcy, **kw)
+
+    dst = kw.pop('dest_subchannel', dest_subchannel)
+    ans = wrapped_conda_build(verbose=True,
+                              keep=True,
+                              dest_subchannel=dst,
+                              cbcy=cbcy,
+                              **kw)
+
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
     print("""\n  <<<  {} finishing: {}  >>>""".format(kw['recipe'], time_string))
     print("""\n  <<<  {} final disposition: {}  >>>\n""".format(kw['recipe'], ans))
@@ -344,6 +429,42 @@ for kw in candidates:
 # python-dateutil           2.6.0                    py36_0    defaults
 # 18 Jul 2017 - below ok but really long so back to 2.1.8
 # conda-build               3.0.6                    py36_0    defaults
+
+# 26 Mar 2018
+# # packages in environment at /home/psilocaluser/toolchainconda:
+# anaconda-client           1.6.14                   py36_0  
+# conda                     4.5.0                    py36_0  
+# conda-build               3.7.2                    py36_0  
+# conda-env                 2.6.0                h36134e3_1  
+# conda-verify              2.0.0            py36h98955d8_0  
+# ipython_genutils          0.2.0            py36hb52b0d5_0  
+# libgcc-ng                 7.2.0                hdf63c60_3  
+# libstdcxx-ng              7.2.0                hdf63c60_3  
+# python                    3.6.4                hc3d631a_3  
+# python-dateutil           2.6.1            py36h88d3b88_1  
+
+# >>> conda list | grep -e conda -e python -e ng
+# # packages in environment at /home/psilocaluser/toolchainconda:
+# anaconda-client           1.6.14                   py36_0  
+# conda                     4.3.30           py36h5d9f9f4_0  
+# conda-build               3.8.0                    py36_0  
+# conda-env                 2.6.0                h36134e3_1  
+# conda-verify              2.0.0            py36h98955d8_0  
+# ipython_genutils          0.2.0            py36hb52b0d5_0  
+# libgcc-ng                 7.2.0                hdf63c60_3  
+# libstdcxx-ng              7.2.0                hdf63c60_3  
+# python                    3.6.0                         0  
+# python-dateutil           2.7.2                    py36_0  
+
+# >>> conda list | grep -e constr -e conda
+# # packages in environment at /home/psilocaluser/toolchainconda:
+# anaconda-client           1.6.14                   py36_0  
+# conda                     4.5.2                    py36_0  
+# conda-build               3.10.1                   py36_0  
+# conda-env                 2.6.0                h36134e3_1  
+# conda-verify              2.0.0            py36h98955d8_0  
+# constructor               2.0.3                    py36_0  
+
 
 
 # constructor --platform linux-64 psi4-installer/

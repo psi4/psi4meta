@@ -1,0 +1,109 @@
+{% set version = "1.0.1" %}
+
+package:
+    name: gau2grid-multiout
+    version: {{ version }}
+
+source:
+    git_url: git@github.com:dgasmith/gau2grid.git         # [linux]
+    git_url: https://github.com/dgasmith/gau2grid.git     # [osx]
+    git_tag: v{{ version }}
+
+build:
+    number: 0                                            # [linux]
+    number: 0                                            # [osx]
+    binary_relocation: true
+    skip: true                                           # [win]
+
+requirements:
+    build:
+        - cmake >=3.0
+        - {{ compiler('c') }}
+    host:
+        - numpy
+        - python {{ python }}
+
+outputs:
+    - name: gau2grid
+      build:
+          run_exports:
+              - {{ pin_subpackage('gau2grid', max_pin='x.x') }}
+      requirements:
+          build:
+              - {{ compiler('c') }}
+              - cmake >=3.0
+          host:
+              - numpy
+              - python {{ python }}
+      files:
+          - include/gau2grid
+          - lib/libgg*
+          - share/cmake/gau2grid
+      test:
+          commands:
+              # Verify library
+              - test -f $PREFIX/lib/libgg$SHLIB_EXT
+              # Inspect linkage
+              - ldd -r -u $PREFIX/lib/libgg.so && return 0  # [linux]
+              - ldd -v $PREFIX/lib/libgg.so                 # [linux]
+              - otool -L $PREFIX/lib/libgg.dylib            # [osx]
+              - conda-inspect linkages gau2grid --show-files
+      about:
+          home: https://github.com/dgasmith/gau2grid
+          dev_url: https://github.com/dgasmith/gau2grid
+          doc_url: https://github.com/dgasmith/gau2grid/blob/master/README.md
+          # doc_source_url:
+          license: BSD-3-Clause
+          license_url: https://opensource.org/licenses/BSD-3-Clause
+          license_family: BSD
+          summary: "D.G.A. Smith's C library for fast computation of a Gaussian and its derivative on a grid"
+          description: >
+            A collocation code for computing gaussians on a grid of the form:
+            ```
+            out_Lp = x^l y^m z^n \sum_i coeff_i e^(exponent_i * (|center - p|)^2)
+            ```
+            , where the returned matrix dimension are the angular momentum (L) by number of requested points (p).
+
+    - name: pygau2grid
+      requirements:
+          build:
+              - {{ compiler('c') }}
+          host:
+              - numpy
+              - python {{ python }}
+          run:
+              - numpy
+              - {{ pin_compatible('python', max_pin='x.x') }}
+      files:
+          - lib/python*/site-packages/gau2grid/*
+          - lib/python*/site-packages/gau2grid/data/*
+          - lib/python*/site-packages/gau2grid/tests/*
+      test:
+          requires:
+              - pytest
+          commands:
+              - export PLPSP=$PREFIX/lib{{ PYMOD_INSTALL_LIBDIR }}
+              # Verify library
+              - test -f $PLPSP/gau2grid/libgg$SHLIB_EXT
+              # Inspect linkage
+              - ldd -r -u $PLPSP/gau2grid/libgg.so && return 0  # [linux]
+              - ldd -v $PLPSP/gau2grid/libgg.so                 # [linux]
+              - otool -L $PLPSP/gau2grid/libgg.dylib            # [osx]
+              - conda-inspect linkages pygau2grid --show-files
+              # Actually test
+              - python -c "import gau2grid; gau2grid.test(); print('*** gau2grid {} built successfully. Buy psinet a beer!'.format(gau2grid.__version__))"
+      about:
+          home: https://github.com/dgasmith/gau2grid
+          dev_url: https://github.com/dgasmith/gau2grid
+          doc_url: https://github.com/dgasmith/gau2grid/blob/master/README.md
+          # doc_source_url:
+          license: BSD-3-Clause
+          license_url: https://opensource.org/licenses/BSD-3-Clause
+          license_family: BSD
+          summary: "D.G.A. Smith's C-based python module for fast computation of a Gaussian and its derivative on a grid"
+          description: >
+            A collocation code for computing gaussians on a grid of the form:
+            ```
+            out_Lp = x^l y^m z^n \sum_i coeff_i e^(exponent_i * (|center - p|)^2)
+            ```
+            , where the returned matrix dimension are the angular momentum (L) by number of requested points (p).

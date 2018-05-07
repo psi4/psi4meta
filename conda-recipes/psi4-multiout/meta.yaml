@@ -1,0 +1,145 @@
+{% set data = load_setup_py_data(setup_file='conda/_conda_vers.py') %}
+
+package:
+    name: psi4-multiout
+    version: {{ data.get('version') }}
+
+source:
+    git_url: git@github.com:psi4/psi4.git      # [linux]
+    git_url: https://github.com/psi4/psi4.git  # [osx]
+    # git_tag: v1.2rc1  # explicit tag when you don't want tag.dev1
+    git_tag: master
+
+build:
+    number: 0                                  # [linux]
+    number: 0                                  # [osx]
+    binary_relocation: true
+    skip: true                                 # [win]
+
+requirements:
+    build:
+        - cmake >=3.3
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+    host:
+        - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
+        - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
+        - pybind11 {{ pybind11 }}
+        - python {{ python }}
+        # qc
+        - chemps2 {{ chemps2 }}
+        - dkh {{ dkh }}
+        - libefp {{ libefp }}
+        - gau2grid {{ gau2grid }}
+        - gdma {{ gdma }}
+        - libint {{ libint }}
+        - pcmsolver {{ pcmsolver }}
+        - libxc {{ libxc }}
+        # rt for ctest
+        - deepdiff
+        - networkx
+        - numpy
+
+outputs:
+    - name: psi4
+      build:
+          requires_features:
+              blas: {{ blas_impl }}
+              ameri: am{{ MAX_AM_ERI }}
+          run_exports:
+              - {{ pin_subpackage('psi4', max_pin='x.x') }}
+      requirements:
+          build:
+              - cmake >=3.3
+              - {{ compiler('c') }}
+              - {{ compiler('cxx') }}
+          host:
+              - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
+              - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
+              - pybind11 {{ pybind11 }}
+              - python {{ python }}
+              # qc
+              - chemps2 {{ chemps2 }}
+              - dkh {{ dkh }}
+              - libefp {{ libefp }}
+              - gau2grid {{ gau2grid }}
+              - gdma {{ gdma }}
+              - libint {{ libint }}
+              - pcmsolver {{ pcmsolver }}
+              - libxc {{ libxc }}
+          run:
+              - deepdiff
+              - intel-openmp
+              - networkx
+              - numpy
+              - pytest                                         # drive psi4 --test
+              - {{ pin_compatible('python', max_pin='x.x') }}
+      files:
+          - bin/psi4
+          - include/psi4
+          - lib{{ PYMOD_INSTALL_LIBDIR }}/psi4
+          - share/cmake/psi4
+          - share/cmake/Target*/*
+          - share/psi4
+          # efpfrag
+      test:
+          imports:
+              - psi4
+          commands:
+              - export PLPSP=$PREFIX/lib{{ PYMOD_INSTALL_LIBDIR }}
+              # Verify existence and execution
+              - test -f $PREFIX/bin/psi4
+              - test -f $PLPSP/psi4/core.so
+              - $PREFIX/bin/psi4 --version
+              # Inspect linkage
+              - ldd -r -u $PLPSP/psi4/core.so  # [linux]
+              - ldd -v $PLPSP/psi4/core.so     # [linux]
+              - otool -L $PLPSP/psi4/core.so   # [osx]
+              - conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver libxc psi4  # erd simint
+              # Actually test
+              - conda list
+              - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
+      about:
+          home: http://psicode.org
+          dev_url: https://github.com/psi4/psi4
+          doc_url: http://psicode.org/psi4manual/master/index.html
+          doc_source_url: https://github.com/psi4/psi4/tree/master/doc/sphinxman/source
+          license: LGPL-3.0
+          license_url: https://opensource.org/licenses/LGPL-3.0
+          license_file: COPYING.LESSER
+          license_family: LGPL
+          summary: "Open-Source Quantum Chemistry - an electronic structure package in C++ driven by Python"
+          description: >
+            Psi4 is an open-source suite of ab initio quantum chemistry programs designed for efficient, high-accuracy simulations of a variety of molecular properties. We can routinely perform computations with more than 2500 basis functions running serially or on multi-core machines.
+
+            With computationally demanding portions written in C++, Pybind11 exports many of the C++ classes into Python, and a flexible Python driver, Psi4 strives to be friendly to both users and developers.
+
+    #- name: psi4-lt-mp
+    #  requirements:
+    #      host:
+    #          - python {{ python }}
+    #      run:
+    #          # pin_run_as_build bad here
+    #          - chemps2 {{ chemps2 }}.*
+    #          - dkh {{ dkh }}.*
+    #          - libefp {{ libefp }}.*
+    #          - gdma {{ gdma }}.*
+    #          - libint {{ libint }}.*
+    #          - pcmsolver {{ pcmsolver }}.*
+    #          - libxc {{ libxc }}.*
+    #  about:
+    #      summary: "link-time quantum chemistry add-ons for Psi4"
+    #      description: >
+    #        Metapackage collecting required link-time dependencies and enabled optional link-time extensions to Psi4 capabilities.
+
+
+# NOTES
+# -----
+# * to conda build package from local source rather than github, substitute like below
+#   package/version: 0.1.6
+#   source/path: ../../../hrw-conda
+#   build/number: 1
+#   build/string: abc
+# * tried adding pybind11 to psi4 pkg run_exports since psi4Config needs it so
+#   see if allows only host:psi4 for plugins. FAIL
+# * - icc_rt {{ mkl }}  # from jupyworks

@@ -1,0 +1,44 @@
+{% set name = "jsonpickle" %}
+{% set version = "0.9.6" %}
+{% set sha256 = "545b3bee0d65e1abb4baa1818edcc9ec239aa9f2ffbfde8084d71c056180054f" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  noarch: python
+  number: 0
+  script: python setup.py install --single-version-externally-managed --record record.txt
+
+requirements:
+  build:
+    - python
+    - setuptools
+  run:
+    - python
+
+test:
+  imports:
+    - jsonpickle
+
+about:
+  summary: Python library for serializing any arbitrary object graph into JSON. It can take almost any Python object and turn the object into JSON. Additionally, it can reconstitute the object back into Python.
+  home: http://jsonpickle.github.io/
+  dev_url: https://github.com/jsonpickle/jsonpickle
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - robmcmullen
+    - ChrisBarker-NOAA
+
+# copied from conda-forge to try for noarch
+

@@ -1,0 +1,46 @@
+{% set ltrtver = "1.2a1.dev5" %}
+{% set mklver = "2017.0.3" %}
+
+package:
+  name: psi4-dev
+  version: {{ ltrtver }}
+
+source:
+  path: ../psi4-dev-src
+
+build:
+  skip: true           # [win]
+  number: 0            # [osx]
+  number: 0            # [linux]
+
+requirements:
+  build:
+    - python x.x                  # define site-packages install dir
+  run:
+    # non-qc
+    - cmake >3.3
+    - gcc              # [osx]    # gfortran
+    - gcc-5-mp         # [linux]
+    - mkl-include >={{ mklver }}  # for mkl.h (intel channel)
+    - mkl >={{ mklver }}          # link libmkl_rt, libiomp5
+    - numpy
+    - pytest
+    - python x.x
+    # qc
+    - psi4-lt-mp {{ ltrtver }}
+    # docs
+    - docutils 0.12*
+    - sphinx >=1.5
+
+test:
+  commands:
+    # Verify existence and execution
+    - test -f $PREFIX/bin/psi4-path-advisor
+    - test -f $PREFIX/share/cmake/psi4/psi4DepsCache.cmake
+    # Actually test
+    - conda list
+
+about:
+  home: http://psicode.org
+  summary: development metapackage for Psi4 including CMake cache, documentation, & compiler tools
+  #description:

@@ -1,34 +1,43 @@
-{% set version = "2.0.1" %}
+{% set version = "2.0.2" %}
 
 package:
-  name: gcp
-  version: {{ version }}
+    name: gcp
+    version: {{ version }}
 
 source:
-  fn: gcp_v2.tar.gz
-  url: http://www.thch.uni-bonn.de/tc/downloads/gcp/data/gcp_v2.tar.gz
+    fn: gcp_v202.tar.gz
+    url: https://www.chemie.uni-bonn.de/pctc/mulliken-center/software/gcp/gcp_v202.tar.gz
 
 build:
-  number: 0
-  binary_relocation: false                             # [linux]
-  skip: true                                           # [win]
+    number: 0                                            # [linux]
+    number: 0                                            # [osx]
+    binary_relocation: false
+    skip: true                                           # [win]
+    ignore_run_exports:
+        # unused libraries
+        - libgcc-ng
+        - libgfortran-ng
 
 requirements:
-  build:
-    - gcc              # [osx]    # build w/ gfortran
-  run:
-    - libgcc           # [osx]    # link libgfortran, libquadmath, libgcc_s
+    build:
+        - {{ compiler('fortran') }}
 
 test:
-  commands:
-    # Verify executable
-    - test -f $PREFIX/bin/gcp
-    # Inspect linkage
-    - ldd -v $PREFIX/bin/gcp    # [linux]   
-    - otool -L $PREFIX/bin/gcp  # [osx]
-    - conda-inspect linkages gcp --show-files
+    commands:
+        # Verify executable
+        - test -f $PREFIX/bin/gcp
+        # Inspect linkage
+        - otool -L $PREFIX/bin/gcp  # [osx]
+        - conda-inspect linkages gcp --show-files
 
 about:
-  home: http://www.thch.uni-bonn.de/tc/index.php?section=impressum&lang=english
-  license: GNU General Public License v1 or later (GPLv1+)
-  summary: "S. Grimme's geometrical counterpoise correction for DFT and Hartree-Fock quantum chemical methods"
+    home: https://www.chemie.uni-bonn.de/pctc/mulliken-center/software/gcp/gcp
+    # dev_url:
+    doc_url: https://www.chemie.uni-bonn.de/pctc/mulliken-center/software/gcp/manGCP.pdf
+    # doc_source_url:
+    license: GPL-1.0+
+    # license_url:
+    # license_file:
+    license_family: GPL
+    summary: "S. Grimme's geometrical counterpoise correction for DFT and Hartree--Fock quantum chemical methods"
+    # description: >
