@@ -1,0 +1,41 @@
+{% set ltrtver = "1.2a1.dev3" %}
+{% set defisa = "avx2" %}
+{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+{% set ccfam = environ.get("PSI_BUILD_CCFAM", "default") %}
+
+
+package:
+  name: psi4-lt-mp
+  version: {{ ltrtver }}
+
+build:
+  number: 0                                            # [linux]
+  number: 0                                            # [osx]
+  {% if isa != defisa %}
+  features:
+    - {{ isa }}                                        # [osx]
+  {% endif %}
+
+requirements:
+  run:
+    - python x.x                  # for build string tracking
+    # qc
+    - chemps2   1.8.3|1.8.4
+    - dkh       1.2
+    - libefp    1.4.2|1.5*
+    - erd       3.0.6
+    - gdma      2.2.6
+    - libint    1.2.0|1.2.1       # required
+    - pcmsolver 1.1.10
+    - simint    0.7
+    - libxc     3.0.0             # required >=1.2
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
+    {% if ccfam != "default" %}
+    - {{ ccfam }}      # [osx]    # track gccmac
+    {% endif %}
+
+about:
+  summary: link-time quantum chemistry add-ons for Psi4
+  #description:

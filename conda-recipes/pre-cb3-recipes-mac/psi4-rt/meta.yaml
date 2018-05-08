@@ -1,0 +1,20 @@
+{% set ltrtver = "1.2a1.dev3" %}
+
+package:
+  name: psi4-rt
+  version: {{ ltrtver }}
+
+build:
+  number: 0
+
+requirements:
+  run:
+    - python x.x                  # for build string tracking
+    # qc
+    - dftd3        >=3.2.0
+    - gcp          >=2.0.1
+    - v2rdm_casscf 0.4 py{{ py }}_1
+
+about:
+  summary: run-time quantum chemistry add-ons for Psi4
+  #description:

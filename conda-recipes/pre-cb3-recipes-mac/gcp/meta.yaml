@@ -1,0 +1,34 @@
+{% set version = "2.0.1" %}
+
+package:
+  name: gcp
+  version: {{ version }}
+
+source:
+  fn: gcp_v2.tar.gz
+  url: http://www.thch.uni-bonn.de/tc/downloads/gcp/data/gcp_v2.tar.gz
+
+build:
+  number: 0
+  binary_relocation: false                             # [linux]
+  skip: true                                           # [win]
+
+requirements:
+  build:
+    - gcc              # [osx]    # build w/ gfortran
+  run:
+    - libgcc           # [osx]    # link libgfortran, libquadmath, libgcc_s
+
+test:
+  commands:
+    # Verify executable
+    - test -f $PREFIX/bin/gcp
+    # Inspect linkage
+    - ldd -v $PREFIX/bin/gcp    # [linux]   
+    - otool -L $PREFIX/bin/gcp  # [osx]
+    - conda-inspect linkages gcp --show-files
+
+about:
+  home: http://www.thch.uni-bonn.de/tc/index.php?section=impressum&lang=english
+  license: GNU General Public License v1 or later (GPLv1+)
+  summary: "S. Grimme's geometrical counterpoise correction for DFT and Hartree-Fock quantum chemical methods"

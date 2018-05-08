@@ -1,0 +1,88 @@
+{% set version = "1.8.4" %}
+
+{% set mklver = "2017.0.3" %}
+{% set defisa = "avx2" %}
+{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+{% set ccfam = environ.get("PSI_BUILD_CCFAM", "default") %}
+
+
+package:
+  name: chemps2
+  version: {{ version }}
+
+source:
+  git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
+  git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
+  git_tag: v{{ version }}
+
+build:
+  number: 0                                            # [linux]
+  {% if (ccfam == "gnu") and (isa == defisa) %}
+  number: 1                                            # [osx]
+  {% elif (ccfam == "gnu") and (isa != defisa) %}
+  number: 0                                            # [osx]
+  {% elif (ccfam != "gnu") and (isa == defisa) %}
+  number: 0                                            # [osx]
+  {% elif (ccfam != "gnu") and (isa != defisa) %}
+  number: 0                                            # [osx]
+  {% endif %}
+  binary_relocation: true
+  skip: true                                           # [win]
+  script_env:
+    - PSI_BUILD_ISA                                    # [osx]
+    - PSI_BUILD_CCFAM                                  # [osx]
+  features:
+    {% if isa != defisa %}
+    - {{ isa }}                                        # [osx]
+    {% endif %}
+    {% if ccfam == "gnu" %}
+    - {{ ccfam }}                                      # [osx]
+    {% endif %}
+
+requirements:
+  build:
+    - cmake >=3.0
+    - hdf5 1.8.17                 # PIN-TO-BUILD
+    - gcc-5-mp         # [linux]
+    - zlib
+    - mkl {{ mklver }}
+    - mkl-static {{ mklver }}  # [linux]
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # for oldmac selection
+    {% endif %}
+    {% if ccfam == "gnu" %}
+    - gcc-5-mp         # [osx]
+    {% endif %}
+  run:
+#    - gcc-5-mp         # [linux]  # link libgcc_s  # trying not incl@rt on same grounds as libefp
+    {% if ccfam == "gnu" %}
+    - gcc-5-mp         # [osx]    # link libstdc++
+    {% endif %}
+    - hdf5 1.8.17                  # link libhdf5, libhdf5_hl  PIN-TO-BUILD
+    - mkl >={{ mklver }}  # [linux]  # link libiomp5, MKL
+    - zlib             #          # link libz
+    - mkl >={{ mklver }} # [osx]
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
+    {% if ccfam == "gnu" %}
+    - {{ ccfam }}                                        # [osx]
+    {% endif %}
+
+test:
+  commands:
+    # Verify libraries and executable.
+    - test -f $PREFIX/lib/libchemps2$SHLIB_EXT
+    - test -f $PREFIX/bin/chemps2
+    # Inspect linkage
+    - ldd -r -u $PREFIX/lib/libchemps2.so && return 0  # [linux]
+    - ldd -v $PREFIX/lib/libchemps2.so                 # [linux]
+    - otool -L $PREFIX/lib/libchemps2.dylib            # [osx]
+    - conda-inspect linkages chemps2 --show-files
+
+about:
+  home: http://sebwouters.github.io/CheMPS2
+  license: GNU General Public License v2 or later (GPLv2+)
+  summary: "a spin-adapted implementation of DMRG for ab initio quantum chemistry"
+  readme: README.md
+

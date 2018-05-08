@@ -1,0 +1,38 @@
+{% set version = "3.2.0" %}
+
+package:
+  name: dftd3
+  version: {{ version }}
+
+source:
+  fn: dftd3.tgz
+  url: http://www.thch.uni-bonn.de/tc/downloads/DFT-D3/data/dftd3.tgz
+
+build:
+  number: 7
+  binary_relocation: false                             # [linux]
+  skip: true                                           # [win]
+
+requirements:
+  build:
+    - gcc              # [osx]    # build w/ gfortran
+  run:
+    - libgcc           # [osx]    # link libgfortran, libquadmath, libgcc_s
+
+test:
+  commands:
+    # Verify executable
+    - test -f $PREFIX/bin/dftd3
+    # Inspect linkage
+    - ldd -v $PREFIX/bin/dftd3    # [linux]
+    - otool -L $PREFIX/bin/dftd3  # [osx]
+    - conda-inspect linkages dftd3 --show-files
+
+about:
+  home: http://www.thch.uni-bonn.de/tc/index.php?section=downloads&subsection=DFT-D3&lang=english
+  license: GNU General Public License v1 or later (GPLv1+)
+  summary: "S. Grimme's dispersion correction for DFT, Hartree--Fock, and semi-empirical quantum chemical methods"
+
+# Anaconda.org description
+#**Site:** <a href="http://www.thch.uni-bonn.de/tc/index.php?section=downloads&subsection=DFT-D3&lang=english">http://www.thch.uni-bonn.de/tc/index.php?section=downloads&subsection=DFT-D3&lang=english</a><br>**License:** <a href="http://www.thch.uni-bonn.de/tc/index.php?section=impressum&lang=english">http://www.thch.uni-bonn.de/tc/index.php?section=impressum&lang=english</a>
+

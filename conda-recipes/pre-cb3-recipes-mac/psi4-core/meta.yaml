@@ -1,0 +1,128 @@
+
+{% set data = load_setup_py_data(setup_file='conda/_conda_vers.py') %}
+
+{% set ltrtver = "1.2a1.dev3" %}
+{% set mklver = "2017.0.3" %}
+{% set defisa = "avx2" %}
+{% set isa = environ.get("PSI_BUILD_ISA", defisa) %}
+{% set docs = environ.get("PSI_BUILD_DOCS", "0") %}
+{% set ccfam = environ.get("PSI_BUILD_CCFAM", "default") %}
+
+
+package:
+  name: psi4
+  version: {{ data.get('version') }}
+
+source:
+  git_url: git@github.com:psi4/psi4.git                # [linux]
+  git_url: https://github.com/psi4/psi4.git            # [osx]
+  git_tag: master
+  #git_tag: v1.1  # explicit tag when you don't want tag.dev1
+
+build:
+  skip: true                                           # [win]
+  number: 0
+  binary_relocation: true
+  script_env:
+    - PSI_BUILD_DOCS                                   # [linux]
+    - PSI_BUILD_ISA                                    # [osx]
+    - PSI_BUILD_CCFAM                                  # [osx]
+  features:
+    {% if isa != defisa %}
+    - {{ isa }}                                        # [osx]
+    {% endif %}
+    {% if ccfam == "gnu" %}
+    - {{ ccfam }}                                      # [osx]
+    {% endif %}
+
+requirements:
+  build:
+    # non-qc
+    - cmake >3.3
+    - gcc              # [osx]    # for gfortran
+    - gcc-5-mp         # [linux]
+    - mkl {{ mklver }}
+    - mkl-include {{ mklver }}    # for mkl.h (intel channel)
+    - numpy                       # for psi4 execution w/i ctest and sphinxman (intel channel so mkl_rt-linked)
+    - python x.x
+    # qc
+    - psi4-lt-mp {{ ltrtver }}
+    - psi4-rt {{ ltrtver }}       # for cmake testing
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # for oldmac selection
+    {% endif %}
+    {% if ccfam == "gnu" %}
+    - gcc-5-mp         # [osx]
+    - {{ ccfam }}      # [osx]
+    {% endif %}
+    # docs
+    {% if docs == "1" %}
+    - astropy-helpers  # [linux]  # for autoapi
+    - cloud_sptheme    # [linux]  # for docs
+    - docutils 0.12*   # [linux]  # for docs (verno avoids sphinx bug)
+    - graphviz         # [linux]  # for autoapi
+    - ipykernel        # [linux]  # for psiapi docs
+    - jupyter_client   # [linux]  # for psiapi docs
+    - nbsphinx         # [linux]  # for psiapi docs
+    - pandoc 1.19*     # [linux]  # for psiapi docs (verno forces conda-forge that gets headers right)
+    - python-graphviz  # [linux]  # for autoapi
+    - sphinx >=1.5     # [linux]  # for docs
+    - sphinx-psi-theme # [linux]  # for docs
+    {% endif %}
+  run:
+    # non-qc
+    - gcc-5-mp         # [linux]  # link libgcc_s
+    {% if ccfam == "gnu" %}
+    - gcc-5-mp         # [osx]
+    {% else %}
+    - libgcc           # [osx]    # link libgfortran
+    {% endif %}
+    - mkl >={{ mklver }}          # link libmkl_rt, libiomp5
+    - numpy                       # linalg python
+    - pytest                      # drive psi4 --test
+    - python x.x                  # interpreter python
+    # qc
+    - psi4-lt-mp {{ ltrtver }}    # link libchemps2, libdkh, libefp, liberd
+                                  #      libgdma, libint, libderiv, libpcm,
+                                  #      libsimint, libxc (in 1.2)
+    {% if isa != defisa %}
+    - {{ isa }}        # [osx]    # track oldmac
+    {% endif %}
+    {% if ccfam == "gnu" %}
+    - {{ ccfam }}      # [osx]    # track gnumac
+    {% endif %}
+
+test:
+  requires:
+    - psi4-rt {{ ltrtver }}       # load dftd3, gcp, v2rdm_casscf
+  commands:
+    # Verify existence and execution
+    - test -f $PREFIX/bin/psi4
+    - test -f $SP_DIR/psi4/core.so
+    - $PREFIX/bin/psi4 --version
+    # Inspect linkage
+    - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
+    - ldd -v $SP_DIR/psi4/core.so     # [linux]
+    - otool -L $SP_DIR/psi4/core.so   # [osx]
+    - conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gdma libint pcmsolver simint libxc psi4  # [linux]
+        # above commented for Mac b/c inspect bug in 2.1.8 the doesn't like libgcc 485 and gcc 52
+    # Actually test
+    - conda list
+    - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
+
+about:
+  home: http://psicode.org
+  dev_url: https://github.com/psi4/psi4
+  doc_url: http://psicode.org/psi4manual/master/index.html
+  license: LGPL-3.0
+  license_url: https://opensource.org/licenses/LGPL-3.0
+  license_file: COPYING.LESSER
+  license_family: LGPL
+  summary: Open-Source Quantum Chemistry - an electronic structure package in C++ driven by Python
+  #description:
+
+# to conda build package from local source rather than github, substitute like below
+#package/version: 0.1.6
+#source/path: ../../../hrw-conda
+#build/number: 1
+#build/string: abc
