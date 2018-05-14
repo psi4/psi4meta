@@ -1,0 +1,25 @@
+name: {{ cookiecutter.name }}
+
+version: "{{ cookiecutter.release }}"
+
+installer_filename: {{ cookiecutter.name }}-{{ cookiecutter.release }}-py{{ cookiecutter.python }}-{{ cookiecutter.platform }}.sh
+
+packages:
+- {{ cookiecutter.repo }}{{ cookiecutter.channel }}{{ cookiecutter.channel_tag }}/{{ cookiecutter.platform }}/{{ cookiecutter.channel }}-{{ cookiecutter.release }}+{{ cookiecutter.hash }}-py{{ cookiecutter.python | replace(".", "") }}_{{ cookiecutter.build_number }}.tar.bz2
+
+specs:
+  - libgcc    # [osx]
+  - gcc-5-mp  # [linux]
+  - mkl       # [linux]
+  - python {{ cookiecutter.python }}*
+  - psi4-lt-mp {{ cookiecutter.release }}
+  - psi4-rt {{ cookiecutter.release }}
+  - conda
+
+channels:
+  - {{ cookiecutter.repo }}{{ cookiecutter.channel }}
+  - http://repo.continuum.io/pkgs/free
+
+install_in_dependency_order: true
+
+keep_pkgs: false
