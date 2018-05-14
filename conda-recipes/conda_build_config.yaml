@@ -1,16 +1,19 @@
 # <<<  Compiler Stuff  >>>
 
 c_compiler:
-    - clang     # [osx]
-    - gcc       # [linux]
+    - clang                            # [osx]
+    - gcc                              # [linux]
 cxx_compiler:
-    - clangxx   # [osx]
-    - gxx       # [linux]
+    - clangxx                          # [osx]
+    - gxx                              # [linux]
 fortran_compiler:
     - gfortran
 target_platform:
-    - osx-64    # [osx]
-    - linux-64  # [linux]
+    - osx-64                           # [osx]
+    - linux-64                         # [linux]
+CONDA_BUILD_SYSROOT:
+  - /Users/github/SDKs/MacOSX10.9.sdk  # [osx]
+
 
 # <<<  Packages Stuff  >>>
 
@@ -42,8 +45,10 @@ ltrtver:
     #- "1.2a1.dev8"   # ( 1 May 2018)                                                                          1.2.1                   4.0.2
     - "1.2a1.dev9"    # ( 6 May 2018)                                1.5.0                                                                      | 0.3
 MAX_AM_ERI:
-    - '6'
+    - '4'
+#    - '6'
 OPTS:
+    - '-msse4.1 -axCORE-AVX2'  # [osx]
     - '-msse2 -axCORE-AVX2,AVX -Wl,--as-needed -static-intel -wd10237'  # [linux]
 PY_ABBR:
     - python3.6m

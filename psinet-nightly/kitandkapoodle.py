@@ -63,6 +63,12 @@
 #   remove pb11 2.2.2 from psi4 channel
 #   remove mkl-include 2017 linux from psi4 channel
 
+# [LAB 11 May 2018]
+#   anaconda copy --to-owner psi4 conda-forge/pybind11/2.2.3/osx-64/pybind11-2.2.3-py36_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/pybind11/2.2.3/osx-64/pybind11-2.2.3-py35_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/pybind11/2.2.3/osx-64/pybind11-2.2.3-py27_0.tar.bz2
+
+
 import os
 import sys
 import datetime
@@ -78,11 +84,13 @@ def _form_channel_command(channel_arg):
             chan_list.extend(['-c', chan])
         return chan_list
 
-
 def _form_python_command(py_arg):
+    """Effectively deprecated by conda_build_config.yaml variants"""
     if py_arg is None:
         return []
     elif str(py_arg) in ['2.7', '3.5', '3.6']:
+        print('Use conda_build_config.yaml instead!')
+        sys.exit(1)
         return ['--python', str(py_arg)]
     else:
         print('Bad Python:', py_arg)
@@ -129,13 +137,13 @@ if sys.platform.startswith('linux'):
 
 elif sys.platform == 'darwin':
     host = "macpsinet"
-    dest_subchannel = 'main'
-    psi4_dest_subchannel = 'dev'
+    dest_subchannel = 'agg'
     recipe_box = '/Users/github/Git/psi4meta/conda-recipes'
+    cbcy = recipe_box + '/conda_build_config.yaml'
     lenv = {
         'CPU_COUNT': '2',
         'CONDA_BLD_PATH': '/Users/github/builds/conda-builds',
-        'PATH': '/Users/github/bldmconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin',
+        'PATH': '/Users/github/toolchainconda/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin',
         }
 
 else:
@@ -262,6 +270,19 @@ if host == "macpsinet":
 #{'recipe': 'p4test', 'python': '3.6' , 'build_channels': ['psi4', 'defaults', 'intel']}, #['psi4/label/oldmac', 'psi4']},  # bldstr 10, 11
 #{'recipe': 'p4test', 'python': '3.6' , 'envvars': {'PSI_BUILD_ISA': 'sse41'}, 'build_channels': ['psi4', 'defaults', 'intel']},  # bldstr 12
 #{'recipe': 'p4test', 'python': '3.6' , 'envvars': {'PSI_BUILD_ISA': 'sse41'}, 'build_channels': ['psi4', 'defaults', 'intel']},  # bldstr 13
+
+# LT: bump in recipe any upstream versions Psi means to support and rebuild
+#     upon any failure, adjust source of Psi & upstream
+# -------------------------------------------------------------------------
+#{'recipe': 'libxc'},
+#{'recipe': 'gau2grid-multiout'},  # cb3
+#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # b_chnl: deepdiff, pb11
+{'recipe': 'libint'},
+
+
+# PSI4: build Psi4 w/o any RT deps or tests (***)
+# -----------------------------------------------
+#{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'psi4/label/agg']}, #, 'psi4']},
 		]
 
 if host == "psinet":
@@ -399,63 +420,6 @@ for kw in candidates:
 #conda create -n tp4deps35 python=3.5 psi4-deps -c psi4/label/test -c psi4
 #conda create -n tp4deps35 python=3.5 psi4-deps -c psi4
 
-# # packages in environment at /home/psilocaluser/bldmconda3:
-# anaconda-client           1.6.2                    py36_0
-# conda                     4.3.16                   py36_0
-# conda-build               2.1.9                    py36_0
-# conda-env                 2.6.0                         0
-# conda-verify              2.0.0                    py36_0
-# constructor               1.5.5                    py36_0
-# libconda                  4.0.0                    py36_0
-# python                    3.6.1                         0
-# python-dateutil           2.6.0                    py36_0
-
-# 8 May 2017
-#    Linux
-#    anaconda-client: 1.6.2-py36_0  --> 1.6.3-py36_0
-#    conda:           4.3.16-py36_0 --> 4.3.17-py36_0
-#    Mac
-#    anaconda-client: 1.6.2-py36_0 defaults --> 1.6.3-py36_0 defaults
-
-# # packages in environment at /Users/github/bldmconda3:
-# anaconda-client           1.6.2                    py36_0    defaults
-# conda                     4.3.14                   py36_0    defaults
-# conda-build               2.1.8                    py36_0    defaults
-# conda-env                 2.6.0                         0    defaults
-# conda-verify              2.0.0                    py36_0    defaults
-# constructor               1.5.4                    py36_0    defaults
-# libconda                  4.0.0                    py36_0    defaults
-# python                    3.6.0                         0    defaults
-# python-dateutil           2.6.0                    py36_0    defaults
-# 18 Jul 2017 - below ok but really long so back to 2.1.8
-# conda-build               3.0.6                    py36_0    defaults
-
-# 26 Mar 2018
-# # packages in environment at /home/psilocaluser/toolchainconda:
-# anaconda-client           1.6.14                   py36_0  
-# conda                     4.5.0                    py36_0  
-# conda-build               3.7.2                    py36_0  
-# conda-env                 2.6.0                h36134e3_1  
-# conda-verify              2.0.0            py36h98955d8_0  
-# ipython_genutils          0.2.0            py36hb52b0d5_0  
-# libgcc-ng                 7.2.0                hdf63c60_3  
-# libstdcxx-ng              7.2.0                hdf63c60_3  
-# python                    3.6.4                hc3d631a_3  
-# python-dateutil           2.6.1            py36h88d3b88_1  
-
-# >>> conda list | grep -e conda -e python -e ng
-# # packages in environment at /home/psilocaluser/toolchainconda:
-# anaconda-client           1.6.14                   py36_0  
-# conda                     4.3.30           py36h5d9f9f4_0  
-# conda-build               3.8.0                    py36_0  
-# conda-env                 2.6.0                h36134e3_1  
-# conda-verify              2.0.0            py36h98955d8_0  
-# ipython_genutils          0.2.0            py36hb52b0d5_0  
-# libgcc-ng                 7.2.0                hdf63c60_3  
-# libstdcxx-ng              7.2.0                hdf63c60_3  
-# python                    3.6.0                         0  
-# python-dateutil           2.7.2                    py36_0  
-
 # >>> conda list | grep -e constr -e conda
 # # packages in environment at /home/psilocaluser/toolchainconda:
 # anaconda-client           1.6.14                   py36_0  
@@ -464,6 +428,14 @@ for kw in candidates:
 # conda-env                 2.6.0                h36134e3_1  
 # conda-verify              2.0.0            py36h98955d8_0  
 # constructor               2.0.3                    py36_0  
+
+# # packages in environment at /Users/github/toolchainconda:
+# anaconda-client           1.6.14                   py36_0    defaults
+# conda                     4.5.2                    py36_0    defaults
+# conda-build               3.10.2                   py36_0    defaults
+# conda-env                 2.6.0                         0    defaults
+# conda-verify              2.0.0            py36he837df3_0    defaults
+# libconda                  4.0.3                    py36_0    defaults
 
 
 
