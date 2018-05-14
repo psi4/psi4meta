@@ -2,23 +2,26 @@ name: {{ cookiecutter.name }}
 
 version: "{{ cookiecutter.release }}"
 
-installer_filename: {{ cookiecutter.name }}-{{ cookiecutter.release }}-py{{ cookiecutter.python }}-{{ cookiecutter.platform }}.sh
+{% if cookiecutter.platform == "linux-64" %}
+    {% set platform2 = "Linux-x86_64" %}
+{% elif cookiecutter.platform == "osx-64" %}
+    {% set platform2 = "MacOSX-x86_64" %}
+{% endif %}
 
-packages:
-- {{ cookiecutter.repo }}{{ cookiecutter.channel }}{{ cookiecutter.channel_tag }}/{{ cookiecutter.platform }}/{{ cookiecutter.channel }}-{{ cookiecutter.release }}+{{ cookiecutter.hash }}-py{{ cookiecutter.python | replace(".", "") }}_{{ cookiecutter.build_number }}.tar.bz2
+installer_filename: {{ cookiecutter.name }}-{{ cookiecutter.release }}-py{{ cookiecutter.python | replace(".", "") }}-{{ platform2 }}.sh
 
 specs:
-  - libgcc    # [osx]
-  - gcc-5-mp  # [linux]
-  - mkl       # [linux]
-  - python {{ cookiecutter.python }}*
-  - psi4-lt-mp {{ cookiecutter.release }}
-  - psi4-rt {{ cookiecutter.release }}
   - conda
+  - psi4 =={{ cookiecutter.release }}+{{ cookiecutter.hash }}
+  - psi4-rt =={{ cookiecutter.ltrtver }}
+  - python {{ cookiecutter.python }}*
 
-channels:
-  - {{ cookiecutter.repo }}{{ cookiecutter.channel }}
-  - http://repo.continuum.io/pkgs/free
+channels: &id1
+  - {{ cookiecutter.repo }}{{ cookiecutter.channel }}{{ cookiecutter.channel_tag }}
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/free
+
+conda_default_channels: *id1
 
 install_in_dependency_order: true
 

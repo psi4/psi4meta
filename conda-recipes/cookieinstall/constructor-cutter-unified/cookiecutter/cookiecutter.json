@@ -1,7 +1,7 @@
 {
   "name": "psi4conda",
   "channel": "psi4",
-  "release": "1.1",
+  "release": "1.2rc2.dev52",
   "python": [
     "2.7",
     "3.5",
@@ -11,7 +11,8 @@
     "linux-64",
     "osx-64"
   ],
-  "hash": "add49b9",
+  "hash": "015c10a",
+  "ltrtver": "1.2a1.dev9",
   "channel_tag": "/label/dev",
   "repo": "https://conda.anaconda.org/",
   "build_number": "0"
