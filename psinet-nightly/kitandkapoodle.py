@@ -63,6 +63,15 @@
 #   remove pb11 2.2.2 from psi4 channel
 #   remove mkl-include 2017 linux from psi4 channel
 
+# [LAB 14 May 2018]
+#   remove c-f noarch copy of deepdiff from psi4 channel, replace with Linux-targeted builds
+#   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/linux-64/jsonpickle-0.9.6-py27_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/linux-64/jsonpickle-0.9.6-py35_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/linux-64/jsonpickle-0.9.6-py36_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/osx-64/jsonpickle-0.9.6-py36_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/osx-64/jsonpickle-0.9.6-py35_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/osx-64/jsonpickle-0.9.6-py27_0.tar.bz2
+
 import os
 import sys
 import datetime
@@ -339,6 +348,7 @@ if host == "psinet":
 # MISC: order mostly doesn't matter
 # ---------------------------------
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
+{'recipe': 'deepdiff', 'build_channels': ['conda-forge']},  # chnl: jsonpickle  # neededby: pylibefp, psi4
 
 # LT: bump in recipe any upstream versions Psi means to support and rebuild
 #     upon any failure, adjust source of Psi & upstream
