@@ -348,7 +348,7 @@ if host == "psinet":
 # MISC: order mostly doesn't matter
 # ---------------------------------
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
-{'recipe': 'deepdiff', 'build_channels': ['conda-forge']},  # chnl: jsonpickle  # neededby: pylibefp, psi4
+#{'recipe': 'deepdiff', 'build_channels': ['conda-forge']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
 
 # LT: bump in recipe any upstream versions Psi means to support and rebuild
 #     upon any failure, adjust source of Psi & upstream
@@ -383,8 +383,10 @@ if host == "psinet":
 
 # DOCS: build the docs, feed, and doxygen targets (***)
 # -----------------------------------------------------
-{'recipe': 'psi4-docs', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge', 'astropy'], 'cbextras': ['--prefix-length', '100']},
+{'recipe': 'psi4-docs', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge', 'astropy'], 'cbextras': ['--prefix-length', '100']},  # chnl: codecov, sphinx* jupyter* astropy-helpers
 
+# In future when `gcov` available, coverage can be added to psi4-docs recipe
+#{'recipe': 'psi4-coverage', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge', 'astropy'], 'cbextras': ['--prefix-length', '100']},  # chnl: cov*, docs*
         ]
 
 

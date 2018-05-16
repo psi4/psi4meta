@@ -16,7 +16,7 @@ target_platform:
 
 blas_impl:
     - mkl
-    #- openblas
+    # - openblas
 hdf5:
     - 1.10.1  # this recipe pins to x.x.x which I trust more than the 1.8 recipe x.x
 mkl:
@@ -88,11 +88,13 @@ zip_keys:
     - python
     - PYMOD_INSTALL_LIBDIR
     - PY_ABBR
-ignore_version:
-    - PYMOD_INSTALL_LIBDIR
-    - PY_ABBR
 
 # NOTES
 # -----
 
 # Ok pre-rel tags: 1.2.0rc1, 1.5b2
+
+# * below bad b/c messed with predicted vs actual hashes, so didn't upload
+#   ignore_version:
+#       - PYMOD_INSTALL_LIBDIR
+#       - PY_ABBR
