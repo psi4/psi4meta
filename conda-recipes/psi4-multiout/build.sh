@@ -151,3 +151,5 @@ fi
 
     # * HOST=x86_64-conda_cos6-linux-gnu
     #OPTS="-gnu-prefix=x86_64-conda_cos6-linux-gnu- -msse2 -axCORE-AVX2,AVX"
+
+# * -DENABLE_PLUGIN_TESTING=ON \ is a casualty of the really long prefix

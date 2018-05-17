@@ -70,6 +70,7 @@ outputs:
           run:
               - deepdiff
               - intel-openmp
+              - mkl {{ mkl }}*                                 # run_exports uncertain at present for mkl-devel --> mkl
               - networkx
               - numpy
               - pytest                                         # drive psi4 --test
