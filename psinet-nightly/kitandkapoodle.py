@@ -271,18 +271,22 @@ if host == "macpsinet":
 #{'recipe': 'p4test', 'python': '3.6' , 'envvars': {'PSI_BUILD_ISA': 'sse41'}, 'build_channels': ['psi4', 'defaults', 'intel']},  # bldstr 12
 #{'recipe': 'p4test', 'python': '3.6' , 'envvars': {'PSI_BUILD_ISA': 'sse41'}, 'build_channels': ['psi4', 'defaults', 'intel']},  # bldstr 13
 
+# MISC: order mostly doesn't matter
+# ---------------------------------
+#{'recipe': 'deepdiff', 'build_channels': ['conda-forge']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
+
 # LT: bump in recipe any upstream versions Psi means to support and rebuild
 #     upon any failure, adjust source of Psi & upstream
 # -------------------------------------------------------------------------
 #{'recipe': 'libxc'},
 #{'recipe': 'gau2grid-multiout'},  # cb3
-#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # b_chnl: deepdiff, pb11
-{'recipe': 'libint'},
+#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: deepdiff, pb11
+#{'recipe': 'libint'},
 
 
 # PSI4: build Psi4 w/o any RT deps or tests (***)
 # -----------------------------------------------
-#{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'psi4/label/agg']}, #, 'psi4']},
+{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'psi4/label/agg']}, #, 'psi4']},
 		]
 
 if host == "psinet":

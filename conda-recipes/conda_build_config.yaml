@@ -45,8 +45,7 @@ ltrtver:
     #- "1.2a1.dev8"   # ( 1 May 2018)                                                                          1.2.1                   4.0.2
     - "1.2a1.dev9"    # ( 6 May 2018)                                1.5.0                                                                      | 0.3
 MAX_AM_ERI:
-    - '4'
-#    - '6'
+    - '6'
 OPTS:
     - '-msse4.1 -axCORE-AVX2'  # [osx]
     - '-msse2 -axCORE-AVX2,AVX -Wl,--as-needed -static-intel -wd10237'  # [linux]

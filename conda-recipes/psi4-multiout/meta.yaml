@@ -27,13 +27,13 @@ requirements:
         - pybind11 {{ pybind11 }}
         - python {{ python }}
         # qc
-        - chemps2 {{ chemps2 }}
-        - dkh {{ dkh }}
-        - libefp {{ libefp }}
+#        - chemps2 {{ chemps2 }}
+#        - dkh {{ dkh }}
+#        - libefp {{ libefp }}
         - gau2grid {{ gau2grid }}
-        - gdma {{ gdma }}
+#        - gdma {{ gdma }}
         - libint {{ libint }}
-        - pcmsolver {{ pcmsolver }}
+#        - pcmsolver {{ pcmsolver }}
         - libxc {{ libxc }}
         # rt for ctest
         - deepdiff
@@ -59,13 +59,13 @@ outputs:
               - pybind11 {{ pybind11 }}
               - python {{ python }}
               # qc
-              - chemps2 {{ chemps2 }}
-              - dkh {{ dkh }}
-              - libefp {{ libefp }}
+#              - chemps2 {{ chemps2 }}
+#              - dkh {{ dkh }}
+#              - libefp {{ libefp }}
               - gau2grid {{ gau2grid }}
-              - gdma {{ gdma }}
+#              - gdma {{ gdma }}
               - libint {{ libint }}
-              - pcmsolver {{ pcmsolver }}
+#              - pcmsolver {{ pcmsolver }}
               - libxc {{ libxc }}
           run:
               - deepdiff
@@ -95,7 +95,7 @@ outputs:
               - ldd -r -u $PLPSP/psi4/core.so  # [linux]
               - ldd -v $PLPSP/psi4/core.so     # [linux]
               - otool -L $PLPSP/psi4/core.so   # [osx]
-              - conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver libxc psi4  # erd simint
+              #- conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver libxc psi4  # erd simint
               # Actually test
               - conda list
               - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"

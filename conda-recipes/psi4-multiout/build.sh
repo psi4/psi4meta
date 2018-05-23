@@ -1,39 +1,51 @@
 
 if [ "$(uname)" == "Darwin" ]; then
 
+    #ALLOPTS="-gnu-prefix=${HOST}- ${OPTS}"
+    #ALLOPTS="-clang-name=${CLANG} -clangxx-name=${CLANGXX} -stdlib=libc++ -I${PREFIX}/include/c++/v1 ${OPTS}"
+    # link against conda Clang
+    ALLOPTS="-clang-name=${CLANG} ${OPTS}"
+    ALLOPTSCXX="-clang-name=${CLANG} -clangxx-name=${CLANGXX} -stdlib=libc++ -I${PREFIX}/include/c++/v1 ${OPTS} -mmacosx-version-min=10.9"
+
+
     # configure
-    ${PREFIX}/bin/cmake \
+    ${BUILD_PREFIX}/bin/cmake \
         -H${SRC_DIR} \
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER=clang \
-        -DCMAKE_CXX_COMPILER=clang++ \
-        -DCMAKE_CXX_FLAGS="-stdlib=libc++" \
-        -DCMAKE_Fortran_COMPILER=${PREFIX}/bin/gfortran \
+        -DCMAKE_C_COMPILER=icc \
+        -DCMAKE_CXX_COMPILER=icpc \
+        -DCMAKE_Fortran_COMPILER=${FC} \
+        -DCMAKE_C_FLAGS="${ALLOPTS}" \
+        -DCMAKE_CXX_FLAGS="${ALLOPTSCXX}" \
+        -DCMAKE_Fortran_FLAGS="${ALLOPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
-        -DBUILD_SHARED_LIBS=ON \
-        -DENABLE_CheMPS2=ON \
-        -DENABLE_dkh=ON \
-        -DENABLE_libefp=ON \
-        -DENABLE_erd=ON \
-        -DENABLE_gdma=ON \
-        -DENABLE_PCMSolver=ON \
-        -DENABLE_simint=ON \
-        -DSIMINT_VECTOR=sse \
-        -DMAX_AM_ERI=6 \
+        -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.dylib" \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}${SHLIB_EXT}" \
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
-        -DBUILDNAME="LAB-OSX-clang7.3.0-accelerate-py${CONDA_PY}-release-conda" \
+        -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
+        -DENABLE_OPENMP=ON \
+        -DENABLE_XHOST=OFF \
+        -DBUILDNAME="LAB-OSX-clang4.0.1-intel18.0.2-mkl-py${CONDA_PY}-release-conda" \
         -DSITE=gatech-mac-conda \
         -DCMAKE_OSX_DEPLOYMENT_TARGET=''
 
-        #-DLAPACK_LIBRARIES="/System/Library/Frameworks/Accelerate.framework/Accelerate" \
-        #-DBLAS_LIBRARIES="/System/Library/Frameworks/Accelerate.framework/Accelerate"
-        #-DENABLE_OPENMP=ON \
+#        -DBUILD_SHARED_LIBS=ON \
+#        -DENABLE_CheMPS2=ON \
+#        -DENABLE_dkh=ON \
+#        -DENABLE_libefp=ON \
+#        -DENABLE_erd=ON \
+#        -DENABLE_gdma=ON \
+#        -DENABLE_PCMSolver=ON \
+#        -DENABLE_simint=ON \
+#        -DSIMINT_VECTOR=sse \
 
     # build
     cd build
@@ -45,11 +57,6 @@ if [ "$(uname)" == "Darwin" ]; then
     # test (full suite too stressful for macpsinet)
     ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} -L quick
 
-    # notes
-    #sed -i.bak "s|/opt/anaconda1anaconda2anaconda3|${PREFIX}|g" ${PREFIX}/share/psi4/python/pcm_placeholder.py
-    #DYLD_LIBRARY_PATH=${PREFIX}/lib:$DYLD_LIBRARY_PATH \
-    #       PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
-    #             PATH=${PREFIX}/bin:$PATH \
 fi
 
 if [ "$(uname)" == "Linux" ]; then
@@ -151,3 +158,8 @@ fi
 
     # * HOST=x86_64-conda_cos6-linux-gnu
     #OPTS="-gnu-prefix=x86_64-conda_cos6-linux-gnu- -msse2 -axCORE-AVX2,AVX"
+
+    #sed -i.bak "s|/opt/anaconda1anaconda2anaconda3|${PREFIX}|g" ${PREFIX}/share/psi4/python/pcm_placeholder.py
+    #DYLD_LIBRARY_PATH=${PREFIX}/lib:$DYLD_LIBRARY_PATH \
+    #       PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
+    #             PATH=${PREFIX}/bin:$PATH \
