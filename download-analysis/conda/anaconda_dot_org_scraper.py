@@ -10,11 +10,11 @@ title = "Binstar/conda package stats"
 import os
 from datetime import datetime
 
-from IPython.core.display import HTML
+#from IPython.core.display import HTML
 
 # with open('creative_commons.txt', 'r') as f:
 #    html = f.read()
-    
+
 # html = '''
 # <small>
 # <p> This post was written as an IPython notebook.
@@ -123,9 +123,9 @@ def get_page(package, page):
     url = "https://anaconda.org/psi4/{}/files?page={}".format
     r = requests.get(url(package, page))
     r.raise_for_status()
-    soup = BeautifulSoup(r.text, "lxml")
+    soup = BeautifulSoup(r.text, "html5lib")
     table = soup.find("table", class_="full-width")
-    
+
     downloads, uploaded, platforms, names = [], [], [], []
     for row in table.findAll('tr'):
         col = row.findAll('td')
@@ -153,7 +153,7 @@ def get_df(package):
             break
     else:
         print("Insufficient pages or packages in multiple of 50 which may lead to inflated download counts.")
-    
+
     df = DataFrame(data=np.c_[platforms, names, uploaded, downloads],
                    columns=['platform', 'name', 'uploaded', 'downloads'])
     df['uploaded'] = pd.to_datetime(df['uploaded'])
@@ -173,7 +173,6 @@ from pandas import Panel, read_json
 import pandas as pd
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.max_rows', 5000)
-pd.set_option('display.height', 1000)
 pd.set_option('display.width', 1000)
 
 json = "https://conda.anaconda.org/psi4/linux-64/repodata.json"
@@ -190,7 +189,7 @@ for pac in packages:
         dfs.update({pac: get_df(pac)})
     except HTTPError:
         continue
-        
+
 #print(dfs)
 
 
@@ -201,7 +200,7 @@ for pac in packages:
 
 def get_plat_total(df):
     package = dict()
-    
+
     for plat in ['linux-64', 'osx-64']:  #, 'win-32', 'win-64']:
         # all time
         #sset = df.loc[:].query('platform == "{}"'.format(plat))
@@ -222,9 +221,7 @@ for pac in dfs.keys():
     packages.update({pac: get_plat_total(df)})
 
 for pac in dfs.keys():
-    print('{:<15}: {:<10} {:<6} {:<10} {:<6} {:<10} {:<6}'.format(pac, 
+    print('{:<15}: {:<10} {:<6} {:<10} {:<6} {:<10} {:<6}'.format(pac,
           'linux-64', packages[pac]['linux-64'],
           'osx-64', packages[pac]['osx-64'],
           'total', packages[pac]['linux-64'] + packages[pac]['osx-64']))
-
-
