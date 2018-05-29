@@ -68,9 +68,8 @@ def main(argv):
 # note: the newlines will be part of the lines read,
 # so either strip them or don't print additional newlines 
 # when printing out
-    infile = open(input_filename, 'r')
-    lines = infile.readlines()
-    infile.close()
+    with open(input_filename, 'r') as infile:
+        lines = infile.readlines()
 
     if (output_filename != ''):
         outfile = open(output_filename, 'w')
