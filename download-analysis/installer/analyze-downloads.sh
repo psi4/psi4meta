@@ -1,15 +1,17 @@
-#!/bin/tcsh
+#!/bin/bash
+
+PATH=/home/cdsgroup/miniconda/bin:${PATH}
 
 # I think this user already has this in the path
-set MYDIR = /home/cdsgroup/psi4meta/PSIDownloadAnalyzer
+#set MYDIR = /home/cdsgroup/psi4meta/PSIDownloadAnalyzer
 #set MINICONDA = /theoryfs2/ds/cdsgroup/miniconda/bin
 
-echo "analyze-downloads.tcsh: about to execute"
+echo "analyze-downloads.sh: about to execute"
 date
 
 #set path = ($MINICONDA $path)
 #echo `which python`
-cd $MYDIR
+cd /home/cdsgroup/psi4meta/PSIDownloadAnalyzer
 
 # we assume a privileged account has already made the access_log file
 # from /var/log/httpd/access_log available in the current directory
@@ -26,6 +28,6 @@ cd $MYDIR
 rm -f psitmp.png
 rm -f psitmp2.png
 
-echo "analyze-downloads.tcsh: execution completed"
+echo "analyze-downloads.sh: execution completed"
 date
 
