@@ -19,7 +19,7 @@ CONDA_BUILD_SYSROOT:
 
 blas_impl:
     - mkl
-    #- openblas
+    # - openblas  # not playing nicely with threading in psi4 at last check (May 2018)
 hdf5:
     - 1.10.1  # this recipe pins to x.x.x which I trust more than the 1.8 recipe x.x
 mkl:
@@ -47,7 +47,8 @@ ltrtver:
 MAX_AM_ERI:
     - '6'
 OPTS:
-    - '-msse4.1 -axCORE-AVX2'  # [osx]
+    # - '-msse4.1 -axCORE-AVX2'  # [osx]  # intel compilers
+    - '-msse4.1'                                                        # [osx]
     - '-msse2 -axCORE-AVX2,AVX -Wl,--as-needed -static-intel -wd10237'  # [linux]
 PY_ABBR:
     - python3.6m

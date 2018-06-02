@@ -21,17 +21,19 @@ requirements:
         - cmake >=3.3
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
+        - {{ compiler('fortran') }}      # [osx]
+        - llvm-openmp                    # [osx]
     host:
         - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
         - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
         - pybind11 {{ pybind11 }}
         - python {{ python }}
         # qc
-#        - chemps2 {{ chemps2 }}
+        - chemps2 {{ chemps2 }}
 #        - dkh {{ dkh }}
 #        - libefp {{ libefp }}
         - gau2grid {{ gau2grid }}
-#        - gdma {{ gdma }}
+        - gdma {{ gdma }}
         - libint {{ libint }}
 #        - pcmsolver {{ pcmsolver }}
         - libxc {{ libxc }}
@@ -53,17 +55,19 @@ outputs:
               - cmake >=3.3
               - {{ compiler('c') }}
               - {{ compiler('cxx') }}
+              - {{ compiler('fortran') }}      # [osx]
+              - llvm-openmp                    # [osx]
           host:
               - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
               - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
               - pybind11 {{ pybind11 }}
               - python {{ python }}
               # qc
-#              - chemps2 {{ chemps2 }}
+              - chemps2 {{ chemps2 }}
 #              - dkh {{ dkh }}
 #              - libefp {{ libefp }}
               - gau2grid {{ gau2grid }}
-#              - gdma {{ gdma }}
+              - gdma {{ gdma }}
               - libint {{ libint }}
 #              - pcmsolver {{ pcmsolver }}
               - libxc {{ libxc }}
@@ -95,7 +99,9 @@ outputs:
               - ldd -r -u $PLPSP/psi4/core.so  # [linux]
               - ldd -v $PLPSP/psi4/core.so     # [linux]
               - otool -L $PLPSP/psi4/core.so   # [osx]
-              #- conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver libxc psi4  # erd simint
+              #- conda inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver libxc psi4  # erd simint
+              - conda inspect linkages --show-files --groupby=dependency chemps2 gau2grid gdma libint libxc psi4
+              - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               # Actually test
               - conda list
               - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
