@@ -31,11 +31,13 @@ requirements:
         # qc
         - chemps2 {{ chemps2 }}
 #        - dkh {{ dkh }}
-#        - libefp {{ libefp }}
+#        - erd {{ erd }}
+        - libefp {{ libefp }}
         - gau2grid {{ gau2grid }}
         - gdma {{ gdma }}
         - libint {{ libint }}
 #        - pcmsolver {{ pcmsolver }}
+        - simint {{ simint }}
         - libxc {{ libxc }}
         # rt for ctest
         - deepdiff
@@ -65,11 +67,13 @@ outputs:
               # qc
               - chemps2 {{ chemps2 }}
 #              - dkh {{ dkh }}
-#              - libefp {{ libefp }}
+#              - erd {{ erd }}
+              - libefp {{ libefp }}
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}
               - libint {{ libint }}
 #              - pcmsolver {{ pcmsolver }}
+              - simint {{ simint }}
               - libxc {{ libxc }}
           run:
               - deepdiff
@@ -100,7 +104,7 @@ outputs:
               - ldd -v $PLPSP/psi4/core.so     # [linux]
               - otool -L $PLPSP/psi4/core.so   # [osx]
               #- conda inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver libxc psi4  # erd simint
-              - conda inspect linkages --show-files --groupby=dependency chemps2 gau2grid gdma libint libxc psi4
+              - conda inspect linkages --show-files --groupby=dependency chemps2 libefp gau2grid gdma libint simint libxc psi4
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               # Actually test
               - conda list
@@ -119,24 +123,6 @@ outputs:
             Psi4 is an open-source suite of ab initio quantum chemistry programs designed for efficient, high-accuracy simulations of a variety of molecular properties. We can routinely perform computations with more than 2500 basis functions running serially or on multi-core machines.
 
             With computationally demanding portions written in C++, Pybind11 exports many of the C++ classes into Python, and a flexible Python driver, Psi4 strives to be friendly to both users and developers.
-
-    #- name: psi4-lt-mp
-    #  requirements:
-    #      host:
-    #          - python {{ python }}
-    #      run:
-    #          # pin_run_as_build bad here
-    #          - chemps2 {{ chemps2 }}.*
-    #          - dkh {{ dkh }}.*
-    #          - libefp {{ libefp }}.*
-    #          - gdma {{ gdma }}.*
-    #          - libint {{ libint }}.*
-    #          - pcmsolver {{ pcmsolver }}.*
-    #          - libxc {{ libxc }}.*
-    #  about:
-    #      summary: "link-time quantum chemistry add-ons for Psi4"
-    #      description: >
-    #        Metapackage collecting required link-time dependencies and enabled optional link-time extensions to Psi4 capabilities.
 
 
 # NOTES

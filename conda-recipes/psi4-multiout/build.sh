@@ -41,8 +41,13 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
         -DENABLE_CheMPS2=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON \
+        -DENABLE_libefp=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON \
         -DENABLE_gdma=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
+        -DENABLE_simint=ON \
+        -DSIMINT_VECTOR="${SIMINT_VECTOR}" \
+        -DCMAKE_INSIST_FIND_PACKAGE_simint=ON \
         -DENABLE_OPENMP=ON \
         -DOpenMP_C_FLAG="-fopenmp=libiomp5" \
         -DOpenMP_CXX_FLAG="-fopenmp=libiomp5" \
@@ -51,13 +56,13 @@ if [ "$(uname)" == "Darwin" ]; then
         -DSITE=gatech-mac-conda \
         -DCMAKE_OSX_DEPLOYMENT_TARGET=''
 
+
+        #-DENABLE_dkh=ON \
+        #-DCMAKE_INSIST_FIND_PACKAGE_dkh=ON \
+        #-DENABLE_erd=ON \
+        #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
 #        -DBUILD_SHARED_LIBS=ON \
-#        -DENABLE_dkh=ON \
-#        -DENABLE_libefp=ON \
-#        -DENABLE_erd=ON \
 #        -DENABLE_PCMSolver=ON \
-#        -DENABLE_simint=ON \
-#        -DSIMINT_VECTOR=sse \
 
     # build
     cd build

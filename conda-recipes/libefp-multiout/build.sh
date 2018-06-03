@@ -1,12 +1,7 @@
 
-#ALLOPTS="-clang-name=${CLANG} -clangxx-name=${CLANGXX} -I${PREFIX}/include/c++/v1 ${OPTS}"  # yea
-#ALLOPTS="-clang-name=${CLANG} -clangxx-name=${CLANGXX} -stdlib=libc++ -I${PREFIX}/include ${OPTS}"  # nay
-ALLOPTS="-clang-name=${CLANG} -clangxx-name=${CLANGXX} -stdlib=libc++ -I${PREFIX}/include/c++/v1 ${OPTS}"  # yea
-
-
 if [ "$(uname)" == "Darwin" ]; then
 
-    # link against conda MKL & GCC
+    # link against conda MKL & Clang
     if [ "$blas_impl" = "mkl" ]; then
         LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt${SHLIB_EXT}"
     fi
@@ -17,10 +12,10 @@ if [ "$(uname)" == "Darwin" ]; then
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER=icc \
-        -DCMAKE_CXX_COMPILER=icpc \
-        -DCMAKE_C_FLAGS="${ALLOPTS}" \
-        -DCMAKE_CXX_FLAGS="${ALLOPTS}" \
+        -DCMAKE_C_COMPILER=${CLANG} \
+        -DCMAKE_CXX_COMPILER=${CLANGXX} \
+        -DCMAKE_C_FLAGS="${CFLAGS} ${OPTS}" \
+        -DCMAKE_CXX_FLAGS="${CXXFLAGS} ${OPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
         -DPYTHON_EXECUTABLE=${PYTHON} \
@@ -34,12 +29,6 @@ if [ "$(uname)" == "Darwin" ]; then
         -DINSTALL_DEVEL_HEADERS=ON \
         -Dpybind11_DIR="${PREFIX}/share/cmake/pybind11" \
         -DLAPACK_LIBRARIES=${LAPACK_INTERJECT}
-
-        # works
-        #-DCMAKE_C_COMPILER=${CC} \
-        #-DCMAKE_CXX_COMPILER=${CXX} \
-        #-DCMAKE_C_FLAGS="${ISA}" \
-        #-DCMAKE_CXX_FLAGS="${ISA}" \
 fi
 
 if [ "$(uname)" == "Linux" ]; then

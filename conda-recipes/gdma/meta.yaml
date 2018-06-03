@@ -37,7 +37,8 @@ test:
         - ldd -r -u $PREFIX/lib/libgdma.so    # [linux]
         - ldd -v $PREFIX/lib/libgdma.so       # [linux]
         - otool -L $PREFIX/lib/libgdma.dylib  # [osx]
-        - conda-inspect linkages gdma --show-files
+        - conda inspect linkages --show-files --groupby=dependency gdma
+        - conda inspect objects -p $PREFIX $PKG_NAME   # [osx]
 
 about:
     home: http://www-stone.ch.cam.ac.uk/programs.html
