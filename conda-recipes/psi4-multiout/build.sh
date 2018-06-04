@@ -41,8 +41,12 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
         -DENABLE_CheMPS2=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON \
+        -DENABLE_dkh=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON \
         -DENABLE_libefp=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON \
+        -DENABLE_erd=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
         -DENABLE_gdma=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
         -DENABLE_simint=ON \
@@ -56,11 +60,6 @@ if [ "$(uname)" == "Darwin" ]; then
         -DSITE=gatech-mac-conda \
         -DCMAKE_OSX_DEPLOYMENT_TARGET=''
 
-
-        #-DENABLE_dkh=ON \
-        #-DCMAKE_INSIST_FIND_PACKAGE_dkh=ON \
-        #-DENABLE_erd=ON \
-        #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
 #        -DBUILD_SHARED_LIBS=ON \
 #        -DENABLE_PCMSolver=ON \
 

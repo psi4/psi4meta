@@ -30,9 +30,9 @@ requirements:
         - python {{ python }}
         # qc
         - chemps2 {{ chemps2 }}
-#        - dkh {{ dkh }}
-#        - erd {{ erd }}
+        - dkh {{ dkh }}
         - libefp {{ libefp }}
+        - erd {{ erd }}
         - gau2grid {{ gau2grid }}
         - gdma {{ gdma }}
         - libint {{ libint }}
@@ -66,9 +66,9 @@ outputs:
               - python {{ python }}
               # qc
               - chemps2 {{ chemps2 }}
-#              - dkh {{ dkh }}
-#              - erd {{ erd }}
+              - dkh {{ dkh }}
               - libefp {{ libefp }}
+              - erd {{ erd }}
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}
               - libint {{ libint }}
@@ -104,7 +104,7 @@ outputs:
               - ldd -v $PLPSP/psi4/core.so     # [linux]
               - otool -L $PLPSP/psi4/core.so   # [osx]
               #- conda inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver libxc psi4  # erd simint
-              - conda inspect linkages --show-files --groupby=dependency chemps2 libefp gau2grid gdma libint simint libxc psi4
+              - conda inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gau2grid gdma libint simint libxc psi4
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               # Actually test
               - conda list

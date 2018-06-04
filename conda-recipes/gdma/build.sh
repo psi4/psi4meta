@@ -1,6 +1,9 @@
 
 if [ "$(uname)" == "Darwin" ]; then
 
+    # for FortranCInterface
+    CMAKE_Fortran_FLAGS="${FFLAGS} -L${CONDA_BUILD_SYSROOT}/usr/lib/system/ ${OPTS}"
+
     # configure
     ${BUILD_PREFIX}/bin/cmake \
         -H${SRC_DIR} \
@@ -10,7 +13,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_C_COMPILER=${CLANG} \
         -DCMAKE_Fortran_COMPILER=${GFORTRAN} \
         -DCMAKE_C_FLAGS="${CFLAGS} ${OPTS}" \
-        -DCMAKE_Fortran_FLAGS="${FFLAGS} ${OPTS}" \
+        -DCMAKE_Fortran_FLAGS="${CMAKE_Fortran_FLAGS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_OPENMP=ON \
