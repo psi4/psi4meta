@@ -49,6 +49,8 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
         -DENABLE_gdma=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
+        -DENABLE_PCMSolver=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON \
         -DENABLE_simint=ON \
         -DSIMINT_VECTOR="${SIMINT_VECTOR}" \
         -DCMAKE_INSIST_FIND_PACKAGE_simint=ON \
@@ -61,7 +63,6 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_OSX_DEPLOYMENT_TARGET=''
 
 #        -DBUILD_SHARED_LIBS=ON \
-#        -DENABLE_PCMSolver=ON \
 
     # build
     cd build

@@ -36,7 +36,7 @@ requirements:
         - gau2grid {{ gau2grid }}
         - gdma {{ gdma }}
         - libint {{ libint }}
-#        - pcmsolver {{ pcmsolver }}
+        - pcmsolver {{ pcmsolver }}
         - simint {{ simint }}
         - libxc {{ libxc }}
         # rt for ctest
@@ -72,7 +72,7 @@ outputs:
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}
               - libint {{ libint }}
-#              - pcmsolver {{ pcmsolver }}
+              - pcmsolver {{ pcmsolver }}
               - simint {{ simint }}
               - libxc {{ libxc }}
           run:
@@ -103,8 +103,7 @@ outputs:
               - ldd -r -u $PLPSP/psi4/core.so  # [linux]
               - ldd -v $PLPSP/psi4/core.so     # [linux]
               - otool -L $PLPSP/psi4/core.so   # [osx]
-              #- conda inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver libxc psi4  # erd simint
-              - conda inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gau2grid gdma libint simint libxc psi4
+              - conda inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gau2grid gdma libint pcmsolver simint libxc psi4
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               # Actually test
               - conda list
