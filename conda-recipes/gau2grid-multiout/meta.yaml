@@ -47,7 +47,8 @@ outputs:
               - ldd -r -u $PREFIX/lib/libgg.so && return 0  # [linux]
               - ldd -v $PREFIX/lib/libgg.so                 # [linux]
               - otool -L $PREFIX/lib/libgg.dylib            # [osx]
-              - conda-inspect linkages gau2grid --show-files
+              - conda inspect linkages --show-files --groupby=dependency gau2grid
+              - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
       about:
           home: https://github.com/dgasmith/gau2grid
           dev_url: https://github.com/dgasmith/gau2grid
@@ -89,7 +90,8 @@ outputs:
               - ldd -r -u $PLPSP/gau2grid/libgg.so && return 0  # [linux]
               - ldd -v $PLPSP/gau2grid/libgg.so                 # [linux]
               - otool -L $PLPSP/gau2grid/libgg.dylib            # [osx]
-              - conda-inspect linkages pygau2grid --show-files
+              - conda inspect linkages --show-files --groupby=dependency pygau2grid
+              - conda inspect objects -p $PREFIX $PKG_NAME      # [osx]
               # Actually test
               - python -c "import gau2grid; gau2grid.test(); print('*** gau2grid {} built successfully. Buy psinet a beer!'.format(gau2grid.__version__))"
       about:
