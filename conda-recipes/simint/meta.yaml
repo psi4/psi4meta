@@ -1,0 +1,48 @@
+{% set version = "0.7" %}
+
+package:
+    name: simint
+    version: {{ version }}
+
+source:
+    url: http://www.bennyp.org/research/simint/download/simint-v{{ version }}.tar.bz2
+
+build:
+    number: 1                                     # [linux]
+    number: 0                                     # [osx]
+    binary_relocation: true
+    skip: true                                    # [win]
+    run_exports:
+        - {{ pin_subpackage('simint', max_pin='x.x') }}
+    ignore_run_exports:
+        # gcc symbols linked statically. c++ only for undistributed tests.
+        - libgcc-ng
+        - libstdcxx-ng
+
+requirements:
+  build:
+    - cmake >=3.0
+    - {{ compiler('cxx') }}
+
+test:
+  commands:
+    # Verify library
+    - test -f $PREFIX/lib/libsimint$SHLIB_EXT
+    # Inspect linkage
+    - ldd -v $PREFIX/lib/libsimint.so             # [linux]
+    - otool -L $PREFIX/lib/libsimint.dylib        # [osx]
+    - conda inspect linkages --show-files --groupby=dependency simint
+    - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+      
+about:
+    home: http://www.bennyp.org/research/simint/
+    dev_url: https://github.com/simint-chem/simint-generator
+    doc_url: http://www.bennyp.org/research/simint/
+    # doc_source_url:
+    license: BSD-3-Clause
+    license_url: https://opensource.org/licenses/BSD-3-Clause
+    # license_file:
+    license_family: BSD
+    summary: "B. Pritchard and E. Chow's Vectorized Obara-Saika electron repulsion integrals"
+    # description: >
+

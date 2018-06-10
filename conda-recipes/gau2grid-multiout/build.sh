@@ -24,6 +24,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
         -DPYTHON_EXECUTABLE=${PYTHON} \
+        -DCARTESIAN_ORDER=row \
+        -DSPHERICAL_ORDER=gaussian \
         -DMAX_AM=8
 fi
 

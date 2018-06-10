@@ -1,4 +1,4 @@
-{% set version = "1.0.1" %}
+{% set version = "1.1.0" %}
 
 package:
     name: gau2grid-multiout
@@ -47,7 +47,8 @@ outputs:
               - ldd -r -u $PREFIX/lib/libgg.so && return 0  # [linux]
               - ldd -v $PREFIX/lib/libgg.so                 # [linux]
               - otool -L $PREFIX/lib/libgg.dylib            # [osx]
-              - conda-inspect linkages gau2grid --show-files
+              - conda inspect linkages --show-files --groupby=dependency gau2grid
+              - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
       about:
           home: https://github.com/dgasmith/gau2grid
           dev_url: https://github.com/dgasmith/gau2grid
@@ -75,21 +76,19 @@ outputs:
               - numpy
               - {{ pin_compatible('python', max_pin='x.x') }}
       files:
-          - lib/python*/site-packages/gau2grid/*
-          - lib/python*/site-packages/gau2grid/data/*
-          - lib/python*/site-packages/gau2grid/tests/*
+          - lib{{ PYMOD_INSTALL_LIBDIR }}/gau2grid
       test:
           requires:
               - pytest
           commands:
-              - export PLPSP=$PREFIX/lib{{ PYMOD_INSTALL_LIBDIR }}
               # Verify library
-              - test -f $PLPSP/gau2grid/libgg$SHLIB_EXT
+              - test -f $SP_DIR/gau2grid/libgg$SHLIB_EXT
               # Inspect linkage
-              - ldd -r -u $PLPSP/gau2grid/libgg.so && return 0  # [linux]
-              - ldd -v $PLPSP/gau2grid/libgg.so                 # [linux]
-              - otool -L $PLPSP/gau2grid/libgg.dylib            # [osx]
-              - conda-inspect linkages pygau2grid --show-files
+              - ldd -r -u $SP_DIR/gau2grid/libgg.so && return 0  # [linux]
+              - ldd -v $SP_DIR/gau2grid/libgg.so                 # [linux]
+              - otool -L $SP_DIR/gau2grid/libgg.dylib            # [osx]
+              - conda inspect linkages --show-files --groupby=dependency pygau2grid
+              - conda inspect objects -p $PREFIX $PKG_NAME       # [osx]
               # Actually test
               - python -c "import gau2grid; gau2grid.test(); print('*** gau2grid {} built successfully. Buy psinet a beer!'.format(gau2grid.__version__))"
       about:
