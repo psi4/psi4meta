@@ -100,19 +100,19 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
         -DENABLE_PCMSolver=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON \
+        -DENABLE_simint=ON \
+        -DSIMINT_VECTOR=sse \
+        -DCMAKE_INSIST_FIND_PACKAGE_simint=ON \
         -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=OFF \
         -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}" \
-        -DBUILDNAME="LAB-RHEL7-gcc7.2-intel18.0.2-mkl-py${CONDA_PY}-release-conda" \
+        -DBUILDNAME="LAB-RHEL7-gcc7.2-intel18.0.3-mkl-py${CONDA_PY}-release-conda" \
         -DSITE="gatech-conda" \
         -DSPHINX_ROOT=${PREFIX}
 
         #-DENABLE_erd=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
-        #-DENABLE_simint=ON \
-        #-DSIMINT_VECTOR=sse \
-        #-DCMAKE_INSIST_FIND_PACKAGE_simint=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_ambit=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_GTFock=ON \
 

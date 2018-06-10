@@ -7,7 +7,7 @@ package:
 source:
     git_url: git@github.com:psi4/psi4.git      # [linux]
     git_url: https://github.com/psi4/psi4.git  # [osx]
-    # git_tag: v1.2rc1  # explicit tag when you don't want tag.dev1
+    # git_tag: v1.2rc2  # explicit tag when you don't want tag.dev1
     git_tag: master
 
 build:
@@ -34,6 +34,7 @@ requirements:
         - gdma {{ gdma }}
         - libint {{ libint }}
         - pcmsolver {{ pcmsolver }}
+        - simint {{ simint }}
         - libxc {{ libxc }}
         # rt for ctest
         - deepdiff
@@ -66,11 +67,12 @@ outputs:
               - gdma {{ gdma }}
               - libint {{ libint }}
               - pcmsolver {{ pcmsolver }}
+              - simint {{ simint }}
               - libxc {{ libxc }}
           run:
               - deepdiff
               - intel-openmp
-              - mkl {{ mkl }}*                                 # run_exports uncertain at present for mkl-devel --> mkl
+#              - mkl {{ mkl }}*                                 # run_exports uncertain at present for mkl-devel --> mkl
               - networkx
               - numpy
               - pytest                                         # drive psi4 --test
@@ -87,16 +89,17 @@ outputs:
           imports:
               - psi4
           commands:
-              - export PLPSP=$PREFIX/lib{{ PYMOD_INSTALL_LIBDIR }}
               # Verify existence and execution
               - test -f $PREFIX/bin/psi4
-              - test -f $PLPSP/psi4/core.so
+              - test -f $SP_DIR/psi4/core.so
               - $PREFIX/bin/psi4 --version
               # Inspect linkage
-              - ldd -r -u $PLPSP/psi4/core.so  # [linux]
-              - ldd -v $PLPSP/psi4/core.so     # [linux]
-              - otool -L $PLPSP/psi4/core.so   # [osx]
-              - conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver libxc psi4  # erd simint
+              - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
+              - ldd -v $SP_DIR/psi4/core.so     # [linux]
+              - otool -L $SP_DIR/psi4/core.so   # [osx]
+              #- conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver libxc psi4  # erd simint
+              - conda inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver simint libxc psi4
+              - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               # Actually test
               - conda list
               - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"

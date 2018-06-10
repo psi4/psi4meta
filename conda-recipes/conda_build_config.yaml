@@ -36,12 +36,13 @@ zlib:
 
 ltrtver:
     # bump whenever a dep version bumps. beyond the "|" aren't in ltrtver.
-    # bump whenever a dep version bumps: pb11   chemps2  dftd3  dkh  libefp erd    g2g    gcp    gdma   libint pcm       sns    v2rdm  libxc    | pylibefp
-    # - "1.2a1.dev6"  # (   Apr 2018)    2.2.3, 1.8.7b1, 3.2.0, 1.2, 1.5b2, 3.0.6, 1.0.1, 2.0.2, 2.2.6, 1.2.1, 1.2.0rc1, 1.0.1, 0.7a1, 4.0.1
+    # bump whenever a dep version bumps: pb11   chemps2  dftd3  dkh  libefp erd    g2g    gcp    gdma   libint pcm       sim  sns    v2rdm  libxc    | pylibefp
+    # - "1.2a1.dev6"  # (   Apr 2018)    2.2.3, 1.8.7b1, 3.2.0, 1.2, 1.5b2, 3.0.6, 1.0.1, 2.0.2, 2.2.6, 1.2.1, 1.2.0rc1,      1.0.1, 0.7a1, 4.0.1
     # - "1.2a1.dev7"  # ( 1 May 2018)           1.8.7                                                          1.2.0rc2
-    # - "1.2a1.dev8"  # ( 1 May 2018)                                                                          1.2.1                   4.0.2
-    # - "1.2a1.dev9"  # ( 6 May 2018)                                1.5.0                                                                      | 0.3
-    - "1.2a1.dev10"   # (17 May 2018) psi4-dev/src changed - LAPACK_LIBRARIES
+    # - "1.2a1.dev8"  # ( 1 May 2018)                                                                          1.2.1                        4.0.2
+    # - "1.2a1.dev9"  # ( 6 May 2018)                                1.5.0                                                                           | 0.3
+    # - "1.2a1.dev10" # (17 May 2018) psi4-dev/src changed - LAPACK_LIBRARIES
+    - "1.2a1.dev11"   # ( 8 Jun 2018)                                              1.1.0                                 0.7         0.7a2
 MAX_AM_ERI:
     - '6'
 OPTS:
@@ -65,7 +66,7 @@ libefp:
 erd:
     - 3.0.6
 gau2grid:
-    - 1.0.1
+    - 1.1.0
 gcp:
     - 2.0.2
 gdma:
@@ -76,10 +77,12 @@ pcmsolver:
     - 1.2.1
 pylibefp:
     - 0.3
+simint:
+    - 0.7
 snsmp2:
     - 1.0.1
 v2rdm_casscf:
-    - 0.7a1
+    - 0.7a2
 libxc:
     - 4.0.2
 
