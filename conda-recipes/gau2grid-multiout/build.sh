@@ -1,7 +1,8 @@
 
 if [ "$(uname)" == "Darwin" ]; then
 
-    ALLOPTS="${OPTS}"
+    # Intel atop conda Clang
+    CMAKE_C_FLAGS="-clang-name=${CLANG} -msse4.1 -axCORE-AVX2"
 
     # configure
     ${BUILD_PREFIX}/bin/cmake \
@@ -10,7 +11,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=icc \
-        -DCMAKE_C_FLAGS="${ALLOPTS}" \
+        -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
         -DINSTALL_PYMOD=ON \
@@ -18,8 +19,9 @@ if [ "$(uname)" == "Darwin" ]; then
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=OFF \
         -DPYTHON_EXECUTABLE=${PYTHON} \
+        -DCARTESIAN_ORDER=row \
+        -DSPHERICAL_ORDER=gaussian \
         -DMAX_AM=8
-
 fi
 
 
