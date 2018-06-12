@@ -97,6 +97,9 @@ rm ${PREFIX}/lib/libpcm.a
 # green_spherical_diffuse hitting an Intel 2018+Eigen bug
 # but they can be run if static lib is built
 if [ "$(uname)" == "Darwin" ]; then
+    install_name_tool -add_rpath ${PREFIX}/lib/ lib/libpcm.1.dylib
+    install_name_tool -add_rpath ${PREFIX}/lib/ bin/unit_tests
+    install_name_tool -add_rpath ${PREFIX}/lib/ bin/Fortran_host
     ctest -j${CPU_COUNT}
 fi
 

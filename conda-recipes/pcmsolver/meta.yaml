@@ -34,11 +34,10 @@ requirements:
 
 test:
     commands:
-        - export PLPSP=$PREFIX/lib{{ PYMOD_INSTALL_LIBDIR }}
         # Verify library
         - test -f $PREFIX/lib/libpcm$SHLIB_EXT
         - test -f $PREFIX/bin/go_pcm.py
-        - test -f $PLPSP/pcmsolver/pcmparser.py
+        - test -f $SP_DIR/pcmsolver/pcmparser.py
         # Inspect linkage
         - ldd -r -u $PREFIX/lib/libpcm.so    # [linux]
         - ldd -v $PREFIX/lib/libpcm.so       # [linux]
