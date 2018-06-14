@@ -8,8 +8,6 @@ if [ "$(uname)" == "Darwin" ]; then
     if [ "$blas_impl" = "mkl" ]; then
         LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt$SHLIB_EXT"
     fi
-    ALLOPTS="${CFLAGS} ${OPTS}"
-    ALLOPTSCXX="${CXXFLAGS} ${OPTS}"
 
     # configure
     ${BUILD_PREFIX}/bin/cmake \
@@ -19,8 +17,8 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=${CLANG} \
         -DCMAKE_CXX_COMPILER=${CLANGXX} \
-        -DCMAKE_C_FLAGS="${ALLOPTS}" \
-        -DCMAKE_CXX_FLAGS="${ALLOPTSXX}" \
+        -DCMAKE_C_FLAGS="${CFLAGS} ${OPTS}" \
+        -DCMAKE_CXX_FLAGS="${CXXFLAGS} ${OPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DSHARED_ONLY=ON \
         -DENABLE_OPENMP=ON \

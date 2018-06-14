@@ -11,7 +11,7 @@ source:
 
 build:
     number: 5                                            # [linux]
-    number: 4                                            # [osx]
+    number: 5                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
     run_exports:

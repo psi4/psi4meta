@@ -14,6 +14,11 @@ build:
     skip: true                                           # [win]
     run_exports:
         - {{ pin_subpackage('simint', max_pin='x.x') }}
+    ignore_run_exports:
+        # gcc symbols linked statically. c++ only for undistributed tests.
+        - libgcc-ng                                      # [linux]
+        - libstdcxx-ng                                   # [linux]
+        - libcxx                                         # [osx]
 
 requirements:
     build:
@@ -42,5 +47,5 @@ about:
     license: BSD-3-Clause
     license_url: https://opensource.org/licenses/BSD-3-Clause
     license_family: BSD
-    summary: "B. Pritchard's vectorized Obara-Saika electron repulsion integrals"
+    summary: "B. Pritchard and E. Chow's vectorized Obara-Saika electron repulsion integrals"
     # description: >
