@@ -1,0 +1,56 @@
+{% set name = "resp" %}
+{% set version = "0.7a3" %}
+
+package:
+    name: {{ name|lower }}
+    version: {{ version }}
+
+source:
+    git_url: git@github.com:cdsgroup/resp.git              # [linux]
+    git_url: https://github.com/cdsgroup/resp.git          # [osx]
+    # git_tag: {{ version }}
+    # git_tag: a70c56f  # 1.0 + 13
+    git_tag: master
+
+build:
+    number: 0                                               # [linux]
+    number: 0                                               # [osx]
+    skip: true                                              # [win]
+    script: python setup.py install --single-version-externally-managed --record=record.txt
+
+requirements:
+    build:
+        - python {{ python }}
+        - setuptools
+    run:
+        - numpy
+        - {{ pin_compatible('python', max_pin='x.x') }}
+
+test:
+    requires:
+        - psi4
+    imports:
+        - psi4
+        - resp
+    commands:
+        # Verify module
+        - test -f $SP_DIR/resp/driver.py
+        # Inspect linkage
+        - conda inspect linkages --show-files --groupby=dependency resp
+        - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+        # Actually test
+        - psi4 --test
+        - python -c "import sys, resp; rc = resp.test(); sys.exit(rc)"
+        - python -c "import psi4, resp; print('*** resp {} built successfully against Psi4 {}. Buy psinet a beer.'.format(resp.__version__, psi4.__version__))"
+
+about:
+    home: https://github.com/cdsgroup/resp
+    dev_url: https://github.com/cdsgroup/resp
+    # doc_url:
+    # doc_source_url:
+    license: BSD-3-Clause
+    license_url: https://opensource.org/licenses/BSD-3-Clause
+    # license_file:
+    license_family: BSD
+    summary: "A. Alenaizan's restrained electrostatic potential (RESP) plugin to Psi4"
+    # description: >

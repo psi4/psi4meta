@@ -13,12 +13,14 @@ requirements:
         - python {{ python }}
         - dftd3 {{ dftd3 }}
         - gcp {{ gcp }}
+        - resp {{ resp }}
         - snsmp2 {{ snsmp2 }}
         - v2rdm_casscf {{ v2rdm_casscf }}
     run:
         - {{ pin_compatible('python', max_pin='x.x') }}
         - {{ pin_compatible('dftd3', max_pin='x.x') }}
         - {{ pin_compatible('gcp', max_pin='x.x') }}
+        - {{ pin_compatible('resp', max_pin='x.x') }}
         - {{ pin_compatible('snsmp2', max_pin='x.x') }}
       {% for package in resolved_packages('host') %}
        {% if package.startswith('v2rdm_casscf') %}
@@ -30,11 +32,15 @@ test:
     requires:
         - psi4
     imports:
+        - resp
         - snsmp2
         - v2rdm_casscf
         - psi4
     commands:
         - psi4 --test
+        - python -c "import resp; rc = resp.test('long'); import sys; sys.exit(rc)"
+        - python -c "import v2rdm_casscf as v2; rc = v2.test('long', extras=['-k', 'psiapi']); import sys; sys.exit(rc)"
+        - python -c "import psi4, resp, v2rdm_casscf; print('*** Psi4 {}, resp {}, v2rdm_casscf {} compatible!'.format(psi4.__version__, resp.__version__, v2rdm_casscf.__version__))"
 
 about:
     home: http://psicode.org
