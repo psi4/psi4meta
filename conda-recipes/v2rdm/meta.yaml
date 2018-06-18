@@ -1,16 +1,14 @@
-{% set version = "0.7a2" %}  # TODO get a tag when stable and bump and pull from tag below
+{% set version = "0.7" %}
 
 package:
     name: v2rdm_casscf
     version: {{ version }}
 
 source:
-    #git_url: git@github.com:edeprince3/v2rdm_casscf.git      # [linux]
-    git_url: git@github.com:loriab/v2rdm_casscf.git      # [linux]
+    git_url: git@github.com:edeprince3/v2rdm_casscf.git      # [linux]
     git_url: https://github.com/edeprince3/v2rdm_casscf.git  # [osx]
-    #git_tag: v{{ version }}
-    #git_tag: c12571d
-    git_tag: verfix
+    # git_tag: v{{ version }}
+    git_tag: master  # 0: ~ 57f80fc v0.7 + 4
 
 build:
     number: 0                                            # [linux]
@@ -57,7 +55,8 @@ test:
         # Actually test
         - psi4 --test
         # * conda-build and pytest-shutil don't get along
-        - python -c "import v2rdm_casscf as v2; v2.test(extras=['-k', 'psiapi']); print('*** v2rdm_casscf {} built successfully. Buy psinet a beer.'.format(v2.__version__))"
+        - python -c "import v2rdm_casscf as v2; rc = v2.test('long', extras=['-k', 'psiapi']); import sys; sys.exit(rc)"
+        - python -c "import v2rdm_casscf as v2; import psi4; print('*** v2rdm_casscf {} built successfully against Psi4 {}. Buy psinet a beer.'.format(v2.__version__, psi4.__version__))"
 
 about:
     home: https://github.com/edeprince3/v2rdm_casscf

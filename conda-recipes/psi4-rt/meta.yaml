@@ -13,15 +13,18 @@ requirements:
         - python {{ python }}
         - dftd3 {{ dftd3 }}
         - gcp {{ gcp }}
+        - gpu_dfcc {{ gpu_dfcc }}              # [linux]
+        - resp {{ resp }}
         - snsmp2 {{ snsmp2 }}
         - v2rdm_casscf {{ v2rdm_casscf }}
     run:
         - {{ pin_compatible('python', max_pin='x.x') }}
         - {{ pin_compatible('dftd3', max_pin='x.x') }}
         - {{ pin_compatible('gcp', max_pin='x.x') }}
+        - {{ pin_compatible('resp', max_pin='x.x') }}
         - {{ pin_compatible('snsmp2', max_pin='x.x') }}
       {% for package in resolved_packages('host') %}
-       {% if package.startswith('v2rdm_casscf') %}
+       {% if package.startswith('v2rdm_casscf') or package.startswith('gpu_dfcc') %}
         - {{ package }}
        {% endif %}
       {% endfor %}
@@ -30,11 +33,18 @@ test:
     requires:
         - psi4
     imports:
+        - gpu_dfcc                              # [linux]
+        - resp
         - snsmp2
         - v2rdm_casscf
         - psi4
     commands:
         - psi4 --test
+        - python -c "import gpu_dfcc, sys; sys.exit(gpu_dfcc.test())"  # [linux]
+        - python -c "import resp, sys; sys.exit(resp.test('long'))"
+        - python -c "import v2rdm_casscf as v2; import sys; sys.exit(v2.test('long', extras=['-k', 'psiapi']))"
+        - python -c "import psi4, resp, v2rdm_casscf; print('*** Psi4 {}, resp {}, v2rdm_casscf {} compatible!'.format(psi4.__version__, resp.__version__, v2rdm_casscf.__version__))"
+        - python -c "import psi4, gpu_dfcc; print('*** Psi4 {}, gpu_dfcc {} compatible!'.format(psi4.__version__, gpu_dfcc.__version__))"  # [linux]
 
 about:
     home: http://psicode.org
