@@ -25,15 +25,15 @@ requirements:
     - {{ compiler('cxx') }}
 
 test:
-  commands:
-    # Verify library
-    - test -f $PREFIX/lib/libsimint$SHLIB_EXT
-    # Inspect linkage
-    - ldd -v $PREFIX/lib/libsimint.so             # [linux]
-    - otool -L $PREFIX/lib/libsimint.dylib        # [osx]
-    - conda inspect linkages --show-files --groupby=dependency simint
-    - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
-      
+    commands:
+        # Verify library
+        - test -f $PREFIX/lib/libsimint$SHLIB_EXT
+        # Inspect linkage
+        - ldd -v $PREFIX/lib/libsimint.so             # [linux]
+        - otool -L $PREFIX/lib/libsimint.dylib        # [osx]
+        - conda inspect linkages --show-files --groupby=dependency simint
+        - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+
 about:
     home: http://www.bennyp.org/research/simint/
     dev_url: https://github.com/simint-chem/simint-generator
@@ -43,6 +43,6 @@ about:
     license_url: https://opensource.org/licenses/BSD-3-Clause
     # license_file:
     license_family: BSD
-    summary: "B. Pritchard and E. Chow's Vectorized Obara-Saika electron repulsion integrals"
+    summary: "B. Pritchard and E. Chow's vectorized Obara-Saika electron repulsion integrals"
     # description: >
 
