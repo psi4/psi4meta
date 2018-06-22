@@ -1,29 +1,28 @@
 
-if [ "${PSI_BUILD_ISA}" == "sse41" ]; then
-    ISA="-msse4.1"
-elif [ "${PSI_BUILD_ISA}" == "avx2" ]; then
-    ISA="-march=native"
-fi
-
-
 if [ "$(uname)" == "Darwin" ]; then
 
+    # link against conda Clang
+    # * -fno-exceptions squashes `___gxx_personality_v0` symbol and thus libc++ dependence
+    ALLOPTS="-clang-name=${CLANG} ${OPTS} -fno-exceptions"
+    ALLOPTSCXX="-clang-name=${CLANG} -clangxx-name=${CLANGXX} -stdlib=libc++ -I${PREFIX}/include/c++/v1 ${OPTS} -fno-exceptions -mmacosx-version-min=10.9"
+
     # configure
-    ${PREFIX}/bin/cmake \
+    ${BUILD_PREFIX}/bin/cmake \
         -H${SRC_DIR} \
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER=clang \
-        -DCMAKE_C_FLAGS="${ISA}" \
-        -DCMAKE_CXX_COMPILER=clang++ \
-        -DCMAKE_CXX_FLAGS="-stdlib=libc++ ${ISA}" \
+        -DCMAKE_C_COMPILER=icc \
+        -DCMAKE_CXX_COMPILER=icpc \
+        -DCMAKE_C_FLAGS="${ALLOPTS}" \
+        -DCMAKE_CXX_FLAGS="${ALLOPTSCXX}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DMAX_AM_ERI=${max_am_eri} \
+        -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DBUILD_SHARED_LIBS=ON \
         -DMERGE_LIBDERIV_INCLUDEDIR=ON \
         -DENABLE_XHOST=OFF
 fi
+
 
 if [ "$(uname)" == "Linux" ]; then
 

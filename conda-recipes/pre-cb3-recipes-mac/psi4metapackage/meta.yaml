@@ -1,0 +1,36 @@
+package:
+  name: psi4metapackage
+  version: 0.2
+
+build:
+  number: 3
+
+requirements:
+  run:
+    - python 2.7*
+    - boost 1.57.0 0      # pre-built core non-qc dependency
+    - chemps2 1.5         # pre-built qc add-on
+    - pcmsolver           # pre-built qc add-on
+    - zlib                # non-qc dependency for add-ons chemps2 & pcmsolver
+    - gsl                 # non-qc dependency for add-on chemps2
+    - hdf5 1.8.16         # non-qc dependency for add-on chemps2 (hdf5 version must match chemps2 built one)
+#    - mkl-rt              # all mkl runtime libs. supplied by anaconda. we can't get in trouble for license agreements
+#    - libgcc              # gcc_s for linking non-qc add-on dependencies
+
+test:
+  commands:
+    - which python
+    - which perl
+    - perl -e 'print "Hello Mr Euler!\n"'
+    - python -c "print unichr(234)"
+
+about:
+  home: http://www.psicode.org
+  license: GNU General Public License v2 or later (GPLv2+)
+  summary: "open-source quantum chemistry"
+
+# to conda build package from local source rather than github, substitute like below
+#package/version: 0.1.6
+#source/path: ../../psi4mangle/psi4
+#build/number: 1
+#build/string: abc

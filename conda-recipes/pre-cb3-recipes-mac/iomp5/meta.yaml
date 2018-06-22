@@ -1,0 +1,17 @@
+package:
+  name: iomp5
+  version: "15.0.3"
+
+build:
+  number: 7
+
+about:
+  home: https://software.intel.com/en-us/
+  license: https://software.intel.com/sites/default/files/managed/c0/5f/Master-EULA-for-Intel-Sw-Development-Products-March-2015.pdf
+  summary: "Intel OpenMP runtime library redistributable"
+
+# to conda build package from local source rather than github, substitute like below
+#package/version: 0.1.6
+#source/path: ../../psi4mangle/psi4
+#build/number: 1
+#build/string: abc

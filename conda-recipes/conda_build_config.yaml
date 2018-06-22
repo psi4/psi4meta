@@ -11,6 +11,8 @@ fortran_compiler:
 target_platform:
     - osx-64                           # [osx]
     - linux-64                         # [linux]
+CONDA_BUILD_SYSROOT:
+  - /Users/github/SDKs/MacOSX10.9.sdk  # [osx]
 
 # <<<  Packages Stuff  >>>
 
@@ -47,8 +49,10 @@ ltrtver:
     - "1.2a2.dev13"   # (17 Jun 2018)    ...    ...      ...    ...  ...          ...   ...   ...   0.2   ...    ...      0.7   ...  ...    ...   ...   | ...      ...
     # "1.2a2.dev14"   # (20 Jun 2018)    ...    ...      ...    ...  ...          ...   ...   ...   ...   ...    ...      ...   ...  ...    ...   ...   | ...      1.10.2
 MAX_AM_ERI:
-    - '6'
+    - '4'
+#    - '6'
 OPTS:
+    - '-msse4.1 -axCORE-AVX2'  # [osx]
     - '-msse2 -axCORE-AVX2,AVX -Wl,--as-needed -static-intel -wd10237'  # [linux]
 PY_ABBR:
     - python3.6m

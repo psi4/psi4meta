@@ -10,8 +10,7 @@ source:
     git_url: git@github.com:loriab/pylibefp.git         # [linux]
     git_url: https://github.com/loriab/pylibefp.git     # [osx]
     # git_tag: v{{ version }}
-    # git tag: master  #  0.4.dev1+e1ee9b1
-    git_tag: v0.3
+    git_tag: e84aa39  # 0.3.dev2
 
 build:
     number: 0                                            # [linux]
@@ -27,7 +26,7 @@ requirements:
     host:
         - mkl-devel {{ mkl }}                           # [blas_impl == 'mkl']
         - openblas-devel {{ openblas }}                 # [blas_impl == 'openblas']
-        # - pybind11 {{ pybind11 }}  # trouble at dep metadata time
+        - pybind11 {{ pybind11 }}  # trouble at dep metadata time
         - python {{ python }}
 
 outputs:
@@ -40,15 +39,21 @@ outputs:
               - {{ pin_subpackage('libefp', max_pin='x.x.x') }}
           ignore_run_exports:
               # gcc symbols linked statically
-              - libgcc-ng
+              - libgcc-ng                               # [linux]
       requirements:
+          build:
+              - {{ compiler('c') }}
           host:
               - mkl-devel {{ mkl }}                           # [blas_impl == 'mkl']
               - openblas-devel {{ openblas }}                 # [blas_impl == 'openblas']
+          run:
+              # run_exports not present in osx for mkl-devel --> mkl
+              - mkl {{ mkl }}*
       files:
           - include/efp.h
           - include/libefp/*
-          - lib/libefp.so*
+          - lib/libefp.so*                                    # [linux]
+          - lib/libefp.*dylib                                 # [osx]
           - share/cmake/libefp/*
           - share/libefp/*
           - share/libefp/fraglib/*
@@ -64,6 +69,7 @@ outputs:
               - ldd -v $PREFIX/lib/libefp.so                 # [linux]
               - otool -L $PREFIX/lib/libefp.dylib            # [osx]
               - conda-inspect linkages libefp --show-files
+              - conda inspect objects -p $PREFIX libefp      # [osx]
       about:
           home: https://github.com/ilyak/libefp
           dev_url: https://github.com/ilyak/libefp/blob/master/README.md
@@ -81,8 +87,10 @@ outputs:
           ignore_run_exports:
               # # gcc symbols linked statically
               # - libgcc-ng
-              - libstdcxx-ng
+              - libstdcxx-ng                                 # [linux]
       requirements:
+          build:
+              - {{ compiler('cxx') }}
           host:
               - pybind11 {{ pybind11 }}
               - python {{ python }}
@@ -106,9 +114,10 @@ outputs:
               - test -f $PLPSP/pylibefp/core.so
               # Inspect linkage
               - ldd -r -u $PLPSP/pylibefp/core.so && return 0  # [linux]
-              - ldd -v $PLPSP/pylibefp/core.so     # [linux]
-              - otool -L $PLPSP/pylibefp/core.so   # [osx]
+              - ldd -v $PLPSP/pylibefp/core.so                 # [linux]
+              - otool -L $PLPSP/pylibefp/core.so               # [osx]
               - conda-inspect linkages pylibefp --show-files
+              - conda inspect objects -p $PREFIX pylibefp      # [osx]
               # Actually test
               - conda list
               - python -c "import pylibefp; pylibefp.test(); print('*** PylibEFP {} built successfully. Buy psinet a beer.'.format(pylibefp.__version__))"

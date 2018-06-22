@@ -20,8 +20,9 @@ build:
         - {{ pin_subpackage('libint', max_pin='x.x') }}
     ignore_run_exports:
         # gcc symbols linked statically. c++ only a formality to build c lib.
-        - libgcc-ng
-        - libstdcxx-ng
+        - libgcc-ng                                      # [linux]
+        - libstdcxx-ng                                   # [linux]
+        - libcxx                                         # [osx]
 
 requirements:
     build:
