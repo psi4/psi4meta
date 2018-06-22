@@ -1,0 +1,64 @@
+{% set name = "openfermion" %}
+{% set version = "0.6a3" %}  # TODO update
+
+package:
+    name: {{ name|lower }}
+    version: {{ version }}
+
+source:
+    #path: ../../../OpenFermion
+    git_url: git@github.com:loriab/OpenFermion.git              # [linux]
+    #git_url: git@github.com:quantumlib/OpenFermion.git              # [linux]
+    #git_url: https://github.com/quantumlib/OpenFermion.git          # [osx]
+    #git_tag: v{{ version }}
+    #git_tag: v0.6
+    git_tag: testtweaks #master
+
+build:
+    number: 0                                               # [linux]
+    number: 0                                               # [osx]
+    skip: true                                              # [win]
+
+requirements:
+    build:
+        - python {{ python }}
+        - setuptools
+    run:
+        - cvxopt
+        - future
+        - h5py >=2.8
+        - hdf5 {{ hdf5 }}*                                  # explicit (from hdf5) for pinning
+        - networkx
+        - numpy >=1.11.0
+        - {{ pin_compatible('python', max_pin='x.x') }}
+        - scipy >=0.18.0
+
+test:
+    requires:
+        - ipykernel
+        - matplotlib
+        - nbconvert
+        - pubchempy
+        - pytest
+    imports:
+        - openfermion
+    commands:
+        # Verify module
+        - test -f $SP_DIR/openfermion/__init__.py
+        # Inspect linkage
+        - conda inspect linkages --show-files --groupby=dependency openfermion
+        - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+        # Actually test
+        - pytest -rws --capture=sys $SP_DIR/openfermion
+
+about:
+    home: https://www.openfermion.org
+    dev_url: https://github.com/quantumlib/OpenFermion
+    doc_url: http://openfermion.readthedocs.io/en/latest/openfermion.html
+    doc_source_url: https://github.com/quantumlib/OpenFermion/tree/master/docs
+    license: Apache-2.0
+    license_url: https://opensource.org/licenses/Apache-2.0
+    license_file: LICENSE
+    license_family: APACHE
+    summary: "Google's electronic structure package for quantum computers"
+    # description: >
