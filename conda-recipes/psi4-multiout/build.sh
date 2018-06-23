@@ -45,8 +45,6 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON \
         -DENABLE_libefp=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON \
-        -DENABLE_erd=ON \
-        -DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
         -DENABLE_gdma=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
         -DENABLE_PCMSolver=ON \
@@ -63,6 +61,8 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_OSX_DEPLOYMENT_TARGET=''
 
 #        -DBUILD_SHARED_LIBS=ON \
+#        -DENABLE_erd=ON \
+#        -DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
 
     # build
     cd build
@@ -74,6 +74,8 @@ if [ "$(uname)" == "Darwin" ]; then
     # test (full suite too stressful for macpsinet)
     ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} -L quick
 
+    # remove conda-build-bound Cache file, to be replaced by psi4-dev
+    rm ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake
 fi
 
 if [ "$(uname)" == "Linux" ]; then

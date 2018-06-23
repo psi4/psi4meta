@@ -7,7 +7,7 @@ package:
 source:
     git_url: git@github.com:psi4/psi4.git      # [linux]
     git_url: https://github.com/psi4/psi4.git  # [osx]
-    # git_tag: v1.2rc1  # explicit tag when you don't want tag.dev1
+    # git_tag: v1.2rc2  # explicit tag when you don't want tag.dev1
     git_tag: master
 
 build:
@@ -32,7 +32,6 @@ requirements:
         - chemps2 {{ chemps2 }}
         - dkh {{ dkh }}
         - libefp {{ libefp }}
-        - erd {{ erd }}
         - gau2grid {{ gau2grid }}
         - gdma {{ gdma }}
         - libint {{ libint }}
@@ -68,7 +67,6 @@ outputs:
               - chemps2 {{ chemps2 }}
               - dkh {{ dkh }}
               - libefp {{ libefp }}
-              - erd {{ erd }}
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}
               - libint {{ libint }}
@@ -94,20 +92,25 @@ outputs:
           imports:
               - psi4
           commands:
-              - export PLPSP=$PREFIX/lib{{ PYMOD_INSTALL_LIBDIR }}
               # Verify existence and execution
               - test -f $PREFIX/bin/psi4
-              - test -f $PLPSP/psi4/core.so
+              - test -f $SP_DIR/psi4/core.so
               - $PREFIX/bin/psi4 --version
               # Inspect linkage
-              - ldd -r -u $PLPSP/psi4/core.so  # [linux]
-              - ldd -v $PLPSP/psi4/core.so     # [linux]
-              - otool -L $PLPSP/psi4/core.so   # [osx]
-              - conda inspect linkages --show-files --groupby=dependency chemps2 dkh libefp erd gau2grid gdma libint pcmsolver simint libxc psi4
+              - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
+              - ldd -v $SP_DIR/psi4/core.so     # [linux]
+              - otool -L $SP_DIR/psi4/core.so   # [osx]
+              - conda inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver simint libxc psi4  # erd
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               # Actually test
               - conda list
-              - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
+              - python -c "import psi4, sys; sys.exit(psi4.test())"
+              - python -c "import psi4; print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
+              - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --ldd  # [py3k]
+              - python $PREFIX/share/psi4/scripts/test_threading.py --psiapi -n${CPU_COUNT}  # [py3k]
+              #- python $PREFIX/share/psi4/scripts/test_threading.py --passfail --psiapi -n${CPU_COUNT}  # [py3k]
+              #- python $PREFIX/share/psi4/scripts/test_threading.py --passfail --psithon -n${CPU_COUNT}  # [py3k]
+              - python $PREFIX/share/psi4/scripts/test_threading.py --psithon -n${CPU_COUNT}  # [py3k]
       about:
           home: http://psicode.org
           dev_url: https://github.com/psi4/psi4
