@@ -137,7 +137,8 @@ if sys.platform.startswith('linux'):
 
 elif sys.platform == 'darwin':
     host = "macpsinet"
-    dest_subchannel = 'agg'
+    dest_subchannel = 'dev'
+    #dest_subchannel = 'agg'
     recipe_box = '/Users/github/Git/psi4meta/conda-recipes'
     cbcy = recipe_box + '/conda_build_config.yaml'
     lenv = {

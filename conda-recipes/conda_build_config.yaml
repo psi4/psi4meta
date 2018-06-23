@@ -12,7 +12,7 @@ target_platform:
     - osx-64                           # [osx]
     - linux-64                         # [linux]
 CONDA_BUILD_SYSROOT:
-  - /Users/github/SDKs/MacOSX10.9.sdk  # [osx]
+    - /Users/github/SDKs/MacOSX10.9.sdk  # [osx]
 
 
 # <<<  Packages Stuff  >>>
@@ -87,7 +87,7 @@ pcmsolver:
 pylibefp:
     - 0.3
 resp:
-    - 0.7a3
+    - 0.7
 simint:
     - 0.7
 snsmp2:
