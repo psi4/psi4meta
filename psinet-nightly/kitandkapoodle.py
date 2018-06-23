@@ -351,13 +351,13 @@ if host == "psinet":
 
 # PSI4: build Psi4 w/o any RT deps or tests (***)
 # -----------------------------------------------
-{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev']}, #, 'psi4']},
+{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev']},
 #{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'psi4'], 'dest_subchannel': 'nola'},  # qcdb
 
 # RT-MP: build RT metapackage w/existing downstreams and new Psi4 (***)
 #         upon any failure, step forward or back, adjusting source of downstream or Psi
 # -------------------------------------------------------------------------------------
-#{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},
+{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},
 
 # RT: if psi4-rt tests fail, build the downstream
 # -----------------------------------------------

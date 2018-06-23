@@ -41,12 +41,10 @@ set(Libint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/Libint"
 set(ENABLE_PCMSolver       ON CACHE BOOL "")
 set(PCMSolver_DIR          "/opt/anaconda1anaconda2anaconda3/share/cmake/PCMSolver" CACHE PATH "")
 
-#set(ENABLE_simint          ON CACHE BOOL "")
-#set(simint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/simint" CACHE PATH "")
+set(ENABLE_simint          ON CACHE BOOL "")
+set(simint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/simint" CACHE PATH "")
 
 set(Libxc_DIR              "/opt/anaconda1anaconda2anaconda3/share/cmake/Libxc" CACHE PATH "")
-
-#set(TargetLAPACK_DIR       "/opt/anaconda1anaconda2anaconda3/share/cmake/TargetLAPACK" CACHE PATH "")
 
 set(SPHINX_ROOT            "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
 set(CMAKE_PROGRAM_PATH     "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")

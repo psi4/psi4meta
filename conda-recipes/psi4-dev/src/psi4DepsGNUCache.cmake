@@ -20,3 +20,7 @@ set(CMAKE_C_COMPILER       "/opt/anaconda1anaconda2anaconda3/bin/@HOST@-gcc" CAC
 set(CMAKE_CXX_COMPILER     "/opt/anaconda1anaconda2anaconda3/bin/@HOST@-g++" CACHE STRING "")
 set(CMAKE_Fortran_COMPILER "/opt/anaconda1anaconda2anaconda3/bin/@HOST@-gfortran" CACHE STRING "")
 
+# aka
+#set(CMAKE_C_COMPILER       "\${GCC}" CACHE STRING "")
+#set(CMAKE_CXX_COMPILER     "\${GXX}" CACHE STRING "")
+#set(CMAKE_Fortran_COMPILER "\${GFORTRAN}" CACHE STRING "")
