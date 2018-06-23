@@ -34,8 +34,6 @@ if [ "$(uname)" == "Linux" ]; then
         -DBUILD_SPHINX=OFF \
         -DENABLE_TESTS=OFF \
         -DLAPACK_LIBRARIES=${LAPACK_INTERJECT}
-
-        #-DHDF5_VERSION="${hdf5}"
 fi
 
 # build
@@ -66,3 +64,4 @@ ${PYTHON} setup.py install --prefix=${PREFIX}
 # NOTES:
 #   '-Wl,-Bstatic;ifport;ifcore;imf;svml;     m;ipgo;                       irc;pthread;svml;c;irc_s;dl;c'
 #                              'imf;svml;irng;m;ipgo;decimal;cilkrts;stdc++;irc;        svml;c;irc_s;dl;c')
+# * -DHDF5_VERSION="${hdf5}"

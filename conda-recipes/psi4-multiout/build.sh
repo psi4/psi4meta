@@ -116,11 +116,6 @@ if [ "$(uname)" == "Linux" ]; then
         #-DCMAKE_INSIST_FIND_PACKAGE_ambit=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_GTFock=ON \
 
-        #-DENABLE_v2rdm_casscf=ON \
-        #-DCMAKE_INSIST_FIND_PACKAGE_v2rdm_casscf=ON \
-        #-DENABLE_snsmp2=ON \
-        #-DCMAKE_INSIST_FIND_PACKAGE_snsmp2=ON \
-
     # build
     cd build
     make -j${CPU_COUNT}
@@ -139,6 +134,9 @@ if [ "$(uname)" == "Linux" ]; then
     ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} -L quick
 
     mv -f stage/${PREFIX}/bin/psi4_reserve stage/${PREFIX}/bin/psi4
+
+    # remove conda-build-bound Cache file, to be replaced by psi4-dev
+    rm ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake
 fi
 
 # NOTES
@@ -153,3 +151,6 @@ fi
     #OPTS="-gnu-prefix=x86_64-conda_cos6-linux-gnu- -msse2 -axCORE-AVX2,AVX"
 
 # * -DENABLE_PLUGIN_TESTING=ON \ is a casualty of the really long prefix
+
+# * downstream (v2, sns) are built and tested downstream
+# * downstream py (sns) won't register properly anyways w/o psi4 and CM config time

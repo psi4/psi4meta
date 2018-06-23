@@ -8,10 +8,10 @@ source:
     git_url: git@github.com:edeprince3/gpu_dfcc.git      # [linux]
     git_url: https://github.com/edeprince3/gpu_dfcc.git  # [osx]
     # git_tag: v{{ version }}
-    git_tag: master  # 1: v0.2-6-g8feb10e
+    git_tag: master  # 1: v0.2-6-g8feb10e  # 2: v0.2-8-5f22ebd
 
 build:
-    number: 1                                            # [linux]
+    number: 2                                            # [linux]
     binary_relocation: true
     skip: true                                           # [win or osx]
     ignore_run_exports:

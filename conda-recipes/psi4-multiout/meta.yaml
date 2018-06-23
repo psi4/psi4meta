@@ -72,7 +72,7 @@ outputs:
           run:
               - deepdiff
               - intel-openmp
-#              - mkl {{ mkl }}*                                 # run_exports uncertain at present for mkl-devel --> mkl
+              # - mkl {{ mkl }}*                                 # run_exports uncertain at present for mkl-devel --> mkl
               - networkx
               - numpy
               - pytest                                         # drive psi4 --test
@@ -97,12 +97,15 @@ outputs:
               - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
               - ldd -v $SP_DIR/psi4/core.so     # [linux]
               - otool -L $SP_DIR/psi4/core.so   # [osx]
-              #- conda-inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver libxc psi4  # erd simint
-              - conda inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver simint libxc psi4
+              - conda inspect linkages --show-files --groupby=dependency chemps2 dkh libefp gau2grid gdma libint pcmsolver simint libxc psi4  # erd
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               # Actually test
               - conda list
-              - python -c "import psi4; psi4.test(); print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
+              - python -c "import psi4, sys; sys.exit(psi4.test())"
+              - python -c "import psi4; print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
+              - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --ldd  # [py3k]
+              - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --psiapi -n${CPU_COUNT}  # [py3k]
+              - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --psithon -n${CPU_COUNT}  # [py3k]
       about:
           home: http://psicode.org
           dev_url: https://github.com/psi4/psi4
