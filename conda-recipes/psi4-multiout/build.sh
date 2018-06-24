@@ -126,26 +126,21 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
         -DENABLE_PCMSolver=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON \
+        -DENABLE_simint=ON \
+        -DSIMINT_VECTOR=sse \
+        -DCMAKE_INSIST_FIND_PACKAGE_simint=ON \
         -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=OFF \
         -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}" \
-        -DBUILDNAME="LAB-RHEL7-gcc7.2-intel18.0.2-mkl-py${CONDA_PY}-release-conda" \
+        -DBUILDNAME="LAB-RHEL7-gcc7.2-intel18.0.3-mkl-py${CONDA_PY}-release-conda" \
         -DSITE="gatech-conda" \
         -DSPHINX_ROOT=${PREFIX}
 
         #-DENABLE_erd=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
-        #-DENABLE_simint=ON \
-        #-DSIMINT_VECTOR=sse \
-        #-DCMAKE_INSIST_FIND_PACKAGE_simint=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_ambit=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_GTFock=ON \
-
-        #-DENABLE_v2rdm_casscf=ON \
-        #-DCMAKE_INSIST_FIND_PACKAGE_v2rdm_casscf=ON \
-        #-DENABLE_snsmp2=ON \
-        #-DCMAKE_INSIST_FIND_PACKAGE_snsmp2=ON \
 
     # build
     cd build
@@ -165,6 +160,9 @@ if [ "$(uname)" == "Linux" ]; then
     ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} -L quick
 
     mv -f stage/${PREFIX}/bin/psi4_reserve stage/${PREFIX}/bin/psi4
+
+    # remove conda-build-bound Cache file, to be replaced by psi4-dev
+    rm ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake
 fi
 
 # NOTES
@@ -182,3 +180,8 @@ fi
     #DYLD_LIBRARY_PATH=${PREFIX}/lib:$DYLD_LIBRARY_PATH \
     #       PYTHONPATH=${PREFIX}/bin:${PREFIX}/lib/python2.7/site-packages:$PYTHONPATH \
     #             PATH=${PREFIX}/bin:$PATH \
+
+# * -DENABLE_PLUGIN_TESTING=ON \ is a casualty of the really long prefix
+
+# * downstream (v2, sns) are built and tested downstream
+# * downstream py (sns) won't register properly anyways w/o psi4 and CM config time

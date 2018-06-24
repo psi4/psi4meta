@@ -32,12 +32,12 @@ requirements:
         - networkx
         - numpy
         # docs
-        - astropy-helpers
         - ipykernel
         - jupyter_client
         - nbsphinx
         - python-graphviz
         - sphinx >=1.5
+        - sphinx-automodapi
         - sphinx-psi-theme
 
 outputs:

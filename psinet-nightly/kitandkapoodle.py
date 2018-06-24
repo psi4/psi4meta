@@ -66,6 +66,14 @@
 #   anaconda copy --to-owner psi4 conda-forge/pybind11/2.2.3/osx-64/pybind11-2.2.3-py35_0.tar.bz2
 #   anaconda copy --to-owner psi4 conda-forge/pybind11/2.2.3/osx-64/pybind11-2.2.3-py27_0.tar.bz2
 
+# [LAB 14 May 2018]
+#   remove c-f noarch copy of deepdiff from psi4 channel, replace with Linux-targeted builds
+#   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/linux-64/jsonpickle-0.9.6-py27_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/linux-64/jsonpickle-0.9.6-py35_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/linux-64/jsonpickle-0.9.6-py36_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/osx-64/jsonpickle-0.9.6-py36_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/osx-64/jsonpickle-0.9.6-py35_0.tar.bz2
+#   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/osx-64/jsonpickle-0.9.6-py27_0.tar.bz2
 
 import os
 import sys
@@ -123,6 +131,7 @@ def _run_command(command, env=None, cwd=None):
 
 if sys.platform.startswith('linux'):
     host = "psinet"
+    #dest_subchannel = 'agg'
     dest_subchannel = 'dev'
     #dest_subchannel = 'main'
     recipe_box = '/home/psilocaluser/gits/psi4meta/conda-recipes'
@@ -257,54 +266,16 @@ if host == "psinet":
 #{'recipe': 'ci-psi4-lt', 'python': '2.7'},  # linux
 #{'recipe': 'ci-psi4-lt', 'python': '3.5'},  # linux
 #{'recipe': 'ci-psi4-lt', 'python': '3.6'},  # linux
-    #{'recipe': 'sphinx-psi-theme', 'python': '2.7', 'build_channels': ['conda-forge']},  # linuxmkl
-    #{'recipe': 'sphinx-psi-theme', 'python': '3.5', 'build_channels': ['conda-forge']},  # linuxmkl
-    #{'recipe': 'sphinx-psi-theme', 'python': '3.6', 'build_channels': ['conda-forge']},  # linuxmkl
-#{'recipe': 'hungarian', 'python': '2.7'},
-#{'recipe': 'hungarian', 'python': '3.5'},
-#{'recipe': 'hungarian', 'python': '3.6'},
 
-    #{'recipe': 'chemps2', 'build_channels': ['psi4', 'intel']},  # linuxmkl
 #{'recipe': 'lawrap'},  # linux
-    #{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-    #{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-    #{'recipe': 'pychemps2', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-#{'recipe': 'dkh', 'build_channels': 'psi4'},  # linux
-    #{'recipe': 'libefp', 'build_channels': 'psi4'},  # linuxmkl
-    ###{'recipe': 'pylibefp', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4', 'conda-forge']},  # linuxmkl
-    ###{'recipe': 'pylibefp', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4', 'conda-forge']},  # linuxmkl
 #{'recipe': 'erd', 'build_channels': 'psi4'},  # linux
-#{'recipe': 'gdma', 'build_channels': 'psi4'},  # linux
 #{'recipe': 'am7-mp'},
 #{'recipe': 'am8-mp'},
-    #{'recipe': 'libint', 'envvars': {'MAX_AM_ERI': '6'}},  # linux
-    #{'recipe': 'libint'},  # linux
 #{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '7'}},  # linux
 #{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '8'}},  # linux
-    #{'recipe': 'pcmsolver', 'python': '2.7', 'build_channels': 'psi4'},  # linux
-    #{'recipe': 'pcmsolver', 'python': '3.5', 'build_channels': 'psi4'},  # linux
-    #{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4'},  # linux
-#{'recipe': 'simint'},
-#{'recipe': 'libxc'},  # linux
-#{'recipe': 'gau2grid', 'python': '3.6'},  # linuxmkl
-    #{'recipe': 'dftd3'},
-    #{'recipe': 'gcp'},
-    #{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linux
-    #{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linux
-    #{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linux
-    #{'recipe': 'snsmp2', 'python': '2.7'},
-    #{'recipe': 'snsmp2', 'python': '3.5'},
-    #{'recipe': 'snsmp2', 'python': '3.6'},
-
-    #{'recipe': 'psi4-rt', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-    #{'recipe': 'psi4-rt', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-    #{'recipe': 'psi4-rt', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
 #{'recipe': 'psi4-lt-mp', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
 #{'recipe': 'psi4-lt-mp', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
 #{'recipe': 'psi4-lt-mp', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-    #{'recipe': 'psi4-dev', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-    #{'recipe': 'psi4-dev', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-    #{'recipe': 'psi4-dev', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
 
 
 # CBCY openblas --- dest_subchannel = 'nomkl'
@@ -313,53 +284,64 @@ if host == "psinet":
 #{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/nomkl', 'psi4/label/dev', 'psi4'], 'dest_subchannel': 'nomkl'},
 
 # Unplaced
-#{'recipe': 'gau2grid-multiout'},  # cb3
-#{'recipe': 'gdma'},  # cb3
 #{'recipe': 'dkh'},  # cb3
 #{'recipe': 'libxc'},  # cb3
 #{'recipe': 'erd'},
+
 
 # starred (***) are nightly build
 
 # MISC: order mostly doesn't matter
 # ---------------------------------
+#{'recipe': 'deepdiff', 'build_channels': ['conda-forge']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
+#{'recipe': 'pytest-shutil', 'build_channels': ['defaults', 'conda-forge']},  # chnl: setuptools-git  # neededby: v2rdm  # Note: recipe fine but useless as c-b & pytest-shutil don't mix
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
+#{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
+#{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/agg']},  # chnl: openfermion
 
 # LT: bump in recipe any upstream versions Psi means to support and rebuild
 #     upon any failure, adjust source of Psi & upstream
 # -------------------------------------------------------------------------
 #{'recipe': 'chemps2-multiout'},
-#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # deepdiff, pb11 from psi4
+#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: deepdiff, pb11
+#{'recipe': 'gau2grid-multiout'},
+#{'recipe': 'gdma'},
 #{'recipe': 'libint'},
 #{'recipe': 'pcmsolver'},
+#{'recipe': 'simint'},
 
 # CBCY: edit "ltrtver" & "<addon>" if anything in LT changed
 # ----------------------------------------------------------
 
 # PSI4: build Psi4 w/o any RT deps or tests (***)
 # -----------------------------------------------
-{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'psi4']},
+{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev']},
+#{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'psi4'], 'dest_subchannel': 'nola'},  # qcdb
 
 # RT-MP: build RT metapackage w/existing downstreams and new Psi4 (***)
 #         upon any failure, step forward or back, adjusting source of downstream or Psi
 # -------------------------------------------------------------------------------------
-{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev', 'psi4']},
+{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},
 
 # RT: if psi4-rt tests fail, build the downstream
 # -----------------------------------------------
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
-#{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev', 'psi4']},  # psi4, deepdiff from psi4
-#{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev', 'psi4']},  # psi4, deepdiff from psi4
+#{'recipe': 'gpudfcc', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
+#{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
+#{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
+#{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 
 # DEV: build the deps package and test `psi4-path-advisor` (***)
 # --------------------------------------------------------------
-{'recipe': 'psi4-dev', 'build_channels': ['psi4/label/dev', 'psi4']},
+{'recipe': 'psi4-dev', 'build_channels': ['psi4/label/dev']},
 
 # DOCS: build the docs, feed, and doxygen targets (***)
 # -----------------------------------------------------
-{'recipe': 'psi4-docs', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge', 'astropy'], 'cbextras': ['--prefix-length', '100']},
+{'recipe': 'psi4-docs', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge', 'astropy'], 'cbextras': ['--prefix-length', '100']},  # chnl: codecov, sphinx* jupyter* astropy-helpers
 
+# In future when `gcov` available, coverage can be added to psi4-docs recipe
+#{'recipe': 'psi4-coverage', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge', 'astropy'], 'cbextras': ['--prefix-length', '100']},  # chnl: cov*, docs*
         ]
 
 

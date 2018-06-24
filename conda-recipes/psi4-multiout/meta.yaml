@@ -76,6 +76,7 @@ outputs:
           run:
               - deepdiff
               - intel-openmp
+              # - mkl {{ mkl }}*                                 # run_exports uncertain at present for mkl-devel --> mkl
               - networkx
               - numpy
               - pytest                                         # drive psi4 --test
@@ -107,10 +108,8 @@ outputs:
               - python -c "import psi4, sys; sys.exit(psi4.test())"
               - python -c "import psi4; print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
               - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --ldd  # [py3k]
-              - python $PREFIX/share/psi4/scripts/test_threading.py --psiapi -n${CPU_COUNT}  # [py3k]
-              #- python $PREFIX/share/psi4/scripts/test_threading.py --passfail --psiapi -n${CPU_COUNT}  # [py3k]
-              #- python $PREFIX/share/psi4/scripts/test_threading.py --passfail --psithon -n${CPU_COUNT}  # [py3k]
-              - python $PREFIX/share/psi4/scripts/test_threading.py --psithon -n${CPU_COUNT}  # [py3k]
+              - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --psiapi -n${CPU_COUNT}  # [py3k]
+              - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --psithon -n${CPU_COUNT}  # [py3k]
       about:
           home: http://psicode.org
           dev_url: https://github.com/psi4/psi4

@@ -104,3 +104,5 @@ ${PYTHON} setup.py install --prefix=${PREFIX}
 #        sed -i '' "s|-fopenmp||g" ${SRC_DIR}/build/CheMPS2/CMakeFiles/chemps2-shared.dir/link.txt
 #        sed -i '' "s|-fopenmp||g" ${SRC_DIR}/build/CheMPS2/CMakeFiles/chemps2-bin.dir/link.txt
 #    fi
+
+# * -DHDF5_VERSION="${hdf5}"

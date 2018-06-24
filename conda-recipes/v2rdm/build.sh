@@ -30,11 +30,8 @@ if [ "$(uname)" == "Linux" ]; then
     source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
     set -x
 
-    # link against older libc for generic linux
-    #LIBC_INTERJECT="-liomp5;-Wl,-Bstatic;-Wl,--whole-archive;-lifport;-lifcoremt_pic;-Wl,--no-whole-archive;-Wl,-Bdynamic"
+    # suppress Intel Fortran libs
     LIBC_INTERJECT="-liomp5;-Wl,-Bstatic;-lifport;-lifcoremt_pic;-Wl,-Bdynamic"
-    #LIBC_INTERJECT="-Wl,-Bstatic;-lifport;-lifcoremt_pic;-Wl,-Bdynamic"
-    #LIBC_INTERJECT=""
 
     # link against conda GCC
     ALLOPTS="-gnu-prefix=${HOST}- ${OPTS}"
@@ -55,9 +52,6 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=OFF \
         -DLIBC_INTERJECT=${LIBC_INTERJECT}
-
-        #-DCMAKE_CXX_FLAGS=" -qopenmp -Wl,--as-needed -static-libstdc++ -static-libgcc -static-intel -wd10237 ${ALLOPTS}" \
-        #-DCMAKE_Fortran_FLAGS=" -qopenmp -static-libgcc -static-intel -wd10006 ${ALLOPTS}" \
 fi
 
 # build

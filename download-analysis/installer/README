@@ -1,22 +1,25 @@
 Copy over the access_log every night before 3am before it might get zipped
 up
 
-as root, 'crontab -e' and enter:
+as root on VERGIL, 'crontab -e' and enter:
 
-# vergil daily: every day at 1:00am 
-0 1 * * * /usr/bin/cp -f /etc/httpd/logs/access_log /home/cdsgroup/psi4meta/PSIDownloadAnalyzer/access_log
-# vergil daily: every day at 1:05am 
-5 1 * * * /usr/bin/cp -f /home/cdsgroup/psi4meta/PSIDownloadAnalyzer/psi-downloads-map.png /var/www/html/psicode-download/psi-downloads-map.png
-# vergil daily: every day at 1:06am 
-6 1 * * * /usr/bin/cp -f /home/cdsgroup/psi4meta/PSIDownloadAnalyzer/psi-downloads-pie.png /var/www/html/psicode-download/psi-downloads-pie.png
-7 1 * * * /usr/bin/cp -f /home/cdsgroup/psi4meta/PSIDownloadAnalyzer/psi-downloads-pie-pyos.png /var/www/html/psicode-download/psi-downloads-pie-pyos.png
+# vergil daily: every day at 1:00am
+0 1 * * * /usr/bin/cp -f /etc/httpd/logs/access_log /home/cdsgroup/psi4meta/download-analysis/installer/access_log
+# vergil daily: every day at 1:05am
+5 1 * * * /usr/bin/cp -f --preserve=timestamps /home/cdsgroup/psi4meta/download-analysis/installer/psi-downloads-map.png /var/www/html/psicode-download/psi-downloads-map.png
+# vergil daily: every day at 1:06am
+6 1 * * * /usr/bin/cp -f --preserve=timestamps /home/cdsgroup/psi4meta/download-analysis/installer/psi-downloads-pie.png /var/www/html/psicode-download/psi-downloads-pie.png
+# vergil daily: every day at 1:07am
+7 1 * * * /usr/bin/cp -f --preserve=timestamps /home/cdsgroup/psi4meta/download-analysis/installer/psi-downloads-pie-pyos.png /var/www/html/psicode-download/psi-downloads-pie-pyos.png
 
 ----
 
 Run the analyzer script every night
 
-as cdsgroup, 'crontab -e' and enter:
+as cdsgroup on VERGIL, 'crontab -e' and enter:
 
 # vergil daily: every day at 1:10am
-10 1 * * * /home/cdsgroup/psi4meta/PSIDownloadAnalyzer/analyze-downloads.tcsh
+10 1 * * * bash /home/cdsgroup/psi4meta/download-analysis/installer/analyze-downloads.sh > /home/cdsgroup/psi4meta/download-analysis/installer/crontab.log 2>&1
+# vergil first o'the month
+0 0 1 * * /home/cdsgroup/miniconda/bin/python /home/cdsgroup/psi4meta/download-analysis/conda/anaconda_dot_org_scraper.py > /home/cdsgroup/psi4meta/download-analysis/conda/scraped_$(date -d "today" +"\%Y\%m\%d\%H\%M").dat 2>&1
 

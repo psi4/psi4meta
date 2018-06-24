@@ -1,0 +1,11 @@
+name: _constructor_cutter
+
+channels:
+  - defaults
+  - conda-forge
+
+dependencies:
+  - conda-build==2.1.17
+  - conda==4.3.22
+  - constructor==1.5.5
+  - cookiecutter==1.5.1
