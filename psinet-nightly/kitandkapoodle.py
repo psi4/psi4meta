@@ -225,7 +225,7 @@ if host == "macpsinet":
 #{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: deepdiff, pb11
 #{'recipe': 'erd'},
 #{'recipe': 'gau2grid-multiout'},
-{'recipe': 'gdma'},
+#{'recipe': 'gdma'},
 #{'recipe': 'libint'},
 #{'recipe': 'pcmsolver'},
 #{'recipe': 'simint'},
@@ -254,7 +254,7 @@ if host == "macpsinet":
 
 # M/DEV: build the deps package and test `psi4-path-advisor` (***)
 # ----------------------------------------------------------------
-#{'recipe': 'psi4-dev', 'build_channels': ['psi4/label/dev', 'psi4']},
+{'recipe': 'psi4-dev', 'build_channels': ['psi4/label/dev', 'psi4']},
 		]
 
 

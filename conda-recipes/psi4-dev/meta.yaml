@@ -39,6 +39,7 @@ outputs:
               - {{ compiler('c') }}
               - {{ compiler('cxx') }}
               - {{ compiler('fortran') }}
+              - llvm-openmp                    # [osx]
               - mkl-devel {{ mkl }}*
               - {{ pin_compatible('pybind11', max_pin='x.x.x') }}
               - {{ pin_compatible('python', max_pin='x.x') }}
@@ -47,9 +48,6 @@ outputs:
               - networkx
               - numpy
               - pytest
-              # dev tools
-              # - docutils 0.12*
-              # - sphinx >=1.5
       files:
           - bin/psi4-path-advisor
           - share/cmake/psi4
