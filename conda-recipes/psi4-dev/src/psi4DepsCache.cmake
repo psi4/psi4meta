@@ -18,6 +18,9 @@ set(PYTHON_INCLUDE_DIR     "/opt/anaconda1anaconda2anaconda3/include/@PY_ABBR@" 
 
 set(pybind11_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/pybind11" CACHE PATH "")
 
+set(ENABLE_ambit           ON CACHE BOOL "")
+set(ambit_DIR              "/opt/anaconda1anaconda2anaconda3/share/cmake/ambit" CACHE PATH "")
+
 set(ENABLE_CheMPS2         ON CACHE BOOL "")
 set(CheMPS2_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/CheMPS2" CACHE PATH "")
 

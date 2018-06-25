@@ -24,6 +24,7 @@ outputs:
               - pybind11 {{ pybind11 }}
               - python {{ python }}
               # qc: libs here in "host:" imposes them to "run:" with proper version ranges
+              - ambit {{ ambit }}
               - chemps2 {{ chemps2 }}
               - dkh {{ dkh }}
               - libefp {{ libefp }}
@@ -75,6 +76,7 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON
@@ -111,6 +113,7 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON

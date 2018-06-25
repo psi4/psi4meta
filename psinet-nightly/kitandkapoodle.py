@@ -327,17 +327,18 @@ if host == "psinet":
 
 # starred (***) are nightly build
 
-# MISC: order mostly doesn't matter
-# ---------------------------------
+# L/MISC: order mostly doesn't matter
+# -----------------------------------
 #{'recipe': 'deepdiff', 'build_channels': ['conda-forge']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
 #{'recipe': 'pytest-shutil', 'build_channels': ['defaults', 'conda-forge']},  # chnl: setuptools-git  # neededby: v2rdm  # Note: recipe fine but useless as c-b & pytest-shutil don't mix
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
 #{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
 #{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/agg']},  # chnl: openfermion
 
-# LT: bump in recipe any upstream versions Psi means to support and rebuild
-#     upon any failure, adjust source of Psi & upstream
-# -------------------------------------------------------------------------
+# L/LT: bump in recipe any upstream versions Psi means to support and rebuild
+#       upon any failure, adjust source of Psi & upstream
+# ---------------------------------------------------------------------------
+#{'recipe': 'ambit'},
 #{'recipe': 'chemps2-multiout'},
 #{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: deepdiff, pb11
 #{'recipe': 'gau2grid-multiout'},
@@ -346,21 +347,21 @@ if host == "psinet":
 #{'recipe': 'pcmsolver'},
 #{'recipe': 'simint'},
 
-# CBCY: edit "ltrtver" & "<addon>" if anything in LT changed
-# ----------------------------------------------------------
+# L/CBCY: edit "ltrtver" & "<addon>" if anything in LT changed
+# ------------------------------------------------------------
 
-# PSI4: build Psi4 w/o any RT deps or tests (***)
-# -----------------------------------------------
+# L/PSI4: build Psi4 w/o any RT deps or tests (***)
+# -------------------------------------------------
 {'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev']},
 #{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'psi4'], 'dest_subchannel': 'nola'},  # qcdb
 
-# RT-MP: build RT metapackage w/existing downstreams and new Psi4 (***)
-#         upon any failure, step forward or back, adjusting source of downstream or Psi
+# L/RT-MP: build RT metapackage w/existing downstreams and new Psi4 (***)
+#          upon any failure, step forward or back, adjusting source of downstream or Psi
 # -------------------------------------------------------------------------------------
 {'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},
 
-# RT: if psi4-rt tests fail, build the downstream
-# -----------------------------------------------
+# L/RT: if psi4-rt tests fail, build the downstream
+# -------------------------------------------------
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
 #{'recipe': 'gpudfcc', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
@@ -368,12 +369,12 @@ if host == "psinet":
 #{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 
-# DEV: build the deps package and test `psi4-path-advisor` (***)
-# --------------------------------------------------------------
+# L/DEV: build the deps package and test `psi4-path-advisor` (***)
+# ----------------------------------------------------------------
 {'recipe': 'psi4-dev', 'build_channels': ['psi4/label/dev']},
 
-# DOCS: build the docs, feed, and doxygen targets (***)
-# -----------------------------------------------------
+# L/DOCS: build the docs, feed, and doxygen targets (***)
+# -------------------------------------------------------
 {'recipe': 'psi4-docs', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge', 'astropy'], 'cbextras': ['--prefix-length', '100']},  # chnl: codecov, sphinx* jupyter* astropy-helpers
 
 # In future when `gcov` available, coverage can be added to psi4-docs recipe

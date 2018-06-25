@@ -11,7 +11,7 @@ set(CMAKE_Fortran_COMPILER    "/opt/anaconda1anaconda2anaconda3/bin/@HOST@-gfort
 
 set(CMAKE_C_FLAGS             "-march=native" CACHE STRING "")
 set(CMAKE_CXX_FLAGS           "-march=native" CACHE STRING "")
-set(CMAKE_Fortran_FLAGS       "" CACHE STRING "")
+set(CMAKE_Fortran_FLAGS       "-march=native" CACHE STRING "")
 
 set(ENABLE_OPENMP             ON CACHE BOOL "")
 set(OpenMP_LIBRARY_DIRS       "/opt/anaconda1anaconda2anaconda3/lib" CACHE STRING "")

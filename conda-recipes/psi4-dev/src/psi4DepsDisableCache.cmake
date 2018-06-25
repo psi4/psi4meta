@@ -13,6 +13,7 @@
 #       -Bobjdir
 #
 
+set(ENABLE_ambit           OFF CACHE BOOL "" FORCE)
 set(ENABLE_CheMPS2         OFF CACHE BOOL "" FORCE)
 set(ENABLE_dkh             OFF CACHE BOOL "" FORCE)
 set(ENABLE_libefp          OFF CACHE BOOL "" FORCE)

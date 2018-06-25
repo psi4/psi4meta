@@ -74,6 +74,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_OPENMP=OFF \
+        -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
+        -DCMAKE_DISABLE_FIND_PACKAGE_libefp=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
         -DFRAGLIB_UNDERSCORE_L=OFF \

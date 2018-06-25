@@ -90,6 +90,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
+        -DENABLE_ambit=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON \
         -DENABLE_CheMPS2=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON \
         -DENABLE_dkh=ON \

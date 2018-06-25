@@ -24,7 +24,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DSIMINT_MAXAM=7 \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DBUILD_SHARED_LIBS=ON \
-        -DSIMINT_VECTOR=sse \
+        -DSIMINT_VECTOR="${SIMINT_VECTOR}" \
         -DSIMINT_STANDALONE=ON \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DENABLE_TESTS=ON

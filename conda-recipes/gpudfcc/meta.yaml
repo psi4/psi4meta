@@ -1,4 +1,4 @@
-{% set version = "0.2" %}
+{% set version = "0.3" %}
 
 package:
     name: gpu_dfcc
@@ -8,10 +8,10 @@ source:
     git_url: git@github.com:edeprince3/gpu_dfcc.git      # [linux]
     git_url: https://github.com/edeprince3/gpu_dfcc.git  # [osx]
     # git_tag: v{{ version }}
-    git_tag: master  # 1: v0.2-6-g8feb10e  # 2: v0.2-8-5f22ebd
+    git_tag: v0.3  # 16606bf
 
 build:
-    number: 2                                            # [linux]
+    number: 0                                            # [linux]
     binary_relocation: true
     skip: true                                           # [win or osx]
     ignore_run_exports:
@@ -24,7 +24,7 @@ requirements:
         - {{ compiler('cxx') }}
     host:
         - cudatoolkit {{ cudatoolkit }}*                  # not used in build but pins the CUDA version for runtime
-        - psi4                                            # for psi4OptionsTools to initiate plugin and to link against
+        - psi4                                            # initiate plugin and to link against
         - pybind11 {{ pybind11 }}
         - python {{ python }}
     run:
@@ -50,7 +50,7 @@ test:
         - grep -r theoryfs2 $PREFIX/share/cmake/ || true      # [linux]
         # Actually test
         - psi4 --test
-        - python -c "import gpu_dfcc, sys; rc = gpu_dfcc.test('long', extras=['-k', 'psiapi']); sys.exit(rc)"
+        - python -c "import gpu_dfcc, sys; sys.exit(gpu_dfcc.test('long', extras=['-k', 'psiapi']))"
         - python -c "import gpu_dfcc, psi4; print('*** gpu_dfcc {} built successfully against Psi4 {}. Buy psinet a beer.'.format(gpu_dfcc.__version__, psi4.__version__))"
 
 about:
