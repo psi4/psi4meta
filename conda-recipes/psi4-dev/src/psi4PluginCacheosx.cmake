@@ -7,11 +7,10 @@
 
 set(CMAKE_C_COMPILER          "/opt/anaconda1anaconda2anaconda3/bin/@HOST@-clang" CACHE STRING "")
 set(CMAKE_CXX_COMPILER        "/opt/anaconda1anaconda2anaconda3/bin/@HOST@-clang++" CACHE STRING "") 
-set(CMAKE_CXX_FLAGS           "-stdlib=libc++" CACHE STRING "")
 set(CMAKE_Fortran_COMPILER    "/opt/anaconda1anaconda2anaconda3/bin/@HOST@-gfortran" CACHE STRING "")
 
 set(CMAKE_C_FLAGS             "-march=native" CACHE STRING "")
-set(CMAKE_CXX_FLAGS           "-march=native" CACHE STRING "")
+set(CMAKE_CXX_FLAGS           "-march=native -stdlib=libc++" CACHE STRING "")
 set(CMAKE_Fortran_FLAGS       "-march=native" CACHE STRING "")
 
 set(ENABLE_OPENMP             ON CACHE BOOL "")
@@ -26,9 +25,6 @@ set(PYMOD_INSTALL_LIBDIR      "@PYMOD_INSTALL_LIBDIR@" CACHE STRING "")
 set(CMAKE_INSTALL_MESSAGE     "LAZY" CACHE STRING "")
 set(pybind11_DIR              "/opt/anaconda1anaconda2anaconda3/share/cmake/pybind11" CACHE PATH "")
 set(PYTHON_EXECUTABLE         "/opt/anaconda1anaconda2anaconda3/bin/python" CACHE STRING "")
-#####
 
-#elseif((DEFINED ENV{CONDA_BUILD}) AND (APPLE) AND (CMAKE_CXX_COMPILER_ID STREQUAL Clang))
 #    ALLOPTS="${CFLAGS} ${OPTS}"
 #    ALLOPTSCXX="${CXXFLAGS} ${OPTS}"
-

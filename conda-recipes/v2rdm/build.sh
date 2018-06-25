@@ -1,41 +1,27 @@
-if [ "${PSI_BUILD_ISA}" == "sse41" ]; then
-    ISA="-msse4.1"
-elif [ "${PSI_BUILD_ISA}" == "avx2" ]; then
-    ISA="-march=native"
-fi
 
 psi4 --version
 
-
 if [ "$(uname)" == "Darwin" ]; then
 
-    if [ "${PSI_BUILD_CCFAM}" == "gnu" ]; then
-        CC="${PREFIX}/bin/gcc"
-        CXX="${PREFIX}/bin/g++"
-        CXXFLAGS=""
-        LIBC_INTERJECT="-fno-openmp;-liomp5"
-    else
-        CC="clang"
-        CXX="clang++"
-        CXXFLAGS="-stdlib=libc++ "
-        LIBC_INTERJECT=""
-    fi
-
     # configure
-    ${PREFIX}/bin/cmake \
+    ${BUILD_PREFIX}/bin/cmake \
         -H${SRC_DIR} \
         -B. \
-        -DCMAKE_INSTALL_PREFIX=${SP_DIR} \
+        -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER="${CC}" \
-        -DCMAKE_CXX_COMPILER="${CXX}" \
-        -DCMAKE_CXX_FLAGS="${CXXFLAGS}${ISA}" \
-        -DCMAKE_Fortran_COMPILER="${PREFIX}/bin/gfortran" \
-        -DCMAKE_Fortran_FLAGS="${ISA}" \
-        -DLIBC_INTERJECT=${LIBC_INTERJECT} \
+        -DCMAKE_C_COMPILER="${CLANG}" \
+        -DCMAKE_CXX_COMPILER="${CLANGXX}" \
+        -DCMAKE_Fortran_COMPILER="${GFORTRAN}" \
+        -DCMAKE_C_FLAGS="${CFLAGS} ${OPTS}" \
+        -DCMAKE_CXX_FLAGS="${CXXFLAGS} ${OPTS}" \
+        -DCMAKE_Fortran_FLAGS="${FFLAGS} ${OPTS}" \
+        -DENABLE_OPENMP=ON \
+        -DOpenMP_C_FLAG="-fopenmp=libiomp5" \
+        -DOpenMP_CXX_FLAG="-fopenmp=libiomp5" \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_XHOST=OFF
 fi
+
 
 if [ "$(uname)" == "Linux" ]; then
 

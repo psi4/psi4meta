@@ -1,7 +1,7 @@
 
 if [ "$(uname)" == "Darwin" ]; then
 
-    make FC='gfortran' LINKER='gfortran'
+    make FC='${GFORTRAN}' LINKER='${GFORTRAN}'
 fi
 
 if [ "$(uname)" == "Linux" ]; then

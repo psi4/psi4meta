@@ -10,7 +10,7 @@ source:
 
 build:
     number: 8                                            # [linux]
-    number: 7                                            # [osx]
+    number: 8                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
     ignore_run_exports:
@@ -26,9 +26,11 @@ test:
     commands:
         # Verify executable
         - test -f $PREFIX/bin/dftd3
+        - $PREFIX/bin/dftd3 -h
         # Inspect linkage
         - otool -L $PREFIX/bin/dftd3                     # [osx]
-        - conda-inspect linkages dftd3 --show-files
+        - conda inspect linkages --show-files --groupby=dependency dftd3
+        - conda inspect objects -p $PREFIX $PKG_NAME     # [osx]
 
 about:
     home: http://www.thch.uni-bonn.de/tc/index.php?section=downloads&subsection=DFT-D3&lang=english

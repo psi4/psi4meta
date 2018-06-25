@@ -1,7 +1,5 @@
+#!/Users/github/toolchainconda/bin/python
 #!/home/psilocaluser/toolchainconda/bin/python
-
-#!/home/psilocaluser/bldmconda3/bin/python
-#!/Users/github/bldmconda3/bin/python
 
 #/usr/bin/env python3
 
@@ -146,7 +144,8 @@ if sys.platform.startswith('linux'):
 
 elif sys.platform == 'darwin':
     host = "macpsinet"
-    dest_subchannel = 'agg'
+    dest_subchannel = 'dev'
+    #dest_subchannel = 'agg'
     recipe_box = '/Users/github/Git/psi4meta/conda-recipes'
     cbcy = recipe_box + '/conda_build_config.yaml'
     lenv = {
@@ -211,88 +210,53 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
 
 if host == "macpsinet":
 	candidates = [
-#{'recipe': 'sphinx-psi-theme', 'python': '2.7', 'build_channels': ['conda-forge']},  # macmkl
-#{'recipe': 'sphinx-psi-theme', 'python': '3.5', 'build_channels': ['conda-forge']},  # macmkl
-#{'recipe': 'sphinx-psi-theme', 'python': '3.6', 'build_channels': ['conda-forge']},  # macmkl
-#{'recipe': 'lawrap'},  # mac
-#{'recipe': 'gcc-5-mp', 'build_channels': 'psi4'},  # mac
-#{'recipe': 'gnu-mp'},  # mac
-#{'recipe': 'chemps2', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'sse41', 'PSI_BUILD_CCFAM': 'gnu'}},  # mac
-#{'recipe': 'chemps2', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'avx2', 'PSI_BUILD_CCFAM': 'gnu'}},  # mac
-#{'recipe': 'chemps2', 'build_channels': ['psi4'], 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # macmkl
-#{'recipe': 'chemps2', 'build_channels': ['psi4'], 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # macmkl
-#{'recipe': 'pychemps2', 'python': '2.7', 'build_channels': ['psi4']},  # macmkl
-#{'recipe': 'pychemps2', 'python': '3.5', 'build_channels': ['psi4']},  # macmkl
-#{'recipe': 'pychemps2', 'python': '3.6', 'build_channels': ['psi4']},  # macmkl
-#{'recipe': 'dkh', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # mac
-#{'recipe': 'dkh', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # mac
-#{'recipe': 'libefp', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # macmkl doesn't need b_c:psi4
-#{'recipe': 'libefp', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # macmkl
-#{'recipe': 'erd', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # mac
-#{'recipe': 'erd', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # mac
-#{'recipe': 'gdma', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # mac
-#{'recipe': 'gdma', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # mac
-#{'recipe': 'am7-mp'},  # mac
-#{'recipe': 'am8-mp'},  # mac
-#{'recipe': 'libint'},  # toggle recipes for AM feature
-#{'recipe': 'libint', 'envvars': {'MAX_AM_ERI': '6', 'PSI_BUILD_ISA': 'sse41'}},
-#{'recipe': 'pcmsolver', 'python': '2.7', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # mac doesn't need b_c:psi4
-#{'recipe': 'pcmsolver', 'python': '2.7', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # mac
-#{'recipe': 'pcmsolver', 'python': '3.5', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # mac
-#{'recipe': 'pcmsolver', 'python': '3.5', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # mac
-#{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # mac
-#{'recipe': 'pcmsolver', 'python': '3.6', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # mac
-#{'recipe': 'simint', 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # mac
-#{'recipe': 'simint', 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # mac
-#{'recipe': 'sse41-mp'},  # mac
-#{'recipe': 'libxc', 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # mac
-#{'recipe': 'libxc', 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # mac
 
-#{'recipe': 'dftd3'},  # not yet built on mac
-#{'recipe': 'gcp'},  # not yet built on mac
-#{'recipe': 'v2rdm', 'python': 'x.x', 'build_channels': ['psi4'], 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # mac 1.1 pinned
-#{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4'], 'envvars': {'PSI_BUILD_ISA': 'sse41', 'PSI_BUILD_CCFAM': 'gnu'}},  # mac
-#{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4'], 'envvars': {'PSI_BUILD_ISA': 'avx2', 'PSI_BUILD_CCFAM': 'gnu'}},  # mac
-#{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4'], 'envvars': {'PSI_BUILD_ISA': 'sse41', 'PSI_BUILD_CCFAM': 'default'}},  # mac
-#{'recipe': 'v2rdm', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4'], 'envvars': {'PSI_BUILD_ISA': 'avx2', 'PSI_BUILD_CCFAM': 'default'}},  # mac
-#{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4'], 'envvars': {'PSI_BUILD_ISA': 'sse41', 'PSI_BUILD_CCFAM': 'default'}},  # mac
-#{'recipe': 'v2rdm', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4'], 'envvars': {'PSI_BUILD_ISA': 'avx2', 'PSI_BUILD_CCFAM': 'default'}},  # mac
-#{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4'], 'envvars': {'PSI_BUILD_ISA': 'sse41', 'PSI_BUILD_CCFAM': 'default'}},  # mac
-#{'recipe': 'v2rdm', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4'], 'envvars': {'PSI_BUILD_ISA': 'avx2', 'PSI_BUILD_CCFAM': 'default'}},  # mac
+# starred (***) are nightly build
 
-#{'recipe': 'psi4-rt', 'python': '2.7', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-rt', 'python': '3.5', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-rt', 'python': '3.6', 'build_channels': 'psi4'},
-#{'recipe': 'psi4-lt-mp', 'python': '2.7', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # macmkl
-#{'recipe': 'psi4-lt-mp', 'python': '2.7', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # macmkl
-#{'recipe': 'psi4-lt-mp', 'python': '3.5', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # macmkl
-#{'recipe': 'psi4-lt-mp', 'python': '3.5', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # macmkl
-#{'recipe': 'psi4-lt-mp', 'python': '3.6', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'sse41'}},  # macmkl
-#{'recipe': 'psi4-lt-mp', 'python': '3.6', 'build_channels': 'psi4', 'envvars': {'PSI_BUILD_ISA': 'avx2'}},  # macmkl
-#{'recipe': 'psi4-dev', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # macmkl  needs fno-openmp removed
-#{'recipe': 'psi4-dev', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # macmkl  "
-#{'recipe': 'psi4-dev', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # macmkl  "
-#{'recipe': 'p4test', 'python': '3.6'}, #, 'build_channels': ['psi4']},  # bldstr 0-4
-#{'recipe': 'p4test', 'python': '3.6' , 'build_channels': ['psi4/label/oldmac', 'psi4']},
-#{'recipe': 'p4test', 'python': '3.5' , 'build_channels': ['intel']}, #['psi4/label/oldmac', 'psi4']},  # bldstr 6, 7, 9
-#{'recipe': 'p4test', 'python': '3.5' , 'build_channels': ['intel', 'psi4']}, #['psi4/label/oldmac', 'psi4']},  # bldstr 8
-#{'recipe': 'p4test', 'python': '3.6' , 'build_channels': ['psi4', 'defaults', 'intel']}, #['psi4/label/oldmac', 'psi4']},  # bldstr 10, 11
-#{'recipe': 'p4test', 'python': '3.6' , 'envvars': {'PSI_BUILD_ISA': 'sse41'}, 'build_channels': ['psi4', 'defaults', 'intel']},  # bldstr 12
-#{'recipe': 'p4test', 'python': '3.6' , 'envvars': {'PSI_BUILD_ISA': 'sse41'}, 'build_channels': ['psi4', 'defaults', 'intel']},  # bldstr 13
+# M/MISC: order mostly doesn't matter
+# -----------------------------------
+#{'recipe': 'deepdiff', 'build_channels': ['conda-forge']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
 
-# LT: bump in recipe any upstream versions Psi means to support and rebuild
-#     upon any failure, adjust source of Psi & upstream
-# -------------------------------------------------------------------------
+# M/LT: bump in recipe any upstream versions Psi means to support and rebuild
+#       upon any failure, adjust source of Psi & upstream
+# ---------------------------------------------------------------------------
+#{'recipe': 'chemps2-multiout'},
+#{'recipe': 'dkh'},
+#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: deepdiff, pb11
+#{'recipe': 'erd'},
+#{'recipe': 'gau2grid-multiout'},
+#{'recipe': 'gdma'},
+#{'recipe': 'libint'},
+#{'recipe': 'pcmsolver'},
+#{'recipe': 'simint'},
 #{'recipe': 'libxc'},
-#{'recipe': 'gau2grid-multiout'},  # cb3
-#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # b_chnl: deepdiff, pb11
-{'recipe': 'libint'},
 
+# M/CBCY: edit "ltrtver" & "<addon>" if anything in LT changed
+# ------------------------------------------------------------
 
-# PSI4: build Psi4 w/o any RT deps or tests (***)
-# -----------------------------------------------
-#{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'psi4/label/agg']}, #, 'psi4']},
+# M/PSI4: build Psi4 w/o any RT deps or tests (***)
+# -------------------------------------------------
+{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev']},
+#{'recipe': 'psi4-nola', 'build_channels': ['psi4/label/dev', 'psi4/label/agg', 'psi4'], 'dest_subchannel': 'nola'},  # qcdb
+
+# M/RT-MP: build RT metapackage w/existing downstreams and new Psi4 (***)
+#          upon any failure, step forward or back, adjusting source of downstream or Psi
+# --------------------------------------------------------------------------------------
+{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},
+
+# M/RT: if psi4-rt tests fail, build the downstream
+# -------------------------------------------------
+#{'recipe': 'dftd3'},
+#{'recipe': 'gcp'},
+#{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
+#{'recipe': 'snsmp2', 'build_channels': ['psi4/label/agg', 'psi4']},  # chnl: psi4
+#{'recipe': 'v2rdm', 'build_channels': ['psi4/label/agg', 'psi4']},  # chnl: psi4
+
+# M/DEV: build the deps package and test `psi4-path-advisor` (***)
+# ----------------------------------------------------------------
+{'recipe': 'psi4-dev', 'build_channels': ['psi4/label/dev', 'psi4']},
 		]
+
 
 if host == "psinet":
     candidates = [

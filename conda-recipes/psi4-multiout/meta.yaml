@@ -21,6 +21,8 @@ requirements:
         - cmake >=3.3
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
+        - {{ compiler('fortran') }}      # [osx]
+        - llvm-openmp                    # [osx]
     host:
         - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
         - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
@@ -55,6 +57,8 @@ outputs:
               - cmake >=3.3
               - {{ compiler('c') }}
               - {{ compiler('cxx') }}
+              - {{ compiler('fortran') }}      # [osx]
+              - llvm-openmp                    # [osx]
           host:
               - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
               - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
@@ -123,6 +127,7 @@ outputs:
             Psi4 is an open-source suite of ab initio quantum chemistry programs designed for efficient, high-accuracy simulations of a variety of molecular properties. We can routinely perform computations with more than 2500 basis functions running serially or on multi-core machines.
 
             With computationally demanding portions written in C++, Pybind11 exports many of the C++ classes into Python, and a flexible Python driver, Psi4 strives to be friendly to both users and developers.
+
 
 # NOTES
 # -----

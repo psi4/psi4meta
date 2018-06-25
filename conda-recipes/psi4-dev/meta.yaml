@@ -40,6 +40,7 @@ outputs:
               - {{ compiler('c') }}
               - {{ compiler('cxx') }}
               - {{ compiler('fortran') }}
+              - llvm-openmp                    # [osx]
               - mkl-devel {{ mkl }}*
               - {{ pin_compatible('pybind11', max_pin='x.x.x') }}
               - {{ pin_compatible('python', max_pin='x.x') }}
@@ -48,17 +49,18 @@ outputs:
               - networkx
               - numpy
               - pytest
-              # dev tools
-              # - docutils 0.12*
-              # - sphinx >=1.5
       files:
           - bin/psi4-path-advisor
           - share/cmake/psi4
       test:
           commands:
               - PFX="usr/local/psi4"
-              - NTH=8  # [linux]
-              - NTH=2  # [osx]
+              - PASSFAIL="--passfail"                                                    # [linux]
+              - PASSFAIL=""                                                              # [osx]  # Mac threading occasionally bizarre
+              - CONDA_CPLR=gcc                                                           # [linux]
+              - CONDA_CPLR=clang                                                         # [osx]
+              - NTH=8                                                                    # [linux]
+              - NTH=2                                                                    # [osx]
               # Verify existence and execution
               - test -f $PREFIX/bin/psi4-path-advisor
               - test -f $PREFIX/share/cmake/psi4/psi4DepsCache.cmake
@@ -66,12 +68,12 @@ outputs:
               - conda list
               - git clone https://github.com/psi4/psi4.git
 
-              # Part I: GNU
-              - printf "\n\n  <<<  I.A psi4-dev@conda --> GCC Psi4  >>>\n\n\n"
+              # Part I: GNU/Clang
+              - printf "\n\n  <<<  I.A psi4-dev@conda --> $CONDA_CPLR Psi4  >>>\n\n\n"
               - cd psi4
-              - PPAOUT="$(psi4-path-advisor --gcc)"
+              - PPAOUT="$(psi4-path-advisor --${CONDA_CPLR})"
               - >
-                  ${PPAOUT}-gcc
+                  ${PPAOUT}-${CONDA_CPLR}
                   -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON
@@ -87,55 +89,56 @@ outputs:
                   #-DENABLE_PLUGIN_TESTING=ON
               # * build psi4 and test its threading
               # * evade long prefix
-              - cd objdir-gcc && make -j${CPU_COUNT}                                    # [py36]
-              - sed -r -i.bak 's;^(.!/).*;\1usr/bin/env python;' stage/$PFX/bin/psi4    # [py36]
+              - cd objdir-${CONDA_CPLR} && make -j${CPU_COUNT}                           # [py36]
+              - sed -r -i     's;^(.!/).*;\1usr/bin/env python;' stage/$PFX/bin/psi4     # [py36 and linux]
+              - sed -E -i.bak 's;^(.!/).*;\1usr/bin/env python;' stage/$PFX/bin/psi4     # [py36 and osx]
               - PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd  # [py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --psiapi -n${NTH}  # [py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --psithon -n${NTH}  # [py36]
+              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n${NTH}  # [py36]
+              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${NTH}  # [py36]
               # * build an OpenMP plugin and test its threading
-              - printf "\n\n  <<<  I.B psi4-dev@conda + GCC Psi4 --> GCC plugin  >>>\n\n\n"  # [py36]
-              - PLUG="plugdfmp2"                                                        # [py36]
-              - stage/$PFX/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2         # [py36]
-              - cd $PLUG && `../stage/$PFX/bin/psi4 --plugin-compile` && make && cd ..  # [py36]
+              - printf "\n\n  <<<  I.B psi4-dev@conda + $CONDA_CPLR Psi4 --> $CONDA_CPLR plugin  >>>\n\n\n"  # [py36]
+              - PLUG="plugdfmp2"                                                         # [py36]
+              - stage/$PFX/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2          # [py36]
+              - cd $PLUG && `../stage/$PFX/bin/psi4 --plugin-compile` && make && cd ..   # [py36]
               - PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG.so"  # [py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [py36]
-              - cd ..                                                                   # [py36]
+              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py ${PASSFAIL} --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [py36]
+              - cd ..                                                                    # [py36]
               - cd ..
 
               # Part II: Intel
-              - printf "\n\n  <<<  II.A psi4-dev@conda --> Intel Psi4  >>>\n\n\n"
-              - cd psi4
-              - PPAOUT="$(psi4-path-advisor --intel)"
-              - source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
-              - >
-                  ${PPAOUT}-intel
-                  -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_simint=ON
+              - printf "\n\n  <<<  II.A psi4-dev@conda --> Intel Psi4  >>>\n\n\n"        # [linux]
+              - cd psi4                                                                  # [linux]
+              - PPAOUT="$(psi4-path-advisor --intel)"                                    # [linux]
+              - source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64  # [linux]
+              - >                                                                        # [linux]
+                  ${PPAOUT}-intel                                                        # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON                                # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON                                  # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON                                # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON                                   # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON                                   # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON                                 # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON                                     # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON                                  # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON                                    # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON                               # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_simint=ON                                  # [linux]
                   #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON
               # * build psi4 and test its threading
               # * evade long prefix
-              - cd objdir-intel && make -j${CPU_COUNT}                                  # [py36]
-              - sed -r -i.bak 's;^(.!/).*;\1usr/bin/env python;' stage/$PFX/bin/psi4    # [py36]
-              - PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd  # [py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail -n${NTH}  # [py36]
+              - cd objdir-intel && make -j${CPU_COUNT}                                   # [linux and py36]
+              - sed -r -i 's;^(.!/).*;\1usr/bin/env python;' stage/$PFX/bin/psi4         # [linux and py36]
+              - PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd  # [linux and py36]
+              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail -n${NTH}  # [linux and py36]
               # * build an OpenMP plugin and test its threading
-              - printf "\n\n  <<<  II.B psi4-dev@conda + Intel Psi4 --> Intel plugin  >>>\n\n\n"  # [py36]
-              - PLUG="plugdfmp2"                                                        # [py36]
-              - stage/$PFX/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2         # [py36]
-              - cd $PLUG && `../stage/$PFX/bin/psi4 --plugin-compile` && make && cd ..  # [py36]
-              - PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG.so"  # [py36]
-              #- PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [py36]
-              - cd ..                                                                   # [py36]
+              - printf "\n\n  <<<  II.B psi4-dev@conda + Intel Psi4 --> Intel plugin  >>>\n\n\n"  # [linux and py36]
+              - PLUG="plugdfmp2"                                                         # [linux and py36]
+              - stage/$PFX/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2          # [linux and py36]
+              - cd $PLUG && `../stage/$PFX/bin/psi4 --plugin-compile` && make && cd ..   # [linux and py36]
+              - PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG.so"  # [linux and py36]
+              #- PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [linux and py36]
+              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [linux and py36]
+              - cd ..                                                                    # [linux and py36]
               - cd ..
 
               # Part III: Conda distribution
@@ -144,14 +147,13 @@ outputs:
               - mkdir package && cd package
               - conda install psi4 -c psi4/label/dev -y
               - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --ldd
-              - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --psiapi -n${NTH}
-              - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --psithon -n${NTH}
-              - printf "\n\n  <<<  III.B psi4-dev@conda + psi4@conda --> GCC plugin  >>>\n\n\n"
+              - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n${NTH}
+              - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${NTH}
+              - printf "\n\n  <<<  III.B psi4-dev@conda + psi4@conda --> $CONDA_CPLR plugin  >>>\n\n\n"
               - PLUG="plugdfmp2"
               - psi4 --plugin-name $PLUG --plugin-template dfmp2
               - cd $PLUG && `psi4 --plugin-compile` && make && cd ..
-              #- PYTHONPATH=. python $PREFIX/share/psi4/scripts/test_threading.py --passfail --plugin-dfmp2 --module="$PLUG" -n${NTH}
-              - PYTHONPATH=. python $PREFIX/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}
+              - PYTHONPATH=. python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL}--plugin-dfmp2 --module="$PLUG" -n${NTH}
 
       about:
           home: http://psicode.org

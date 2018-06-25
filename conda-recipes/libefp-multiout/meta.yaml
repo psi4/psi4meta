@@ -33,8 +33,6 @@ outputs:
     - name: libefp
       version: {{ libefp_version }}
       build:
-          requires_features:
-              - blas: {{ blas_impl }}
           run_exports:
               - {{ pin_subpackage('libefp', max_pin='x.x.x') }}
           ignore_run_exports:
@@ -46,9 +44,6 @@ outputs:
           host:
               - mkl-devel {{ mkl }}                           # [blas_impl == 'mkl']
               - openblas-devel {{ openblas }}                 # [blas_impl == 'openblas']
-#          run:
-              # run_exports not present in osx for mkl-devel --> mkl
-#              - mkl {{ mkl }}*
       files:
           - include/efp.h
           - include/libefp/*
@@ -68,8 +63,8 @@ outputs:
               - ldd -r -u $PREFIX/lib/libefp.so && return 0  # [linux]
               - ldd -v $PREFIX/lib/libefp.so                 # [linux]
               - otool -L $PREFIX/lib/libefp.dylib            # [osx]
-              - conda-inspect linkages libefp --show-files
-              - conda inspect objects -p $PREFIX libefp      # [osx]
+              - conda inspect linkages --show-files --groupby=dependency libefp
+              - conda inspect objects -p $PREFIX $PKG_NAME   # [osx]
       about:
           home: https://github.com/ilyak/libefp
           dev_url: https://github.com/ilyak/libefp/blob/master/README.md
@@ -92,10 +87,11 @@ outputs:
           build:
               - {{ compiler('cxx') }}
           host:
+              - {{ pin_subpackage('libefp', exact=True) }}
               - pybind11 {{ pybind11 }}
               - python {{ python }}
           run:
-              - {{ pin_subpackage('libefp', max_pin='x.x.x') }}
+              - {{ pin_subpackage('libefp', exact=True) }}
               - {{ pin_compatible('python', max_pin='x.x') }}
       files:
           - lib/python*/site-packages/pylibefp/*
@@ -116,8 +112,8 @@ outputs:
               - ldd -r -u $PLPSP/pylibefp/core.so && return 0  # [linux]
               - ldd -v $PLPSP/pylibefp/core.so                 # [linux]
               - otool -L $PLPSP/pylibefp/core.so               # [osx]
-              - conda-inspect linkages pylibefp --show-files
-              - conda inspect objects -p $PREFIX pylibefp      # [osx]
+              - conda inspect linkages --show-files --groupby=dependency pylibefp libefp
+              - conda inspect objects -p $PREFIX $PKG_NAME     # [osx]
               # Actually test
               - conda list
               - python -c "import pylibefp; pylibefp.test(); print('*** PylibEFP {} built successfully. Buy psinet a beer.'.format(pylibefp.__version__))"

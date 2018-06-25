@@ -19,7 +19,8 @@ requirements:
     build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        - cmake >=3.1
+        - cmake >=3.11
+        - llvm-openmp                                   # [osx]
     host:
         - cython
         - hdf5 {{ hdf5 }}
@@ -42,7 +43,8 @@ outputs:
           build:
               - {{ compiler('c') }}
               - {{ compiler('cxx') }}
-              - cmake >=3.1
+              - cmake >=3.11
+              - llvm-openmp                                   # [osx]
           host:
               - hdf5 {{ hdf5 }}
               - mkl-devel {{ mkl }}                           # [blas_impl == 'mkl']
@@ -64,7 +66,8 @@ outputs:
               - ldd -r -u $PREFIX/lib/libchemps2.so && return 0  # [linux]
               - ldd -v $PREFIX/lib/libchemps2.so                 # [linux]
               - otool -L $PREFIX/lib/libchemps2.dylib            # [osx]
-              - conda-inspect linkages chemps2 --show-files
+              - conda inspect linkages --show-files --groupby=dependency chemps2
+              - conda inspect objects -p $PREFIX $PKG_NAME       # [osx]
       about:
           home: http://sebwouters.github.io/CheMPS2
           dev_url: http://github.com/SebWouters/CheMPS2
@@ -108,17 +111,17 @@ outputs:
               - PyCheMPS2/tests/
               - tests/matrixelements/
           commands:
-              - export PLPSP=$PREFIX/lib{{ PYMOD_INSTALL_LIBDIR }}
               # Verify library
-              - test -f ${PLPSP}/PyCheMPS2.so                               # [py27]
-              - test -f ${PLPSP}/PyCheMPS2.cpython-35m-x86_64-linux-gnu.so  # [py35 and linux]
-              - test -f ${PLPSP}/PyCheMPS2.cpython-35m-darwin.so            # [py35 and osx]
-              - test -f ${PLPSP}/PyCheMPS2.cpython-36m-x86_64-linux-gnu.so  # [py36 and linux]
-              - test -f ${PLPSP}/PyCheMPS2.cpython-36m-darwin.so            # [py36 and osx]
+              - test -f ${SP_DIR}/PyCheMPS2.so                               # [py27]
+              - test -f ${SP_DIR}/PyCheMPS2.cpython-35m-x86_64-linux-gnu.so  # [py35 and linux]
+              - test -f ${SP_DIR}/PyCheMPS2.cpython-35m-darwin.so            # [py35 and osx]
+              - test -f ${SP_DIR}/PyCheMPS2.cpython-36m-x86_64-linux-gnu.so  # [py36 and linux]
+              - test -f ${SP_DIR}/PyCheMPS2.cpython-36m-darwin.so            # [py36 and osx]
               # Inspect linkage
-              - ldd -v $PLPSP/PyCheMPS2*.so                                 # [linux]
-              - otool -L $PLPSP/PyCheMPS2*.so                               # [osx]
-              - conda-inspect linkages pychemps2 --show-files
+              - ldd -v $SP_DIR/PyCheMPS2*.so                                 # [linux]
+              - otool -L $SP_DIR/PyCheMPS2*.so                               # [osx]
+              - conda inspect linkages --show-files --groupby=dependency pychemps2 chemps2
+              - conda inspect objects -p $PREFIX $PKG_NAME                  # [osx]
               # Actually test
               - cd PyCheMPS2/tests/
               - $PYTHON test1.py

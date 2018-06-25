@@ -30,7 +30,8 @@ test:
         # Inspect linkage
         - ldd -v $PREFIX/lib/libxc.so                 # [linux]
         - otool -L $PREFIX/lib/libxc.dylib            # [osx]
-        - conda-inspect linkages libxc --show-files
+        - conda inspect linkages --show-files --groupby=dependency libxc
+        - conda inspect objects -p $PREFIX $PKG_NAME                  # [osx]
 
 about:
     home: http://www.tddft.org/programs/Libxc

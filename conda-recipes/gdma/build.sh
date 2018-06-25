@@ -1,24 +1,23 @@
-if [ "${PSI_BUILD_ISA}" == "sse41" ]; then
-    ISA="-msse4.1"
-elif [ "${PSI_BUILD_ISA}" == "avx2" ]; then
-    ISA="-march=native"
-fi
-
 
 if [ "$(uname)" == "Darwin" ]; then
 
+    # for FortranCInterface
+    CMAKE_Fortran_FLAGS="${FFLAGS} -L${CONDA_BUILD_SYSROOT}/usr/lib/system/ ${OPTS}"
+
     # configure
-    ${PREFIX}/bin/cmake \
+    ${BUILD_PREFIX}/bin/cmake \
         -H${SRC_DIR} \
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER=clang \
-        -DCMAKE_C_FLAGS="${ISA}" \
-        -DCMAKE_Fortran_COMPILER="${PREFIX}/bin/gfortran" \
-        -DCMAKE_Fortran_FLAGS="${ISA}" \
+        -DCMAKE_C_COMPILER=${CLANG} \
+        -DCMAKE_Fortran_COMPILER=${GFORTRAN} \
+        -DCMAKE_C_FLAGS="${CFLAGS} ${OPTS}" \
+        -DCMAKE_Fortran_FLAGS="${CMAKE_Fortran_FLAGS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DBUILD_SHARED_LIBS=ON \
+        -DENABLE_OPENMP=ON \
+        -DOpenMP_C_FLAG="-fopenmp=libiomp5" \
         -DENABLE_XHOST=OFF
 fi
 

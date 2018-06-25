@@ -27,6 +27,7 @@ requirements:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - {{ compiler('fortran') }}
+        - llvm-openmp                                    # [osx]
     host:
         - mkl-devel {{ mkl }}
         - psi4                                            # for psi4OptionsTools to initiate plugin and to link against
