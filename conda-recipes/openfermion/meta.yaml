@@ -1,18 +1,15 @@
 {% set name = "openfermion" %}
-{% set version = "0.6a3" %}  # TODO update
+{% set version = "0.7" %}
 
 package:
     name: {{ name|lower }}
     version: {{ version }}
 
 source:
-    #path: ../../../OpenFermion
-    git_url: git@github.com:loriab/OpenFermion.git              # [linux]
-    #git_url: git@github.com:quantumlib/OpenFermion.git              # [linux]
-    #git_url: https://github.com/quantumlib/OpenFermion.git          # [osx]
-    #git_tag: v{{ version }}
-    #git_tag: v0.6
-    git_tag: testtweaks #master
+    git_url: git@github.com:quantumlib/OpenFermion.git              # [linux]
+    git_url: https://github.com/quantumlib/OpenFermion.git          # [osx]
+    # git_tag: v{{ version }}
+    git_tag: 7734093  # v0.7 + 1 (installed testing)
 
 build:
     number: 0                                               # [linux]

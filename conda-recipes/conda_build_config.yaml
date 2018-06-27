@@ -38,7 +38,7 @@ zlib:
 
 ltrtver:
     # bump whenever a dep version bumps. beyond the "|" aren't in ltrtver.
-    # bump whenever a dep version bumps: ambit  pb11   chemps2  dftd3  dkh  libefp erd   g2g   gcp   gdma  gpu   libint pcm      resp  sim  sns    v2rdm libxc | pylibefp hdf5
+    # bump whenever a dep version bumps: ambit  pb11   chemps2  dftd3  dkh  libefp erd   g2g   gcp   gdma  gpu   libint pcm      resp  sim  sns    v2rdm libxc | pylibefp hdf5   ofermi ofermip4
     # - "1.2a1.dev6"  # (   Apr 2018)           2.2.3  1.8.7b1  3.2.0  1.2  1.5b2        1.0.1 2.0.2 2.2.6       1.2.1  1.2.0rc1            1.0.1  0.7a1 4.0.1            1.10.1
     # - "1.2a1.dev7"  # ( 1 May 2018)           ...    1.8.7    ...    ...  ...          ...   ...   ...         ...    1.2.0rc2            ...    ...   ...              ...
     # - "1.2a1.dev8"  # ( 1 May 2018)           ...    ...      ...    ...  ...          ...   ...   ...         ...    1.2.1               ...    ...   4.0.2            ...
@@ -47,7 +47,7 @@ ltrtver:
     # - "1.2a1.dev11" # ( 8 Jun 2018)           ...    ...      ...    ...  ...          1.1.0 ...   ...         ...    ...            0.7  ...    0.7a2 ...   | ...      ...
     # - "1.2a2.dev12" # (12 Jun 2018)           ...    ...      ...    ...  ...          ...   ...   ...         ...    ...      0.7a3 ...  ...    0.7   ...   | ...      ...
     # - "1.2a2.dev13" # (17 Jun 2018)           ...    ...      ...    ...  ...          ...   ...   ...   0.2   ...    ...      0.7   ...  ...    ...   ...   | ...      ...
-    - "1.2a2.dev14"   # (20 Jun 2018)    0.2    ...    ...      ...    ...  ...          ...   ...   ...   0.3   ...    ...      ...   ...  ...    0.8   ...   | 0.4.dev7 1.10.2
+    - "1.2a2.dev14"   # (25 Jun 2018)    0.2    ...    ...      ...    ...  ...          ...   ...   ...   0.3   ...    ...      ...   ...  ...    0.8   ...   | 0.4.dev7 1.10.2 0.7    0.3
 MAX_AM_ERI:
     - '6'
 SIMINT_VECTOR:
@@ -87,7 +87,9 @@ gpu_dfcc:
 libint:
     - 1.2.1
 openfermion:
-    - 0.6a1
+    - 0.7
+openfermionpsi4:
+    - 0.3
 pcmsolver:
     - 1.2.1
 pylibefp:
