@@ -284,7 +284,6 @@ if host == "psinet":
 #{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/nomkl', 'psi4/label/dev', 'psi4'], 'dest_subchannel': 'nomkl'},
 
 # Unplaced
-#{'recipe': 'dkh'},  # cb3
 #{'recipe': 'libxc'},  # cb3
 #{'recipe': 'erd'},
 
@@ -304,6 +303,7 @@ if host == "psinet":
 # ---------------------------------------------------------------------------
 #{'recipe': 'ambit'},
 #{'recipe': 'chemps2-multiout'},
+#{'recipe': 'dkh'},
 #{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: deepdiff, pb11
 #{'recipe': 'gau2grid-multiout'},
 #{'recipe': 'gdma'},

@@ -123,7 +123,6 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON                                    # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON                               # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_simint=ON                                  # [linux]
-                  #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON
               # * build psi4 and test its threading
               # * evade long prefix
               - cd objdir-intel && make -j${CPU_COUNT}                                   # [linux and py36]
@@ -136,8 +135,7 @@ outputs:
               - stage/$PFX/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2          # [linux and py36]
               - cd $PLUG && `../stage/$PFX/bin/psi4 --plugin-compile` && make && cd ..   # [linux and py36]
               - PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG.so"  # [linux and py36]
-              #- PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [linux and py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [linux and py36]
+              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [linux and py36]
               - cd ..                                                                    # [linux and py36]
               - cd ..
 
@@ -153,7 +151,7 @@ outputs:
               - PLUG="plugdfmp2"
               - psi4 --plugin-name $PLUG --plugin-template dfmp2
               - cd $PLUG && `psi4 --plugin-compile` && make && cd ..
-              - PYTHONPATH=. python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL}--plugin-dfmp2 --module="$PLUG" -n${NTH}
+              - PYTHONPATH=. python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --plugin-dfmp2 --module="$PLUG" -n${NTH}
 
       about:
           home: http://psicode.org

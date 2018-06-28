@@ -87,9 +87,9 @@ if [ "$(uname)" == "Linux" ]; then
 
     # link against conda MKL & GCC
     if [ "$blas_impl" = "mkl" ]; then
-        LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt.so"
+        LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt${SHLIB_EXT}"
     else
-        LAPACK_INTERJECT="${PREFIX}/lib/libopenblas.so"
+        LAPACK_INTERJECT="${PREFIX}/lib/libopenblas${SHLIB_EXT}"
     fi
     ALLOPTS="-gnu-prefix=${HOST}- ${OPTS}"
 
@@ -109,7 +109,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.so" \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}${SHLIB_EXT}" \
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON \
@@ -141,7 +141,6 @@ if [ "$(uname)" == "Linux" ]; then
 
         #-DENABLE_erd=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
-        #-DCMAKE_INSIST_FIND_PACKAGE_ambit=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_GTFock=ON \
 
     # build
