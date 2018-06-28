@@ -28,6 +28,7 @@ requirements:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake >=3.1
+        - llvm-openmp                                   # [osx]
     host:
         - hdf5 {{ hdf5 }}
         - mkl-devel {{ mkl }}                           # [blas_impl == 'mkl']

@@ -94,14 +94,14 @@ outputs:
               - sed -E -i.bak 's;^(.!/).*;\1usr/bin/env python;' stage/$PFX/bin/psi4     # [py36 and osx]
               - PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd  # [py36]
               - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n${NTH}  # [py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${NTH}  # [py36]
+              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${NTH}  # [py36 and not osx]
               # * build an OpenMP plugin and test its threading
               - printf "\n\n  <<<  I.B psi4-dev@conda + $CONDA_CPLR Psi4 --> $CONDA_CPLR plugin  >>>\n\n\n"  # [py36]
               - PLUG="plugdfmp2"                                                         # [py36]
               - stage/$PFX/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2          # [py36]
               - cd $PLUG && `../stage/$PFX/bin/psi4 --plugin-compile` && make && cd ..   # [py36]
               - PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG.so"  # [py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py ${PASSFAIL} --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [py36]
+              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py ${PASSFAIL} --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [py36 and not osx]
               - cd ..                                                                    # [py36]
               - cd ..
 
@@ -136,10 +136,9 @@ outputs:
               - stage/$PFX/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2          # [linux and py36]
               - cd $PLUG && `../stage/$PFX/bin/psi4 --plugin-compile` && make && cd ..   # [linux and py36]
               - PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG.so"  # [linux and py36]
-              #- PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [linux and py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [linux and py36]
+              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [linux and py36]
               - cd ..                                                                    # [linux and py36]
-              - cd ..
+              - cd ..                                                                    # [linux]
 
               # Part III: Conda distribution
               # Actually test OpenMP threading - Psi4 itself, then a plugin
@@ -148,12 +147,12 @@ outputs:
               - conda install psi4 -c psi4/label/dev -y
               - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --ldd
               - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n${NTH}
-              - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${NTH}
+              - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${NTH}  # [not osx]
               - printf "\n\n  <<<  III.B psi4-dev@conda + psi4@conda --> $CONDA_CPLR plugin  >>>\n\n\n"
               - PLUG="plugdfmp2"
               - psi4 --plugin-name $PLUG --plugin-template dfmp2
               - cd $PLUG && `psi4 --plugin-compile` && make && cd ..
-              - PYTHONPATH=. python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL}--plugin-dfmp2 --module="$PLUG" -n${NTH}
+              - PYTHONPATH=. python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [not osx]
 
       about:
           home: http://psicode.org

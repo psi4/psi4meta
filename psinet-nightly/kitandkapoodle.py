@@ -220,6 +220,7 @@ if host == "macpsinet":
 # M/LT: bump in recipe any upstream versions Psi means to support and rebuild
 #       upon any failure, adjust source of Psi & upstream
 # ---------------------------------------------------------------------------
+#{'recipe': 'ambit'},
 #{'recipe': 'chemps2-multiout'},
 #{'recipe': 'dkh'},
 #{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: deepdiff, pb11
