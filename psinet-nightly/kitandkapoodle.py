@@ -261,32 +261,18 @@ if host == "macpsinet":
 
 if host == "psinet":
     candidates = [
-#{'recipe': 'ci-psi4', 'python': '2.7'},  # linux
-#{'recipe': 'ci-psi4', 'python': '3.5'},  # linux
-#{'recipe': 'ci-psi4', 'python': '3.6'},  # linux
-#{'recipe': 'ci-psi4-lt', 'python': '2.7'},  # linux
-#{'recipe': 'ci-psi4-lt', 'python': '3.5'},  # linux
-#{'recipe': 'ci-psi4-lt', 'python': '3.6'},  # linux
 
 #{'recipe': 'lawrap'},  # linux
-#{'recipe': 'erd', 'build_channels': 'psi4'},  # linux
 #{'recipe': 'am7-mp'},
 #{'recipe': 'am8-mp'},
 #{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '7'}},  # linux
 #{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '8'}},  # linux
-#{'recipe': 'psi4-lt-mp', 'python': '2.7', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-#{'recipe': 'psi4-lt-mp', 'python': '3.5', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-#{'recipe': 'psi4-lt-mp', 'python': '3.6', 'build_channels': ['psi4/label/dev', 'psi4']},  # linuxmkl
-
+#{'recipe': 'erd'},
 
 # CBCY openblas --- dest_subchannel = 'nomkl'
 #{'recipe': 'chemps2-multiout', 'dest_subchannel': 'nomkl'},
 #{'recipe': 'libefp-multiout', 'build_channels': ['psi4'], 'dest_subchannel': 'nomkl'},  # deepdiff, pb11 from psi4
 #{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/nomkl', 'psi4/label/dev', 'psi4'], 'dest_subchannel': 'nomkl'},
-
-# Unplaced
-#{'recipe': 'libxc'},  # cb3
-#{'recipe': 'erd'},
 
 
 # starred (***) are nightly build
@@ -311,6 +297,7 @@ if host == "psinet":
 #{'recipe': 'libint'},
 #{'recipe': 'pcmsolver'},
 #{'recipe': 'simint'},
+#{'recipe': 'libxc'},
 
 # L/CBCY: edit "ltrtver" & "<addon>" if anything in LT changed
 # ------------------------------------------------------------

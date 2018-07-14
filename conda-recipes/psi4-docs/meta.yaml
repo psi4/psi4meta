@@ -7,7 +7,8 @@ package:
 source:
     git_url: git@github.com:psi4/psi4.git      # [linux]
     git_url: https://github.com/psi4/psi4.git  # [osx]
-    git_tag: master
+    git_tag: v1.2  # explicit tag when you don't want tag.dev1
+    #git_tag: master
 
 build:
     number: 0
