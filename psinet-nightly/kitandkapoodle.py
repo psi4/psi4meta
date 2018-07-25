@@ -211,6 +211,9 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
 if host == "macpsinet":
 	candidates = [
 
+#{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
+#{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/agg']},  # chnl: openfermion
+
 # starred (***) are nightly build
 
 # M/MISC: order mostly doesn't matter
@@ -250,8 +253,8 @@ if host == "macpsinet":
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
 #{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
-#{'recipe': 'snsmp2', 'build_channels': ['psi4/label/agg', 'psi4']},  # chnl: psi4
-#{'recipe': 'v2rdm', 'build_channels': ['psi4/label/agg', 'psi4']},  # chnl: psi4
+#{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev', 'psi4']},  # chnl: psi4
+#{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev', 'psi4']},  # chnl: psi4
 
 # M/DEV: build the deps package and test `psi4-path-advisor` (***)
 # ----------------------------------------------------------------
