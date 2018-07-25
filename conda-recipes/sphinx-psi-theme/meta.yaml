@@ -22,7 +22,7 @@ requirements:
         - setuptools
     run:
         - cloud_sptheme
-        - docutils 0.12*
+        - docutils #0.12*
         - {{ pin_compatible('python', max_pin='x.x') }}
         - sphinx >=1.5
 

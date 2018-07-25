@@ -28,9 +28,10 @@ openblas:
 pybind11:
     - 2.2.3
 python:
+    - 3.7
     - 3.6
-    - 2.7
-    - 3.5
+    # - 2.7
+    # - 3.5
 zlib:
     - 1.2
 
@@ -59,13 +60,15 @@ OPTS:
     - '-msse4.1'                                                        # [osx]
     - '-msse2 -axCORE-AVX512,CORE-AVX2,AVX -Wl,--as-needed -static-intel -wd10237'  # [linux]
 PY_ABBR:
+    - python3.7m
     - python3.6m
-    - python2.7
-    - python3.5m
+    # - python2.7
+    # - python3.5m
 PYMOD_INSTALL_LIBDIR:
+    - '/python3.7/site-packages'
     - '/python3.6/site-packages'
-    - '/python2.7/site-packages'
-    - '/python3.5/site-packages'
+    # - '/python2.7/site-packages'
+    # - '/python3.5/site-packages'
 ambit:
     - 0.2
 chemps2:

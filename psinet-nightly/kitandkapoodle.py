@@ -279,7 +279,9 @@ if host == "psinet":
 
 # L/MISC: order mostly doesn't matter
 # -----------------------------------
-#{'recipe': 'deepdiff', 'build_channels': ['conda-forge']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
+#{'recipe': 'jsonpickle'},  # neededby: deepdiff, yesarch for constructor (otherwise, c-f)
+#{'recipe': 'deepdiff', 'build_channels': ['psi4']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
+#{'recipe': 'pybind11'},
 #{'recipe': 'pytest-shutil', 'build_channels': ['defaults', 'conda-forge']},  # chnl: setuptools-git  # neededby: v2rdm  # Note: recipe fine but useless as c-b & pytest-shutil don't mix
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
 #{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
