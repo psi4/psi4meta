@@ -218,7 +218,10 @@ if host == "macpsinet":
 
 # M/MISC: order mostly doesn't matter
 # -----------------------------------
-#{'recipe': 'deepdiff', 'build_channels': ['conda-forge']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
+#{'recipe': 'jsonpickle'},  # neededby: deepdiff, yesarch for constructor (otherwise, c-f)
+#{'recipe': 'deepdiff', 'build_channels': ['psi4']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
+#{'recipe': 'pybind11'},
+#{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
 
 # M/LT: bump in recipe any upstream versions Psi means to support and rebuild
 #       upon any failure, adjust source of Psi & upstream
