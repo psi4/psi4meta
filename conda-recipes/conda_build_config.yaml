@@ -98,7 +98,7 @@ openfermionpsi4:
 pcmsolver:
     - 1.2.1
 pylibefp:
-    - 0.4.dev7
+    - 0.4
 resp:
     - 0.7
 simint:

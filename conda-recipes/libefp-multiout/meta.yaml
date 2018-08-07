@@ -10,7 +10,8 @@ source:
     git_url: git@github.com:loriab/pylibefp.git         # [linux]
     git_url: https://github.com/loriab/pylibefp.git     # [osx]
     # git_tag: v{{ version }}
-    git_tag: 07ec7e9  # 1: 0.4.dev6 = v0.3-7-g07ec7e9  0: e84aa39 = 0.3.dev2
+    # git_tag: 07ec7e9  # 1: 0.4.dev6 = v0.3-7-g07ec7e9  0: e84aa39 = 0.3.dev2
+    git_tag: v0.4
 
 build:
     number: 1                                            # [linux]
@@ -28,6 +29,11 @@ requirements:
         - openblas-devel {{ openblas }}                 # [blas_impl == 'openblas']
         - pybind11 {{ pybind11 }}  # trouble at dep metadata time
         - python {{ python }}
+        # docs
+        - python-graphviz                               # [linux and py36]
+        - sphinx >=1.5                                  # [linux and py36]
+        - sphinx-automodapi                             # [linux and py36]
+        - sphinx-psi-theme                              # [linux and py36]
 
 outputs:
     - name: libefp
@@ -128,6 +134,23 @@ outputs:
           license_family: BSD
           summary: "L. A. Burns's python bindings to libefp"
           # description: >
+
+    - name: pylibefp-docs
+      build:
+           number: 0
+           skip: true  # [win or osx or not py36]
+      requirements:
+          host:
+              - python {{ python }}
+              - python-graphviz
+              - sphinx >=1.5
+              - sphinx-automodapi
+              - sphinx-psi-theme
+      files:
+          - share/doc/pylibefp
+      test:
+          commands:
+              - test -f $PREFIX/share/doc/pylibefp/html/index.html
 
 # NOTES
 # -----

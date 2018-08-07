@@ -43,8 +43,6 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON \
         -DENABLE_dkh=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON \
-        -DENABLE_libefp=ON \
-        -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON \
         -DENABLE_gdma=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
         -DENABLE_PCMSolver=ON \
@@ -122,8 +120,6 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON \
         -DENABLE_dkh=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON \
-        -DENABLE_libefp=ON \
-        -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON \
         -DENABLE_gdma=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
         -DENABLE_PCMSolver=ON \
@@ -168,6 +164,11 @@ fi
 
 # NOTES
 # -----
+
+# RIP c-side EFP
+#        -DENABLE_libefp=ON \
+#        -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON \
+#        -DCMAKE_INSIST_FIND_PACKAGE_pylibefp=ON \
 
     #sed -i "s|/opt/anaconda1anaconda2anaconda3|${PREFIX}|g" ${PREFIX}/share/psi4/python/pcm_placeholder.py
     #LD_LIBRARY_PATH=${PREFIX}/lib:$LD_LIBRARY_PATH \

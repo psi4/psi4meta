@@ -297,7 +297,6 @@ if host == "psinet":
 #{'recipe': 'ambit'},
 #{'recipe': 'chemps2-multiout'},
 #{'recipe': 'dkh'},
-#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: deepdiff, pb11
 #{'recipe': 'gau2grid-multiout'},
 #{'recipe': 'gdma'},
 #{'recipe': 'libint'},
@@ -320,6 +319,7 @@ if host == "psinet":
 
 # L/RT: if psi4-rt tests fail, build the downstream
 # -------------------------------------------------
+#{'recipe': 'libefp-multiout', 'build_channels': ['psi4', 'defaults', 'conda-forge']},  # chnl: deepdiff, pb11, docs-stuff
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
 #{'recipe': 'gpudfcc', 'build_channels': ['psi4/label/dev']},  # chnl: psi4

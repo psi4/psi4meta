@@ -27,7 +27,6 @@ outputs:
               - ambit {{ ambit }}
               - chemps2 {{ chemps2 }}
               - dkh {{ dkh }}
-              - libefp {{ libefp }}
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}
               - libint {{ libint }}
@@ -81,7 +80,6 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_simint=ON
@@ -119,7 +117,6 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON                                   # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON                                 # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON                                     # [linux]
-                  -DCMAKE_INSIST_FIND_PACKAGE_libefp=ON                                  # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON                                    # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON                               # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_simint=ON                                  # [linux]

@@ -41,3 +41,14 @@ if [[ -f "cb-doxyman.tar.gz" ]]; then
     done
 fi
 
+FFILE="cb-sphinxman-pylibefp.tar.gz"
+if [[ -f ${FFILE} ]]; then
+    echo "initial upload ${FFILE}"
+    scp -rv -o 'StrictHostKeyChecking no' ${FFILE} psicode@www.psicode.org:~/machinations/${FFILE} && rm -f ${FFILE}
+    while [ $? -ne 0 ]; do
+        sleep 6
+        echo "trying to upload ${FFILE}"
+        scp -rv -o 'StrictHostKeyChecking no' ${FFILE} psicode@www.psicode.org:~/machinations/${FFILE} && rm -f ${FFILE}
+    done
+fi
+

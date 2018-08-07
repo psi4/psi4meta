@@ -27,8 +27,8 @@ set(CheMPS2_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/CheMPS2
 set(ENABLE_dkh             ON CACHE BOOL "")
 set(dkh_DIR                "/opt/anaconda1anaconda2anaconda3/share/cmake/dkh" CACHE PATH "")
 
-set(ENABLE_libefp          ON CACHE BOOL "")
-set(libefp_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/libefp" CACHE PATH "")
+#set(ENABLE_libefp          ON CACHE BOOL "")
+#set(libefp_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/libefp" CACHE PATH "")
 
 #set(ENABLE_erd             ON CACHE BOOL "")
 #set(erd_DIR                "/opt/anaconda1anaconda2anaconda3/share/cmake/erd" CACHE PATH "")

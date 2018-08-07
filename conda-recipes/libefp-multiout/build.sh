@@ -86,6 +86,25 @@ make install
 # test
 # pytest in conda testing stage
 
+if [ -x "$(command -v ${PREFIX}/bin/sphinx-build)" ]; then
+
+    # docs build
+    make sphinxman -j${CPU_COUNT}
+
+    # install docs
+    make install
+
+    if [[ -d "doc/html" ]]; then
+        # Upon sucessful docs build, tar 'em up and mv to dir to await beaming up to psicode.org
+
+        cd doc
+        mv html master
+        tar -zcf cb-sphinxman-pylibefp.tar.gz master/
+        mv -f cb-sphinxman-pylibefp.tar.gz /home/psilocaluser/gits/psi4meta/psicode_dropbox/
+
+        cd ..
+    fi
+fi
 
 # NOTES
 # -----
