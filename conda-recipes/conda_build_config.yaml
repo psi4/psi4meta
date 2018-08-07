@@ -30,8 +30,8 @@ pybind11:
 python:
     - 3.7
     - 3.6
+    - 3.5
     # - 2.7
-    # - 3.5
 zlib:
     - 1.2
 
@@ -62,13 +62,13 @@ OPTS:
 PY_ABBR:
     - python3.7m
     - python3.6m
+    - python3.5m
     # - python2.7
-    # - python3.5m
 PYMOD_INSTALL_LIBDIR:
     - '/python3.7/site-packages'
     - '/python3.6/site-packages'
+    - '/python3.5/site-packages'
     # - '/python2.7/site-packages'
-    # - '/python3.5/site-packages'
 ambit:
     - 0.2
 chemps2:
@@ -82,7 +82,7 @@ libefp:
 erd:
     - 3.0.6
 gau2grid:
-    - 1.1.0
+    - 1.2.0
 gcp:
     - 2.0.2
 gdma:

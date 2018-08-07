@@ -3,9 +3,11 @@ package:
     version: 1.2
 
 build:
-    number: 0
+    number: 2
 
 requirements:
+    build:
+        - python {{ python }}
     run:
         - python {{ python }}
         - psi4

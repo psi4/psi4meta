@@ -282,6 +282,7 @@ if host == "psinet":
 
 # L/MISC: order mostly doesn't matter
 # -----------------------------------
+#{'recipe': 'ci-psi4'},  # neededby: CI for up/downstream
 #{'recipe': 'jsonpickle'},  # neededby: deepdiff, yesarch for constructor (otherwise, c-f)
 #{'recipe': 'deepdiff', 'build_channels': ['psi4']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
 #{'recipe': 'pybind11'},

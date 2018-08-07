@@ -1,4 +1,4 @@
-{% set version = "1.1.0" %}
+{% set version = "1.2.0" %}
 
 package:
     name: gau2grid-multiout
@@ -10,7 +10,7 @@ source:
     git_tag: v{{ version }}
 
 build:
-    number: 1                                            # [linux]  # 1: has AVX-512
+    number: 0                                            # [linux]  # v1.1_1: has AVX-512
     number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
