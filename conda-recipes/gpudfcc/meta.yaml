@@ -11,7 +11,7 @@ source:
     git_tag: v0.3  # 16606bf
 
 build:
-    number: 0                                            # [linux]
+    number: 1                                            # [linux]
     binary_relocation: true
     skip: true                                           # [win or osx]
     ignore_run_exports:
