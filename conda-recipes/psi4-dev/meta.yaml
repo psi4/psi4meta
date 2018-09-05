@@ -53,7 +53,6 @@ outputs:
           - share/cmake/psi4
       test:
           commands:
-              - PFX="usr/local/psi4"
               - PASSFAIL="--passfail"                                                    # [linux]
               - PASSFAIL=""                                                              # [osx]  # Mac threading occasionally bizarre
               - CONDA_CPLR=gcc                                                           # [linux]
@@ -88,18 +87,18 @@ outputs:
               # * build psi4 and test its threading
               # * evade long prefix
               - cd objdir-${CONDA_CPLR} && make -j${CPU_COUNT}                           # [py36]
-              - sed -r -i     's;^(.!/).*;\1usr/bin/env python;' stage/$PFX/bin/psi4     # [py36 and linux]
-              - sed -E -i.bak 's;^(.!/).*;\1usr/bin/env python;' stage/$PFX/bin/psi4     # [py36 and osx]
-              - PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd  # [py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n${NTH}  # [py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${NTH}  # [py36 and not osx]
+              - sed -r -i     's;^(.!/).*;\1usr/bin/env python;' stage/bin/psi4     # [py36 and linux]
+              - sed -E -i.bak 's;^(.!/).*;\1usr/bin/env python;' stage/bin/psi4     # [py36 and osx]
+              - PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py --passfail --ldd  # [py36]
+              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n${NTH}  # [py36]
+              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${NTH}  # [py36 and not osx]
               # * build an OpenMP plugin and test its threading
               - printf "\n\n   <<  I.B psi4-dev@conda + $CONDA_CPLR Psi4 --> $CONDA_CPLR plugin  >>\n\n\n"  # [py36]
               - PLUG="plugdfmp2"                                                         # [py36]
-              - stage/$PFX/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2          # [py36]
-              - cd $PLUG && `../stage/$PFX/bin/psi4 --plugin-compile` && make && cd ..   # [py36]
-              - PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG.so"  # [py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [py36 and not osx]
+              - stage/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2          # [py36]
+              - cd $PLUG && `../stage/bin/psi4 --plugin-compile` && make && cd ..   # [py36]
+              - PYTHONPATH=stage/lib/:. python stage/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG"  # [py36]
+              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/:. python stage/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [py36 and not osx]
               - cd ..                                                                    # [py36]
               - cd ..
 
@@ -123,16 +122,16 @@ outputs:
               # * build psi4 and test its threading
               # * evade long prefix
               - cd objdir-intel && make -j${CPU_COUNT}                                   # [linux and py36]
-              - sed -r -i 's;^(.!/).*;\1usr/bin/env python;' stage/$PFX/bin/psi4         # [linux and py36]
-              - PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd  # [linux and py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail -n${NTH}  # [linux and py36]
+              - sed -r -i 's;^(.!/).*;\1usr/bin/env python;' stage/bin/psi4         # [linux and py36]
+              - PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py --passfail --ldd  # [linux and py36]
+              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py --passfail -n${NTH}  # [linux and py36]
               # * build an OpenMP plugin and test its threading
               - printf "\n\n   <<  II.B psi4-dev@conda + Intel Psi4 --> Intel plugin  >>\n\n\n"  # [linux and py36]
               - PLUG="plugdfmp2"                                                         # [linux and py36]
-              - stage/$PFX/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2          # [linux and py36]
-              - cd $PLUG && `../stage/$PFX/bin/psi4 --plugin-compile` && make && cd ..   # [linux and py36]
-              - PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG.so"  # [linux and py36]
-              - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/:. python stage/$PFX/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [linux and py36]
+              - stage/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2          # [linux and py36]
+              - cd $PLUG && `../stage/bin/psi4 --plugin-compile` && make && cd ..   # [linux and py36]
+              - PYTHONPATH=stage/lib/:. python stage/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG"  # [linux and py36]
+              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/:. python stage/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [linux and py36]
               - cd ..                                                                    # [linux and py36]
               - cd ..                                                                    # [linux]
 
