@@ -361,28 +361,6 @@ for kw in candidates:
 #conda build v2rdm -c http://conda.anaconda.org/psi4/label/test -c http://conda.anaconda.org/psi4 --python 3.5
 # CONDA_BLD_PATH=/scratch/psilocaluser/conda-builds/ /home/psilocaluser/bldmconda3/bin/conda build purge
 
-#conda create -n tp4deps35 python=3.5 psi4-deps -c psi4/label/test -c psi4
-#conda create -n tp4deps35 python=3.5 psi4-deps -c psi4
-
-# >>> conda list | grep -e constr -e conda
-# # packages in environment at /home/psilocaluser/toolchainconda:
-# anaconda-client           1.6.14                   py36_0  
-# conda                     4.5.2                    py36_0  
-# conda-build               3.10.1                   py36_0  
-# conda-env                 2.6.0                h36134e3_1  
-# conda-verify              2.0.0            py36h98955d8_0  
-# constructor               2.0.3                    py36_0  
-
-# # packages in environment at /Users/github/toolchainconda:
-# anaconda-client           1.6.14                   py36_0    defaults
-# conda                     4.5.2                    py36_0    defaults
-# conda-build               3.10.2                   py36_0    defaults
-# conda-env                 2.6.0                         0    defaults
-# conda-verify              2.0.0            py36he837df3_0    defaults
-# libconda                  4.0.3                    py36_0    defaults
-
-
-
 # constructor --platform linux-64 psi4-installer/
 # constructor --platform osx-64 psi4-installer/
 # scp -r psi4conda-1.1rc1-py* root@vergil.chemistry.gatech.edu:/var/www/html/download/

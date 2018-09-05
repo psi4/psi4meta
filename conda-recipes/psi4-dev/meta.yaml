@@ -68,7 +68,7 @@ outputs:
               - git clone https://github.com/psi4/psi4.git
 
               # Part I: GNU/Clang
-              - printf "\n\n  <<<  I.A psi4-dev@conda --> $CONDA_CPLR Psi4  >>>\n\n\n"
+              - printf "\n\n   <<  I.A psi4-dev@conda --> $CONDA_CPLR Psi4  >>\n\n\n"
               - cd psi4
               - PPAOUT="$(psi4-path-advisor --${CONDA_CPLR})"
               - >
@@ -94,7 +94,7 @@ outputs:
               - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n${NTH}  # [py36]
               - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${NTH}  # [py36 and not osx]
               # * build an OpenMP plugin and test its threading
-              - printf "\n\n  <<<  I.B psi4-dev@conda + $CONDA_CPLR Psi4 --> $CONDA_CPLR plugin  >>>\n\n\n"  # [py36]
+              - printf "\n\n   <<  I.B psi4-dev@conda + $CONDA_CPLR Psi4 --> $CONDA_CPLR plugin  >>\n\n\n"  # [py36]
               - PLUG="plugdfmp2"                                                         # [py36]
               - stage/$PFX/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2          # [py36]
               - cd $PLUG && `../stage/$PFX/bin/psi4 --plugin-compile` && make && cd ..   # [py36]
@@ -104,7 +104,7 @@ outputs:
               - cd ..
 
               # Part II: Intel
-              - printf "\n\n  <<<  II.A psi4-dev@conda --> Intel Psi4  >>>\n\n\n"        # [linux]
+              - printf "\n\n   <<  II.A psi4-dev@conda --> Intel Psi4  >>\n\n\n"        # [linux]
               - cd psi4                                                                  # [linux]
               - PPAOUT="$(psi4-path-advisor --intel)"                                    # [linux]
               - source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64  # [linux]
@@ -127,7 +127,7 @@ outputs:
               - PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail --ldd  # [linux and py36]
               - PATH=stage/$PFX/bin/:$PATH PYTHONPATH=stage/$PFX/lib/ python stage/$PFX/share/psi4/scripts/test_threading.py --passfail -n${NTH}  # [linux and py36]
               # * build an OpenMP plugin and test its threading
-              - printf "\n\n  <<<  II.B psi4-dev@conda + Intel Psi4 --> Intel plugin  >>>\n\n\n"  # [linux and py36]
+              - printf "\n\n   <<  II.B psi4-dev@conda + Intel Psi4 --> Intel plugin  >>\n\n\n"  # [linux and py36]
               - PLUG="plugdfmp2"                                                         # [linux and py36]
               - stage/$PFX/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2          # [linux and py36]
               - cd $PLUG && `../stage/$PFX/bin/psi4 --plugin-compile` && make && cd ..   # [linux and py36]
@@ -138,13 +138,13 @@ outputs:
 
               # Part III: Conda distribution
               # Actually test OpenMP threading - Psi4 itself, then a plugin
-              - printf "\n\n  <<<  III.A psi4-dev@conda + psi4@conda  >>>\n\n\n"
+              - printf "\n\n   <<  III.A psi4-dev@conda + psi4@conda  >>\n\n\n"
               - mkdir package && cd package
               - conda install psi4 -c psi4/label/dev -y
               - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --ldd
               - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n${NTH}
               - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${NTH}  # [not osx]
-              - printf "\n\n  <<<  III.B psi4-dev@conda + psi4@conda --> $CONDA_CPLR plugin  >>>\n\n\n"
+              - printf "\n\n   <<  III.B psi4-dev@conda + psi4@conda --> $CONDA_CPLR plugin  >>\n\n\n"
               - PLUG="plugdfmp2"
               - psi4 --plugin-name $PLUG --plugin-template dfmp2
               - cd $PLUG && `psi4 --plugin-compile` && make && cd ..

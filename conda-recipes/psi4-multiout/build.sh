@@ -78,14 +78,24 @@ fi
 
 if [ "$(uname)" == "Linux" ]; then
 
+    # GNU compilers
+    # LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt${SHLIB_EXT}"
+    #     -DCMAKE_C_COMPILER=${GCC} \
+    #     -DCMAKE_CXX_COMPILER=${GXX} \
+    #     -DCMAKE_Fortran_COMPILER=${GFORTRAN} \
+    #     -DCMAKE_C_FLAGS="${CFLAGS}" \
+    #     -DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
+    #     -DCMAKE_Fortran_FLAGS="${FFLAGS}" \
+
     # load Intel compilers
     set +x
     source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
     set -x
 
     # link against conda MKL & GCC
+    # * static svml fixes "undefined symbol: __svml_pow4_mask_e9" for multiarch
     if [ "$blas_impl" = "mkl" ]; then
-        LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt${SHLIB_EXT}"
+        LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt${SHLIB_EXT};-Wl,-Bstatic;-lsvml;-Wl,-Bdynamic"
     else
         LAPACK_INTERJECT="${PREFIX}/lib/libopenblas${SHLIB_EXT}"
     fi
