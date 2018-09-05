@@ -92,14 +92,15 @@ outputs:
           imports:
               - psi4
           commands:
+              - export PYLIB_EXT=`$PYTHON -c 'import sysconfig as s; print(s.get_config_var("SO"))'`
               # Verify existence and execution
               - test -f $PREFIX/bin/psi4
-              - test -f $SP_DIR/psi4/core.so
+              - test -f $SP_DIR/psi4/core$PYLIB_EXT
               - $PREFIX/bin/psi4 --version
               # Inspect linkage
-              - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
-              - ldd -v $SP_DIR/psi4/core.so     # [linux]
-              - otool -L $SP_DIR/psi4/core.so   # [osx]
+              - ldd -r -u $SP_DIR/psi4/core$PYLIB_EXT  # [linux]
+              - ldd -v $SP_DIR/psi4/core$PYLIB_EXT     # [linux]
+              - otool -L $SP_DIR/psi4/core$PYLIB_EXT   # [osx]
               - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint pcmsolver simint libxc psi4  # erd
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               - grep -r theoryfs2 $PREFIX/share/cmake/ || true  # [linux]

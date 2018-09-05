@@ -158,15 +158,15 @@ if [ "$(uname)" == "Linux" ]; then
 
     # test
     # * full PREFIX is too long for shebang (in bin/psi4 tests), so use env python just for tests
-    mv stage/${PREFIX}/bin/psi4 stage/${PREFIX}/bin/psi4_reserve
-    echo "#! /usr/bin/env python" > stage/${PREFIX}/bin/psi4
-    cat stage/${PREFIX}/bin/psi4_reserve >> stage/${PREFIX}/bin/psi4
-    chmod u+x stage/${PREFIX}/bin/psi4
+    mv stage/bin/psi4 stage/bin/psi4_reserve
+    echo "#! /usr/bin/env python" > stage/bin/psi4
+    cat stage/bin/psi4_reserve >> stage/bin/psi4
+    chmod u+x stage/bin/psi4
 
-    stage/${PREFIX}/bin/psi4 ../tests/tu1-h2o-energy/input.dat
+    stage/bin/psi4 ../tests/tu1-h2o-energy/input.dat
     ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} #-L quick
 
-    mv -f stage/${PREFIX}/bin/psi4_reserve stage/${PREFIX}/bin/psi4
+    mv -f stage/bin/psi4_reserve stage/bin/psi4
 
     # remove conda-build-bound Cache file, to be replaced by psi4-dev
     rm ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake
