@@ -18,20 +18,22 @@ requirements:
     build:
         - cmake >=3.3
         - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
+        - {{ compiler('cxx') }}                # gcov, too
     host:
         - mkl-devel {{ mkl }}
         - pybind11 {{ pybind11 }}
         - python {{ python }}
         # qc
-        - libefp {{ libefp }}                              # for efp fragment autodoc
         - gau2grid {{ gau2grid }}
         - libint {{ libint }}
         - libxc {{ libxc }}
-        # run: for build-time testing
+        # run: for build-time testing or docs
         - deepdiff
+        - dftd3 {{ dftd3 }}
+        - gcp {{ gcp }}
         - networkx
         - numpy
+        - pylibefp {{ pylibefp }}              # for efp fragment autodoc
         # docs
         - ipykernel
         - jupyter_client
@@ -40,6 +42,9 @@ requirements:
         - sphinx >=1.5
         - sphinx-automodapi
         - sphinx-psi-theme
+        # cov
+        - codecov
+        - coverage
 
 outputs:
     - name: psi4-docs

@@ -336,10 +336,7 @@ if host == "psinet":
 
 # L/DOCS: build the docs, feed, and doxygen targets (***)
 # -------------------------------------------------------
-{'recipe': 'psi4-docs', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge', 'astropy'], 'cbextras': ['--prefix-length', '100']},  # chnl: codecov, sphinx* jupyter* astropy-helpers
-
-# In future when `gcov` available, coverage can be added to psi4-docs recipe
-#{'recipe': 'psi4-coverage', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge', 'astropy'], 'cbextras': ['--prefix-length', '100']},  # chnl: cov*, docs*
+{'recipe': 'psi4-docs', 'build_channels': ['psi4/label/dev', 'defaults', 'conda-forge'], 'cbextras': ['--prefix-length', '100']},  # chnl: cov*, docs*
         ]
 
 

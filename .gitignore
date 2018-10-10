@@ -9,3 +9,4 @@ psinet-nightly/kpd-anom.log
 psinet-nightly/kpd-norm.log
 psinet-nightly/psicode-dropbox.log
 PSIDownloadAnalyzer/*.png
+conda-recipes/psi4-docs/token-codecov

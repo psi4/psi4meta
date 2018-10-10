@@ -1,4 +1,11 @@
-#!/usr/bin/env python3
+#!/home/psilocaluser/toolchainconda/bin/python
+
+# CDS:
+# need to get the right python... we have to update the line above if
+# python moves (sigh).  /usr/bin/env python3 wouldn't work for me
+# when this is called as a crontab (even though it works when called
+# as a user).  Only thing I found that worked was hardwiring the path
+# above.
 
 # this program creates a list of recent papers citing the Psi4 1.1 paper
 # and creates a webpage with this info, suitable for posting at 
