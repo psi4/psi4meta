@@ -75,6 +75,9 @@
 #   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/osx-64/jsonpickle-0.9.6-py35_0.tar.bz2
 #   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/osx-64/jsonpickle-0.9.6-py27_0.tar.bz2
 
+# [LAB 30 Sep 2018]
+#   anaconda copy --to-owner psi4 conda-forge/pint/0.8.1/noarch/pint-0.8.1-py_1.tar.bz2
+
 import os
 import sys
 import datetime
@@ -320,8 +323,8 @@ if host == "psinet":
 # -------------------------------------------------------------------------------------
 {'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},
 
-# L/RT: if psi4-rt tests fail, build the downstream
-# -------------------------------------------------
+# L/RT: if psi4-rt tests fail, build the downstream. incr ltrtver in cbc before rebuilding psi4-rt
+# ------------------------------------------------------------------------------------------------
 #{'recipe': 'libefp-multiout', 'build_channels': ['psi4', 'defaults', 'conda-forge']},  # chnl: deepdiff, pb11, docs-stuff
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},

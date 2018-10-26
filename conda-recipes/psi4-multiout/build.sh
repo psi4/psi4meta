@@ -141,7 +141,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=OFF \
         -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}" \
-        -DBUILDNAME="LAB-RHEL7-gcc7.2-intel18.0.3-mkl-py${CONDA_PY}-release-conda" \
+        -DBUILDNAME="LAB-RHEL7-gcc7.3-intel18.0.3-mkl-py${CONDA_PY}-release-conda" \
         -DSITE="gatech-conda" \
         -DSPHINX_ROOT=${PREFIX}
 
