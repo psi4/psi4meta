@@ -1,0 +1,57 @@
+{% set name = "qcelemental" %}
+{% set version = "0.1.0a0" %}
+#{% set sha256 = "545b3bee0d65e1abb4baa1818edcc9ec239aa9f2ffbfde8084d71c056180054f" %}
+
+package:
+    name: {{ name|lower }}
+    version: {{ version }}
+
+#source:
+#    fn: {{ name }}-{{ version }}.tar.gz
+#    url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+#    #sha256: {{ sha256 }}
+
+source:
+    git_url: git@github.com:MolSSI/QCElemental.git
+    git_tag: pytestinstalled
+
+build:
+    noarch: python
+    number: 0
+    script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+
+requirements:
+    build:
+        - python
+        - setuptools
+    run:
+        - numpy
+        - pint
+        - python
+
+test:
+    imports:
+        - qcelemental
+    requires:
+        - deepdiff
+        - pytest
+    commands:
+        - py.test --pyargs qcelemental
+
+about:
+    home: https://github.com/MolSSI/QCElemental
+    dev_url: https://github.com/MolSSI/QCElemental
+    doc_url: https://qcelemental.readthedocs.io/en/latest/
+    doc_source_url: https://github.com/MolSSI/QCElemental/blob/master/docs/source/index.rst
+    license: BSD-3-Clause
+    license_url: https://opensource.org/licenses/BSD-3-Clause
+    license_file: LICENSE
+    license_family: BSD
+    summary: QCElemental is a resource module for quantum chemistry containing physical constants and periodic table data from NIST and molecule handlers.
+    # description: >
+
+extra:
+    recipe-maintainers:
+        - loriab
+        - dgasmith
+
