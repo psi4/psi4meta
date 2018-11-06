@@ -78,14 +78,24 @@ fi
 
 if [ "$(uname)" == "Linux" ]; then
 
+    # GNU compilers
+    # LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt${SHLIB_EXT}"
+    #     -DCMAKE_C_COMPILER=${GCC} \
+    #     -DCMAKE_CXX_COMPILER=${GXX} \
+    #     -DCMAKE_Fortran_COMPILER=${GFORTRAN} \
+    #     -DCMAKE_C_FLAGS="${CFLAGS}" \
+    #     -DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
+    #     -DCMAKE_Fortran_FLAGS="${FFLAGS}" \
+
     # load Intel compilers
     set +x
     source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
     set -x
 
     # link against conda MKL & GCC
+    # * static svml fixes "undefined symbol: __svml_pow4_mask_e9" for multiarch
     if [ "$blas_impl" = "mkl" ]; then
-        LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt${SHLIB_EXT}"
+        LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt${SHLIB_EXT};-Wl,-Bstatic;-lsvml;-Wl,-Bdynamic"
     else
         LAPACK_INTERJECT="${PREFIX}/lib/libopenblas${SHLIB_EXT}"
     fi
@@ -131,7 +141,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=OFF \
         -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}" \
-        -DBUILDNAME="LAB-RHEL7-gcc7.2-intel18.0.3-mkl-py${CONDA_PY}-release-conda" \
+        -DBUILDNAME="LAB-RHEL7-gcc7.3-intel18.0.3-mkl-py${CONDA_PY}-release-conda" \
         -DSITE="gatech-conda" \
         -DSPHINX_ROOT=${PREFIX}
 
@@ -148,15 +158,15 @@ if [ "$(uname)" == "Linux" ]; then
 
     # test
     # * full PREFIX is too long for shebang (in bin/psi4 tests), so use env python just for tests
-    mv stage/${PREFIX}/bin/psi4 stage/${PREFIX}/bin/psi4_reserve
-    echo "#! /usr/bin/env python" > stage/${PREFIX}/bin/psi4
-    cat stage/${PREFIX}/bin/psi4_reserve >> stage/${PREFIX}/bin/psi4
-    chmod u+x stage/${PREFIX}/bin/psi4
+    mv stage/bin/psi4 stage/bin/psi4_reserve
+    echo "#! /usr/bin/env python" > stage/bin/psi4
+    cat stage/bin/psi4_reserve >> stage/bin/psi4
+    chmod u+x stage/bin/psi4
 
-    stage/${PREFIX}/bin/psi4 ../tests/tu1-h2o-energy/input.dat
-    ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} #-L quick
+    stage/bin/psi4 ../tests/tu1-h2o-energy/input.dat
+    ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} #-E bench #-L quick
 
-    mv -f stage/${PREFIX}/bin/psi4_reserve stage/${PREFIX}/bin/psi4
+    mv -f stage/bin/psi4_reserve stage/bin/psi4
 
     # remove conda-build-bound Cache file, to be replaced by psi4-dev
     rm ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake

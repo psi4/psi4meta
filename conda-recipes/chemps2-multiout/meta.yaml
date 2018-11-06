@@ -7,10 +7,11 @@ package:
 source:
     git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
     git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
-    git_tag: v{{ version }}  # v1.8.7 + 0  971c111
+    git_tag: fc77bc4  # L2: v1.8.7 + 5  fc77bc4
+                      # L1/M0: v{{ version }}  # v1.8.7 + 0  971c111
 
 build:
-    number: 1                                            # [linux]
+    number: 2                                            # [linux]
     number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
@@ -32,8 +33,8 @@ requirements:
 outputs:
     - name: chemps2
       build:
-          requires_features:
-              blas: {{ blas_impl }}
+          # requires_features:
+          #      blas: {{ blas_impl }}
           ignore_run_exports:
               # not using hdf5's fortran interface
               - libgfortran-ng

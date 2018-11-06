@@ -75,6 +75,9 @@
 #   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/osx-64/jsonpickle-0.9.6-py35_0.tar.bz2
 #   anaconda copy --to-owner psi4 conda-forge/jsonpickle/0.9.6/osx-64/jsonpickle-0.9.6-py27_0.tar.bz2
 
+# [LAB 30 Sep 2018]
+#   anaconda copy --to-owner psi4 conda-forge/pint/0.8.1/noarch/pint-0.8.1-py_1.tar.bz2
+
 import os
 import sys
 import datetime
@@ -293,6 +296,7 @@ if host == "psinet":
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
 #{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
 #{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/agg']},  # chnl: openfermion
+#{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint, deepdiff  # neededby: psi4
 
 # L/LT: bump in recipe any upstream versions Psi means to support and rebuild
 #       upon any failure, adjust source of Psi & upstream
@@ -320,8 +324,8 @@ if host == "psinet":
 # -------------------------------------------------------------------------------------
 {'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},
 
-# L/RT: if psi4-rt tests fail, build the downstream
-# -------------------------------------------------
+# L/RT: if psi4-rt tests fail, build the downstream. incr ltrtver in cbc before rebuilding psi4-rt
+# ------------------------------------------------------------------------------------------------
 #{'recipe': 'libefp-multiout', 'build_channels': ['psi4', 'defaults', 'conda-forge']},  # chnl: deepdiff, pb11, docs-stuff
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
@@ -336,10 +340,7 @@ if host == "psinet":
 
 # L/DOCS: build the docs, feed, and doxygen targets (***)
 # -------------------------------------------------------
-{'recipe': 'psi4-docs', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge', 'astropy'], 'cbextras': ['--prefix-length', '100']},  # chnl: codecov, sphinx* jupyter* astropy-helpers
-
-# In future when `gcov` available, coverage can be added to psi4-docs recipe
-#{'recipe': 'psi4-coverage', 'build_channels': ['psi4/label/dev', 'psi4', 'defaults', 'conda-forge', 'astropy'], 'cbextras': ['--prefix-length', '100']},  # chnl: cov*, docs*
+{'recipe': 'psi4-docs', 'build_channels': ['psi4/label/dev', 'defaults', 'conda-forge'], 'cbextras': ['--prefix-length', '100']},  # chnl: cov*, docs*
         ]
 
 
@@ -360,28 +361,6 @@ for kw in candidates:
 
 #conda build v2rdm -c http://conda.anaconda.org/psi4/label/test -c http://conda.anaconda.org/psi4 --python 3.5
 # CONDA_BLD_PATH=/scratch/psilocaluser/conda-builds/ /home/psilocaluser/bldmconda3/bin/conda build purge
-
-#conda create -n tp4deps35 python=3.5 psi4-deps -c psi4/label/test -c psi4
-#conda create -n tp4deps35 python=3.5 psi4-deps -c psi4
-
-# >>> conda list | grep -e constr -e conda
-# # packages in environment at /home/psilocaluser/toolchainconda:
-# anaconda-client           1.6.14                   py36_0  
-# conda                     4.5.2                    py36_0  
-# conda-build               3.10.1                   py36_0  
-# conda-env                 2.6.0                h36134e3_1  
-# conda-verify              2.0.0            py36h98955d8_0  
-# constructor               2.0.3                    py36_0  
-
-# # packages in environment at /Users/github/toolchainconda:
-# anaconda-client           1.6.14                   py36_0    defaults
-# conda                     4.5.2                    py36_0    defaults
-# conda-build               3.10.2                   py36_0    defaults
-# conda-env                 2.6.0                         0    defaults
-# conda-verify              2.0.0            py36he837df3_0    defaults
-# libconda                  4.0.3                    py36_0    defaults
-
-
 
 # constructor --platform linux-64 psi4-installer/
 # constructor --platform osx-64 psi4-installer/

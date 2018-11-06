@@ -83,6 +83,13 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_CXX11_SUPPORT=ON
 fi
 
+        #-DCMAKE_C_COMPILER=${GCC} \
+        #-DCMAKE_C_FLAGS="${CFLAGS}" \
+        #-DCMAKE_CXX_COMPILER=${GXX} \
+        #-DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
+        #-DCMAKE_Fortran_COMPILER=${GFORTRAN} \
+        #-DCMAKE_Fortran_FLAGS="${FFLAGS}" \
+
 # build
 cd build
 make -j${CPU_COUNT}

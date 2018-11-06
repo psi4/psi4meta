@@ -106,3 +106,5 @@ ${PYTHON} setup.py install --prefix=${PREFIX}
 #    fi
 
 # * -DHDF5_VERSION="${hdf5}"
+
+# * for gcc82 before CheMPS2#66  -DLIBC_INTERJECT="-lhdf5;-lmkl_rt" \

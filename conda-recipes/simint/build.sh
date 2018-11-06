@@ -67,6 +67,7 @@ make install
 # * On Mac, running the test takes hours with no output, so skipping (could use a smaller test)
 if [ "$(uname)" == "Darwin" ]; then
     #OMP_NUM_THREADS=${CPU_COUNT} test/test_eri ../test/dat/ethane.dzp.mol
+    echo "Skipping testing on Mac"
 elif [ "$(uname)" == "Linux" ]; then
     LD_LIBRARY_PATH=${BUILD_PREFIX}/lib:${LD_LIBRARY_PATH} OMP_NUM_THREADS=${CPU_COUNT} test/test_eri ../test/dat/ethane.dzp.mol
 fi

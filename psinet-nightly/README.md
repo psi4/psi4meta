@@ -1,5 +1,19 @@
 psinet nightly
 --------------
+[CDS 11 Sept 2018]
+
+I have split out the handling of the github feed into its own scripts, and I have added a feed of recent articles that cite Psi4.  The scripts to do this, like the scripts below, are run nightly on psinet.
+
+45 14 * * 3 bash /home/psilocaluser/gits/psi4meta/recent-citing-articles/parse_gs_psi4_refs.py > /home/psilocaluser/gits/psi4meta/recent-citing-articles/error.log 2>&1
+50 * * * * bash /home/psilocaluser/gits/psi4meta/github-feed/parse_gh_commits.py > /home/psilocaluser/gits/psi4meta/github-feed/error.log 2>&1
+55 * * * * bash /home/psilocaluser/gits/psi4meta/psinet-nightly/push_feed.sh >>/home/psilocaluser/gits/psi4meta/psinet-nightly/push_feed.log 2>&1
+
+The first script grabs recent articles that cite Psi4, and creates two files, articles.txt and most_recent_article.txt.  Note it is invoked with bash, to help it find an appropriate python.
+
+The second script grabs recent commits to github, and puts them in commits.txt and most_recent_commimt.txt
+
+The third script pushes these text files from psinet to psicode.net so that the files are locally available for inclusion
+in the website.
 
 [LAB 4 April 2017]
 
