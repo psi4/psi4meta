@@ -232,7 +232,6 @@ if host == "macpsinet":
 #{'recipe': 'ambit'},
 #{'recipe': 'chemps2-multiout'},
 #{'recipe': 'dkh'},
-#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: deepdiff, pb11
 #{'recipe': 'erd'},
 #{'recipe': 'gau2grid-multiout'},
 #{'recipe': 'gdma'},
@@ -256,6 +255,7 @@ if host == "macpsinet":
 
 # M/RT: if psi4-rt tests fail, build the downstream
 # -------------------------------------------------
+#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: deepdiff, pb11
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
 #{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
