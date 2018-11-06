@@ -42,6 +42,7 @@ requirements:
         - deepdiff
         - networkx
         - numpy
+        - qcelemental {{ qcelemental }}
 
 outputs:
     - name: psi4
@@ -71,6 +72,7 @@ outputs:
               - gdma {{ gdma }}
               - libint {{ libint }}
               - pcmsolver {{ pcmsolver }}
+              - qcelemental {{ qcelemental }}
               - simint {{ simint }}
               - libxc {{ libxc }}
           run:
@@ -80,6 +82,7 @@ outputs:
               - numpy
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
+              - {{ pin_compatible('qcelemental', max_pin='x.x') }}
       files:
           - bin/psi4
           - include/psi4

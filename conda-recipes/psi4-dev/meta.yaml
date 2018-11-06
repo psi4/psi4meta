@@ -48,6 +48,7 @@ outputs:
               - networkx
               - numpy
               - pytest
+              - qcelemental {{ qcelemental }}*
       files:
           - bin/psi4-path-advisor
           - share/cmake/psi4
@@ -76,6 +77,7 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON

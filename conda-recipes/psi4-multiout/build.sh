@@ -124,6 +124,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON \
         -DENABLE_ambit=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON \
         -DENABLE_CheMPS2=ON \
@@ -174,6 +175,8 @@ fi
 
 # NOTES
 # -----
+
+# * seems to slow down tests  #export PSI_SCRATCH=/scratch/psilocaluser/
 
 # RIP c-side EFP
 #        -DENABLE_libefp=ON \

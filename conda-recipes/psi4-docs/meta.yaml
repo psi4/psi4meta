@@ -34,6 +34,7 @@ requirements:
         - networkx
         - numpy
         - pylibefp {{ pylibefp }}              # for efp fragment autodoc
+        - qcelemental {{ qcelemental }}*
         # docs
         - ipykernel
         - jupyter_client

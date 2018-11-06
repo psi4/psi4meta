@@ -1,18 +1,21 @@
 # this version is an invention. official upstream is 1.0
-{% set version = "1.0.1" %}
+{% set version = "1.0.2" %}
 
 package:
     name: snsmp2
     version: {{ version }}
 
 source:
-    git_url: git@github.com:DEShawResearch/sns-mp2.git      # [linux]
-    git_url: https://github.com/DEShawResearch/sns-mp2.git  # [osx]
-    # git_tag: {{ version }}
-    git_tag: a70c56f  # 1.0 + 13
+    #git_url: git@github.com:DEShawResearch/sns-mp2.git      # [linux]
+    #git_url: https://github.com/DEShawResearch/sns-mp2.git  # [osx]
+    ## git_tag: {{ version }}
+    #git_tag: # v1.0.1 2: a70c56f  # 1.0 + 13
+    git_url: git@github.com:loriab/sns-mp2.git      # [linux]
+    git_url: https://github.com/loriab/sns-mp2.git  # [osx]
+    git_tag: a035c27  # 0: 1.0 + 13 + 2
 
 build:
-    number: 2                                               # [linux]
+    number: 0                                               # [linux]
     number: 0                                               # [osx]
     skip: true                                              # [win]
     script: python setup.py install --single-version-externally-managed --record=record.txt
