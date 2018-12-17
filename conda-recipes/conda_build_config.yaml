@@ -92,7 +92,7 @@ libefp:
 erd:
     - 3.0.6
 gau2grid:
-    - 1.2.0
+    - 1.3.1
 gcp:
     - 2.0.2
 gdma:

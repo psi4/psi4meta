@@ -1,4 +1,4 @@
-{% set version = "1.2.0" %}
+{% set version = "1.3.1" %}
 
 package:
     name: gau2grid-multiout
@@ -7,7 +7,8 @@ package:
 source:
     git_url: git@github.com:dgasmith/gau2grid.git         # [linux]
     git_url: https://github.com/dgasmith/gau2grid.git     # [osx]
-    git_tag: v{{ version }}
+#    git_tag: v{{ version }}
+    git_tag: 10ae39b  # ~v1.3.1
 
 build:
     number: 0                                            # [linux]  # v1.1_1: has AVX-512
@@ -42,13 +43,13 @@ outputs:
       test:
           commands:
               # Verify library
-              - test -f $PREFIX/lib/libgg$SHLIB_EXT
+              - test -L $PREFIX/lib/libgg$SHLIB_EXT
               # Inspect linkage
-              - ldd -r -u $PREFIX/lib/libgg.so && return 0  # [linux]
-              - ldd -v $PREFIX/lib/libgg.so                 # [linux]
-              - otool -L $PREFIX/lib/libgg.dylib            # [osx]
+              - ldd -r -u $PREFIX/lib/libgg$SHLIB_EXT && return 0  # [linux]
+              - ldd -v $PREFIX/lib/libgg$SHLIB_EXT                 # [linux]
+              - otool -L $PREFIX/lib/libgg$SHLIB_EXT               # [osx]
               - conda inspect linkages --show-files --groupby=dependency gau2grid
-              - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+              - conda inspect objects -p $PREFIX $PKG_NAME         # [osx]
       about:
           home: https://github.com/dgasmith/gau2grid
           dev_url: https://github.com/dgasmith/gau2grid
@@ -81,16 +82,18 @@ outputs:
           requires:
               - pytest
           commands:
+              - export PYLIB_EXT=`$PYTHON -c 'from numpy import distutils; print(distutils.misc_util.get_shared_lib_extension(is_python_ext=False))'`
               # Verify library
-              - test -f $SP_DIR/gau2grid/libgg$SHLIB_EXT
+              - test -f $SP_DIR/gau2grid/gg$PYLIB_EXT
               # Inspect linkage
-              - ldd -r -u $SP_DIR/gau2grid/libgg.so && return 0  # [linux]
-              - ldd -v $SP_DIR/gau2grid/libgg.so                 # [linux]
-              - otool -L $SP_DIR/gau2grid/libgg.dylib            # [osx]
+              - ldd -r -u $SP_DIR/gau2grid/gg$PYLIB_EXT && return 0  # [linux]
+              - ldd -v $SP_DIR/gau2grid/gg$PYLIB_EXT                 # [linux]
+              - otool -L $SP_DIR/gau2grid/gg$PYLIB_EXT               # [osx]
               - conda inspect linkages --show-files --groupby=dependency pygau2grid
-              - conda inspect objects -p $PREFIX $PKG_NAME       # [osx]
+              - conda inspect objects -p $PREFIX $PKG_NAME           # [osx]
               # Actually test
-              - python -c "import gau2grid; gau2grid.test(); print('*** gau2grid {} built successfully. Buy psinet a beer!'.format(gau2grid.__version__))"
+              - export GAU2GRID_FORCE_C_TEST=1
+              - python -c "import gau2grid as gg; gg.test(); print('*** gau2grid {} built successfully. Buy psinet a beer!'.format(gg.__version__))"
       about:
           home: https://github.com/dgasmith/gau2grid
           dev_url: https://github.com/dgasmith/gau2grid
