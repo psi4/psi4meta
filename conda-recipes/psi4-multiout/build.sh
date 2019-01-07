@@ -165,7 +165,7 @@ if [ "$(uname)" == "Linux" ]; then
     chmod u+x stage/bin/psi4
 
     stage/bin/psi4 ../tests/tu1-h2o-energy/input.dat
-    ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} #-E bench #-L quick
+    ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} #-L quick
 
     mv -f stage/bin/psi4_reserve stage/bin/psi4
 

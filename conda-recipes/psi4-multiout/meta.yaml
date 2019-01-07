@@ -95,7 +95,7 @@ outputs:
           imports:
               - psi4
           commands:
-              - export PYLIB_EXT=`$PYTHON -c 'import sysconfig as s; print(s.get_config_var("SO"))'`
+              - export PYLIB_EXT=`$PYTHON -c 'import sysconfig as s; print(s.get_config_var("EXT_SUFFIX"))'`
               # Verify existence and execution
               - test -f $PREFIX/bin/psi4
               - test -f $SP_DIR/psi4/core$PYLIB_EXT
@@ -109,7 +109,8 @@ outputs:
               - grep -r theoryfs2 $PREFIX/share/cmake/ || true  # [linux]
               # Actually test
               - conda list
-              - python -c "import psi4, sys; sys.exit(psi4.test())"
+              - python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', '1']))"  #os.environ.get('CPU_COUNT')]))"
+                # works but tries to test qcdb too  - pytest -rws -v --durations=0 -n ${CPU_COUNT} -m quick --pyargs psi4
               - python -c "import psi4; print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
               - PASSFAIL="--passfail"           # [linux]
               - PASSFAIL=""                     # [osx]  # Mac threading occasionally bizarre
