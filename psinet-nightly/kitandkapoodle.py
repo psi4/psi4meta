@@ -169,6 +169,7 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     chnls = _form_channel_command(build_channels)
     extras = _form_extras_command(cbextras)
 
+    lenv['HOME'] = os.path.expanduser('~')  # dftd3 & icpc likes a full environment and POSIX guarantees HOME
     if envvars:
         lenv.update(envvars)
 
