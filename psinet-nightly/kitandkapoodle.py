@@ -95,6 +95,7 @@ def _form_channel_command(channel_arg):
 
 def _form_python_command(py_arg):
     """Effectively deprecated by conda_build_config.yaml variants"""
+
     if py_arg is None:
         return []
     elif str(py_arg) in ['2.7', '3.5', '3.6']:
@@ -169,7 +170,7 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     chnls = _form_channel_command(build_channels)
     extras = _form_extras_command(cbextras)
 
-    lenv['HOME'] = os.path.expanduser('~')  # dftd3 & icpc likes a full environment and POSIX guarantees HOME
+    lenv['HOME'] = os.path.expanduser('~')  # dftd3 & Intel license likes a full environment and POSIX guarantees HOME
     if envvars:
         lenv.update(envvars)
 
