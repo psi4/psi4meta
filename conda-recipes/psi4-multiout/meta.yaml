@@ -18,7 +18,7 @@ build:
 
 requirements:
     build:
-        - cmake >=3.3
+        - cmake >=3.5
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - {{ compiler('fortran') }}      # [osx]
@@ -54,7 +54,7 @@ outputs:
               - {{ pin_subpackage('psi4', max_pin='x.x') }}
       requirements:
           build:
-              - cmake >=3.3
+              - cmake >=3.5
               - {{ compiler('c') }}
               - {{ compiler('cxx') }}
               - {{ compiler('fortran') }}      # [osx]
@@ -94,6 +94,8 @@ outputs:
       test:
           imports:
               - psi4
+          requires:
+              - pytest-xdist
           commands:
               - export PYLIB_EXT=`$PYTHON -c 'import sysconfig as s; print(s.get_config_var("EXT_SUFFIX"))'`
               # Verify existence and execution
@@ -109,7 +111,8 @@ outputs:
               - grep -r theoryfs2 $PREFIX/share/cmake/ || true  # [linux]
               # Actually test
               - conda list
-              - python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', '1']))"  #os.environ.get('CPU_COUNT')]))"
+              - python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', '1']))"   # [linux]
+              - python -c "import psi4, sys, os; sys.exit(psi4.test('quick', extras=['--durations=50', '-n', '1']))"  # [osx]
                 # works but tries to test qcdb too  - pytest -rws -v --durations=0 -n ${CPU_COUNT} -m quick --pyargs psi4
               - python -c "import psi4; print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
               - PASSFAIL="--passfail"           # [linux]

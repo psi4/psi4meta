@@ -39,6 +39,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON \
         -DENABLE_CheMPS2=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON \
         -DENABLE_dkh=ON \
@@ -70,7 +71,7 @@ if [ "$(uname)" == "Darwin" ]; then
     make install
 
     # test (full suite too stressful for macpsinet)
-    ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} -L smoke #quick
+    ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} -L quick
 
     # remove conda-build-bound Cache file, to be replaced by psi4-dev
     rm ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake
