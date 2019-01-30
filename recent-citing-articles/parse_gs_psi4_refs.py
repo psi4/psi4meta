@@ -33,8 +33,14 @@ res.raise_for_status() # error out if something went wrong
 # parse the webpage into elements
 parsed = bs4.BeautifulSoup(res.text, "html.parser")
 
+print(parsed)
+
 # get list of titles with links
 titles = parsed.select('.gs_rt a')
+
+# we seem to be getting an extra title lately (our own) for no apparent
+# reason... pop that off
+titles.pop(0)
 
 # get the list of authors (and journal)
 authors = parsed.select('.gs_a')

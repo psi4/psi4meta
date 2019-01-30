@@ -82,7 +82,7 @@ outputs:
               - numpy
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
-              - {{ pin_compatible('qcelemental', max_pin='x.x') }}
+              - {{ pin_compatible('qcelemental') }}  #, max_pin='x.x') }}
       files:
           - bin/psi4
           - include/psi4
@@ -111,6 +111,7 @@ outputs:
               - grep -r theoryfs2 $PREFIX/share/cmake/ || true  # [linux]
               # Actually test
               - conda list
+                # - python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', os.environ.get('CPU_COUNT')]))"
               - python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', '1']))"   # [linux]
               - python -c "import psi4, sys, os; sys.exit(psi4.test('quick', extras=['--durations=50', '-n', '1']))"  # [osx]
                 # works but tries to test qcdb too  - pytest -rws -v --durations=0 -n ${CPU_COUNT} -m quick --pyargs psi4
