@@ -1,4 +1,4 @@
-{% set version = "1.8.7" %}
+{% set version = "1.8.9" %}
 
 package:
     name: chemps2-multiout
@@ -7,11 +7,10 @@ package:
 source:
     git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
     git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
-    git_tag: fc77bc4  # L2: v1.8.7 + 5  fc77bc4
-                      # L1/M0: v{{ version }}  # v1.8.7 + 0  971c111
+    git_tag: d8ac508  # L0/M0: v1.8.9 + 1 = d8ac508
 
 build:
-    number: 2                                            # [linux]
+    number: 0                                            # [linux]
     number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
@@ -64,11 +63,11 @@ outputs:
               - test -f $PREFIX/bin/chemps2
               - test -f $PREFIX/lib/libchemps2$SHLIB_EXT
               # Inspect linkage
-              - ldd -r -u $PREFIX/lib/libchemps2.so && return 0  # [linux]
-              - ldd -v $PREFIX/lib/libchemps2.so                 # [linux]
-              - otool -L $PREFIX/lib/libchemps2.dylib            # [osx]
+              - ldd -r -u $PREFIX/lib/libchemps2$SHLIB_EXT && return 0  # [linux]
+              - ldd -v $PREFIX/lib/libchemps2$SHLIB_EXT                 # [linux]
+              - otool -L $PREFIX/lib/libchemps2$SHLIB_EXT               # [osx]
               - conda inspect linkages --show-files --groupby=dependency chemps2
-              - conda inspect objects -p $PREFIX $PKG_NAME       # [osx]
+              - conda inspect objects -p $PREFIX $PKG_NAME              # [osx]
       about:
           home: http://sebwouters.github.io/CheMPS2
           dev_url: http://github.com/SebWouters/CheMPS2
@@ -112,17 +111,14 @@ outputs:
               - PyCheMPS2/tests/
               - tests/matrixelements/
           commands:
+              - export PYLIB_EXT=`$PYTHON -c 'from numpy import distutils; print(distutils.misc_util.get_shared_lib_extension(is_python_ext=True))'`
               # Verify library
-              - test -f ${SP_DIR}/PyCheMPS2.so                               # [py27]
-              - test -f ${SP_DIR}/PyCheMPS2.cpython-35m-x86_64-linux-gnu.so  # [py35 and linux]
-              - test -f ${SP_DIR}/PyCheMPS2.cpython-35m-darwin.so            # [py35 and osx]
-              - test -f ${SP_DIR}/PyCheMPS2.cpython-36m-x86_64-linux-gnu.so  # [py36 and linux]
-              - test -f ${SP_DIR}/PyCheMPS2.cpython-36m-darwin.so            # [py36 and osx]
+              - test -f $SP_DIR/PyCheMPS2$PYLIB_EXT
               # Inspect linkage
-              - ldd -v $SP_DIR/PyCheMPS2*.so                                 # [linux]
-              - otool -L $SP_DIR/PyCheMPS2*.so                               # [osx]
+              - ldd -v $SP_DIR/PyCheMPS2$PYLIB_EXT          # [linux]
+              - otool -L $SP_DIR/PyCheMPS2$PYLIB_EXT        # [osx]
               - conda inspect linkages --show-files --groupby=dependency pychemps2 chemps2
-              - conda inspect objects -p $PREFIX $PKG_NAME                  # [osx]
+              - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               # Actually test
               - cd PyCheMPS2/tests/
               - $PYTHON test1.py
@@ -147,3 +143,9 @@ outputs:
             The CheMPS2 library can be interfaced with quantum chemistry codes which can handle R(O)HF calculations and molecular orbital matrix elements. This has been done for psi4 and pyscf, as described in the user manual. Usage of the library is illustrated in the c++ and python tests.
 
             The CheMPS2 binary allows to perform DMRG-SCF and DMRG-CASPT2 calculations based on input files. Molecular orbital matrix elements should then be provided in FCIDUMP format. Usage of the binary is illustrated in the binary example.
+
+## History
+
+# version 1.8.7
+# * L2: v1.8.7 + 5 = fc77bc4
+# * L1/M0: v{{ version }}  # v1.8.7 + 0 = 971c111
