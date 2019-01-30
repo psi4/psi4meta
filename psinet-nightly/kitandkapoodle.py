@@ -93,6 +93,19 @@ def _form_channel_command(channel_arg):
             chan_list.extend(['-c', chan])
         return chan_list
 
+#def alt_form_channel_command(channel_arg):
+#    if isinstance(channel_arg, str):
+#        chan_list = ['-c', channel_arg]
+#    else:
+#        chan_list = []
+#        for chan in channel_arg:
+#            chan_list.extend(['-c', chan])
+#
+#    if defaults_channel is None:
+#        return chan_list
+#    else:
+#        return [(defaults_channel if (c == 'defaults') else c) for c in chan_list]
+
 def _form_python_command(py_arg):
     """Effectively deprecated by conda_build_config.yaml variants"""
 
@@ -135,14 +148,17 @@ def _run_command(command, env=None, cwd=None):
 
 if sys.platform.startswith('linux'):
     host = "psinet"
-    #dest_subchannel = 'agg'
+    #defaults_channel = None
     dest_subchannel = 'dev'
+    #defaults_channel = 'c3i_test2'
+    #dest_subchannel = 'c3i_test2'
     #dest_subchannel = 'main'
     recipe_box = '/home/psilocaluser/gits/psi4meta/conda-recipes'
     cbcy = recipe_box + '/conda_build_config.yaml'
     lenv = {
         'CPU_COUNT': '12',
         'CONDA_BLD_PATH': '/scratch/psilocaluser/conda-builds',
+        #'PATH': '/home/psilocaluser/testingconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
         'PATH': '/home/psilocaluser/toolchainconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
         }
 
@@ -299,6 +315,7 @@ if host == "psinet":
 #{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
 #{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/agg']},  # chnl: openfermion
 #{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint, deepdiff  # neededby: psi4
+#{'recipe': 'helpme'},  #, 'build_channels': ['psi4']},  # chnl: pybind11
 
 # L/LT: bump in recipe any upstream versions Psi means to support and rebuild
 #       upon any failure, adjust source of Psi & upstream
@@ -335,6 +352,7 @@ if host == "psinet":
 #{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
+#{'recipe': 'mp2d'},
 
 # L/DEV: build the deps package and test `psi4-path-advisor` (***)
 # ----------------------------------------------------------------
