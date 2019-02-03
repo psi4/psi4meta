@@ -44,8 +44,11 @@ zlib:
 # <<<  Psi Stuff  >>>
 
 ltrtver:
-    # bump whenever a dep version bumps. beyond the "|" aren't in ltrtver.
-    # bump whenever a dep version bumps: ambit  pb11   chemps2  dftd3  dkh  libefp erd   g2g   gcp   gdma  gpu   libint pcm      qcel  resp  sim  sns    v2rdm    libxc | pylibefp hdf5   ofermi ofermip4
+    # bump whenever a dependency (upstream or downstream) version bumps.
+    # * in the "starred" sequence in poodle, ltrtver must be set correctly before building psi4-rt.
+    # * beyond the "|" aren't in ltrtver.
+    #                                    ambit  pb11   chemps2  dftd3  dkh  libefp erd   g2g   gcp   gdma  gpu   libint pcm      qcel  resp  sim  sns    v2rdm    libxc | pylibefp hdf5   ofermi ofermip4
+    #                                    ------ ------ -------- ------ ---- ------ ----- ----- ----- ----- ----- ------ -------- ----- ----- ---- ------ -------- -----   -------- ------ ------ --------
     # - "1.2a1.dev6"  # (   Apr 2018)           2.2.3  1.8.7b1  3.2.0  1.2  1.5b2        1.0.1 2.0.2 2.2.6       1.2.1  1.2.0rc1                  1.0.1  0.7a1    4.0.1            1.10.1
     # - "1.2a1.dev7"  # ( 1 May 2018)           ...    1.8.7    ...    ...  ...          ...   ...   ...         ...    1.2.0rc2                  ...    ...      ...              ...
     # - "1.2a1.dev8"  # ( 1 May 2018)           ...    ...      ...    ...  ...          ...   ...   ...         ...    1.2.1                     ...    ...      4.0.2            ...
@@ -71,7 +74,7 @@ SIMINT_VECTOR:
     - 'sse'
     # - 'avxfma'
 OPTS:
-    - '-msse4.1'                                                        # [osx]
+    - '-msse4.1'                                                                    # [osx]
     - '-msse2 -axCORE-AVX512,CORE-AVX2,AVX -Wl,--as-needed -static-intel -wd10237'  # [linux]
 PY_ABBR:
     - python3.7m
@@ -83,6 +86,22 @@ PYMOD_INSTALL_LIBDIR:
     - '/python3.6/site-packages'
     - '/python3.5/site-packages'
     # - '/python2.7/site-packages'
+
+# * keep upstream & downstream dependencies below alphabetized
+# * in the "starred" sequence in poodle, any upstream packages (i.e., those in "/MISC:" or "/LT:")
+#   must have their version below set correctly (matching a built conda package and probably matching version in their recipe)
+#   before building psi4 (== "/PSI4:").
+# * in the "starred" sequence in poodle, any downstream packages (i.e., those in "/RT:") must
+#   must have their version below set correctly (matching a built conda package and probably matching version in their recipe)
+#   before building psi4-rt (== "/RT-MP:").
+# * fyi, the proper sync for conda and the psi4 repo (e.g., external/.../CMakeLists.txt) is:
+#   * target version -- this is the best (newest release (preferred) or commit known to work with psi4) source to fresh build addon
+#     * in ExternalProject_Add() of <psi4>/external/*/<addon>/CMakeLists.txt, the GIT_REPOSITORY and GIT_TAG source and commit
+#       should match those in source/ section of <psi4meta>/conda_recipes/<addon>/meta.yaml
+#   * minimal version -- this is the minimal (oldest release known to work with psi4) build to accept if detected
+#     * in find_package(<addon> <version> ...) of <psi4>/external/*/<addon>/CMakeLists.txt, the version should be the minimal version
+#     * in find_package(<addon> <version> REQUIRED ...) of <psi4>/psi4/CMakeLists.txt, the version should be exactly that same minimal version
+
 ambit:
     - 0.2
 chemps2:
