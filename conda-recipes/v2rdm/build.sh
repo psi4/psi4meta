@@ -1,5 +1,6 @@
 
 psi4 --version
+git describe
 
 if [ "$(uname)" == "Darwin" ]; then
 
@@ -20,6 +21,9 @@ if [ "$(uname)" == "Darwin" ]; then
         -DOpenMP_CXX_FLAG="-fopenmp=libiomp5" \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_XHOST=OFF
+
+    # While https://github.com/pybind/pybind11/pull/1678 ironing out
+    sed -i '' "s/-std=c++14 -fopenmp$/-fopenmp/g" CMakeFiles/v2rdm_casscf.dir/flags.make
 fi
 
 

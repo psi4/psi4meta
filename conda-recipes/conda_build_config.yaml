@@ -87,7 +87,7 @@ ambit:
 chemps2:
     - 1.8.9
 dftd3:
-    - 3.2.0
+    - 3.2.1
 dkh:
     - 1.2
 libefp:
