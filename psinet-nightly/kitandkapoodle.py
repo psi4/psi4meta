@@ -222,9 +222,9 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
 
     # Upload conda package and report package build status
     # * NoBuild --- conda-build failed in build or test
-    # * Success --- conda package built and uploaded to anaconda.org
-    # * NoUpload --- conda package built but upload rejected b/c already posted or no space
     # * NoFile --- conda package built but package file not found (check if master changed hash during run or croot amiss)
+    # * NoUpload --- conda package built but upload rejected b/c already posted or no space
+    # * Success --- conda package built and uploaded to anaconda.org
     outcomes = []
     for bp in build_products.split():
         command = ['anaconda', 'upload', bp, '--label', dest_subchannel]
@@ -412,6 +412,7 @@ if host == "psinet":
 ##
 ## Loop conda-build ##  (Code) Build all un-commented packages in Build Plan
 ##
+dependent_sequence = True  # T for (***)
 for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
     print("""\n  <<<  {} starting: {}  >>>""".format(kw['recipe'], time_string))
@@ -427,6 +428,12 @@ for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
     print("""\n  <<<  {} finishing: {}  >>>""".format(kw['recipe'], time_string))
     print("""\n  <<<  {} final disposition: {}  >>>\n""".format(kw['recipe'], ans))
+
+    if dependent_sequence and not all([(outcome in ['NoUpload', 'Success']) for outcome in ans]):
+        print("""\n  <<<  Poodle has halted.  >>>\n""")
+        break
+else:
+    print("""\n  <<<  Poodle has finished cleanly.  >>>\n""")
 
 
 #conda build v2rdm -c http://conda.anaconda.org/psi4/label/test -c http://conda.anaconda.org/psi4 --python 3.5
