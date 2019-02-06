@@ -78,6 +78,12 @@
 # [LAB 30 Sep 2018]
 #   anaconda copy --to-owner psi4 conda-forge/pint/0.8.1/noarch/pint-0.8.1-py_1.tar.bz2
 
+# [LAB 31 Jan 2019]
+# Mac
+# anaconda-client           1.6.14-py36_0 --> 1.7.2-py36_0
+# conda                     4.5.4-py36_0  --> 4.6.2-py36_0
+# conda-build               3.10.8-py36_0 --> 3.17.8-py36_0
+
 import os
 import sys
 import datetime
@@ -168,9 +174,9 @@ elif sys.platform == 'darwin':
     #dest_subchannel = 'agg'
     recipe_box = '/Users/github/Git/psi4meta/conda-recipes'
     cbcy = recipe_box + '/conda_build_config.yaml'
+    croot = '/Users/github/builds/conda-builds'  # formerly CONDA_BLD_PATH
     lenv = {
         'CPU_COUNT': '2',
-        'CONDA_BLD_PATH': '/Users/github/builds/conda-builds',
         'PATH': '/Users/github/toolchainconda/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin',
         }
 
@@ -180,7 +186,7 @@ else:
 
 def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
                         dest_subchannel='main', build_channels='defaults',
-                        envvars=None, cbcy=None, cbextras=None):
+                        envvars=None, cbcy=None, croot=None, cbextras=None):
 
     pyxx = _form_python_command(python)
     chnls = _form_channel_command(build_channels)
@@ -194,8 +200,11 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     command = ['conda', 'build', recipe, '--output']
     command.extend(pyxx)
     command.extend(chnls)
-    build_products = subprocess.Popen(command, env=lenv, cwd=recipe_box,
-                                     stdout=subprocess.PIPE).stdout.read().decode('utf-8').strip()
+    if croot:
+        command.extend(['--croot', croot])
+    process = subprocess.run(command, env=lenv, cwd=recipe_box, stdout=subprocess.PIPE)
+    build_products = process.stdout.decode('utf-8').strip()
+
     print("""\n  <<<  {} anticipating: {}  >>>""".format(recipe, build_products))
 
     # Build conda package
@@ -208,6 +217,8 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     if cbcy:
         command.append('--variant-config-files')
         command.append(cbcy)
+    if croot:
+        command.extend(['--croot', croot])
     print("""\n  <<<  {} building: {}  >>>\n""".format(recipe, ' '.join(command)))
     build_process = _run_command(command, env=lenv, cwd=recipe_box)
     if build_process != 0:
@@ -373,6 +384,7 @@ for kw in candidates:
                               keep=True,
                               dest_subchannel=dst,
                               cbcy=cbcy,
+                              croot=croot,
                               **kw)
 
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
