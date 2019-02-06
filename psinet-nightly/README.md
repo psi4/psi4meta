@@ -4,9 +4,11 @@ psinet nightly
 
 I have split out the handling of the github feed into its own scripts, and I have added a feed of recent articles that cite Psi4.  The scripts to do this, like the scripts below, are run nightly on psinet.
 
+```
 45 14 * * 3 bash /home/psilocaluser/gits/psi4meta/recent-citing-articles/parse_gs_psi4_refs.py > /home/psilocaluser/gits/psi4meta/recent-citing-articles/error.log 2>&1
 50 * * * * bash /home/psilocaluser/gits/psi4meta/github-feed/parse_gh_commits.py > /home/psilocaluser/gits/psi4meta/github-feed/error.log 2>&1
 55 * * * * bash /home/psilocaluser/gits/psi4meta/psinet-nightly/push_feed.sh >>/home/psilocaluser/gits/psi4meta/psinet-nightly/push_feed.log 2>&1
+```
 
 The first script grabs recent articles that cite Psi4, and creates two files, articles.txt and most_recent_article.txt.  Note it is invoked with bash, to help it find an appropriate python.
 
@@ -19,9 +21,11 @@ in the website.
 
 Duties of build script in entry below unchanged, but moved to (nu)psinet which we're handling out-of-networked-disk
 
+```
 00 02 * * * /home/psilocaluser/gits/psi4meta/psinet-nightly/kitandkapoodle.py > /home/psilocaluser/gits/psi4meta/psinet-nightly/kpd-norm.log 2>&1
 30 18 * * * /home/psilocaluser/gits/psi4meta/psinet-nightly/kitandkapoodle.py > /home/psilocaluser/gits/psi4meta/psinet-nightly/kpd-anom.log 2>&1
 11,26,41,56 * * * * bash /home/psilocaluser/gits/psi4meta/psinet-nightly/handle_sphinxman.sh >>/home/psilocaluser/gits/psi4meta/psinet-nightly/psicode-dropbox.log 2>&1
+```
 
 [LAB 23 March 2017]
 
