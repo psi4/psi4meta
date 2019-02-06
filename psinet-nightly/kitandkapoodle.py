@@ -78,11 +78,15 @@
 # [LAB 30 Sep 2018]
 #   anaconda copy --to-owner psi4 conda-forge/pint/0.8.1/noarch/pint-0.8.1-py_1.tar.bz2
 
-# [LAB 31 Jan 2019]
+# [LAB ~31 Jan 2019]
+# Linux
+#    anaconda-client  1.6.14-py36_0 --> 1.7.2-py36_0
+#    conda            4.5.9-py36_0  --> 4.6.2-py36_0
+#    conda-build      3.12.0-py36_1 --> 3.17.8-py36_0
 # Mac
-# anaconda-client           1.6.14-py36_0 --> 1.7.2-py36_0
-# conda                     4.5.4-py36_0  --> 4.6.2-py36_0
-# conda-build               3.10.8-py36_0 --> 3.17.8-py36_0
+#    anaconda-client  1.6.14-py36_0 --> 1.7.2-py36_0
+#    conda            4.5.4-py36_0  --> 4.6.2-py36_0
+#    conda-build      3.10.8-py36_0 --> 3.17.8-py36_0
 
 import os
 import sys
@@ -90,27 +94,58 @@ import datetime
 import subprocess
 
 
+##
+## Build-Box ##  (Data) In this block (and in shebang), define build-box-dependent paths
+##
+## * good to have an indepdendent miniconda installation (not used in research) for building so can trash. here, "toolchainconda".
+## * in the main environment of this miniconda, have installed "conda", "conda-build", and "anaconda-client" packages.
+## * similarly, keep the build packages and index outside the miniconda, perhaps in scratch. here, "croot".
+## * "dest_subchannel" is where packages uploaded (i.e., "-c psi4/label/dev"). for releases, leave as "dev"
+##   and _copy_, not _move_, to "main" via the online interface at Anaconda Cloud
+## * leave ".condarc" empty or with harmless show or don't-update-conda commands
+##
+if sys.platform.startswith('linux'):
+    host = "psinet"
+    dest_subchannel = 'dev'
+    recipe_box = '/home/psilocaluser/gits/psi4meta/conda-recipes'
+    croot = '/scratch/psilocaluser/conda-builds'  # formerly CONDA_BLD_PATH
+    lenv = {
+        'CPU_COUNT': '12',
+        'PATH': '/home/psilocaluser/toolchainconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
+        }
+elif sys.platform == 'darwin':
+    host = "macpsinet"
+    dest_subchannel = 'dev'
+    recipe_box = '/Users/github/Git/psi4meta/conda-recipes'
+    croot = '/Users/github/builds/conda-builds'  # formerly CONDA_BLD_PATH
+    lenv = {
+        'CPU_COUNT': '2',
+        'PATH': '/Users/github/toolchainconda/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin',
+        }
+else:
+    sys.exit(1)
+
+cbcy = recipe_box + '/conda_build_config.yaml'
+lenv['HOME'] = os.path.expanduser('~')  # dftd3 & Intel license likes a full environment and POSIX guarantees HOME
+
+
+##
+## Wrap conda-build ## (Code)
+##
 def _form_channel_command(channel_arg):
     if isinstance(channel_arg, str):
-        return ['-c', channel_arg]
+        chan_list = ['-c', channel_arg]
     else:
         chan_list = []
         for chan in channel_arg:
             chan_list.extend(['-c', chan])
         return chan_list
 
-#def alt_form_channel_command(channel_arg):
-#    if isinstance(channel_arg, str):
-#        chan_list = ['-c', channel_arg]
-#    else:
-#        chan_list = []
-#        for chan in channel_arg:
-#            chan_list.extend(['-c', chan])
-#
-#    if defaults_channel is None:
-#        return chan_list
-#    else:
-#        return [(defaults_channel if (c == 'defaults') else c) for c in chan_list]
+    # if defaults_channel is None:
+    return chan_list
+    # else:
+        # return [(defaults_channel if (c == 'defaults') else c) for c in chan_list]
+
 
 def _form_python_command(py_arg):
     """Effectively deprecated by conda_build_config.yaml variants"""
@@ -152,38 +187,6 @@ def _run_command(command, env=None, cwd=None):
     return rc
 
 
-if sys.platform.startswith('linux'):
-    host = "psinet"
-    #defaults_channel = None
-    dest_subchannel = 'dev'
-    #defaults_channel = 'c3i_test2'
-    #dest_subchannel = 'c3i_test2'
-    #dest_subchannel = 'main'
-    recipe_box = '/home/psilocaluser/gits/psi4meta/conda-recipes'
-    cbcy = recipe_box + '/conda_build_config.yaml'
-    lenv = {
-        'CPU_COUNT': '12',
-        'CONDA_BLD_PATH': '/scratch/psilocaluser/conda-builds',
-        #'PATH': '/home/psilocaluser/testingconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
-        'PATH': '/home/psilocaluser/toolchainconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
-        }
-
-elif sys.platform == 'darwin':
-    host = "macpsinet"
-    dest_subchannel = 'dev'
-    #dest_subchannel = 'agg'
-    recipe_box = '/Users/github/Git/psi4meta/conda-recipes'
-    cbcy = recipe_box + '/conda_build_config.yaml'
-    croot = '/Users/github/builds/conda-builds'  # formerly CONDA_BLD_PATH
-    lenv = {
-        'CPU_COUNT': '2',
-        'PATH': '/Users/github/toolchainconda/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin',
-        }
-
-else:
-    sys.exit(1)
-
-
 def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
                         dest_subchannel='main', build_channels='defaults',
                         envvars=None, cbcy=None, croot=None, cbextras=None):
@@ -192,7 +195,6 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     chnls = _form_channel_command(build_channels)
     extras = _form_extras_command(cbextras)
 
-    lenv['HOME'] = os.path.expanduser('~')  # dftd3 & Intel license likes a full environment and POSIX guarantees HOME
     if envvars:
         lenv.update(envvars)
 
@@ -204,7 +206,6 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
         command.extend(['--croot', croot])
     process = subprocess.run(command, env=lenv, cwd=recipe_box, stdout=subprocess.PIPE)
     build_products = process.stdout.decode('utf-8').strip()
-
     print("""\n  <<<  {} anticipating: {}  >>>""".format(recipe, build_products))
 
     # Build conda package
@@ -215,8 +216,7 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     if keep:
         command.append('--keep-old-work')
     if cbcy:
-        command.append('--variant-config-files')
-        command.append(cbcy)
+        command.extend(['--variant-config-files', cbcy])
     if croot:
         command.extend(['--croot', croot])
     print("""\n  <<<  {} building: {}  >>>\n""".format(recipe, ' '.join(command)))
@@ -224,7 +224,11 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     if build_process != 0:
         return 'NoBuild'
 
-    # Upload conda package
+    # Upload conda package and report package build status
+    # * NoBuild --- conda-build failed in build or test
+    # * NoFile --- conda package built but package file not found (check if master changed hash during run or croot amiss)
+    # * NoUpload --- conda package built but upload rejected b/c already posted or no space
+    # * Success --- conda package built and uploaded to anaconda.org
     outcomes = []
     for bp in build_products.split():
         command = ['anaconda', 'upload', bp, '--label', dest_subchannel]
@@ -240,11 +244,23 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     return outcomes
 
 
+##
+## Build Plan ## (Data) Define what to build in this invocation.
+##
+## * most edits happen in this section. separate for each build box
+## * "starred" (***) are the nightly build sequence where psi4/psi4 is changing and psi4 ecosystem constant
+## * when committing, all lines except starred should be commented
+##
 if host == "macpsinet":
 	candidates = [
 
-#{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
-#{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/agg']},  # chnl: openfermion
+    # Ignore this non-sequenced block
+    # -------------------------------
+    #{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
+    #{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/agg']},  # chnl: openfermion
+
+    # qcdb psi4 aka dev1032 --- dest_subchannel = 'nola'
+    #{'recipe': 'psi4-nola', 'build_channels': ['psi4/label/dev', 'psi4/label/agg', 'psi4'], 'dest_subchannel': 'nola'},  # qcdb
 
 # starred (***) are nightly build
 
@@ -255,9 +271,10 @@ if host == "macpsinet":
 #{'recipe': 'pybind11'},
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
 
-# M/LT: bump in recipe any upstream versions Psi means to support and rebuild
-#       upon any failure, adjust source of Psi & upstream
-# ---------------------------------------------------------------------------
+# M/LT: build upstream deps.
+#       bump in recipe any upstream versions Psi means to support. rebuild packages.
+#       upon any failure, adjust source of Psi & upstream.
+# ----------------------------------------------------------------------------------
 #{'recipe': 'ambit'},
 #{'recipe': 'chemps2-multiout'},
 #{'recipe': 'dkh'},
@@ -269,27 +286,35 @@ if host == "macpsinet":
 #{'recipe': 'simint'},
 #{'recipe': 'libxc'},
 
-# M/CBCY: edit "ltrtver" & "<addon>" if anything in LT changed
-# ------------------------------------------------------------
+# M/CBCY1: if anything in LT changed, edit cbcy.
+#          start new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.
+#          good idea to edit target (& if warranted, min) in psi4 repo at this time.
+# -----------------------------------------------------------------------------------------
 
 # M/PSI4: build Psi4 w/o any RT deps or tests (***)
 # -------------------------------------------------
 {'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev']},
-#{'recipe': 'psi4-nola', 'build_channels': ['psi4/label/dev', 'psi4/label/agg', 'psi4'], 'dest_subchannel': 'nola'},  # qcdb
 
 # M/RT-MP: build RT metapackage w/existing downstreams and new Psi4 (***)
-#          upon any failure, step forward or back, adjusting source of downstream or Psi
-# --------------------------------------------------------------------------------------
+#          upon any failure, step back (preferred), adjusting source of Psi to fix Psi+downstream interface
+#                       -OR- step forward, rebuilding downstream against new Psi ABI or adjusting source of downstream.
+#          upon success, continue at M/DEV.
+# ---------------------------------------------------------------------------------------------------------------------
 {'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},
 
-# M/RT: if psi4-rt tests fail, build the downstream
-# -------------------------------------------------
+# M/RT: if psi4-rt tests fail, build the downstreams as needed.
+# -------------------------------------------------------------
 #{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: deepdiff, pb11
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
 #{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev', 'psi4']},  # chnl: psi4
 #{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev', 'psi4']},  # chnl: psi4
+
+# M/CBCY2: if anything in RT changed, edit cbcy.
+#          start or continue editing new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.
+#          return to M/RT-MP.
+# -------------------------------------------------------------------------------------------------------------
 
 # M/DEV: build the deps package and test `psi4-path-advisor` (***)
 # ----------------------------------------------------------------
@@ -300,18 +325,22 @@ if host == "macpsinet":
 if host == "psinet":
     candidates = [
 
-#{'recipe': 'lawrap'},  # linux
-#{'recipe': 'am7-mp'},
-#{'recipe': 'am8-mp'},
-#{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '7'}},  # linux
-#{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '8'}},  # linux
-#{'recipe': 'erd'},
+    # Ignore this non-sequenced block
+    # -------------------------------
+    #{'recipe': 'lawrap'},  # linux
+    #{'recipe': 'am7-mp'},
+    #{'recipe': 'am8-mp'},
+    #{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '7'}},  # linux
+    #{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '8'}},  # linux
+    #{'recipe': 'erd'},
 
-# CBCY openblas --- dest_subchannel = 'nomkl'
-#{'recipe': 'chemps2-multiout', 'dest_subchannel': 'nomkl'},
-#{'recipe': 'libefp-multiout', 'build_channels': ['psi4'], 'dest_subchannel': 'nomkl'},  # deepdiff, pb11 from psi4
-#{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/nomkl', 'psi4/label/dev', 'psi4'], 'dest_subchannel': 'nomkl'},
+    # CBCY openblas --- dest_subchannel = 'nomkl'
+    #{'recipe': 'chemps2-multiout', 'dest_subchannel': 'nomkl'},
+    #{'recipe': 'libefp-multiout', 'build_channels': ['psi4'], 'dest_subchannel': 'nomkl'},  # deepdiff, pb11 from psi4
+    #{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/nomkl', 'psi4/label/dev', 'psi4'], 'dest_subchannel': 'nomkl'},
 
+    # qcdb psi4 aka dev1032 --- dest_subchannel = 'nola'
+    #{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'psi4'], 'dest_subchannel': 'nola'},  # qcdb
 
 # starred (***) are nightly build
 
@@ -328,9 +357,10 @@ if host == "psinet":
 #{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint, deepdiff  # neededby: psi4
 #{'recipe': 'helpme'},  #, 'build_channels': ['psi4']},  # chnl: pybind11
 
-# L/LT: bump in recipe any upstream versions Psi means to support and rebuild
-#       upon any failure, adjust source of Psi & upstream
-# ---------------------------------------------------------------------------
+# L/LT: build upstream deps.
+#       bump in recipe any upstream versions Psi means to support. rebuild packages.
+#       upon any failure, adjust source of Psi & upstream.
+# ----------------------------------------------------------------------------------
 #{'recipe': 'ambit'},
 #{'recipe': 'chemps2-multiout'},
 #{'recipe': 'dkh'},
@@ -341,21 +371,24 @@ if host == "psinet":
 #{'recipe': 'simint'},
 #{'recipe': 'libxc'},
 
-# L/CBCY: edit "ltrtver" & "<addon>" if anything in LT changed
-# ------------------------------------------------------------
+# L/CBCY1: if anything in LT changed, edit cbcy.
+#          start new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.
+#          good idea to edit target (& if warranted, min) in psi4 repo at this time.
+# -----------------------------------------------------------------------------------------
 
 # L/PSI4: build Psi4 w/o any RT deps or tests (***)
 # -------------------------------------------------
 {'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev']},
-#{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'psi4'], 'dest_subchannel': 'nola'},  # qcdb
 
 # L/RT-MP: build RT metapackage w/existing downstreams and new Psi4 (***)
-#          upon any failure, step forward or back, adjusting source of downstream or Psi
-# -------------------------------------------------------------------------------------
+#          upon any failure, step back (preferred), adjusting source of Psi to fix Psi+downstream interface
+#                       -OR- step forward, rebuilding downstream against new Psi ABI or adjusting source of downstream.
+#          upon success, continue at L/DEV.
+# ---------------------------------------------------------------------------------------------------------------------
 {'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},
 
-# L/RT: if psi4-rt tests fail, build the downstream. incr ltrtver in cbc before rebuilding psi4-rt
-# ------------------------------------------------------------------------------------------------
+# L/RT: if psi4-rt tests fail, build the downstreams as needed.
+# -------------------------------------------------------------
 #{'recipe': 'libefp-multiout', 'build_channels': ['psi4', 'defaults', 'conda-forge']},  # chnl: deepdiff, pb11, docs-stuff
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
@@ -365,16 +398,25 @@ if host == "psinet":
 #{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'mp2d'},
 
+# L/CBCY2: if anything in RT changed, edit cbcy.
+#          start or continue editing new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.
+#          return to L/RT-MP.
+# -------------------------------------------------------------------------------------------------------------
+
 # L/DEV: build the deps package and test `psi4-path-advisor` (***)
 # ----------------------------------------------------------------
 {'recipe': 'psi4-dev', 'build_channels': ['psi4/label/dev']},
 
-# L/DOCS: build the docs, feed, and doxygen targets (***)
-# -------------------------------------------------------
+# L/DOCS: build the docs, feed, and doxygen targets and run coverage (***)
+# ------------------------------------------------------------------------
 {'recipe': 'psi4-docs', 'build_channels': ['psi4/label/dev', 'defaults', 'conda-forge'], 'cbextras': ['--prefix-length', '100']},  # chnl: cov*, docs*
         ]
 
 
+##
+## Loop conda-build ##  (Code) Build all un-commented packages in Build Plan
+##
+dependent_sequence = True  # T for (***)
 for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
     print("""\n  <<<  {} starting: {}  >>>""".format(kw['recipe'], time_string))
@@ -390,6 +432,13 @@ for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
     print("""\n  <<<  {} finishing: {}  >>>""".format(kw['recipe'], time_string))
     print("""\n  <<<  {} final disposition: {}  >>>\n""".format(kw['recipe'], ans))
+
+    if dependent_sequence and not all([(outcome in ['NoUpload', 'Success']) for outcome in ans]):
+        print("""\n  <<<  Poodle has halted.  >>>\n""")
+        break
+else:
+    print("""\n  <<<  Poodle has finished cleanly.  >>>\n""")
+
 
 #conda build v2rdm -c http://conda.anaconda.org/psi4/label/test -c http://conda.anaconda.org/psi4 --python 3.5
 # CONDA_BLD_PATH=/scratch/psilocaluser/conda-builds/ /home/psilocaluser/bldmconda3/bin/conda build purge
