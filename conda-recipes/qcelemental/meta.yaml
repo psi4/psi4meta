@@ -12,7 +12,8 @@ package:
 #    #sha256: {{ sha256 }}
 
 source:
-    git_url: git@github.com:MolSSI/QCElemental.git
+    git_url: git@github.com:MolSSI/QCElemental.git       # [linux]
+    git_url: https://github.com/MolSSI/QCElemental.git   # [osx]
     git_tag: v{{ version }}
 
 build:

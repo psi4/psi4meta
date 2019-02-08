@@ -270,6 +270,8 @@ if host == "macpsinet":
 #{'recipe': 'deepdiff', 'build_channels': ['psi4']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
 #{'recipe': 'pybind11'},
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
+#{'recipe': 'pint'},  # neededby: qcelemental
+#{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint, deepdiff  # neededby: psi4
 
 # M/LT: build upstream deps.
 #       bump in recipe any upstream versions Psi means to support. rebuild packages.
