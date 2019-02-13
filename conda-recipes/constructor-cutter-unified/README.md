@@ -5,6 +5,8 @@
 
 * dir `build/` is regenerated each time.
 
+* may want to clear out ~/.conda/constructor
+
 * `python run.py`
 
 * `scp -r build/psi4*/psi4*sh root@vergil.chemistry.gatech.edu:/var/www/html/psicode-download/`

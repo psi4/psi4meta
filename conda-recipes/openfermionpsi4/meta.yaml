@@ -1,5 +1,5 @@
 {% set name = "openfermionpsi4" %}
-{% set version = "0.3" %}
+{% set version = "0.4" %}
 
 package:
     name: {{ name|lower }}
@@ -9,7 +9,7 @@ source:
     git_url: git@github.com:quantumlib/OpenFermion-Psi4.git              # [linux]
     git_url: https://github.com/quantumlib/OpenFermion-Psi4.git          # [osx]
     # git_tag: v{{ version }}
-    git_tag: 98d94cf  # v0.3 + 2 (fix encoding)
+    git_tag: c6b0a37  # 0.4 = c6b0a37
 
 build:
     number: 0                                               # [linux]
@@ -22,18 +22,25 @@ requirements:
         - python {{ python }}
         - setuptools
     run:
-        - openfermion >=0.5
+        - openfermion >={{ openfermion }}
         - {{ pin_compatible('python', max_pin='x.x') }}
 
 test:
+    requires:
+        - psi4
     imports:
         - openfermionpsi4
+        - psi4
+    files:
+        - tests/demo.py
     commands:
         # Verify module
         - test -f $SP_DIR/openfermionpsi4/__init__.py
         # Inspect linkage
         - conda inspect linkages --show-files --groupby=dependency openfermionpsi4 openfermion
         - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+        # Actually test
+        - ${PYTHON} tests/demo.py
 
 about:
     home: https://www.openfermion.org
@@ -46,3 +53,8 @@ about:
     license_family: LGPL
     summary: "Google's plugin allowing OpenFermion to interface with Psi4"
     # description: >
+
+# History
+#
+# * {% set version = "0.3" %}
+#    git_tag: 98d94cf  # v0.3 + 2 (fix encoding)
