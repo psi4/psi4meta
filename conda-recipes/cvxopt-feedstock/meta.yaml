@@ -1,0 +1,48 @@
+{% set version = "1.2.0" %}
+
+package:
+  name: cvxopt
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/c/cvxopt/cvxopt-{{ version }}.tar.gz
+  sha256: 3296c9d49b7dcb894b20db5d7d1c1a443912b4d82358e03f836575e8398e0d60
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler("c") }}
+    - c99-to-c89          # [win and vc<14]
+  host:
+    - python
+    - setuptools
+    - mkl-devel  {{ mkl }}  # [blas_impl == "mkl"]
+    - openblas-devel {{ openblas }}  # [blas_impl == "openblas"]
+    - gsl
+    - fftw
+    - glpk
+    - suitesparse    # [unix]
+
+  run:
+    - python
+
+test:
+  imports:
+    - cvxopt
+  source_files:
+    - tests/*
+    - examples/*
+
+about:
+  home: http://cvxopt.org
+  license: GPL 3
+  license_file: LICENSE
+  summary: Convex optimization package
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - jjhelmus
+    - martinandersen

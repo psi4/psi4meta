@@ -354,8 +354,9 @@ if host == "psinet":
 #{'recipe': 'pybind11'},
 #{'recipe': 'pytest-shutil', 'build_channels': ['defaults', 'conda-forge']},  # chnl: setuptools-git  # neededby: v2rdm  # Note: recipe fine but useless as c-b & pytest-shutil don't mix
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
+#{'recipe': 'cvxopt-feedstock'},  # neededby: openfermion
 #{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
-#{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/agg']},  # chnl: openfermion
+#{'recipe': 'pint'},  # neededby: qcelemental
 #{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint, deepdiff  # neededby: psi4
 #{'recipe': 'helpme'},  #, 'build_channels': ['psi4']},  # chnl: pybind11
 
@@ -398,6 +399,7 @@ if host == "psinet":
 #{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
+#{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/dev']},  # chnl: openfermion, psi4
 #{'recipe': 'mp2d'},
 
 # L/CBCY2: if anything in RT changed, edit cbcy.

@@ -6,7 +6,7 @@ package:
 
 source:
     git_url: https://gitlab.com/libxc/libxc.git
-    git_tag: 4.3.3  # L0/M0 4.3.3
+    git_tag: 4.3.3  # L0/M0: 4.3.3
 
 build:
     number: 0                                            # [linux]
@@ -56,3 +56,6 @@ about:
 #   * number: 1                                            # [linux]  # 1: AVX-512
 #   * number: 0                                            # [osx]
 #   * test -f $PREFIX/lib/libxc$SHLIB_EXT
+
+#    git_tag: 4.3.0  # L1/M1 4.3.0, L2 c-b 3.17
+#                    # L0/M0 loriab branch

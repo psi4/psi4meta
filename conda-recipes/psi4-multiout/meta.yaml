@@ -50,7 +50,6 @@ outputs:
       build:
           requires_features:
               blas: {{ blas_impl }}
-              ameri: am{{ MAX_AM_ERI }}
           run_exports:
               - {{ pin_subpackage('psi4', max_pin='x.x') }}
       requirements:
@@ -83,7 +82,7 @@ outputs:
               - numpy
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
-              - {{ pin_compatible('qcelemental') }}  #, max_pin='x.x') }}
+              - {{ pin_compatible('qcelemental', upper_bound='0.3') }}  #, max_pin='x.x') }}  , upper_bound='0.3') }}
       files:
           - bin/psi4
           - include/psi4
