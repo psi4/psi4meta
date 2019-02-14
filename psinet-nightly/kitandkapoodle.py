@@ -256,9 +256,6 @@ if host == "macpsinet":
 
     # Ignore this non-sequenced block
     # -------------------------------
-    #{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
-    #{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/agg']},  # chnl: openfermion
-
     # qcdb psi4 aka dev1032 --- dest_subchannel = 'nola'
     #{'recipe': 'psi4-nola', 'build_channels': ['psi4/label/dev', 'psi4/label/agg', 'psi4'], 'dest_subchannel': 'nola'},  # qcdb
 
@@ -270,6 +267,8 @@ if host == "macpsinet":
 #{'recipe': 'deepdiff', 'build_channels': ['psi4']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
 #{'recipe': 'pybind11'},
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
+#{'recipe': 'cvxopt-feedstock'},  # neededby: openfermion
+#{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
 #{'recipe': 'pint'},  # neededby: qcelemental
 #{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint, deepdiff  # neededby: psi4
 
@@ -312,6 +311,7 @@ if host == "macpsinet":
 #{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev', 'psi4']},  # chnl: psi4
 #{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev', 'psi4']},  # chnl: psi4
+#{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/dev']},  # chnl: openfermion, psi4
 
 # M/CBCY2: if anything in RT changed, edit cbcy.
 #          start or continue editing new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.
