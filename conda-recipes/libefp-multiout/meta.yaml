@@ -30,10 +30,10 @@ requirements:
         - pybind11 {{ pybind11 }}  # trouble at dep metadata time
         - python {{ python }}
         # docs
-        - python-graphviz                               # [linux and py36]
-        - sphinx >=1.5                                  # [linux and py36]
-        - sphinx-automodapi                             # [linux and py36]
-        - sphinx-psi-theme                              # [linux and py36]
+        - python-graphviz                               # [linux and py==36]
+        - sphinx >=1.5                                  # [linux and py==36]
+        - sphinx-automodapi                             # [linux and py==36]
+        - sphinx-psi-theme                              # [linux and py==36]
 
 outputs:
     - name: libefp
@@ -138,7 +138,7 @@ outputs:
     - name: pylibefp-docs
       build:
            number: 0
-           skip: true  # [win or osx or not py36]
+           skip: true  # [win or osx or not py==36]
       requirements:
           host:
               - python {{ python }}

@@ -7,13 +7,12 @@ package:
 source:
     git_url: git@github.com:psi4/psi4.git      # [linux]
     git_url: https://github.com/psi4/psi4.git  # [osx]
-    # git_tag: v1.2.1  # explicit tag when you don't want tag.dev1
+    # git_tag: v1.3rc1  # explicit tag when you don't want tag.dev1
     git_tag: master
-    #git_tag: v1.3rc1
 
 build:
     number: 0
-    skip: true                                 # [win or osx or not py36]
+    skip: true                                 # [win or osx or not py==36]
 
 requirements:
     build:
