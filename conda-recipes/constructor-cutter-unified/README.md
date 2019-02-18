@@ -9,6 +9,9 @@
 
 * `python run.py`
 
+* watch out for `py_` in buildstring as this means a noarch and must be eliminated
+
 * `scp -r build/psi4*/psi4*sh root@vergil.chemistry.gatech.edu:/var/www/html/psicode-download/`
 
+* log in to vergil root and make WindowsWSL symlinks
 

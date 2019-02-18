@@ -330,10 +330,6 @@ if host == "psinet":
     # Ignore this non-sequenced block
     # -------------------------------
     #{'recipe': 'lawrap'},  # linux
-    #{'recipe': 'am7-mp'},
-    #{'recipe': 'am8-mp'},
-    #{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '7'}},  # linux
-    #{'recipe': 'libint', 'build_channels': 'psi4', 'envvars': {'MAX_AM_ERI': '8'}},  # linux
     #{'recipe': 'erd'},
 
     # CBCY openblas --- dest_subchannel = 'nomkl'

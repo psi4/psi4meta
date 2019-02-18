@@ -15,6 +15,7 @@ specs:
   - psi4 =={{ cookiecutter.release }}+{{ cookiecutter.hash }}
   - psi4-rt =={{ cookiecutter.ltrtver }}
   - python {{ cookiecutter.python }}*
+  - atomicwrites ==1.2.1  # force yesarch from defaults
 
 channels: &id1
   - {{ cookiecutter.repo }}{{ cookiecutter.channel }}{{ cookiecutter.channel_tag }}
