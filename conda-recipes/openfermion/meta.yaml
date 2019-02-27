@@ -9,11 +9,11 @@ source:
     git_url: git@github.com:quantumlib/OpenFermion.git              # [linux]
     git_url: https://github.com/quantumlib/OpenFermion.git          # [osx]
     # git_tag: v{{ version }}
-    git_tag: 0.9.0  # L0/M0: 0.9 = 9c2e029  # L1: defaults cvxopt
+    git_tag: 0.9.0  # L0/M0: 0.9 = 9c2e029  # L1/M1: defaults cvxopt
 
 build:
     number: 1                                               # [linux]
-    number: 0                                               # [osx]
+    number: 1                                               # [osx]
     skip: true                                              # [win]
 
 requirements:
