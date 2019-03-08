@@ -48,7 +48,8 @@ outputs:
               - networkx
               - numpy
               - pytest
-              - qcelemental {{ qcelemental }}*
+              - qcelemental {{ qcelemental }}
+              - {{ pin_compatible('qcelemental', upper_bound='0.5') }}
       files:
           - bin/psi4-path-advisor
           - share/cmake/psi4
