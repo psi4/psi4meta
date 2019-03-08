@@ -171,7 +171,7 @@ if [ "$(uname)" == "Linux" ]; then
     mv -f stage/bin/psi4_reserve stage/bin/psi4
 
     # remove conda-build-bound Cache file, to be replaced by psi4-dev
-    rm ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake
+    rm share/cmake/psi4/psi4PluginCache.cmake
 fi
 
 # NOTES

@@ -419,7 +419,7 @@ if host == "psinet":
 ## Loop conda-build ##  (Code) Build all un-commented packages in Build Plan
 ##
 dependent_sequence = True  # T for (***)
-try_to_upload = False
+try_to_upload = True
 for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
     print("""\n  <<<  {} starting: {}  >>>""".format(kw['recipe'], time_string))
