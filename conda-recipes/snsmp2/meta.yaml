@@ -15,7 +15,7 @@ source:
 
 build:
     number: 2                                               # [linux]
-    number: 0                                               # [osx]
+    number: 1                                               # [osx]
     skip: true                                              # [win]
     script: python setup.py install --single-version-externally-managed --record=record.txt
 

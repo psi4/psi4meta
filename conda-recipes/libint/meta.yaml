@@ -7,12 +7,12 @@ package:
 source:
     git_url: git@github.com:evaleev/libint.git           # [linux]
     git_url: https://github.com/evaleev/libint.git       # [osx]
-    git_tag: 5c89451  # L5: v1, 1.2.1 + 13 = 5c89451, L5: am8
+    git_tag: 5c89451  # L5-6: v1, 1.2.1 + 13 = 5c89451, L5: am8, L6M2: hand-edited to incl libderiv/libderiv.h
                       # L3-4,M1: v1, ~1.2.1 = 3f14ff0, am6 L4: AVX-512
 
 build:
-    number: 5                                            # [linux]
-    number: 1                                            # [osx]
+    number: 6                                            # [linux]
+    number: 2                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
     run_exports:
