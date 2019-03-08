@@ -189,7 +189,8 @@ def _run_command(command, env=None, cwd=None):
 
 def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
                         dest_subchannel='main', build_channels='defaults',
-                        envvars=None, cbcy=None, croot=None, cbextras=None):
+                        envvars=None, cbcy=None, croot=None, cbextras=None,
+                        try_to_upload=True):
 
     pyxx = _form_python_command(python)
     chnls = _form_channel_command(build_channels)
@@ -234,11 +235,14 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
         command = ['anaconda', 'upload', bp, '--label', dest_subchannel]
         print("""\n  <<<  {} uploading: {}  >>>\n""".format(recipe, ' '.join(command)))
         if os.path.isfile(bp):
-            upload_process = _run_command(command, env=lenv)
-            if upload_process == 0:
-                outcomes.append('Success')
+            if try_to_upload:
+                upload_process = _run_command(command, env=lenv)
+                if upload_process == 0:
+                    outcomes.append('Success')
+                else:
+                    outcomes.append('NoUpload')
             else:
-                outcomes.append('NoUpload')
+                    outcomes.append('Local')
         else:
             outcomes.append('NoFile')
     return outcomes
@@ -415,6 +419,7 @@ if host == "psinet":
 ## Loop conda-build ##  (Code) Build all un-commented packages in Build Plan
 ##
 dependent_sequence = True  # T for (***)
+try_to_upload = False
 for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
     print("""\n  <<<  {} starting: {}  >>>""".format(kw['recipe'], time_string))
@@ -425,6 +430,7 @@ for kw in candidates:
                               dest_subchannel=dst,
                               cbcy=cbcy,
                               croot=croot,
+                              try_to_upload=try_to_upload,
                               **kw)
 
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
