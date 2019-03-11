@@ -90,8 +90,10 @@
 
 import os
 import sys
+import json
 import datetime
 import subprocess
+from urllib.parse import quote
 
 
 ##
@@ -127,6 +129,14 @@ else:
 
 cbcy = recipe_box + '/conda_build_config.yaml'
 lenv['HOME'] = os.path.expanduser('~')  # dftd3 & Intel license likes a full environment and POSIX guarantees HOME
+
+badgecolors = {
+    'NothingNew': '9aa3c4',  # blue
+    'Success':    'a3c49a',  # green
+    'NoUpload':   'f7f5c1',  # yellow
+    'NoFile':     'f7f5c1',  # yellow
+    'NoBuild':    'c49aa3',  # red
+}
 
 
 ##
@@ -234,6 +244,7 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     for bp in build_products.split():
         command = ['anaconda', 'upload', bp, '--label', dest_subchannel]
         print("""\n  <<<  {} uploading: {}  >>>\n""".format(recipe, ' '.join(command)))
+        version = bp.split(recipe)[-1].split('-')[1]
         if os.path.isfile(bp):
             if try_to_upload:
                 upload_process = _run_command(command, env=lenv)
@@ -245,7 +256,7 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
                     outcomes.append('Local')
         else:
             outcomes.append('NoFile')
-    return outcomes
+    return outcomes, version
 
 
 ##
@@ -425,7 +436,7 @@ for kw in candidates:
     print("""\n  <<<  {} starting: {}  >>>""".format(kw['recipe'], time_string))
 
     dst = kw.pop('dest_subchannel', dest_subchannel)
-    ans = wrapped_conda_build(verbose=True,
+    ans, ver = wrapped_conda_build(verbose=True,
                               keep=True,
                               dest_subchannel=dst,
                               cbcy=cbcy,
@@ -436,6 +447,18 @@ for kw in candidates:
     time_string = datetime.datetime.now().strftime('%A, %d %B %Y %I:%M%p')
     print("""\n  <<<  {} finishing: {}  >>>""".format(kw['recipe'], time_string))
     print("""\n  <<<  {} final disposition: {}  >>>\n""".format(kw['recipe'], ans))
+
+    shieldsio = {
+        "schemaVersion": 1,
+        "label": quote(kw['recipe']),
+        "message": ver,
+        "color": badgecolors[ans[-1]],
+        "namedLogo": {"macpsinet": 'apple', "psinet": "linux"}[host],
+        "logoColor": "white",
+        "isError": "true",
+    }
+    with open(f'/home/psilocaluser/gits/psi4meta/psicode_dropbox/shieldsio_{host}_{kw["recipe"]}.json', 'w') as fp:
+        json.dump(shieldsio, fp)
 
     if dependent_sequence and not all([(outcome in ['NoUpload', 'Success']) for outcome in ans]):
         print("""\n  <<<  Poodle has halted.  >>>\n""")

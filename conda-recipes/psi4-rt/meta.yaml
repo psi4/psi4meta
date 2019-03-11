@@ -16,7 +16,7 @@ requirements:
         - gcp {{ gcp }}
         - openfermionpsi4 {{ openfermionpsi4 }}
         - resp {{ resp }}
-#        - snsmp2 {{ snsmp2 }}
+        - snsmp2 {{ snsmp2 }}
         - v2rdm_casscf {{ v2rdm_casscf }}
     run:
         - {{ pin_compatible('python', max_pin='x.x') }}
@@ -25,7 +25,7 @@ requirements:
         - {{ pin_compatible('gcp', max_pin='x.x') }}
         - {{ pin_compatible('openfermionpsi4', max_pin='x.x') }}
         - {{ pin_compatible('resp', max_pin='x.x') }}
-#        - {{ pin_compatible('snsmp2', max_pin='x.x') }}
+        - {{ pin_compatible('snsmp2', max_pin='x.x') }}
       {% for package in resolved_packages('host') %}
        {% if package.startswith('v2rdm_casscf') or package.startswith('gpu_dfcc') %}
         - {{ package }}
@@ -41,7 +41,7 @@ test:
         - gpu_dfcc                              # [linux]
         - openfermionpsi4
         - resp
-#        - snsmp2
+        - snsmp2
         - v2rdm_casscf
         - psi4
     files:
