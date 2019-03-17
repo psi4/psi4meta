@@ -40,6 +40,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_qcengine=ON \
         -DENABLE_CheMPS2=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON \
         -DENABLE_dkh=ON \
@@ -126,6 +127,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_qcengine=ON \
         -DENABLE_ambit=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON \
         -DENABLE_CheMPS2=ON \

@@ -43,6 +43,7 @@ requirements:
         - networkx
         - numpy
         - qcelemental {{ qcelemental }}
+        - qcengine {{ qcengine }}
 
 outputs:
     - name: psi4
@@ -72,6 +73,7 @@ outputs:
               - libint {{ libint }}
               - pcmsolver {{ pcmsolver }}
               - qcelemental {{ qcelemental }}
+              - qcengine {{ qcengine }}
               - simint {{ simint }}
               - libxc {{ libxc }}
           run:
@@ -82,6 +84,7 @@ outputs:
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
               - {{ pin_compatible('qcelemental', upper_bound='0.5') }}  #, max_pin='x.x') }}
+              - {{ pin_compatible('qcengine', upper_bound='0.8') }}
       files:
           - bin/psi4
           - include/psi4

@@ -14,6 +14,7 @@ requirements:
         - dftd3 {{ dftd3 }}
         # - pylibefp {{ pylibefp }}
         - gcp {{ gcp }}
+        - mp2d {{ mp2d }}
         - openfermionpsi4 {{ openfermionpsi4 }}
         - resp {{ resp }}
         - snsmp2 {{ snsmp2 }}
@@ -23,6 +24,7 @@ requirements:
         - {{ pin_compatible('dftd3', max_pin='x.x') }}
         - pylibefp {{ pylibefp }}*  # can't do max_pin while version is +git
         - {{ pin_compatible('gcp', max_pin='x.x') }}
+        - {{ pin_compatible('mp2d', max_pin='x.x') }}
         - {{ pin_compatible('openfermionpsi4', max_pin='x.x') }}
         - {{ pin_compatible('resp', max_pin='x.x') }}
         - {{ pin_compatible('snsmp2', max_pin='x.x') }}

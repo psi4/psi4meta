@@ -218,6 +218,8 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     process = subprocess.run(command, env=lenv, cwd=recipe_box, stdout=subprocess.PIPE)
     build_products = process.stdout.decode('utf-8').strip()
     print("""\n  <<<  {} anticipating: {}  >>>""".format(recipe, build_products))
+    for bp in build_products.split():
+        version = bp.split(recipe)[-1].split('-')[1]
 
     # Build conda package
     command = ['conda', 'build', recipe]
@@ -233,7 +235,7 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     print("""\n  <<<  {} building: {}  >>>\n""".format(recipe, ' '.join(command)))
     build_process = _run_command(command, env=lenv, cwd=recipe_box)
     if build_process != 0:
-        return 'NoBuild'
+        return 'NoBuild', version
 
     # Upload conda package and report package build status
     # * NoBuild --- conda-build failed in build or test
@@ -244,7 +246,6 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
     for bp in build_products.split():
         command = ['anaconda', 'upload', bp, '--label', dest_subchannel]
         print("""\n  <<<  {} uploading: {}  >>>\n""".format(recipe, ' '.join(command)))
-        version = bp.split(recipe)[-1].split('-')[1]
         if os.path.isfile(bp):
             if try_to_upload:
                 upload_process = _run_command(command, env=lenv)
@@ -253,7 +254,7 @@ def wrapped_conda_build(recipe, python=None, keep=False, verbose=True,
                 else:
                     outcomes.append('NoUpload')
             else:
-                    outcomes.append('Local')
+                outcomes.append('Local')
         else:
             outcomes.append('NoFile')
     return outcomes, version
@@ -390,14 +391,14 @@ if host == "psinet":
 
 # L/PSI4: build Psi4 w/o any RT deps or tests (***)
 # -------------------------------------------------
-{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev']},
+{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'defaults', 'conda-forge']},  # def&c-f for ACS season until we finalize channel strategy
 
 # L/RT-MP: build RT metapackage w/existing downstreams and new Psi4 (***)
 #          upon any failure, step back (preferred), adjusting source of Psi to fix Psi+downstream interface
 #                       -OR- step forward, rebuilding downstream against new Psi ABI or adjusting source of downstream.
 #          upon success, continue at L/DEV.
 # ---------------------------------------------------------------------------------------------------------------------
-{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},
+{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev', 'defaults', 'conda-forge']},  # def&c-f for ACS season until we finalize channel strategy
 
 # L/RT: if psi4-rt tests fail, build the downstreams as needed.
 # -------------------------------------------------------------
@@ -407,7 +408,7 @@ if host == "psinet":
 #{'recipe': 'gpudfcc', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
-#{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
+#{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev', 'defaults', 'conda-forge']},  # chnl: psi4  # def&c-f for ACS season until we finalize channel strategy
 #{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/dev']},  # chnl: openfermion, psi4
 #{'recipe': 'mp2d'},
 
@@ -418,7 +419,7 @@ if host == "psinet":
 
 # L/DEV: build the deps package and test `psi4-path-advisor` (***)
 # ----------------------------------------------------------------
-{'recipe': 'psi4-dev', 'build_channels': ['psi4/label/dev']},
+{'recipe': 'psi4-dev', 'build_channels': ['psi4/label/dev', 'defaults', 'conda-forge']},  # def&c-f for ACS season until we finalize channel strategy
 
 # L/DOCS: build the docs, feed, and doxygen targets and run coverage (***)
 # ------------------------------------------------------------------------
@@ -448,6 +449,8 @@ for kw in candidates:
     print("""\n  <<<  {} finishing: {}  >>>""".format(kw['recipe'], time_string))
     print("""\n  <<<  {} final disposition: {}  >>>\n""".format(kw['recipe'], ans))
 
+    if isinstance(ans, str):
+        ans = [ans]
     shieldsio = {
         "schemaVersion": 1,
         "label": quote(kw['recipe']),

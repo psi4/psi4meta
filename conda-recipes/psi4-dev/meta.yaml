@@ -49,6 +49,7 @@ outputs:
               - numpy
               - pytest
               - qcelemental >={{ qcelemental }},<0.5
+              - qcengine >={{ qcengine }},<0.8
               - libint {{ libint }} {{ libint_bld }}
       files:
           - bin/psi4-path-advisor
@@ -79,6 +80,7 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_qcengine=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON
@@ -117,6 +119,7 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON                                # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON                                   # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON                             # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_qcengine=ON                                # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON                                   # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON                                 # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON                                     # [linux]
