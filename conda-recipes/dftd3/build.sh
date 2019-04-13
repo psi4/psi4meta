@@ -33,7 +33,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_Fortran_COMPILER=ifort \
-        -DCMAKE_Fortran_FLAGS="${ALLOPTS} -static" \
+        -DCMAKE_Fortran_FLAGS="${ALLOPTS}" \
         -DENABLE_XHOST=OFF
 fi
 
@@ -46,3 +46,8 @@ make install
 
 # test
 # no independent tests
+
+# NOTES
+#
+# removed b/c WSL and some Linux segfaulted
+#   -DCMAKE_Fortran_FLAGS="${ALLOPTS} -static" \

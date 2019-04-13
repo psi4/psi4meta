@@ -88,6 +88,19 @@
 #    conda            4.5.4-py36_0  --> 4.6.2-py36_0
 #    conda-build      3.10.8-py36_0 --> 3.17.8-py36_0
 
+# [LAB 10 Apr 2019]
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.23/linux-64/pydantic-0.23-py36_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.23/linux-64/pydantic-0.23-py37_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.23/osx-64/pydantic-0.23-py37_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.23/osx-64/pydantic-0.23-py36_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.23/win-64/pydantic-0.23-py36_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.23/win-64/pydantic-0.23-py37_0.tar.bz2
+#
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.3.3/noarch/qcelemental-0.3.3-py_0.tar.bz2
+
+# [LAB 11 Apr 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.6.4/noarch/qcengine-0.6.4-py_0.tar.bz2
+
 import os
 import sys
 import json
@@ -135,6 +148,7 @@ badgecolors = {
     'Success':    'a3c49a',  # green
     'NoUpload':   'f7f5c1',  # yellow
     'NoFile':     'f7f5c1',  # yellow
+    'Local':      'f7f5c1',  # yellow
     'NoBuild':    'c49aa3',  # red
 }
 
@@ -391,14 +405,14 @@ if host == "psinet":
 
 # L/PSI4: build Psi4 w/o any RT deps or tests (***)
 # -------------------------------------------------
-{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev', 'defaults', 'conda-forge']},  # def&c-f for ACS season until we finalize channel strategy
+{'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev']},
 
 # L/RT-MP: build RT metapackage w/existing downstreams and new Psi4 (***)
 #          upon any failure, step back (preferred), adjusting source of Psi to fix Psi+downstream interface
 #                       -OR- step forward, rebuilding downstream against new Psi ABI or adjusting source of downstream.
 #          upon success, continue at L/DEV.
 # ---------------------------------------------------------------------------------------------------------------------
-{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev', 'defaults', 'conda-forge']},  # def&c-f for ACS season until we finalize channel strategy
+{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},
 
 # L/RT: if psi4-rt tests fail, build the downstreams as needed.
 # -------------------------------------------------------------
@@ -408,7 +422,7 @@ if host == "psinet":
 #{'recipe': 'gpudfcc', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
-#{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev', 'defaults', 'conda-forge']},  # chnl: psi4  # def&c-f for ACS season until we finalize channel strategy
+#{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/dev']},  # chnl: openfermion, psi4
 #{'recipe': 'mp2d'},
 
@@ -419,7 +433,7 @@ if host == "psinet":
 
 # L/DEV: build the deps package and test `psi4-path-advisor` (***)
 # ----------------------------------------------------------------
-{'recipe': 'psi4-dev', 'build_channels': ['psi4/label/dev', 'defaults', 'conda-forge']},  # def&c-f for ACS season until we finalize channel strategy
+{'recipe': 'psi4-dev', 'build_channels': ['psi4/label/dev']},
 
 # L/DOCS: build the docs, feed, and doxygen targets and run coverage (***)
 # ------------------------------------------------------------------------
