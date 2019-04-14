@@ -345,6 +345,7 @@ if host == "macpsinet":
 #{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev', 'psi4']},  # chnl: psi4
 #{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev', 'psi4']},  # chnl: psi4
 #{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/dev']},  # chnl: openfermion, psi4
+#{'recipe': 'mp2d'},
 
 # M/CBCY2: if anything in RT changed, edit cbcy.
 #          start or continue editing new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.
@@ -478,7 +479,7 @@ for kw in candidates:
         "logoColor": "white",
         "isError": "true",
     }
-    with open(f'/home/psilocaluser/gits/psi4meta/psicode_dropbox/shieldsio_{host}_{kw["recipe"]}.json', 'w') as fp:
+    with open(recipe_box + f'/../psicode_dropbox/shieldsio_{host}_{kw["recipe"]}.json', 'w') as fp:
         json.dump(shieldsio, fp)
 
     if dependent_sequence and not all([(outcome in ['NoUpload', 'Success']) for outcome in ans]):
