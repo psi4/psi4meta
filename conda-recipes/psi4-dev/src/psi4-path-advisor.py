@@ -39,7 +39,8 @@ if sys.platform.startswith('linux'):
 
 elif sys.platform == 'darwin':
     parser.add_argument('--clang', action='store_true',
-                        help="""Engage conda's psi4-dev-provided clang/clang++/gfortran compilers. !Change! this arg formerly invoked XCode AppleClang.""")
+                        help="""Engage conda's psi4-dev-provided clang/clang++/gfortran compilers. You must have downloaded this file https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX10.9.sdk.tar.xz, unpacked it, and saved it at ~/SDKs/MacOSX10.9.sdk . !Change! this arg invoked XCode AppleClang prior to Jul 2018.""")
+
     #                    help="""Engage system-provided clang/clang++ compilers and psi4-dev-provided gfortran.""")
     #parser.add_argument('--gcc', action='store_true',
     #                    help="""Engage psi4-dev-provided gcc/g++/gfortran compilers.""")
@@ -113,6 +114,7 @@ if sys.platform.startswith('linux'):
 if sys.platform == 'darwin':
     if args.clang:
         recc.insert(-1, '-C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsClangCache.cmake')
+        recc.insert(0, 'CONDA_BUILD_SYSROOT=~/SDKs/MacOSX10.9.sdk')
     #    recc.insert(-1, '-C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsAppleClangCache.cmake')
     #if args.gcc:
     #    recc.insert(-1, '-C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsGNUCache.cmake')

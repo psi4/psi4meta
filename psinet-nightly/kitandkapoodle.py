@@ -101,6 +101,10 @@
 # [LAB 11 Apr 2019]
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.6.4/noarch/qcengine-0.6.4-py_0.tar.bz2
 
+# [LAB 12 Apr 2019]
+# anaconda copy --to-owner psi4 conda-forge/dataclasses/0.6/noarch/dataclasses-0.6-py_0.tar.bz2
+
+
 import os
 import sys
 import json

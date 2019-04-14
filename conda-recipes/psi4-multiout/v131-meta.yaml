@@ -7,8 +7,8 @@ package:
 source:
     git_url: git@github.com:psi4/psi4.git      # [linux]
     git_url: https://github.com/psi4/psi4.git  # [osx]
-    # git_tag: v1.3.1  # explicit tag when you don't want tag.dev1  # v1.2 L1: AVX-512  # v1.2.1 L1: am8 c. v1.3  # v1.3 L1/M1: qcel max 0.5
-    git_tag: master
+    git_tag: v1.3.1  # explicit tag when you don't want tag.dev1  # v1.2 L1: AVX-512  # v1.2.1 L1: am8 c. v1.3  # v1.3 L1/M1: qcel max 0.5
+#    git_tag: master
 
 build:
     number: 0                                  # [linux]
@@ -43,7 +43,7 @@ requirements:
         - networkx
         - numpy
         - qcelemental {{ qcelemental }}
-        - qcengine {{ qcengine }}
+#        - qcengine {{ qcengine }}
 
 outputs:
     - name: psi4
@@ -73,7 +73,7 @@ outputs:
               - libint {{ libint }} {{ libint_bld }}
               - pcmsolver {{ pcmsolver }}
               - qcelemental {{ qcelemental }}
-              - qcengine {{ qcengine }}
+#              - qcengine {{ qcengine }}
               - simint {{ simint }}
               - libxc {{ libxc }}
           run:
@@ -84,7 +84,7 @@ outputs:
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
               - {{ pin_compatible('qcelemental', upper_bound='0.5') }}  #, max_pin='x.x') }}
-              - {{ pin_compatible('qcengine', upper_bound='0.8') }}
+#              - {{ pin_compatible('qcengine', upper_bound='0.8') }}
       files:
           - bin/psi4
           - include/psi4
