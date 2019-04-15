@@ -15,7 +15,10 @@ specs:
   - psi4 =={{ cookiecutter.release }}+{{ cookiecutter.hash }}
   - psi4-rt =={{ cookiecutter.ltrtver }}
   - python {{ cookiecutter.python }}*
-  - atomicwrites ==1.2.1  # force yesarch from defaults
+
+# https://github.com/conda/constructor/issues/86
+# https://github.com/openturns/otconda/blob/master/construct.yaml.in
+post_install: post_install.sh  [unix]
 
 channels: &id1
   - {{ cookiecutter.repo }}{{ cookiecutter.channel }}{{ cookiecutter.channel_tag }}
