@@ -34,7 +34,7 @@ requirements:
         - dkh {{ dkh }}
         - gau2grid {{ gau2grid }}
         - gdma {{ gdma }}
-        - libint {{ libint }}
+        - libint {{ libint }} {{ libint_bld }}
         - pcmsolver {{ pcmsolver }}
         - simint {{ simint }}
         - libxc {{ libxc }}
