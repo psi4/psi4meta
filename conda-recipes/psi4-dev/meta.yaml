@@ -75,6 +75,7 @@ outputs:
               - cd psi4
               - PPAOUT="$(psi4-path-advisor --${CONDA_CPLR})"
               - >
+                  eval
                   ${PPAOUT}-${CONDA_CPLR}
                   -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON
@@ -114,6 +115,7 @@ outputs:
               - PPAOUT="$(psi4-path-advisor --intel)"                                    # [linux]
               - source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64  # [linux]
               - >                                                                        # [linux]
+                  eval                                                                   # [linux]
                   ${PPAOUT}-intel                                                        # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON                                # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON                                  # [linux]
