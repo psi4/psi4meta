@@ -29,6 +29,8 @@ hdf5:
     - 1.10.2  # this recipe pins to x.x.x which I trust more than the 1.8 recipe x.x  # no need to bump build no. for dep pkgs
 mkl:
     - 2018
+openbabel:
+    - 2.4
 openblas:
     - 0.2.20
 pybind11:

@@ -388,6 +388,7 @@ if host == "psinet":
 #{'recipe': 'pint'},  # neededby: qcelemental
 #{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint, deepdiff  # neededby: psi4
 #{'recipe': 'helpme'},  #, 'build_channels': ['psi4']},  # chnl: pybind11
+#{'recipe': 'pnab', 'build_channels': ['conda-forge']},
 
 # L/LT: build upstream deps.
 #       bump in recipe any upstream versions Psi means to support. rebuild packages.
