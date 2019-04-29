@@ -41,7 +41,7 @@ requirements:
         - jupyter_client
         - nbsphinx
         - python-graphviz
-        - sphinx >=1.5
+        - sphinx >=1.5,<2.0
         - sphinx-automodapi
         - sphinx-psi-theme
         # cov
