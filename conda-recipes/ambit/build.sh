@@ -37,7 +37,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # link against conda MKL & GCC
     if [ "$blas_impl" = "mkl" ]; then
-        LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt.so"
+        LAPACK_INTERJECT="${PREFIX}/lib/libmkl_rt${SHLIB_EXT};-Wl,-Bstatic;-lsvml;-Wl,-Bdynamic"
     else
         LAPACK_INTERJECT="${PREFIX}/lib/libopenblas.so"
     fi
