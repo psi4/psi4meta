@@ -24,6 +24,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_OPENMP=OFF \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON \
         -DCMAKE_DISABLE_FIND_PACKAGE_libefp=ON \
         -DENABLE_XHOST=OFF \
         -DFRAGLIB_UNDERSCORE_L=OFF \
@@ -66,6 +67,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_OPENMP=OFF \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON \
         -DCMAKE_DISABLE_FIND_PACKAGE_libefp=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
