@@ -175,15 +175,10 @@ if [ "$(uname)" == "Linux" ]; then
     # remove conda-build-bound Cache file, to be replaced by psi4-dev
     rm ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake
 
-#INTERFACE_LINK_LIBRARIES "/opt/anaconda1anaconda2anaconda3/lib/libhdf5.so;${BUILD_PREFIX}/x86_64-conda_cos6-linux-gnu/sysroot/usr/lib/librt.so;${BUILD_PREFIX}/x86_64-conda_cos6-linux-gnu/sysroot/usr/lib/libpthread.so;/opt/anaconda1anaconda2anaconda3/lib/libz.so;${BUILD_PREFIX}/x86_64-conda_cos6-linux-gnu/sysroot/usr/lib/libdl.so;${BUILD_PREFIX}/x86_64-conda_cos6-linux-gnu/sysroot/usr/lib/libm.so"
-#INTERFACE_LINK_LIBRARIES "/opt/anaconda1anaconda2anaconda3/lib/libhdf5.so;-lrt;-lpthread;/opt/anaconda1anaconda2anaconda3/lib/libz.so;-ldl;-lm"
-#INTERFACE_LINK_LIBRARIES "${CONDA_PREFIX}/lib/libhdf5.so;-lrt;-lpthread;${CONDA_PREFIX}/lib/libz.so;-ldl;-lm"
-
     sed -i "s|${BUILD_PREFIX}/${HOST}/sysroot/usr/lib/librt.so|-lrt|g" ${PREFIX}/share/cmake/TargetHDF5/TargetHDF5Targets.cmake
     sed -i "s|${BUILD_PREFIX}/${HOST}/sysroot/usr/lib/libpthread.so|-lpthread|g" ${PREFIX}/share/cmake/TargetHDF5/TargetHDF5Targets.cmake
     sed -i "s|${BUILD_PREFIX}/${HOST}/sysroot/usr/lib/libdl.so|-ldl|g" ${PREFIX}/share/cmake/TargetHDF5/TargetHDF5Targets.cmake
     sed -i "s|${BUILD_PREFIX}/${HOST}/sysroot/usr/lib/libm.so|-lm|g" ${PREFIX}/share/cmake/TargetHDF5/TargetHDF5Targets.cmake
-
 fi
 
 # NOTES

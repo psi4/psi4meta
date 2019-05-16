@@ -104,6 +104,8 @@
 # [LAB 12 Apr 2019]
 # anaconda copy --to-owner psi4 conda-forge/dataclasses/0.6/noarch/dataclasses-0.6-py_0.tar.bz2
 
+# [LAB 13 May 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.4.0/noarch/qcelemental-0.4.0-py_0.tar.bz2
 
 import os
 import sys
@@ -130,6 +132,7 @@ if sys.platform.startswith('linux'):
     croot = '/scratch/psilocaluser/conda-builds'  # formerly CONDA_BLD_PATH
     lenv = {
         'CPU_COUNT': '12',
+#        'CPU_COUNT': '1',
         'PATH': '/home/psilocaluser/toolchainconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
         }
 elif sys.platform == 'darwin':

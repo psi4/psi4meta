@@ -44,7 +44,6 @@ outputs:
               - {{ pin_compatible('pybind11', max_pin='x.x.x') }}
               - {{ pin_compatible('python', max_pin='x.x') }}
               # rt
-              - deepdiff
               - networkx
               - numpy
               - pytest
