@@ -39,7 +39,6 @@ requirements:
         - simint {{ simint }}
         - libxc {{ libxc }}
         # rt for ctest
-        - deepdiff
         - networkx
         - numpy
         - qcelemental {{ qcelemental }}
@@ -77,7 +76,6 @@ outputs:
               - simint {{ simint }}
               - libxc {{ libxc }}
           run:
-              - deepdiff
               - intel-openmp
               - networkx
               - numpy

@@ -28,7 +28,6 @@ requirements:
         - libint {{ libint }}
         - libxc {{ libxc }}
         # run: for build-time testing or docs
-        - deepdiff
         - dftd3 {{ dftd3 }}
         - gcp {{ gcp }}
         - networkx
