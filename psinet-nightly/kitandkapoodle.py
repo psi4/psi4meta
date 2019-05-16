@@ -306,7 +306,7 @@ if host == "macpsinet":
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
 #{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
 #{'recipe': 'pint'},  # neededby: qcelemental
-#{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint, deepdiff  # neededby: psi4
+#{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint  # neededby: psi4
 
 # M/LT: build upstream deps.
 #       bump in recipe any upstream versions Psi means to support. rebuild packages.
@@ -341,7 +341,7 @@ if host == "macpsinet":
 
 # M/RT: if psi4-rt tests fail, build the downstreams as needed.
 # -------------------------------------------------------------
-#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: deepdiff, pb11
+#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: qcel, pb11
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
 #{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
@@ -389,7 +389,7 @@ if host == "psinet":
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
 #{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
 #{'recipe': 'pint'},  # neededby: qcelemental
-#{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint, deepdiff  # neededby: psi4
+#{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint  # neededby: psi4
 #{'recipe': 'helpme'},  #, 'build_channels': ['psi4']},  # chnl: pybind11
 #{'recipe': 'pnab', 'build_channels': ['conda-forge']},
 
@@ -425,7 +425,7 @@ if host == "psinet":
 
 # L/RT: if psi4-rt tests fail, build the downstreams as needed.
 # -------------------------------------------------------------
-#{'recipe': 'libefp-multiout', 'build_channels': ['psi4', 'defaults', 'conda-forge']},  # chnl: deepdiff, pb11, docs-stuff
+#{'recipe': 'libefp-multiout', 'build_channels': ['psi4', 'defaults', 'conda-forge']},  # chnl: qcel, pb11, docs-stuff
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
 #{'recipe': 'gpudfcc', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
