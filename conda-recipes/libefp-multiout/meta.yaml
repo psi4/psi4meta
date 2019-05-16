@@ -28,6 +28,7 @@ requirements:
         - openblas-devel {{ openblas }}                 # [blas_impl == 'openblas']
         - pybind11 {{ pybind11 }}  # trouble at dep metadata time
         - python {{ python }}
+        - qcelemental {{ qcelemental }}
         # docs
         - python-graphviz                               # [linux and py==36]
         - sphinx >=1.5,<2                               # [linux and py==36]

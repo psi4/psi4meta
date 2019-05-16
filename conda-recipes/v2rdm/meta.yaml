@@ -51,7 +51,7 @@ test:
         - test -f $SP_DIR/v2rdm_casscf/v2rdm_casscf.so
         - test -f $PREFIX/share/cmake/v2rdm_casscf/v2rdm_casscfConfig.cmake
         # Inspect linkage
-        - ldd -r -u $SP_DIR/v2rdm_casscf/v2rdm_casscf.so && return 0  # [linux]
+#        - ldd -r -u $SP_DIR/v2rdm_casscf/v2rdm_casscf.so && return 0  # [linux]
         - ldd -v $SP_DIR/v2rdm_casscf/v2rdm_casscf.so                 # [linux]
         - otool -L $SP_DIR/v2rdm_casscf/v2rdm_casscf.so               # [osx]
         - conda inspect linkages --show-files --groupby=dependency v2rdm_casscf
