@@ -7,11 +7,11 @@ package:
 source:
     git_url: git@github.com:psi4/psi4.git      # [linux]
     git_url: https://github.com/psi4/psi4.git  # [osx]
-    # git_tag: v1.3.2  # explicit tag when you don't want tag.dev1  # v1.2 L1: AVX-512  # v1.2.1 L1: am8 c. v1.3  # v1.3 L1/M1: qcel max 0.5
-    git_tag: master
+    git_tag: v1.2.1  # explicit tag when you don't want tag.dev1  # v1.2 L1: AVX-512  # v1.2.1 L1: am8 c. v1.3  # v1.3 L1/M1: qcel max 0.5
+    #git_tag: master
 
 build:
-    number: 0                                  # [linux]
+    number: 1                                  # [linux]
     number: 0                                  # [osx]
     binary_relocation: true
     skip: true                                 # [win]
@@ -33,16 +33,17 @@ requirements:
         - chemps2 {{ chemps2 }}
         - dkh {{ dkh }}
         - gau2grid {{ gau2grid }}
+        - libefp {{ libefp }}
         - gdma {{ gdma }}
-        - libint {{ libint }} {{ libint_bld }}
+        - libint {{ libint }}
         - pcmsolver {{ pcmsolver }}
         - simint {{ simint }}
         - libxc {{ libxc }}
         # rt for ctest
+        - deepdiff
         - networkx
         - numpy
-        - qcelemental {{ qcelemental }}
-        - qcengine {{ qcengine }}
+#        - qcelemental {{ qcelemental }}
 
 outputs:
     - name: psi4
@@ -68,21 +69,21 @@ outputs:
               - chemps2 {{ chemps2 }}
               - dkh {{ dkh }}
               - gau2grid {{ gau2grid }}
+              - libefp {{ libefp }}
               - gdma {{ gdma }}
-              - libint {{ libint }} {{ libint_bld }}
+              - libint {{ libint }}
               - pcmsolver {{ pcmsolver }}
-              - qcelemental {{ qcelemental }}
-              - qcengine {{ qcengine }}
+#              - qcelemental {{ qcelemental }}
               - simint {{ simint }}
               - libxc {{ libxc }}
           run:
+              - deepdiff
               - intel-openmp
               - networkx
               - numpy
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
-              - {{ pin_compatible('qcelemental', upper_bound='0.6') }}  #, max_pin='x.x') }}
-              - {{ pin_compatible('qcengine', upper_bound='0.8') }}
+#              - {{ pin_compatible('qcelemental', upper_bound='0.5') }}  #, max_pin='x.x') }}
       files:
           - bin/psi4
           - include/psi4
@@ -100,18 +101,23 @@ outputs:
               - export PYLIB_EXT=`$PYTHON -c 'import sysconfig as s; print(s.get_config_var("EXT_SUFFIX"))'`
               # Verify existence and execution
               - test -f $PREFIX/bin/psi4
-              - test -f $SP_DIR/psi4/core$PYLIB_EXT
+#              - test -f $SP_DIR/psi4/core$PYLIB_EXT
+              - test -f $SP_DIR/psi4/core.so
               - $PREFIX/bin/psi4 --version
               # Inspect linkage
-              - ldd -r -u $SP_DIR/psi4/core$PYLIB_EXT  # [linux]
-              - ldd -v $SP_DIR/psi4/core$PYLIB_EXT     # [linux]
-              - otool -L $SP_DIR/psi4/core$PYLIB_EXT   # [osx]
+#              - ldd -r -u $SP_DIR/psi4/core$PYLIB_EXT  # [linux]
+#              - ldd -v $SP_DIR/psi4/core$PYLIB_EXT     # [linux]
+#              - otool -L $SP_DIR/psi4/core$PYLIB_EXT   # [osx]
+              - ldd -r -u $SP_DIR/psi4/core.so  # [linux]
+              - ldd -v $SP_DIR/psi4/core.so     # [linux]
+              - otool -L $SP_DIR/psi4/core.so   # [osx]
               - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint pcmsolver simint libxc psi4  # erd
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               - grep -r theoryfs2 $PREFIX/share/cmake/ || true  # [linux]
               # Actually test
               - conda list
-              - python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', os.environ.get('CPU_COUNT')]))"  # [linux]
+                # - python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', os.environ.get('CPU_COUNT')]))"
+              - python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', '1']))"   # [linux]
               - python -c "import psi4, sys, os; sys.exit(psi4.test('quick', extras=['--durations=50', '-n', '1']))"  # [osx]
                 # works but tries to test qcdb too  - pytest -rws -v --durations=0 -n ${CPU_COUNT} -m quick --pyargs psi4
               - python -c "import psi4; print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
@@ -146,7 +152,3 @@ outputs:
 # * tried adding pybind11 to psi4 pkg run_exports since psi4Config needs it so
 #   see if allows only host:psi4 for plugins. FAIL
 # * - icc_rt {{ mkl }}  # from jupyworks
-
-# * to test on maintenance branch
-#   package/version: v1.3.1rc1  # explicit version for trial builds on maintenance branch (where versioner undefines un-tagged version)
-#   source/git_tag: 1.3.x
