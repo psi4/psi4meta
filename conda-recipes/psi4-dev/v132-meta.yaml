@@ -44,11 +44,12 @@ outputs:
               - {{ pin_compatible('pybind11', max_pin='x.x.x') }}
               - {{ pin_compatible('python', max_pin='x.x') }}
               # rt
+              - deepdiff
               - networkx
               - numpy
               - pytest
-              - qcelemental >={{ qcelemental }},<0.6
-              - qcengine >={{ qcengine }},<0.8
+              - qcelemental >={{ qcelemental }},<0.5
+#              - qcengine >={{ qcengine }},<0.8
               - libint {{ libint }} {{ libint_bld }}
       files:
           - bin/psi4-path-advisor
@@ -81,13 +82,13 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_qcengine=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_simint=ON
+                  #-DCMAKE_INSIST_FIND_PACKAGE_qcengine=ON
                   #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON
                   #-DENABLE_PLUGIN_TESTING=ON
               # * build psi4 and test its threading
@@ -121,13 +122,13 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON                                # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON                                   # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON                             # [linux]
-                  -DCMAKE_INSIST_FIND_PACKAGE_qcengine=ON                                # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON                                   # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON                                 # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON                                     # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON                                    # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON                               # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_simint=ON                                  # [linux]
+                  #-DCMAKE_INSIST_FIND_PACKAGE_qcengine=ON                                # [linux]
               # * build psi4 and test its threading
               # * evade long prefix
               - cd objdir-intel && make -j${CPU_COUNT}                                   # [linux and py==36]

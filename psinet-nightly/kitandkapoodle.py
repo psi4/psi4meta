@@ -107,6 +107,9 @@
 # [LAB 13 May 2019]
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.4.0/noarch/qcelemental-0.4.0-py_0.tar.bz2
 
+# [LAB 31 May 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.4.1/noarch/qcelemental-0.4.1-py_0.tar.bz2
+
 import os
 import sys
 import json

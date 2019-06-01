@@ -28,6 +28,8 @@ test:
         - test -L $PREFIX/lib/libxc$SHLIB_EXT
         # Inspect linkage
         - ldd -v $PREFIX/lib/libxc$SHLIB_EXT             # [linux]
+        - ldd -v $PREFIX/bin/xc-info                     # [linux]
+        - $PREFIX/bin/xc-info 100                        # [linux]
         - otool -L $PREFIX/lib/libxc$SHLIB_EXT           # [osx]
         - conda inspect linkages --show-files --groupby=dependency libxc
         - conda inspect objects -p $PREFIX $PKG_NAME     # [osx]
