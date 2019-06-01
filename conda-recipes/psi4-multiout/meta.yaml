@@ -111,15 +111,15 @@ outputs:
               - grep -r theoryfs2 $PREFIX/share/cmake/ || true  # [linux]
               # Actually test
               - conda list
+              - PASSFAIL="--passfail"           # [linux]
+              - PASSFAIL=""                     # [osx]  # Mac threading occasionally bizarre
+              - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --ldd  # [py3k]
+              - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n6  # [py3k]
+              - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n6  # [py3k and not osx]
               - python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', os.environ.get('CPU_COUNT')]))"  # [linux]
               - python -c "import psi4, sys, os; sys.exit(psi4.test('quick', extras=['--durations=50', '-n', '1']))"  # [osx]
                 # works but tries to test qcdb too  - pytest -rws -v --durations=0 -n ${CPU_COUNT} -m quick --pyargs psi4
               - python -c "import psi4; print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
-              - PASSFAIL="--passfail"           # [linux]
-              - PASSFAIL=""                     # [osx]  # Mac threading occasionally bizarre
-              - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --ldd  # [py3k]
-              - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n${CPU_COUNT}  # [py3k]
-              - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${CPU_COUNT}  # [py3k and not osx]
       about:
           home: http://psicode.org
           dev_url: https://github.com/psi4/psi4
