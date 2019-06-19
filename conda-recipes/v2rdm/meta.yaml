@@ -8,13 +8,13 @@ source:
     git_url: git@github.com:edeprince3/v2rdm_casscf.git      # [linux]
     git_url: https://github.com/edeprince3/v2rdm_casscf.git  # [osx]
     # git_tag: v{{ version }}
-    git_tag: e155289         # L5,6,7,8,9,M5,6,7,8: e155289 = v0.8 + 26 (no L4)
+    git_tag: e155289         # L5,6,7,8,9,10,M5,6,7,8: e155289 = v0.8 + 26 (no L4)
                              # L3: loriab-patch-1 v0.8 + ~7 (codata2014 fix)
                              # L1,2: 976d8af = v0.8 + 1 (version bump)
     #path: ../../../v2rdm_casscf
 
 build:
-    number: 9                                            # [linux]
+    number: 10                                           # [linux]
     number: 8                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]

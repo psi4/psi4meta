@@ -110,6 +110,12 @@
 # [LAB 31 May 2019]
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.4.1/noarch/qcelemental-0.4.1-py_0.tar.bz2
 
+# [LAB 13 Jun 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.4.2/noarch/qcelemental-0.4.2-py_0.tar.bz2
+
+# [LAB 18 Jun 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.7.1/noarch/qcengine-0.7.1-py_0.tar.bz2
+
 import os
 import sys
 import json
@@ -402,6 +408,7 @@ if host == "psinet":
 # ----------------------------------------------------------------------------------
 #{'recipe': 'ambit'},
 #{'recipe': 'chemps2-multiout'},
+#{'recipe': 'cppe'},
 #{'recipe': 'dkh'},
 #{'recipe': 'gau2grid-multiout'},
 #{'recipe': 'gdma'},

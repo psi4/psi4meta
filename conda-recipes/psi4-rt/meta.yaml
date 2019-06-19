@@ -36,11 +36,11 @@ requirements:
 
 test:
     requires:
-        - gpu_dfcc                              # [linux]  # test, even if too fat to include
+#        - gpu_dfcc                              # [linux]  # test, even if too fat to include
         - psi4 {{ psi4ver }}
     imports:
         - pylibefp
-        - gpu_dfcc                              # [linux]
+#        - gpu_dfcc                              # [linux]
         - openfermionpsi4
         - resp
         - snsmp2
@@ -50,12 +50,12 @@ test:
         - tests/openfermionpsi4_demo.py
     commands:
         - psi4 --test
-        - python -c "import gpu_dfcc, sys; sys.exit(gpu_dfcc.test())"  # [linux]
+#        - python -c "import gpu_dfcc, sys; sys.exit(gpu_dfcc.test())"  # [linux]
         - python -c "import pylibefp, sys; sys.exit(pylibefp.test('long'))"
         - python -c "import resp, sys; sys.exit(resp.test('long'))"
         - python -c "import v2rdm_casscf as v2; import sys; sys.exit(v2.test('long', extras=['-k', 'psiapi']))"
         - python -c "import psi4, pylibefp, resp, v2rdm_casscf; print('*** Psi4 {}, pylibefp {}, resp {}, v2rdm_casscf {} compatible!'.format(psi4.__version__, pylibefp.__version__, resp.__version__, v2rdm_casscf.__version__))"
-        - python -c "import psi4, gpu_dfcc; print('*** Psi4 {}, gpu_dfcc {} compatible!'.format(psi4.__version__, gpu_dfcc.__version__))"  # [linux]
+#        - python -c "import psi4, gpu_dfcc; print('*** Psi4 {}, gpu_dfcc {} compatible!'.format(psi4.__version__, gpu_dfcc.__version__))"  # [linux]
         - python tests/openfermionpsi4_demo.py
 
 about:
