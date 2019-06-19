@@ -30,7 +30,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_CXX_COMPILER=icpc \
-        -DCMAKE_CXX_FLAGS="${ALLOPTS} -static"
+        -DCMAKE_CXX_FLAGS="${ALLOPTS}"
 #needed?        -DENABLE_XHOST=OFF
 fi
 
@@ -43,3 +43,11 @@ make install
 
 # test
 # no independent tests
+
+
+# history
+# -------
+
+# original
+#        -DCMAKE_CXX_FLAGS="${ALLOPTS} -static"
+

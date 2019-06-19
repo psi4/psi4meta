@@ -1,24 +1,22 @@
-{% set version = "0.1.0" %}
+{% set version = "1.1.0" %}
 
 package:
     name: mp2d
     version: {{ version }}
 
 source:
-    git_url: git@github.com:loriab/mp2d_cpp.git          # [linux]
-    git_url: https://github.com/loriab/mp2d_cpp.git      # [osx]
+    git_url: https://github.com/loriab/MP2D-1.git        # [linux]
+    #git_url: git@github.com:Chandemonium/MP2D.git        # [linux]
+    #git_url: https://github.com/Chandemonium/MP2D.git    # [osx]
+
     # git_tag: v{{ version }}
-    git_tag: master
+    git_tag: revise #master
 
 build:
     number: 0                                            # [linux]
     number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
-    ignore_run_exports:
-        # unused libraries
-        - libgcc-ng                                      # [linux]
-        - libstdcxx-ng                                   # [linux]
 
 requirements:
     build:
@@ -29,8 +27,8 @@ test:
     commands:
         # Verify executable
         - test -f $PREFIX/bin/mp2d
-        - test -f $PREFIX/share/mp2d/Params.txt
-        #- $PREFIX/bin/mp2d
+        - test -f $PREFIX/share/mp2d/mp2d_parameters.dat
+        - $PREFIX/bin/mp2d --version
         # Inspect linkage
         - otool -L $PREFIX/bin/mp2d           # [osx]
         - conda inspect linkages --show-files --groupby=dependency mp2d
@@ -38,12 +36,29 @@ test:
 
 about:
     # home:
-    dev_url: https://github.com/loriab/mp2d_cpp
+    dev_url: https://github.com/Chandemonium/MP2D.git
     # doc_url:
     # doc_source_url:
     license: MIT
-    # license_url:
+    license_url: https://opensource.org/licenses/MIT
     # license_file:
     license_family: MIT
     summary: "C. Greenwell's dispersion correction for MP2 quantum chemical method"
     # description: >
+
+
+# History
+# -------
+
+# orig repo
+#   {% set version = "0.1.0" %}
+#       git_url: git@github.com:loriab/mp2d_cpp.git          # [linux]
+#       git_url: https://github.com/loriab/mp2d_cpp.git      # [osx]
+#        - test -f $PREFIX/share/mp2d/Params.txt
+#    ignore_run_exports:
+#        # unused libraries
+#        - libgcc-ng                                      # [linux]
+#        - libstdcxx-ng                                   # [linux]
+
+
+
