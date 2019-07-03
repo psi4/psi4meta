@@ -5,12 +5,10 @@ package:
     version: {{ version }}
 
 source:
-    git_url: https://github.com/loriab/MP2D-1.git        # [linux]
-    #git_url: git@github.com:Chandemonium/MP2D.git        # [linux]
-    #git_url: https://github.com/Chandemonium/MP2D.git    # [osx]
-
+    git_url: git@github.com:Chandemonium/MP2D.git        # [linux]
+    git_url: https://github.com/Chandemonium/MP2D.git    # [osx]
     # git_tag: v{{ version }}
-    git_tag: revise #master
+    git_tag: c6c7f86
 
 build:
     number: 0                                            # [linux]
@@ -59,6 +57,3 @@ about:
 #        # unused libraries
 #        - libgcc-ng                                      # [linux]
 #        - libstdcxx-ng                                   # [linux]
-
-
-
