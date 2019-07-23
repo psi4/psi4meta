@@ -116,6 +116,17 @@
 # [LAB 18 Jun 2019]
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.7.1/noarch/qcengine-0.7.1-py_0.tar.bz2
 
+# [LAB 21 Jul 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.5.0/noarch/qcelemental-0.5.0-py_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.8.0/noarch/qcengine-0.8.0-py_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.30.1/linux-64/pydantic-0.30.1-py36h516909a_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.30.1/linux-64/pydantic-0.30.1-py37h516909a_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.30.1/osx-64/pydantic-0.30.1-py36h01d97ff_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.30.1/osx-64/pydantic-0.30.1-py37h01d97ff_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.30.1/win-64/pydantic-0.30.1-py36hfa6e2cd_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.30.1/win-64/pydantic-0.30.1-py37hfa6e2cd_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.8.1/noarch/qcengine-0.8.1-py_0.tar.bz2
+
 import os
 import sys
 import json

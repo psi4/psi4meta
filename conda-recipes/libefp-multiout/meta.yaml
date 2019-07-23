@@ -13,7 +13,7 @@ source:
     git_tag: v0.5
 
 build:
-    number: 2                                            # [linux]
+    number: 3                                            # [linux]
     number: 2                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
@@ -30,10 +30,10 @@ requirements:
         - python {{ python }}
         - qcelemental {{ qcelemental }}
         # docs
-        - python-graphviz                               # [linux and py==36]
-        - sphinx >=1.5,<2                               # [linux and py==36]
-        - sphinx-automodapi                             # [linux and py==36]
-        - sphinx-psi-theme                              # [linux and py==36]
+        - python-graphviz                               # [linux and py==37]
+        - sphinx >=1.5,<2                               # [linux and py==37]
+        - sphinx-automodapi                             # [linux and py==37]
+        - sphinx-psi-theme                              # [linux and py==37]
 
 outputs:
     - name: libefp
@@ -100,7 +100,7 @@ outputs:
           run:
               - {{ pin_subpackage('libefp', exact=True) }}
               - {{ pin_compatible('python', max_pin='x.x') }}
-              - {{ pin_compatible('qcelemental', upper_bound='0.5') }}
+              - {{ pin_compatible('qcelemental', max_pin='x') }}
       files:
           - lib/python*/site-packages/pylibefp/*
           - lib/python*/site-packages/pylibefp/tests/*
@@ -138,7 +138,7 @@ outputs:
     - name: pylibefp-docs
       build:
            number: 0
-           skip: true  # [win or osx or not py==36]
+           skip: true  # [win or osx or not py==37]
       requirements:
           host:
               - python {{ python }}

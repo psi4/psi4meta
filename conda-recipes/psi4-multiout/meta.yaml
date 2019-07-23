@@ -81,8 +81,8 @@ outputs:
               - numpy
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
-              - {{ pin_compatible('qcelemental', upper_bound='0.6') }}  #, max_pin='x.x') }}
-              - {{ pin_compatible('qcengine', upper_bound='0.8') }}
+              - {{ pin_compatible('qcelemental', max_pin='x') }}
+              - {{ pin_compatible('qcengine', max_pin='x') }}
       files:
           - bin/psi4
           - include/psi4
@@ -150,3 +150,7 @@ outputs:
 # * to test on maintenance branch
 #   package/version: v1.3.1rc1  # explicit version for trial builds on maintenance branch (where versioner undefines un-tagged version)
 #   source/git_tag: 1.3.x
+
+# * define slight compatible range
+#   - {{ pin_compatible('qcelemental', upper_bound='0.6') }}
+#   - {{ pin_compatible('qcengine', upper_bound='0.8') }}

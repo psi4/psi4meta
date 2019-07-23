@@ -47,8 +47,8 @@ outputs:
               - networkx
               - numpy
               - pytest
-              - qcelemental >={{ qcelemental }},<0.6
-              - qcengine >={{ qcengine }},<0.8
+              - qcelemental >={{ qcelemental }},<1.0
+              - qcengine >={{ qcengine }},<1.0
               - libint {{ libint }} {{ libint_bld }}
       files:
           - bin/psi4-path-advisor
