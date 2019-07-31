@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATH=/home/cdsgroup/miniconda/bin:${PATH}
+source activate py37
 
 echo "analyze-downloads.sh: about to execute"
 date
