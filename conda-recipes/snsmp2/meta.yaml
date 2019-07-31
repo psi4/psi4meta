@@ -1,5 +1,5 @@
 # this version is an invention. official upstream is 1.0
-{% set version = "1.0.1" %}
+{% set version = "1.0.3" %}
 
 package:
     name: snsmp2
@@ -9,11 +9,13 @@ source:
     git_url: git@github.com:DEShawResearch/sns-mp2.git      # [linux]
     git_url: https://github.com/DEShawResearch/sns-mp2.git  # [osx]
     # git_tag: {{ version }}
-    git_tag: a70c56f  # 1.0 + 13
+    #git_tag: # v1.0.1 2: a70c56f  # 1.0 + 13
+    #git_tag: 99e2a9c  # v1.0.2  0: 1.0 + 16
+    git_tag: fcce1d0  # v1.0.3  L1/M0: 1.0 + 24  L2/M1: narrows to x.x.x
 
 build:
     number: 2                                               # [linux]
-    number: 0                                               # [osx]
+    number: 1                                               # [osx]
     skip: true                                              # [win]
     script: python setup.py install --single-version-externally-managed --record=record.txt
 
@@ -23,7 +25,7 @@ requirements:
         - python {{ python }}
         - setuptools >=17.1
     run:
-        - {{ pin_compatible('python', max_pin='x.x') }}
+        - {{ pin_compatible('python', max_pin='x.x.x') }}
         - scipy
 
 test:
@@ -38,16 +40,17 @@ test:
         - tests/cf-o.in
         - tests/cc-cc.in
     commands:
-        - export PLPSP=$PREFIX/lib{{ PYMOD_INSTALL_LIBDIR }}
         # Verify module
-        - test -f $PLPSP/snsmp2/snsmp2.py
+        - test -f $SP_DIR/snsmp2/snsmp2.py
         # Inspect linkage
-        - conda-inspect linkages snsmp2 --show-files
+        - conda inspect linkages --show-files --groupby=dependency snsmp2
+        - conda inspect objects -p $PREFIX $PKG_NAME   # [osx]
         # Actually test
+        - export TEST_SNSMP2=1
         - ${PYTHON} tests/he-he.py
         - psi4 tests/he-he.in
         - psi4 tests/cf-o.in -n${CPU_COUNT}
-        - psi4 tests/cc-cc.in -n${CPU_COUNT}
+        - psi4 tests/cc-cc.in -n${CPU_COUNT}           # [linux] takes a _long_ time on osx
 
 about:
     home: https://github.com/DEShawResearch/sns-mp2

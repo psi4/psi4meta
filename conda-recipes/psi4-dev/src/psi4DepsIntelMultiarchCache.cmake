@@ -21,7 +21,7 @@ set(CMAKE_CXX_COMPILER     "icpc" CACHE STRING "")
 set(CMAKE_Fortran_COMPILER "ifort" CACHE STRING "")
 
 set(ENABLE_XHOST           OFF CACHE BOOL "")
-set(CMAKE_C_FLAGS          "-gnu-prefix=/opt/anaconda1anaconda2anaconda3/bin/@HOST@- --sysroot=/opt/anaconda1anaconda2anaconda3/@HOST@/sysroot -msse2 -axCORE-AVX2,AVX" CACHE STRING "")
-set(CMAKE_CXX_FLAGS        "-gnu-prefix=/opt/anaconda1anaconda2anaconda3/bin/@HOST@- --sysroot=/opt/anaconda1anaconda2anaconda3/@HOST@/sysroot -msse2 -axCORE-AVX2,AVX" CACHE STRING "")
-set(CMAKE_Fortran_FLAGS    "-gnu-prefix=/opt/anaconda1anaconda2anaconda3/bin/@HOST@- --sysroot=/opt/anaconda1anaconda2anaconda3/@HOST@/sysroot -msse2 -axCORE-AVX2,AVX" CACHE STRING "")
+set(CMAKE_C_FLAGS          "-gnu-prefix=/opt/anaconda1anaconda2anaconda3/bin/@HOST@- --sysroot=/opt/anaconda1anaconda2anaconda3/@HOST@/sysroot -msse2 -axCORE-AVX512,CORE-AVX2,AVX" CACHE STRING "")
+set(CMAKE_CXX_FLAGS        "-gnu-prefix=/opt/anaconda1anaconda2anaconda3/bin/@HOST@- --sysroot=/opt/anaconda1anaconda2anaconda3/@HOST@/sysroot -msse2 -axCORE-AVX512,CORE-AVX2,AVX" CACHE STRING "")
+set(CMAKE_Fortran_FLAGS    "-gnu-prefix=/opt/anaconda1anaconda2anaconda3/bin/@HOST@- --sysroot=/opt/anaconda1anaconda2anaconda3/@HOST@/sysroot -msse2 -axCORE-AVX512,CORE-AVX2,AVX" CACHE STRING "")
 

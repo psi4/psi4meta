@@ -1,13 +1,12 @@
-{% set version = "4.0.2" %}
+{% set version = "4.3.4" %}
 
 package:
     name: libxc
     version: {{ version }}
 
 source:
-    git_url: git@github.com:loriab/libxc.git              # [linux]
-    git_url: https://github.com/loriab/libxc.git          # [osx]
-    git_tag: libxc4retweaked
+    git_url: https://gitlab.com/libxc/libxc.git
+    git_tag: 4.3.4  # L0/M0: 4.3.4, broadens to x
 
 build:
     number: 0                                            # [linux]
@@ -15,7 +14,7 @@ build:
     binary_relocation: true
     skip: true                                           # [win]
     run_exports:
-        - {{ pin_subpackage('libxc', max_pin='x.x') }}
+        - {{ pin_subpackage('libxc', max_pin='x') }}
 
 requirements:
     build:
@@ -26,11 +25,14 @@ requirements:
 test:
     commands:
         # Verify library
-        - test -f $PREFIX/lib/libxc$SHLIB_EXT
+        - test -L $PREFIX/lib/libxc$SHLIB_EXT
         # Inspect linkage
-        - ldd -v $PREFIX/lib/libxc.so                 # [linux]
-        - otool -L $PREFIX/lib/libxc.dylib            # [osx]
-        - conda-inspect linkages libxc --show-files
+        - ldd -v $PREFIX/lib/libxc$SHLIB_EXT             # [linux]
+        - ldd -v $PREFIX/bin/xc-info                     # [linux]
+        - $PREFIX/bin/xc-info 100                        # [linux]
+        - otool -L $PREFIX/lib/libxc$SHLIB_EXT           # [osx]
+        - conda inspect linkages --show-files --groupby=dependency libxc
+        - conda inspect objects -p $PREFIX $PKG_NAME     # [osx]
 
 about:
     home: http://www.tddft.org/programs/Libxc
@@ -43,3 +45,20 @@ about:
     license_family: Other
     summary: "M.A.L. Marques's exchange-correlation functionals for density-functional theory"
     # description: >
+
+
+## NOTES
+
+# * psi4 v1.2-era fork
+#   * -DNAMESPACE_INSTALL_INCLUDEDIR="/libxc" \
+#   * {% set version = "4.0.2" %}
+#   * git_url: git@github.com:psi4/libxc.git              # [linux]
+#   * git_url: https://github.com/psi4/libxc.git          # [osx]
+#   * git_tag: libxc4retweaked
+#   * number: 1                                            # [linux]  # 1: AVX-512
+#   * number: 0                                            # [osx]
+#   * test -f $PREFIX/lib/libxc$SHLIB_EXT
+
+#    git_tag: 4.3.3  # L0/M0: 4.3.3
+#    git_tag: 4.3.0  # L1/M1 4.3.0, L2 c-b 3.17
+#                    # L0/M0 loriab branch

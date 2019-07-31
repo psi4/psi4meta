@@ -10,17 +10,17 @@ source:
     git_url: git@github.com:loriab/pylibefp.git         # [linux]
     git_url: https://github.com/loriab/pylibefp.git     # [osx]
     # git_tag: v{{ version }}
-    git_tag: e84aa39  # 0.3.dev2
+    git_tag: v0.5
 
 build:
-    number: 0                                            # [linux]
-    number: 0                                            # [osx]
+    number: 3                                            # [linux]
+    number: 2                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
 
 requirements:
     build:
-        - cmake >=3.3
+        - cmake >=3.8
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
     host:
@@ -28,13 +28,17 @@ requirements:
         - openblas-devel {{ openblas }}                 # [blas_impl == 'openblas']
         - pybind11 {{ pybind11 }}  # trouble at dep metadata time
         - python {{ python }}
+        - qcelemental {{ qcelemental }}
+        # docs
+        - python-graphviz                               # [linux and py==37]
+        - sphinx >=1.5,<2                               # [linux and py==37]
+        - sphinx-automodapi                             # [linux and py==37]
+        - sphinx-psi-theme                              # [linux and py==37]
 
 outputs:
     - name: libefp
       version: {{ libefp_version }}
       build:
-          requires_features:
-              - blas: {{ blas_impl }}
           run_exports:
               - {{ pin_subpackage('libefp', max_pin='x.x.x') }}
           ignore_run_exports:
@@ -46,9 +50,6 @@ outputs:
           host:
               - mkl-devel {{ mkl }}                           # [blas_impl == 'mkl']
               - openblas-devel {{ openblas }}                 # [blas_impl == 'openblas']
-          run:
-              # run_exports not present in osx for mkl-devel --> mkl
-              - mkl {{ mkl }}*
       files:
           - include/efp.h
           - include/libefp/*
@@ -68,8 +69,8 @@ outputs:
               - ldd -r -u $PREFIX/lib/libefp.so && return 0  # [linux]
               - ldd -v $PREFIX/lib/libefp.so                 # [linux]
               - otool -L $PREFIX/lib/libefp.dylib            # [osx]
-              - conda-inspect linkages libefp --show-files
-              - conda inspect objects -p $PREFIX libefp      # [osx]
+              - conda inspect linkages --show-files --groupby=dependency libefp
+              - conda inspect objects -p $PREFIX $PKG_NAME   # [osx]
       about:
           home: https://github.com/ilyak/libefp
           dev_url: https://github.com/ilyak/libefp/blob/master/README.md
@@ -92,32 +93,33 @@ outputs:
           build:
               - {{ compiler('cxx') }}
           host:
+              - {{ pin_subpackage('libefp', exact=True) }}
               - pybind11 {{ pybind11 }}
               - python {{ python }}
+              - qcelemental {{ qcelemental }}
           run:
-              - {{ pin_subpackage('libefp', max_pin='x.x.x') }}
+              - {{ pin_subpackage('libefp', exact=True) }}
               - {{ pin_compatible('python', max_pin='x.x') }}
+              - {{ pin_compatible('qcelemental', max_pin='x') }}
       files:
           - lib/python*/site-packages/pylibefp/*
           - lib/python*/site-packages/pylibefp/tests/*
-          - lib/python*/site-packages/pylibefp/wrapper/*
           - share/cmake/pylibefp/*
       test:
           requires:
-              - deepdiff
               - numpy
               # - psi4 >= 1.2a1.dev507
               - pytest
           commands:
-              - export PLPSP=$PREFIX/lib{{ PYMOD_INSTALL_LIBDIR }}
+              - export PYLIB_EXT=`$PYTHON -c 'import sysconfig as s; print(s.get_config_var("EXT_SUFFIX"))'`
               # Verify existence and execution
-              - test -f $PLPSP/pylibefp/core.so
+              - test -f $SP_DIR/pylibefp/core$PYLIB_EXT
               # Inspect linkage
-              - ldd -r -u $PLPSP/pylibefp/core.so && return 0  # [linux]
-              - ldd -v $PLPSP/pylibefp/core.so                 # [linux]
-              - otool -L $PLPSP/pylibefp/core.so               # [osx]
-              - conda-inspect linkages pylibefp --show-files
-              - conda inspect objects -p $PREFIX pylibefp      # [osx]
+              - ldd -r -u $SP_DIR/pylibefp/core$PYLIB_EXT && return 0  # [linux]
+              - ldd -v $SP_DIR/pylibefp/core$PYLIB_EXT                 # [linux]
+              - otool -L $SP_DIR/pylibefp/core$PYLIB_EXT               # [osx]
+              - conda inspect linkages --show-files --groupby=dependency pylibefp libefp
+              - conda inspect objects -p $PREFIX $PKG_NAME     # [osx]
               # Actually test
               - conda list
               - python -c "import pylibefp; pylibefp.test(); print('*** PylibEFP {} built successfully. Buy psinet a beer.'.format(pylibefp.__version__))"
@@ -133,7 +135,28 @@ outputs:
           summary: "L. A. Burns's python bindings to libefp"
           # description: >
 
+    - name: pylibefp-docs
+      build:
+           number: 0
+           skip: true  # [win or osx or not py==37]
+      requirements:
+          host:
+              - python {{ python }}
+              - python-graphviz
+              - sphinx >=1.5
+              - sphinx-automodapi
+              - sphinx-psi-theme
+      files:
+          - share/doc/pylibefp
+      test:
+          commands:
+              - test -f $PREFIX/share/doc/pylibefp/html/index.html
+
 # NOTES
 # -----
 
 # source/path: ../../../pylibefp
+
+# HISTORY
+#   source/git_tag: 07ec7e9  # 1: 0.4.dev6 = v0.3-7-g07ec7e9  0: e84aa39 = 0.3.dev2
+#   source/git_tag: v0.4   build/number L1M1

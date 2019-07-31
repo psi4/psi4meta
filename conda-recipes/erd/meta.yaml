@@ -1,0 +1,49 @@
+{% set version = "3.0.6" %}
+
+package:
+    name: erd
+    version: {{ version }}
+
+source:
+    git_url: git@github.com:psi4/erd.git                 # [linux]
+    git_url: https://github.com/psi4/erd.git             # [osx]
+    git_tag: v{{ version }}
+
+build:
+    number: 1                                            # [linux]
+    number: 4                                            # [osx]
+    binary_relocation: true
+    skip: true                                           # [win]
+    run_exports:
+        - {{ pin_subpackage('erd', max_pin='x.x') }}
+
+requirements:
+    build:
+        - cmake >=3.0
+        - {{ compiler('c') }}                            # [osx]
+        - {{ compiler('fortran') }}
+        - llvm-openmp                                    # [osx]
+        - intel-openmp                                   # [osx]
+
+test:
+    commands:
+        # Verify library
+        - test -f $PREFIX/lib/liberd$SHLIB_EXT
+        # Inspect linkage
+        - ldd -r -u $PREFIX/lib/liberd.so    # [linux]
+        - ldd -v $PREFIX/lib/liberd.so       # [linux]
+        - otool -L $PREFIX/lib/liberd.dylib  # [osx]
+        - conda inspect linkages --show-files --groupby=dependency erd
+        - conda inspect objects -p $PREFIX $PKG_NAME   # [osx]
+
+about:
+    home: https://github.com/psi4/erd
+    dev_url: https://github.com/psi4/erd
+    # doc_url:
+    # doc_source_url:
+    license: GPL-2.0+
+    license_url: https://opensource.org/licenses/GPL-2.0
+    license_file: LICENSE
+    license_family: GPL
+    summary: "N. Flocke and V. Lotrich's Gaussian molecular integrals for AcesIII"
+    # description: >

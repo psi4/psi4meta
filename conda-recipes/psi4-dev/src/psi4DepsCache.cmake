@@ -18,14 +18,17 @@ set(PYTHON_INCLUDE_DIR     "/opt/anaconda1anaconda2anaconda3/include/@PY_ABBR@" 
 
 set(pybind11_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/pybind11" CACHE PATH "")
 
+set(ENABLE_ambit           ON CACHE BOOL "")
+set(ambit_DIR              "/opt/anaconda1anaconda2anaconda3/share/cmake/ambit" CACHE PATH "")
+
 set(ENABLE_CheMPS2         ON CACHE BOOL "")
 set(CheMPS2_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/CheMPS2" CACHE PATH "")
 
 set(ENABLE_dkh             ON CACHE BOOL "")
 set(dkh_DIR                "/opt/anaconda1anaconda2anaconda3/share/cmake/dkh" CACHE PATH "")
 
-set(ENABLE_libefp          ON CACHE BOOL "")
-set(libefp_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/libefp" CACHE PATH "")
+#set(ENABLE_libefp          ON CACHE BOOL "")
+#set(libefp_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/libefp" CACHE PATH "")
 
 #set(ENABLE_erd             ON CACHE BOOL "")
 #set(erd_DIR                "/opt/anaconda1anaconda2anaconda3/share/cmake/erd" CACHE PATH "")
@@ -41,12 +44,10 @@ set(Libint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/Libint"
 set(ENABLE_PCMSolver       ON CACHE BOOL "")
 set(PCMSolver_DIR          "/opt/anaconda1anaconda2anaconda3/share/cmake/PCMSolver" CACHE PATH "")
 
-#set(ENABLE_simint          ON CACHE BOOL "")
-#set(simint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/simint" CACHE PATH "")
+set(ENABLE_simint          ON CACHE BOOL "")
+set(simint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/simint" CACHE PATH "")
 
 set(Libxc_DIR              "/opt/anaconda1anaconda2anaconda3/share/cmake/Libxc" CACHE PATH "")
-
-#set(TargetLAPACK_DIR       "/opt/anaconda1anaconda2anaconda3/share/cmake/TargetLAPACK" CACHE PATH "")
 
 set(SPHINX_ROOT            "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
 set(CMAKE_PROGRAM_PATH     "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")

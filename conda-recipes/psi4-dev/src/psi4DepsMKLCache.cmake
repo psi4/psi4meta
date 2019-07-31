@@ -12,7 +12,7 @@
 #       -Bobjdir
 #
 
-#set(LAPACK_LIBRARIES       "/opt/anaconda1anaconda2anaconda3/lib/libmkl_rt@SHLIB_EXT@;/opt/anaconda1anaconda2anaconda3/lib/libiomp5@SHLIB_EXT@;-fno-openmp;-lpthread;-lm;-ldl" CACHE STRING "")
 set(LAPACK_LIBRARIES       "/opt/anaconda1anaconda2anaconda3/lib/libmkl_rt@SHLIB_EXT@" CACHE STRING "")
 set(LAPACK_INCLUDE_DIRS    "/opt/anaconda1anaconda2anaconda3/include" CACHE STRING "")
+set(OpenMP_LIBRARY_DIRS    "/opt/anaconda1anaconda2anaconda3/lib" CACHE STRING "")
 

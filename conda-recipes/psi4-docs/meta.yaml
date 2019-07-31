@@ -7,38 +7,45 @@ package:
 source:
     git_url: git@github.com:psi4/psi4.git      # [linux]
     git_url: https://github.com/psi4/psi4.git  # [osx]
+    # git_tag: v1.3.2  # explicit tag when you don't want tag.dev1
     git_tag: master
 
 build:
     number: 0
-    skip: true                                 # [win or osx or not py36]
+    skip: true                                 # [win or osx or not py==37]
 
 requirements:
     build:
         - cmake >=3.3
         - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
+        - {{ compiler('cxx') }}                # gcov, too
     host:
         - mkl-devel {{ mkl }}
         - pybind11 {{ pybind11 }}
         - python {{ python }}
         # qc
-        - libefp {{ libefp }}                              # for efp fragment autodoc
         - gau2grid {{ gau2grid }}
         - libint {{ libint }}
         - libxc {{ libxc }}
-        # run: for build-time testing
-        - deepdiff
+        # run: for build-time testing or docs
+        - dftd3 {{ dftd3 }}
+        - gcp {{ gcp }}
         - networkx
         - numpy
+        - pylibefp {{ pylibefp }}              # for efp fragment autodoc
+        - qcelemental {{ qcelemental }}*
+        - qcengine {{ qcengine }}*
         # docs
-        - astropy-helpers
         - ipykernel
         - jupyter_client
         - nbsphinx
         - python-graphviz
-        - sphinx >=1.5
+        - sphinx >=1.5,<2.0
+        - sphinx-automodapi
         - sphinx-psi-theme
+        # cov
+        - codecov
+        - coverage
 
 outputs:
     - name: psi4-docs

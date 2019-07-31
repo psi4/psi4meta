@@ -1,0 +1,105 @@
+{% set version = "0.1" %}
+
+package:
+    name: cppe-multiout
+    version: {{ version }}
+
+source:
+#    path: ../../../cppe
+    git_url: git@github.com:loriab/cppe.git          # [linux]
+#    git_url: git@github.com:maxscheurer/cppe.git          # [linux]
+#    git_url: https://github.com/maxscheurer/cppe.git      # [osx]
+#    git_tag: v{{ version }}
+    git_tag: conda #master
+
+build:
+    number: 0                                            # [linux]
+    number: 0                                            # [osx]
+    binary_relocation: true
+    skip: true                                           # [win]
+
+requirements:
+    build:
+        - cmake >=3.0
+        - {{ compiler('cxx') }}
+    host:
+        - pybind11 {{ pybind11 }}
+        - python {{ python }}
+
+outputs:
+    - name: cppe
+      build:
+          run_exports:
+              - {{ pin_subpackage('cppe', max_pin='x.x') }}
+      requirements:
+          build:
+              - {{ compiler('cxx') }}
+              - cmake >=3.0
+          host:
+              - python {{ python }}
+      files:
+          - include/cppe
+          - lib/libcppe*
+          - share/cmake/cppe
+      test:
+          commands:
+              # Verify library
+              - test -f $PREFIX/lib/libcppe$SHLIB_EXT
+              # Inspect linkage
+              - ldd -r -u $PREFIX/lib/libcppe$SHLIB_EXT              # [linux]
+              - ldd -v $PREFIX/lib/libcppe$SHLIB_EXT                 # [linux]
+              - otool -L $PREFIX/lib/libcppe$SHLIB_EXT               # [osx]
+              - conda inspect linkages --show-files --groupby=dependency cppe
+              - conda inspect objects -p $PREFIX $PKG_NAME           # [osx]
+      about:
+          home: https://github.com/maxscheurer/cppe
+          dev_url: https://github.com/maxscheurer/cppe
+          doc_url: https://cppe.readthedocs.io
+          doc_source_url: https://github.com/maxscheurer/cppe/blob/master/doc/source/index.rst
+          license: LGPL-3.0
+          license_url: https://opensource.org/licenses/LGPL-3.0
+          license_family: LGPL
+          summary: "C++ and Python library for Polarizable Embedding calculations"
+#          description: >
+#    CPPE is an open-source, light-weight C-Plus-Plus library for Polarizable Embedding (PE)1,2 calculations. It provides an easy-to-use API to implement PE for ground-state self-consistent field calculations and post-SCF methods. A convenient Python interface is also available.
+
+    - name: pycppe
+      requirements:
+          build:
+              - {{ compiler('cxx') }}
+          host:
+              - pybind11 {{ pybind11 }}
+              - python {{ python }}
+          run:
+              - {{ pin_compatible('python', max_pin='x.x') }}
+      files:
+          - lib{{ PYMOD_INSTALL_LIBDIR }}/cppe*
+      test:
+          imports:
+              - cppe
+          requires:
+              - numpy
+              - pytest
+          commands:
+              - export PYLIB_EXT=`$PYTHON -c 'from numpy import distutils; print(distutils.misc_util.get_shared_lib_extension(is_python_ext=True))'`
+              # Verify library
+              - test -f $SP_DIR/cppe$PYLIB_EXT
+              # Inspect linkage
+              - ldd -v $SP_DIR/cppe$PYLIB_EXT               # [linux]
+              - otool -L $SP_DIR/cppe$PYLIB_EXT             # [osx]
+              - conda inspect linkages --show-files --groupby=dependency pycppe
+              - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+              # Actually test
+              #- $PYTHON -m pytest --pyargs cppe
+      about:
+          home: https://github.com/maxscheurer/cppe
+          dev_url: https://github.com/maxscheurer/cppe
+          doc_url: https://cppe.readthedocs.io
+          doc_source_url: https://github.com/maxscheurer/cppe/blob/master/doc/source/index.rst
+          license: LGPL-3.0
+          license_url: https://opensource.org/licenses/LGPL-3.0
+          license_family: LGPL
+          summary: "C++ and Python library for Polarizable Embedding calculations"
+#          description: >
+#    CPPE is an open-source, light-weight C-Plus-Plus library for Polarizable Embedding (PE)1,2 calculations. It provides an easy-to-use API to implement PE for ground-state self-consistent field calculations and post-SCF methods. A convenient Python interface is also available.
+

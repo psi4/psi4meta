@@ -11,7 +11,7 @@ source:
 
 build:
     number: 2                                            # [linux]
-    number: 2                                            # [osx]
+    number: 3                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
     run_exports:
@@ -24,7 +24,10 @@ build:
 requirements:
     build:
         - cmake >=3.0
+        - {{ compiler('c') }}                            # [osx]
         - {{ compiler('fortran') }}
+        - llvm-openmp                                    # [osx]
+        - intel-openmp                                   # [osx]
 
 test:
     commands:
@@ -34,7 +37,8 @@ test:
         - ldd -r -u $PREFIX/lib/libdkh.so              # [linux]
         - ldd -v $PREFIX/lib/libdkh.so                 # [linux]
         - otool -L $PREFIX/lib/libdkh.dylib            # [osx]
-        - conda-inspect linkages dkh --show-files
+        - conda inspect linkages --show-files --groupby=dependency dkh
+        - conda inspect objects -p $PREFIX $PKG_NAME   # [osx]
 
 about:
     home: http://www.reiher.ethz.ch/software/dkh-x2c.html

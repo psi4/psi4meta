@@ -10,4 +10,4 @@ def test_snsmp2():
 
     e = psi4.energy('sns-mp2')
 
-    assert psi4.compare_values(0.00176708227, psi4.get_variable('SNS-MP2 TOTAL ENERGY'), 5, "SNS-MP2 IE [Eh]")
+    assert psi4.compare_values(0.00176708227, psi4.variable('SNS-MP2 TOTAL ENERGY'), 5, "SNS-MP2 IE [Eh]")

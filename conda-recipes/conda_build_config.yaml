@@ -12,56 +12,125 @@ target_platform:
     - osx-64                           # [osx]
     - linux-64                         # [linux]
 CONDA_BUILD_SYSROOT:
-  - /Users/github/SDKs/MacOSX10.9.sdk  # [osx]
-
+    - /Users/github/SDKs/MacOSX10.9.sdk  # [osx]
+c_compiler_version:
+    - 7.3.0                            # [linux]
+cxx_compiler_version:
+    - 7.3.0                            # [linux]
+fortran_compiler_version:
+    - 7.3.0                            # [linux]
 
 # <<<  Packages Stuff  >>>
 
 blas_impl:
     - mkl
-    #- openblas
+    # - openblas  # not playing nicely with threading in psi4 at last check (May 2018)
 hdf5:
-    - 1.10.1  # this recipe pins to x.x.x which I trust more than the 1.8 recipe x.x
+    - 1.10.2  # this recipe pins to x.x.x which I trust more than the 1.8 recipe x.x  # no need to bump build no. for dep pkgs
 mkl:
     - 2018
+openbabel:
+    - 2.4
 openblas:
     - 0.2.20
 pybind11:
     - 2.2.3
 python:
+    - 3.7
     - 3.6
-    - 2.7
-    - 3.5
 zlib:
     - 1.2
 
 # <<<  Psi Stuff  >>>
 
-ltrtver:
-    # bump whenever a dep version bumps. beyond the "|" aren't in ltrtver.
-    # bump whenever a dep version bumps: pb11   chemps2  dftd3  dkh  libefp erd    g2g    gcp    gdma   libint pcm       sns    v2rdm  libxc    | pylibefp
-    # - "1.2a1.dev6"  # (   Apr 2018)    2.2.3, 1.8.7b1, 3.2.0, 1.2, 1.5b2, 3.0.6, 1.0.1, 2.0.2, 2.2.6, 1.2.1, 1.2.0rc1, 1.0.1, 0.7a1, 4.0.1
-    #- "1.2a1.dev7"   # ( 1 May 2018)           1.8.7                                                          1.2.0rc2
-    #- "1.2a1.dev8"   # ( 1 May 2018)                                                                          1.2.1                   4.0.2
-    - "1.2a1.dev9"    # ( 6 May 2018)                                1.5.0                                                                      | 0.3
-MAX_AM_ERI:
-    - '4'
-#    - '6'
-OPTS:
-    - '-msse4.1 -axCORE-AVX2'  # [osx]
-    - '-msse2 -axCORE-AVX2,AVX -Wl,--as-needed -static-intel -wd10237'  # [linux]
 PY_ABBR:
+    - python3.7m
     - python3.6m
-    - python2.7
-    - python3.5m
 PYMOD_INSTALL_LIBDIR:
+    - '/python3.7/site-packages'
     - '/python3.6/site-packages'
-    - '/python2.7/site-packages'
-    - '/python3.5/site-packages'
+
+psi4ver:
+    # toggle between '' for nightly builds, which goes with `git_tag: master` for psi4-multiout and psi4-docs
+    - ''
+    # toggle between specific version for targeted build, which goes with e.g., `git_tag: v1.3.1` for psi4-multiout and psi4-docs
+    #- 1.3.2
+
+ltrtver:
+    # bump whenever a dependency (upstream or downstream) version bumps.
+    # * for postrelease new line and record anything not in continuous order with <> or blanking
+    # * in the "starred" sequence in poodle, ltrtver must be set correctly before building psi4-rt.
+    # * beyond the "|" aren't in ltrtver.
+    #                                    ambit  pb11   chemps2  dftd3  dkh  libefp erd   g2g   gcp    gdma  gpu   libint   pcm      qcel  resp  sim  sns      v2rdm    libxc qcng  mp2d  | pylibefp hdf5   ofermi ofermip4
+    #                                    ------ ------ -------- ------ ---- ------ ----- ----- ------ ----- ----- ------   -------- ----- ----- ---- ------   -------- ----- ----- -----   -------- ------ ------ --------
+    # - "1.2a1.dev6"  # (   Apr 2018)           2.2.3  1.8.7b1  3.2.0  1.2  1.5b2        1.0.1 2.0.2  2.2.6       1.2.1    1.2.0rc1                  1.0.1    0.7a1    4.0.1                        1.10.1
+    # - "1.2a1.dev7"  # ( 1 May 2018)           ...    1.8.7    ...    ...  ...          ...   ...    ...         ...      1.2.0rc2                  ...      ...      ...                          ...
+    # - "1.2a1.dev8"  # ( 1 May 2018)           ...    ...      ...    ...  ...          ...   ...    ...         ...      1.2.1                     ...      ...      4.0.2                        ...
+    # - "1.2a1.dev9"  # ( 6 May 2018)           ...    ...      ...    ...  1.5.0        ...   ...    ...         ...      ...                       ...      ...      ...               | 0.3      ...
+    # - "1.2a1.dev10" # (17 May 2018) psi4-dev/src changed - LAPACK_LIBRARIES
+    # - "1.2a1.dev11" # ( 8 Jun 2018)           ...    ...      ...    ...  ...          1.1.0 ...    ...         ...      ...                  0.7  ...      0.7a2    ...               | ...      ...
+    # - "1.2a2.dev12" # (12 Jun 2018)           ...    ...      ...    ...  ...          ...   ...    ...         ...      ...            0.7a3 ...  ...      0.7      ...               | ...      ...
+    # - "1.2a2.dev13" # (17 Jun 2018)           ...    ...      ...    ...  ...          ...   ...    ...   0.2   ...      ...            0.7   ...  ...      ...      ...               | ...      ...
+    # - "1.2a2.dev14" # (25 Jun 2018)    0.2    ...    ...      ...    ...  ...          ...   ...    ...   0.3   ...      ...            ...   ...  ...      0.8      ...               | 0.4.dev7 1.10.2 0.7    0.3
+    # - "1.2"         # ( 4 Jul 2018) ditto dev14. for v1.2, v1.2.1
+    # - "1.3a1.dev1"  # ( 4 Jul 2018) ditto dev14
+    # - "1.3.dev2"    # ( 6 Aug 2018)           ...    ...      ...    ...  ...          1.2.0 ...    ...   ...   ...      ...            ...   ...  ...      ..._1    ...                 0.4    | ...    ...    ...
+    # - "1.3.dev3"    # ( 4 Sep 2018)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ..._1 ...      ...            ...   ...  ...      ..._2    ...                 ...    | ...    ...    ...
+    # - "1.3.dev4"    # (19 Oct 2018)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ...   ...      ...            ...   ...  ...      ..._3    ...                 ...    | ...    ...    ...
+    # - "1.3.dev5"    # ( 2 Nov 2018)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ...   ...      ...      0.1.1 ...   ...  1.0.2    ...      ...                 ...    | ...    ...    ...
+    # - "1.3.dev6"    # (14 Nov 2018)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ...   ...      ...      0.1.2 ...   ...  ...      ...      ...                 ...    | ...    ...    ...
+    # - "1.3.dev7"    # ( 5 Jan 2019)    ...    ...    ...      ...    ...  ...          1.3.1 ...    ...   ...   ...      ...      0.1.3 ...   ...  ...      ..._5    ...                 ...    | ...    ...    ...
+    # - "1.3.dev8"    # ( 1 Feb 2019)    ...    ...    1.8.9    3.2.1  ...  ...          ...   ...    ...   ...   ...      ...      ...   ...   ...   !       ..._L6M5 4.3.0               ...    | ...    ...    ...
+    # - "1.3.dev9"    # (13 Feb 2019)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ..._2 am8_L5   ...      ...   ...   ...   !       ...      4.3.3               ...      ...    0.9    0.4 |
+    # - "1.3.dev10"   # (26 Feb 2019)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ...   ...      ...      ...   ...   ...   !*      ...      ...                 ...      ...    ..._1  ... |
+    # - "1.3"         # (27 Feb 2019) ditto dev10 for v1.3
+    # - "1.4.dev1"    # ( 1 Mar 2019) ditto 1.3
+    # - "1.2.1"_L1    # ( 7 Mar 2019) ditto 1.3 except --> (-rt not considered)                                      _L6                                              <4.0.2>
+    # - "1.4.dev2"    # ( 8 Mar 2019)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ...   ..._L6M2 ...      ...   ...   ...  1.0.3    ...      4.3.4               ...      ...    ...    ... |
+    # - "1.4.dev3"    # (16 Mar 2019)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ...   ...      ...      0.3.3 ...   ...  ...      ..._L7M6 ...   0.6.3 0.1     ...      ...    ...    ... |
+    # - "1.3.1"       # (12 Apr 2019)    ...    ...    ...      ..._L2 ...  ...          ...   ..._L1 ...   ...   ...      ...      ...   ...   ...  ...      ...<L6M5>...                 ...      ...    ...    ... |
+    # - "1.4.dev4"    # (13 Apr 2019)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ...   ...      ...      ...   ...   ...  ...      ...      ...   0.6.4 ...     ...      ...    ...    ... |
+    # - "1.4.dev5"    # (27 Apr 2019)    0.3    ...    ...      ...    ...  ...          ...   ...    ...   ..._3 ...      ...      ...   ...   ...  ...      ..._L8   ...   ...   ...     ...      ...    ...    ... |
+    # - "1.4.dev6"    # (29 Apr 2019)    ..._L1 ...    ...      ...    ...  ...          ...   ...    ...   ...   ...      ...      ...   ...   ...  ...      ..._M7   ...   ...   ...     ...      ...    ...    ... |
+    # - "1.3.2"       # (15 May 2019)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ...   ...      ...      0.4.0 ...   ...  ...      ...<L6M5>...   ...           ...      ...    ...    ... |
+    # - "1.4.dev7"    # (31 May 2019)    ...    ...    ...      ...    ...  ..._2        ...   ...    ...   ...   ...      ...      0.4.1 ...   ...  ...      ..._L9M8 ...   ...   ...     0.5      ...    ...    ... |
+    # - "1.4.dev8"    # (18 Jun 2019)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ...   ...      ...      0.4.2 ...   ...  ...      ..._L10M9...   0.7.1 1.1     ...      ...    ...    ... |
+    - "1.4.dev9"      # (22 Jul 2019)    ...    ...    ...      ...    ...  ..._3        ...   ...    ...   ...   ...      ...      0.5.0 ...   ...  ...      ...      ...   0.8.1 ...     ...      ...    ..._2  ... |
+    # - "1.3.2"_1     # (23 Jul 2019)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ...   ...      ...      0.5.0 ...   ...  ...      ...<L6M5>...                 ...      ...    ...    ... |
+
+    # - "XXX"         # (   WIP 2019)    ...    ...    ...      ...    ...  ...          ...   ...    ...   ...   ...      ...      ...   ...   ...  ...      ...      ...   ...   ...     ...      ...    ...    ... |
+    # !* sns in 1.3.dev10: 1.0.3 was ready but forgot to include it again until 1.4.dev2 (at L2M1)
+MAX_AM_ERI:
+    - '6'  # [osx]
+    - '7'  # [linux]  # really 8 but have to humor simint
+SIMINT_VECTOR:
+    - 'sse'
+    # - 'avxfma'
+OPTS:
+    - '-msse4.1'                                                                    # [osx]
+    - '-msse2 -axCORE-AVX512,CORE-AVX2,AVX -Wl,--as-needed -static-intel -wd10237'  # [linux]
+
+# * keep upstream & downstream dependencies below alphabetized
+# * in the "starred" sequence in poodle, any upstream packages (i.e., those in "/MISC:" or "/LT:")
+#   must have their version below set correctly (matching a built conda package and probably matching version in their recipe)
+#   before building psi4 (== "/PSI4:").
+# * in the "starred" sequence in poodle, any downstream packages (i.e., those in "/RT:") must
+#   must have their version below set correctly (matching a built conda package and probably matching version in their recipe)
+#   before building psi4-rt (== "/RT-MP:").
+# * fyi, the proper sync for conda and the psi4 repo (e.g., external/.../CMakeLists.txt) is:
+#   * target version -- this is the best (newest release (preferred) or commit known to work with psi4) source to fresh build addon
+#     * in ExternalProject_Add() of <psi4>/external/*/<addon>/CMakeLists.txt, the GIT_REPOSITORY and GIT_TAG source and commit
+#       should match those in source/ section of <psi4meta>/conda_recipes/<addon>/meta.yaml
+#   * minimal version -- this is the minimal (oldest release known to work with psi4) build to accept if detected
+#     * in find_package(<addon> <version> ...) of <psi4>/external/*/<addon>/CMakeLists.txt, the version should be the minimal version
+#     * in find_package(<addon> <version> REQUIRED ...) of <psi4>/psi4/CMakeLists.txt, the version should be exactly that same minimal version
+
+ambit:
+    - 0.3
 chemps2:
-    - 1.8.7
+    - 1.8.9
 dftd3:
-    - 3.2.0
+    - 3.2.1
 dkh:
     - 1.2
 libefp:
@@ -69,23 +138,52 @@ libefp:
 erd:
     - 3.0.6
 gau2grid:
-    - 1.0.1
+    - 1.3.1
 gcp:
     - 2.0.2
 gdma:
     - 2.2.6
+gpu_dfcc:
+    - 0.3
 libint:
     - 1.2.1
+libint_bld:  # aka _L6M2 . temporary until everyone pulled up to date
+    - h1989688_2  [osx]
+    - hb4a4fd4_6  [linux]
+mp2d:
+    - 1.1
+openfermion:
+    - 0.9
+openfermion_bld:  # temporary until new release has correct scipy pinnings
+    - _2  [linux]
+openfermionpsi4:
+    - 0.4
 pcmsolver:
     - 1.2.1
 pylibefp:
-    - 0.3
+    - 0.5
+pylibefp_bld:  # temporary to pull along looser qcel
+    - _3  [linux]
+qcelemental:
+    - 0.5.0
+qcengine:
+    - 0.8.1
+resp:
+    - 0.7
+simint:
+    - 0.7
 snsmp2:
-    - 1.0.1
+    - 1.0.3
 v2rdm_casscf:
-    - 0.7a1
+    - 0.8
+v2rdm_casscf_bld:
+    # ordinary master
+    - ''
+    # c. v1.3.x _L6M5
+    #- _5  [osx]
+    #- _6  [linux]
 libxc:
-    - 4.0.2
+    - 4.3.4
 
 # <<<  Concluding Stuff  >>>
 
@@ -93,11 +191,21 @@ zip_keys:
     - python
     - PYMOD_INSTALL_LIBDIR
     - PY_ABBR
-ignore_version:
-    - PYMOD_INSTALL_LIBDIR
-    - PY_ABBR
 
 # NOTES
 # -----
 
 # Ok pre-rel tags: 1.2.0rc1, 1.5b2
+
+# * below bad b/c messed with predicted vs actual hashes, so didn't upload
+#   ignore_version:
+#       - PYMOD_INSTALL_LIBDIR
+#       - PY_ABBR
+
+# * drop py27, py35
+    # - 3.5
+    # - 2.7
+    # - python3.5m
+    # - python2.7
+    # - '/python3.5/site-packages'
+    # - '/python2.7/site-packages'

@@ -1,9 +1,1 @@
-channels:
-  - http://conda.anaconda.org/psi4
-  - defaults
-  - http://conda.anaconda.org/asmeurer
-
-binstar_upload: yes
-
-show_channel_urls: True
 

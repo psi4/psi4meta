@@ -14,7 +14,7 @@ parser.add_argument('--psi4-compile', action='store_true', help="""\
     this psi4-dev conda metapackage.
 >>> git clone https://github.com/psi4/psi4.git
 >>> cd {top-level-psi4-dir}
->>> conda create -n p4dev python={3.6} psi4-dev [-c psi4/label/dev] -c psi4
+>>> conda create -n p4dev python={3.6} psi4-dev -c psi4[/label/dev]
 >>> conda activate p4dev
 >>> psi4-path-advisor
 # execute or adapt `cmake` commands above; DepsCache handles python & addons;
@@ -39,7 +39,9 @@ if sys.platform.startswith('linux'):
 
 elif sys.platform == 'darwin':
     parser.add_argument('--clang', action='store_true',
-                        help="""Engage system-provided clang/clang++ compilers and psi4-dev-provided gfortran.""")
+                        help="""Engage conda's psi4-dev-provided clang/clang++/gfortran compilers. You must have downloaded this file https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX10.9.sdk.tar.xz, unpacked it, and saved it at ~/SDKs/MacOSX10.9.sdk . !Change! this arg invoked XCode AppleClang prior to Jul 2018.""")
+
+    #                    help="""Engage system-provided clang/clang++ compilers and psi4-dev-provided gfortran.""")
     #parser.add_argument('--gcc', action='store_true',
     #                    help="""Engage psi4-dev-provided gcc/g++/gfortran compilers.""")
 
@@ -51,12 +53,12 @@ if psi4alongside:
     parser.add_argument("--psiapi-path", action='store_true',
                         help="""(Duplicate from `psi4`) Generates a bash command to source correct Python for `python -c "import psi4"`""")
     
-    parser.add_argument('--plugin-compile', action='store_true', help="""\
-    (Duplicate from `psi4`) Generates a CMake command for building a plugin against this Psi4 installation.
-    >>> cd <plugin_directory>
-    >>> `psi4 --plugin-compile`
-    >>> make
-    >>> psi4""")
+parser.add_argument('--plugin-compile', action='store_true', help="""\
+(Duplicate from `psi4`) Generates a CMake command for building a plugin against this Psi4 installation.
+>>> cd <plugin_directory>
+>>> `psi4 --plugin-compile`
+>>> make
+>>> psi4""")
 
 args = parser.parse_args()
 
@@ -71,6 +73,12 @@ if psi4alongside:
     if args.plugin_compile:
         call([psi4, '--plugin-compile'])
         sys.exit(0)
+
+else:
+    if args.plugin_compile:
+        print("""Install "psi4" via `conda install psi4 -c psi4[/label/dev]`, then reissue command.""")
+
+
 
 #advice = {
 #    'cmake':  '/opt/anaconda1anaconda2anaconda3/bin/cmake \\',
@@ -105,7 +113,9 @@ if sys.platform.startswith('linux'):
 
 if sys.platform == 'darwin':
     if args.clang:
-        recc.insert(-1, '-C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsAppleClangCache.cmake')
+        recc.insert(-1, '-C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsClangCache.cmake')
+        recc.insert(0, 'CONDA_BUILD_SYSROOT=~/SDKs/MacOSX10.9.sdk')
+    #    recc.insert(-1, '-C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsAppleClangCache.cmake')
     #if args.gcc:
     #    recc.insert(-1, '-C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsGNUCache.cmake')
 

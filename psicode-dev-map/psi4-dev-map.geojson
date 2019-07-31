@@ -1,0 +1,239 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "Center for Computational Molecular Science and Technology, Georgia Institute of Technology": "Robert&nbsp;M.&nbsp;Parrish<br/>Lori&nbsp;A.&nbsp;Burns<br/>Ryan&nbsp;M.&nbsp;Richard<br/>J\u0169r\u0180me&nbsp;F.&nbsp;Gonthier<br/>C.&nbsp;David&nbsp;Sherrill<br/>Matthew&nbsp;C.&nbsp;Schieber<br/>Matthew&nbsp;L.&nbsp;Leininger"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -84.3965,
+                    33.78
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "The Molecular Sciences Software Institute": "Daniel&nbsp;G. A.&nbsp;Smith<br/>Benjamin&nbsp;P.&nbsp;Pritchard"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -80.4106,
+                    37.20015
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "National Institutes of Health -- National Heart, Lung and Blood Institute": "Andrew&nbsp;C.&nbsp;Simmonett"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.101852,
+                    38.999264
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Department of Chemistry and Biochemistry, Florida State University": "A.&nbsp;Eugene&nbsp;DePrince"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -84.3013,
+                    30.44392
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Department of Chemistry and Biochemistry, The City College of New York": "Edward&nbsp;G.&nbsp;Hohenstein"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -73.95,
+                    40.82
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Department of Chemistry, Hacettepe University, Turkey": "U\u0223ur&nbsp;Bozkaya"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    32.734,
+                    39.867
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Department of Chemistry and Biochemistry, The Ohio State University": "Alexander&nbsp;Yu.&nbsp;Sokolov"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -83.0113,
+                    40.0023
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Hylleraas Centre for Quantum Molecular Sciences, UiT - The Arctic University of Norway": "Roberto&nbsp;Di Remigio"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    18.977,
+                    69.682
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Department of Chemistry, Virginia Tech": "Andrew&nbsp;M.&nbsp;James<br/>Harley&nbsp;R.&nbsp;McAlexander<br/>Ashutosh&nbsp;Kumar<br/>Xiao&nbsp;Wang<br/>Edward&nbsp;F.&nbsp;Valeev<br/>T.&nbsp;Daniel&nbsp;Crawford"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -80.425,
+                    37.227
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Department of Chemistry and Research Center for Smart Molecules, Rikkyo University, Japan": "Masaaki&nbsp;Saitow"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    139.7018,
+                    35.7305
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Department of Chemistry, Emory University": "Prakash&nbsp;Verma<br/>Francesco&nbsp;A.&nbsp;Evangelista"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -84.3264,
+                    33.7915
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Center for Computational Quantum Chemistry, University of Georgia": "Henry&nbsp;F.&nbsp;Schaefer<br/>Justin&nbsp;M.&nbsp;Turney<br/>Edward&nbsp;T.&nbsp;Seidl<br/>Curtis&nbsp;L.&nbsp;Janssen"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -83.37482,
+                    33.94797
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Department of Chemistry and Biochemistry, Auburn University": "Konrad&nbsp;Patkowski"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -85.4852,
+                    32.5997
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Department of Chemistry, Bethel University": "Rollin&nbsp;A.&nbsp;King"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -93.16138,
+                    45.057793
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Fritz Haber Institute of the Max Planck Society, Berlin, Germany": "Peter&nbsp;Kraus"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    13.2827,
+                    52.4485
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Institute of Biophysics of the CAS, v.v.i., Czech Republic": "Holger&nbsp;Kruse"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    16.58,
+                    49.2206
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "Department of Chemistry, Technical University of Munich": "Marvin&nbsp;H.&nbsp;Lechner"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    11.5679,
+                    48.1497
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "University of Sheffield": "Robert&nbsp;A.&nbsp;Shaw"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -1.488,
+                    53.381
+                ]
+            }
+        }
+    ]
+}
