@@ -1,29 +1,27 @@
 {% set name = "resp" %}
-{% set version = "0.7" %}
+{% set version = "0.8.1" %}
 
 package:
     name: {{ name|lower }}
     version: {{ version }}
 
 source:
-    git_url: git@github.com:cdsgroup/resp.git              # [linux]
-    git_url: https://github.com/cdsgroup/resp.git          # [osx]
+    git_url: git@github.com:cdsgroup/resp.git
     git_tag: v{{ version }}
     # git_tag: master
 
 build:
-    number: 0                                               # [linux]
-    number: 0                                               # [osx]
-    skip: true                                              # [win]
-    script: python setup.py install --single-version-externally-managed --record=record.txt
+    noarch: python
+    number: 0
+    script: "{{ PYTHON }} -m pip install . --no-deps -vv"
 
 requirements:
-    build:
-        - python {{ python }}
-        - setuptools
+    host:
+        - python >=3.6
+        - pip
     run:
         - numpy
-        - {{ pin_compatible('python', max_pin='x.x') }}
+        - python >=3.6
 
 test:
     requires:
@@ -36,7 +34,6 @@ test:
         - test -f $SP_DIR/resp/driver.py
         # Inspect linkage
         - conda inspect linkages --show-files --groupby=dependency resp
-        - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
         # Actually test
         - psi4 --test
         - python -c "import resp, sys; sys.exit(resp.test())"
@@ -49,7 +46,7 @@ about:
     # doc_source_url:
     license: BSD-3-Clause
     license_url: https://opensource.org/licenses/BSD-3-Clause
-    # license_file:
+    license_file: LICENSE
     license_family: BSD
     summary: "A. Alenaizan's restrained electrostatic potential (RESP) plugin to Psi4"
     # description: >

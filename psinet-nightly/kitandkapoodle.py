@@ -364,7 +364,7 @@ if host == "macpsinet":
 #{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: qcel, pb11
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
-#{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
+# 'resp' converted to noarch Aug 2019, so builds on L
 #{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev', 'psi4']},  # chnl: psi4
 #{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev', 'psi4']},  # chnl: psi4
 #{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/dev']},  # chnl: openfermion, psi4
