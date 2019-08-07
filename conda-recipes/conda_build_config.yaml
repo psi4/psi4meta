@@ -27,6 +27,8 @@ blas_impl:
     # - openblas  # not playing nicely with threading in psi4 at last check (May 2018)
 hdf5:
     - 1.10.2  # this recipe pins to x.x.x which I trust more than the 1.8 recipe x.x  # no need to bump build no. for dep pkgs
+ipywidgets:
+    - 7.5
 mkl:
     - 2018
 openbabel:
