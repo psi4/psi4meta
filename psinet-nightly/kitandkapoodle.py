@@ -127,6 +127,12 @@
 # anaconda copy --to-owner psi4 conda-forge/pydantic/0.30.1/win-64/pydantic-0.30.1-py37hfa6e2cd_0.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.8.1/noarch/qcengine-0.8.1-py_0.tar.bz2
 
+# [LAB 8 Aug 2019]
+# anaconda copy --to-owner psi4 conda-forge/pybind11/2.3.0/linux-64/pybind11-2.3.0-py37hc9558a2_1.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pybind11/2.3.0/linux-64/pybind11-2.3.0-py36hc9558a2_1.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pybind11/2.3.0/osx-64/pybind11-2.3.0-py37h770b8ee_1.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pybind11/2.3.0/osx-64/pybind11-2.3.0-py36h770b8ee_1.tar.bz2
+
 import os
 import sys
 import json
@@ -420,7 +426,7 @@ if host == "psinet":
 # ----------------------------------------------------------------------------------
 #{'recipe': 'ambit'},
 #{'recipe': 'chemps2-multiout'},
-#{'recipe': 'cppe'},
+#{'recipe': 'cppe', 'build_channels': ['psi4/label/dev']},  # chnl: pybind11
 #{'recipe': 'dkh'},
 #{'recipe': 'gau2grid-multiout'},
 #{'recipe': 'gdma'},
