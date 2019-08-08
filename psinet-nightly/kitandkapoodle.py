@@ -419,7 +419,7 @@ if host == "psinet":
 # ----------------------------------------------------------------------------------
 #{'recipe': 'ambit'},
 #{'recipe': 'chemps2-multiout'},
-#{'recipe': 'cppe'},
+#{'recipe': 'cppe', 'build_channels': ['psi4/label/dev']},  # chnl: pybind11
 #{'recipe': 'dkh'},
 #{'recipe': 'gau2grid-multiout'},
 #{'recipe': 'gdma'},
