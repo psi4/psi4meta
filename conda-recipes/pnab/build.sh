@@ -1,8 +1,6 @@
 
-if [ "$(uname)" == "Linux" ]; then
-
-    # configure
-    ${BUILD_PREFIX}/bin/cmake \
+# configure
+${BUILD_PREFIX}/bin/cmake \
         -H${SRC_DIR} \
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
@@ -22,8 +20,6 @@ if [ "$(uname)" == "Linux" ]; then
         -Dopenbabel2_DIR="${PREFIX}/lib/cmake/openbabel2" \
         -Dpybind11_DIR="${PREFIX}/share/cmake/pybind11" \
         -DCMAKE_PREFIX_PATH="${PREFIX}"
-
-fi
 
 # build
 cd build
