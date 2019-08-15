@@ -1,6 +1,4 @@
 
-if [ "$(uname)" == "Linux" ]; then
-
 #    # load Intel compilers
 #    set +x
 #    source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
@@ -8,8 +6,8 @@ if [ "$(uname)" == "Linux" ]; then
 #
 #    ALLOPTS="-gnu-prefix=${HOST}- ${OPTS}"
 
-    # configure
-    ${BUILD_PREFIX}/bin/cmake \
+# configure
+${BUILD_PREFIX}/bin/cmake \
         -H${SRC_DIR} \
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
@@ -29,8 +27,6 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_PREFIX_PATH="${PREFIX}"
 
 # TODO OpenMP is off b/c getting gomp
-
-fi
 
 # build
 cd build

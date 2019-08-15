@@ -341,6 +341,7 @@ if host == "macpsinet":
 # ----------------------------------------------------------------------------------
 #{'recipe': 'ambit'},
 #{'recipe': 'chemps2-multiout'},
+#{'recipe': 'cppe', 'build_channels': ['psi4/label/dev']},  # chnl: pybind11
 #{'recipe': 'dkh'},
 #{'recipe': 'erd'},
 #{'recipe': 'gau2grid-multiout'},
