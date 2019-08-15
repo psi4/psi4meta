@@ -345,6 +345,7 @@ if host == "macpsinet":
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
 #{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
 #{'recipe': 'pint'},  # neededby: qcelemental
+#{'recipe': 'pnab', 'build_channels': ['conda-forge']},
 #{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint  # neededby: psi4
 
 # M/LT: build upstream deps.

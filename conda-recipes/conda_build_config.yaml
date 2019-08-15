@@ -159,7 +159,7 @@ mp2d:
 openfermion:
     - 0.9
 openfermion_bld:  # temporary until new release has correct scipy pinnings
-    - _2  [linux]
+    - _2
 openfermionpsi4:
     - 0.4
 pcmsolver:
@@ -167,7 +167,7 @@ pcmsolver:
 pylibefp:
     - 0.5
 pylibefp_bld:  # temporary to pull along looser qcel
-    - _3  [linux]
+    - _3
 qcelemental:
     - 0.6.0
 qcengine:
