@@ -133,6 +133,19 @@
 # anaconda copy --to-owner psi4 conda-forge/pybind11/2.3.0/osx-64/pybind11-2.3.0-py37h770b8ee_1.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/pybind11/2.3.0/osx-64/pybind11-2.3.0-py36h770b8ee_1.tar.bz2
 
+# [LAB 13 Aug 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.8.2/noarch/qcengine-0.8.2-py_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.32.1/win-64/pydantic-0.32.1-py37hfa6e2cd_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.32.1/win-64/pydantic-0.32.1-py36hfa6e2cd_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.32.1/osx-64/pydantic-0.32.1-py36h01d97ff_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.32.1/osx-64/pydantic-0.32.1-py37h01d97ff_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.32.1/linux-64/pydantic-0.32.1-py36h516909a_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/0.32.1/linux-64/pydantic-0.32.1-py37h516909a_0.tar.bz2
+
+# [LAB 15 Aug 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.6.0/noarch/qcelemental-0.6.0-py_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.9.0/noarch/qcengine-0.9.0-py_0.tar.bz2
+
 import os
 import sys
 import json
@@ -430,6 +443,7 @@ if host == "psinet":
 #{'recipe': 'cppe', 'build_channels': ['psi4/label/dev']},  # chnl: pybind11
 #{'recipe': 'dkh'},
 #{'recipe': 'gau2grid-multiout'},
+###{'recipe': 'gau2grid-multiout', 'build_channels': ['conda-forge']},  # c-f prep
 #{'recipe': 'gdma'},
 #{'recipe': 'libint'},
 #{'recipe': 'pcmsolver'},
