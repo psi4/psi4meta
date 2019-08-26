@@ -1,0 +1,340 @@
+platform: linux-64
+Collecting package metadata: ...working... done
+Solving environment: ...working... done
+fetching: python-3.6.8-h0371630_0.tar.bz2
+fetching: blas-1.0-mkl.tar.bz2
+fetching: ca-certificates-2019.1.23-0.tar.bz2
+fetching: dftd3-3.2.1-h84218bc_2.tar.bz2
+fetching: dkh-1.2-h173d85e_2.tar.bz2
+fetching: gcp-2.0.2-h84218bc_1.tar.bz2
+fetching: gdma-2.2.6-h0e1e685_6.tar.bz2
+fetching: intel-openmp-2019.3-199.tar.bz2
+fetching: libgcc-ng-8.2.0-hdf63c60_1.tar.bz2
+fetching: libgfortran-ng-7.3.0-hdf63c60_0.tar.bz2
+fetching: libint-1.2.1-hb4a4fd4_6.tar.bz2
+fetching: libstdcxx-ng-8.2.0-hdf63c60_1.tar.bz2
+fetching: simint-0.7-h642920c_1.tar.bz2
+fetching: gau2grid-1.3.1-h035aef0_0.tar.bz2
+fetching: gmp-6.1.2-h6c8ec71_1.tar.bz2
+fetching: gsl-2.4-h14c3975_4.tar.bz2
+fetching: libffi-3.2.1-hd88cf55_4.tar.bz2
+fetching: libxc-4.3.4-h7b6447c_0.tar.bz2
+fetching: metis-5.1.0-hf484d3e_4.tar.bz2
+fetching: mkl-2019.3-199.tar.bz2
+fetching: ncurses-6.1-he6710b0_1.tar.bz2
+fetching: openssl-1.1.1b-h7b6447c_1.tar.bz2
+fetching: tbb-2019.4-hfd86e86_0.tar.bz2
+fetching: xz-5.2.4-h14c3975_4.tar.bz2
+fetching: yaml-0.1.7-had09818_2.tar.bz2
+fetching: zlib-1.2.11-h7b6447c_3.tar.bz2
+fetching: glpk-4.65-h3ceedfd_2.tar.bz2
+fetching: hdf5-1.10.2-hba1933b_1.tar.bz2
+fetching: libedit-3.1.20181209-hc058e9b_0.tar.bz2
+fetching: libefp-1.5.0-h84097be_1.tar.bz2
+fetching: readline-7.0-h7b6447c_5.tar.bz2
+fetching: suitesparse-5.2.0-h9e4a6bb_0.tar.bz2
+fetching: tk-8.6.8-hbc83047_0.tar.bz2
+fetching: ambit-0.2-he865b90_0.tar.bz2
+fetching: chemps2-1.8.9-h8c3debe_0.tar.bz2
+fetching: sqlite-3.27.2-h7b6447c_0.tar.bz2
+fetching: asn1crypto-0.24.0-py36_0.tar.bz2
+fetching: atomicwrites-1.3.0-py36_1.tar.bz2
+fetching: attrs-19.1.0-py36_1.tar.bz2
+fetching: certifi-2019.3.9-py36_0.tar.bz2
+fetching: chardet-3.0.4-py36_1.tar.bz2
+fetching: cvxopt-1.2.0-py36hfa32c7d_0.tar.bz2
+fetching: dataclasses-0.6-py_0.tar.bz2
+fetching: decorator-4.4.0-py36_1.tar.bz2
+fetching: future-0.17.1-py36_0.tar.bz2
+fetching: idna-2.8-py36_0.tar.bz2
+fetching: jsonpickle-0.9.6-py36_0.tar.bz2
+fetching: more-itertools-6.0.0-py36_0.tar.bz2
+fetching: numpy-base-1.16.2-py36hde5b4d6_0.tar.bz2
+fetching: pcmsolver-1.2.1-py36h8733eb9_0.tar.bz2
+fetching: pluggy-0.9.0-py36_0.tar.bz2
+fetching: py-1.8.0-py36_0.tar.bz2
+fetching: pycosat-0.6.3-py36h14c3975_0.tar.bz2
+fetching: pycparser-2.19-py36_0.tar.bz2
+fetching: pylibefp-0.4+f42ffb8-py36h5a86982_1.tar.bz2
+fetching: pysocks-1.6.8-py36_0.tar.bz2
+fetching: ruamel_yaml-0.15.46-py36h14c3975_0.tar.bz2
+fetching: six-1.12.0-py36_0.tar.bz2
+fetching: v2rdm_casscf-0.8-py36hc3560e4_6.tar.bz2
+fetching: cffi-1.12.2-py36h2e261b9_1.tar.bz2
+fetching: deepdiff-3.3.0-py36_1.tar.bz2
+fetching: mkl_random-1.0.2-py36hd81dba3_0.tar.bz2
+fetching: pydantic-0.23-py36_0.tar.bz2
+fetching: setuptools-41.0.0-py36_0.tar.bz2
+fetching: cryptography-2.6.1-py36h1ba5d50_0.tar.bz2
+fetching: networkx-2.2-py36_1.tar.bz2
+fetching: pint-0.9-py36_2.tar.bz2
+fetching: pytest-4.4.0-py36_1.tar.bz2
+fetching: wheel-0.33.1-py36_0.tar.bz2
+fetching: pip-19.0.3-py36_0.tar.bz2
+fetching: pyopenssl-19.0.0-py36_0.tar.bz2
+fetching: urllib3-1.24.1-py36_0.tar.bz2
+fetching: requests-2.21.0-py36_0.tar.bz2
+fetching: conda-4.6.12-py36_1.tar.bz2
+fetching: h5py-2.8.0-py36h989c5e5_3.tar.bz2
+fetching: mkl_fft-1.0.10-py36ha843d7b_0.tar.bz2
+fetching: numpy-1.16.2-py36h7e9f1db_0.tar.bz2
+fetching: qcelemental-0.3.3-py_0.tar.bz2
+fetching: resp-0.7-py36ha93d1a2_0.tar.bz2
+fetching: scipy-1.2.1-py36h7c811a0_0.tar.bz2
+fetching: openfermion-0.9-py36hd763080_1.tar.bz2
+fetching: psi4-1.3.1+2ce1c29-py36hb53731e_0.tar.bz2
+fetching: snsmp2-1.0.3-py36he403277_2.tar.bz2
+fetching: openfermionpsi4-0.4-py36h934b37d_0.tar.bz2
+fetching: psi4-rt-1.3.1-py36h2930fea_0.tar.bz2
+Checking for duplicate files ...
+Warning: Files 'share/terminfo/2/2621A', 'share/terminfo/2/2621a' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/E/Eterm', 'share/terminfo/e/eterm' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/E/Eterm-color', 'share/terminfo/e/eterm-color' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/L/LFT-PC850', 'share/terminfo/l/lft-pc850' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/n/ncr260vt300wpp', 'share/terminfo/N/NCR260VT300WPP' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/N/NCRVT100WPP', 'share/terminfo/n/ncrvt100wpp' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p12', 'share/terminfo/P/P12' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p12-m', 'share/terminfo/P/P12-M' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p12-m-w', 'share/terminfo/P/P12-M-W' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p12-w', 'share/terminfo/P/P12-W' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p14', 'share/terminfo/P/P14' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p14-m', 'share/terminfo/P/P14-M' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P14-M-W', 'share/terminfo/p/p14-m-w' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p14-w', 'share/terminfo/P/P14-W' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p4', 'share/terminfo/P/P4' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p5', 'share/terminfo/P/P5' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p7', 'share/terminfo/P/P7' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p8', 'share/terminfo/P/P8' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P8-W', 'share/terminfo/p/p8-w' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P9', 'share/terminfo/p/p9' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P9-8', 'share/terminfo/p/p9-8' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P9-8-W', 'share/terminfo/p/p9-8-w' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p9-w', 'share/terminfo/P/P9-W' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/h/hp2621a', 'share/terminfo/h/hp2621A' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/h/hp70092a', 'share/terminfo/h/hp70092A' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Reading: /home/psilocaluser/toolchainconda/envs/cookie/lib/python3.6/site-packages/constructor/header.sh
+Successfully created '/home/psilocaluser/gits/psi4meta/conda-recipes/constructor-cutter-unified/build/Psi4conda-1.3.1-py3.6-linux-64/Psi4conda-1.3.1-py36-Linux-x86_64.sh'.
+platform: linux-64
+Collecting package metadata: ...working... done
+Solving environment: ...working... done
+fetching: python-3.7.3-h0371630_0.tar.bz2
+fetching: asn1crypto-0.24.0-py37_0.tar.bz2
+fetching: atomicwrites-1.3.0-py37_1.tar.bz2
+fetching: attrs-19.1.0-py37_1.tar.bz2
+fetching: certifi-2019.3.9-py37_0.tar.bz2
+fetching: chardet-3.0.4-py37_1.tar.bz2
+fetching: cvxopt-1.2.0-py37hfa32c7d_0.tar.bz2
+fetching: decorator-4.4.0-py37_1.tar.bz2
+fetching: future-0.17.1-py37_0.tar.bz2
+fetching: idna-2.8-py37_0.tar.bz2
+fetching: jsonpickle-0.9.6-py37_0.tar.bz2
+fetching: more-itertools-6.0.0-py37_0.tar.bz2
+fetching: numpy-base-1.16.2-py37hde5b4d6_0.tar.bz2
+fetching: pcmsolver-1.2.1-py37h142c950_0.tar.bz2
+fetching: pluggy-0.9.0-py37_0.tar.bz2
+fetching: py-1.8.0-py37_0.tar.bz2
+fetching: pycosat-0.6.3-py37h14c3975_0.tar.bz2
+fetching: pycparser-2.19-py37_0.tar.bz2
+fetching: pydantic-0.23-py37_0.tar.bz2
+fetching: pylibefp-0.4+f42ffb8-py37h7adc81b_1.tar.bz2
+fetching: pysocks-1.6.8-py37_0.tar.bz2
+fetching: ruamel_yaml-0.15.46-py37h14c3975_0.tar.bz2
+fetching: six-1.12.0-py37_0.tar.bz2
+fetching: v2rdm_casscf-0.8-py37hc3560e4_6.tar.bz2
+fetching: cffi-1.12.2-py37h2e261b9_1.tar.bz2
+fetching: deepdiff-3.3.0-py37_1.tar.bz2
+fetching: mkl_random-1.0.2-py37hd81dba3_0.tar.bz2
+fetching: setuptools-41.0.0-py37_0.tar.bz2
+fetching: cryptography-2.6.1-py37h1ba5d50_0.tar.bz2
+fetching: networkx-2.2-py37_1.tar.bz2
+fetching: pint-0.9-py37_2.tar.bz2
+fetching: pytest-4.4.0-py37_1.tar.bz2
+fetching: wheel-0.33.1-py37_0.tar.bz2
+fetching: pip-19.0.3-py37_0.tar.bz2
+fetching: pyopenssl-19.0.0-py37_0.tar.bz2
+fetching: urllib3-1.24.1-py37_0.tar.bz2
+fetching: requests-2.21.0-py37_0.tar.bz2
+fetching: conda-4.6.12-py37_1.tar.bz2
+fetching: h5py-2.8.0-py37h989c5e5_3.tar.bz2
+fetching: mkl_fft-1.0.10-py37ha843d7b_0.tar.bz2
+fetching: numpy-1.16.2-py37h7e9f1db_0.tar.bz2
+fetching: resp-0.7-py37ha93d1a2_0.tar.bz2
+fetching: scipy-1.2.1-py37h7c811a0_0.tar.bz2
+fetching: openfermion-0.9-py37hd763080_1.tar.bz2
+fetching: psi4-1.3.1+2ce1c29-py37h8fb87e6_0.tar.bz2
+fetching: snsmp2-1.0.3-py37he403277_2.tar.bz2
+fetching: openfermionpsi4-0.4-py37h934b37d_0.tar.bz2
+fetching: psi4-rt-1.3.1-py37h2930fea_0.tar.bz2
+Checking for duplicate files ...
+Warning: Files 'share/terminfo/2/2621A', 'share/terminfo/2/2621a' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/e/eterm', 'share/terminfo/E/Eterm' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/e/eterm-color', 'share/terminfo/E/Eterm-color' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/l/lft-pc850', 'share/terminfo/L/LFT-PC850' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/n/ncr260vt300wpp', 'share/terminfo/N/NCR260VT300WPP' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/n/ncrvt100wpp', 'share/terminfo/N/NCRVT100WPP' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P12', 'share/terminfo/p/p12' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P12-M', 'share/terminfo/p/p12-m' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p12-m-w', 'share/terminfo/P/P12-M-W' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P12-W', 'share/terminfo/p/p12-w' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P14', 'share/terminfo/p/p14' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P14-M', 'share/terminfo/p/p14-m' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p14-m-w', 'share/terminfo/P/P14-M-W' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p14-w', 'share/terminfo/P/P14-W' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P4', 'share/terminfo/p/p4' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P5', 'share/terminfo/p/p5' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p7', 'share/terminfo/P/P7' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P8', 'share/terminfo/p/p8' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P8-W', 'share/terminfo/p/p8-w' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P9', 'share/terminfo/p/p9' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/P/P9-8', 'share/terminfo/p/p9-8' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p9-8-w', 'share/terminfo/P/P9-8-W' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/p/p9-w', 'share/terminfo/P/P9-W' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/h/hp2621A', 'share/terminfo/h/hp2621a' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Warning: Files 'share/terminfo/h/hp70092A', 'share/terminfo/h/hp70092a' found in the package(s): ncurses-6.1-he6710b0_1.tar.bz2
+Reading: /home/psilocaluser/toolchainconda/envs/cookie/lib/python3.6/site-packages/constructor/header.sh
+Successfully created '/home/psilocaluser/gits/psi4meta/conda-recipes/constructor-cutter-unified/build/Psi4conda-1.3.1-py3.7-linux-64/Psi4conda-1.3.1-py37-Linux-x86_64.sh'.
+platform: osx-64
+Collecting package metadata: ...working... done
+Solving environment: ...working... done
+fetching: python-3.6.8-haf84260_0.tar.bz2
+fetching: blas-1.0-mkl.tar.bz2
+fetching: ca-certificates-2019.1.23-0.tar.bz2
+fetching: gau2grid-1.3.1-h1d22016_0.tar.bz2
+fetching: gsl-2.4-h1de35cc_4.tar.bz2
+fetching: intel-openmp-2019.3-199.tar.bz2
+fetching: libcxxabi-4.0.1-hcfea43d_1.tar.bz2
+fetching: libgfortran-3.0.1-h93005f0_2.tar.bz2
+fetching: libint-1.2.1-h1989688_2.tar.bz2
+fetching: libxc-4.3.4-h1de35cc_0.tar.bz2
+fetching: simint-0.7-h9ec563c_2.tar.bz2
+fetching: xz-5.2.4-h1de35cc_4.tar.bz2
+fetching: yaml-0.1.7-hc338f04_2.tar.bz2
+fetching: zlib-1.2.11-h1de35cc_3.tar.bz2
+fetching: dftd3-3.2.1-h0e1e685_0.tar.bz2
+fetching: dkh-1.2-ha0829f0_3.tar.bz2
+fetching: gcp-2.0.2-h0e1e685_0.tar.bz2
+fetching: gdma-2.2.6-hdc02c5d_5.tar.bz2
+fetching: libcxx-4.0.1-hcfea43d_1.tar.bz2
+fetching: mkl-2019.3-199.tar.bz2
+fetching: openssl-1.1.1b-h1de35cc_1.tar.bz2
+fetching: tk-8.6.8-ha441bb4_0.tar.bz2
+fetching: gmp-6.1.2-hb37e062_1.tar.bz2
+fetching: hdf5-1.10.2-hfa1e0ec_1.tar.bz2
+fetching: libefp-1.5.0-h8c6ee86_1.tar.bz2
+fetching: libffi-3.2.1-h475c297_4.tar.bz2
+fetching: metis-5.1.0-h0a44026_4.tar.bz2
+fetching: ncurses-6.1-h0a44026_1.tar.bz2
+fetching: tbb-2019.4-h04f5b5a_0.tar.bz2
+fetching: ambit-0.2-hd197b8c_1.tar.bz2
+fetching: chemps2-1.8.9-h57cbb5c_0.tar.bz2
+fetching: glpk-4.65-ha8bbb54_2.tar.bz2
+fetching: libedit-3.1.20181209-hb402a30_0.tar.bz2
+fetching: readline-7.0-h1de35cc_5.tar.bz2
+fetching: suitesparse-5.2.0-h7413580_0.tar.bz2
+fetching: sqlite-3.27.2-ha441bb4_0.tar.bz2
+fetching: asn1crypto-0.24.0-py36_0.tar.bz2
+fetching: atomicwrites-1.3.0-py36_1.tar.bz2
+fetching: attrs-19.1.0-py36_1.tar.bz2
+fetching: certifi-2019.3.9-py36_0.tar.bz2
+fetching: chardet-3.0.4-py36_1.tar.bz2
+fetching: cvxopt-1.2.0-py36hcab12e0_0.tar.bz2
+fetching: dataclasses-0.6-py_0.tar.bz2
+fetching: decorator-4.4.0-py36_1.tar.bz2
+fetching: future-0.17.1-py36_0.tar.bz2
+fetching: idna-2.8-py36_0.tar.bz2
+fetching: jsonpickle-0.9.6-py36_0.tar.bz2
+fetching: more-itertools-6.0.0-py36_0.tar.bz2
+fetching: numpy-base-1.16.2-py36h6575580_0.tar.bz2
+fetching: pcmsolver-1.2.1-py36hd665ad5_0.tar.bz2
+fetching: pluggy-0.9.0-py36_0.tar.bz2
+fetching: py-1.8.0-py36_0.tar.bz2
+fetching: pycosat-0.6.3-py36h1de35cc_0.tar.bz2
+fetching: pycparser-2.19-py36_0.tar.bz2
+fetching: pylibefp-0.4+f42ffb8-py36h28c923a_1.tar.bz2
+fetching: pysocks-1.6.8-py36_0.tar.bz2
+fetching: ruamel_yaml-0.15.46-py36h1de35cc_0.tar.bz2
+fetching: six-1.12.0-py36_0.tar.bz2
+fetching: v2rdm_casscf-0.8-py36h6c80819_5.tar.bz2
+fetching: cffi-1.12.2-py36hb5b8e2f_1.tar.bz2
+fetching: deepdiff-3.3.0-py36_1.tar.bz2
+fetching: mkl_random-1.0.2-py36h27c97d8_0.tar.bz2
+fetching: pydantic-0.23-py36_0.tar.bz2
+fetching: setuptools-41.0.0-py36_0.tar.bz2
+fetching: cryptography-2.6.1-py36ha12b0ac_0.tar.bz2
+fetching: networkx-2.2-py36_1.tar.bz2
+fetching: pint-0.9-py36_2.tar.bz2
+fetching: pytest-4.4.0-py36_1.tar.bz2
+fetching: wheel-0.33.1-py36_0.tar.bz2
+fetching: pip-19.0.3-py36_0.tar.bz2
+fetching: pyopenssl-19.0.0-py36_0.tar.bz2
+fetching: urllib3-1.24.1-py36_0.tar.bz2
+fetching: requests-2.21.0-py36_0.tar.bz2
+fetching: conda-4.6.12-py36_1.tar.bz2
+fetching: h5py-2.8.0-py36h878fce3_3.tar.bz2
+fetching: mkl_fft-1.0.10-py36h5e564d8_0.tar.bz2
+fetching: numpy-1.16.2-py36hacdab7b_0.tar.bz2
+fetching: qcelemental-0.3.3-py_0.tar.bz2
+fetching: resp-0.7-py36ha93d1a2_0.tar.bz2
+fetching: scipy-1.2.1-py36h1410ff5_0.tar.bz2
+fetching: openfermion-0.9-py36hd763080_1.tar.bz2
+fetching: psi4-1.3.1+2ce1c29-py36hd296a92_0.tar.bz2
+fetching: snsmp2-1.0.3-py36he403277_1.tar.bz2
+fetching: openfermionpsi4-0.4-py36h934b37d_0.tar.bz2
+fetching: psi4-rt-1.3.1-py36hdfb82b5_0.tar.bz2
+Checking for duplicate files ...
+Reading: /home/psilocaluser/toolchainconda/envs/cookie/lib/python3.6/site-packages/constructor/header.sh
+Successfully created '/home/psilocaluser/gits/psi4meta/conda-recipes/constructor-cutter-unified/build/Psi4conda-1.3.1-py3.6-osx-64/Psi4conda-1.3.1-py36-MacOSX-x86_64.sh'.
+platform: osx-64
+Collecting package metadata: ...working... done
+Solving environment: ...working... done
+fetching: python-3.7.3-h359304d_0.tar.bz2
+fetching: asn1crypto-0.24.0-py37_0.tar.bz2
+fetching: atomicwrites-1.3.0-py37_1.tar.bz2
+fetching: attrs-19.1.0-py37_1.tar.bz2
+fetching: certifi-2019.3.9-py37_0.tar.bz2
+fetching: chardet-3.0.4-py37_1.tar.bz2
+fetching: cvxopt-1.2.0-py37hcab12e0_0.tar.bz2
+fetching: decorator-4.4.0-py37_1.tar.bz2
+fetching: future-0.17.1-py37_0.tar.bz2
+fetching: idna-2.8-py37_0.tar.bz2
+fetching: jsonpickle-0.9.6-py37_0.tar.bz2
+fetching: more-itertools-6.0.0-py37_0.tar.bz2
+fetching: numpy-base-1.16.2-py37h6575580_0.tar.bz2
+fetching: pcmsolver-1.2.1-py37h92ea98a_0.tar.bz2
+fetching: pluggy-0.9.0-py37_0.tar.bz2
+fetching: py-1.8.0-py37_0.tar.bz2
+fetching: pycosat-0.6.3-py37h1de35cc_0.tar.bz2
+fetching: pycparser-2.19-py37_0.tar.bz2
+fetching: pydantic-0.23-py37_0.tar.bz2
+fetching: pylibefp-0.4+f42ffb8-py37h5fa1240_1.tar.bz2
+fetching: pysocks-1.6.8-py37_0.tar.bz2
+fetching: ruamel_yaml-0.15.46-py37h1de35cc_0.tar.bz2
+fetching: six-1.12.0-py37_0.tar.bz2
+fetching: v2rdm_casscf-0.8-py37h6c80819_5.tar.bz2
+fetching: cffi-1.12.2-py37hb5b8e2f_1.tar.bz2
+fetching: deepdiff-3.3.0-py37_1.tar.bz2
+fetching: mkl_random-1.0.2-py37h27c97d8_0.tar.bz2
+fetching: setuptools-41.0.0-py37_0.tar.bz2
+fetching: cryptography-2.6.1-py37ha12b0ac_0.tar.bz2
+fetching: networkx-2.2-py37_1.tar.bz2
+fetching: pint-0.9-py37_2.tar.bz2
+fetching: pytest-4.4.0-py37_1.tar.bz2
+fetching: wheel-0.33.1-py37_0.tar.bz2
+fetching: pip-19.0.3-py37_0.tar.bz2
+fetching: pyopenssl-19.0.0-py37_0.tar.bz2
+fetching: urllib3-1.24.1-py37_0.tar.bz2
+fetching: requests-2.21.0-py37_0.tar.bz2
+fetching: conda-4.6.12-py37_1.tar.bz2
+fetching: h5py-2.8.0-py37h878fce3_3.tar.bz2
+fetching: mkl_fft-1.0.10-py37h5e564d8_0.tar.bz2
+fetching: numpy-1.16.2-py37hacdab7b_0.tar.bz2
+fetching: resp-0.7-py37ha93d1a2_0.tar.bz2
+fetching: scipy-1.2.1-py37h1410ff5_0.tar.bz2
+fetching: openfermion-0.9-py37hd763080_1.tar.bz2
+fetching: psi4-1.3.1+2ce1c29-py37hbd12a5c_0.tar.bz2
+fetching: snsmp2-1.0.3-py37he403277_1.tar.bz2
+fetching: openfermionpsi4-0.4-py37h934b37d_0.tar.bz2
+fetching: psi4-rt-1.3.1-py37hdfb82b5_0.tar.bz2
+Checking for duplicate files ...
+Reading: /home/psilocaluser/toolchainconda/envs/cookie/lib/python3.6/site-packages/constructor/header.sh
+Successfully created '/home/psilocaluser/gits/psi4meta/conda-recipes/constructor-cutter-unified/build/Psi4conda-1.3.1-py3.7-osx-64/Psi4conda-1.3.1-py37-MacOSX-x86_64.sh'.

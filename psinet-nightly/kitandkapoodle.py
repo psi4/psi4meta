@@ -146,6 +146,13 @@
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.6.0/noarch/qcelemental-0.6.0-py_0.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.9.0/noarch/qcengine-0.9.0-py_0.tar.bz2
 
+# [LAB 19 Aug 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.6.1/noarch/qcelemental-0.6.1-py_0.tar.bz2
+
+# [LAB 26 Aug 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.7.0/noarch/qcelemental-0.7.0-py_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.10.0/noarch/qcengine-0.10.0-py_0.tar.bz2
+
 import os
 import sys
 import json
@@ -477,6 +484,7 @@ if host == "psinet":
 #{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'openfermionpsi4', 'build_channels': ['psi4/label/dev']},  # chnl: openfermion, psi4
 #{'recipe': 'mp2d'},
+#{'recipe': 'postg'},
 
 # L/CBCY2: if anything in RT changed, edit cbcy.
 #          start or continue editing new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.

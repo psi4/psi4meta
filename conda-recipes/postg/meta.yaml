@@ -1,0 +1,50 @@
+{% set version = "0.1" %}
+
+package:
+    name: postg
+    version: {{ version }}
+
+source:
+#    git_url: git@github.com:aoterodelaroza/postg.git     # [linux]
+#    git_url: https://github.com/aoterodelaroza/postg.git # [osx]
+    git_url: git@github.com:loriab/postg.git             # [linux]
+#    git_tag: v{{ version }}
+    git_tag: cmake
+
+build:
+    number: 0                                            # [linux]
+    number: 0                                            # [osx]
+    binary_relocation: true
+    skip: true                                           # [win]
+
+requirements:
+    build:
+        - {{ compiler('fortran') }}
+        - cmake >=3.3
+
+test:
+    commands:
+        # Verify executable
+        - test -f $PREFIX/bin/postg
+        - $PREFIX/bin/postg && return 0
+#        - $PREFIX/bin/dftd3 -version
+        # Inspect linkage
+        - ldd -r -u $PREFIX/bin/postg                    # [linux]
+        - otool -L $PREFIX/bin/postg                     # [osx]
+        - conda inspect linkages --show-files --groupby=dependency postg
+        - conda inspect objects -p $PREFIX $PKG_NAME     # [osx]
+
+about:
+    home: https://github.com/aoterodelaroza/postg
+    dev_url: https://github.com/aoterodelaroza/postg
+    # doc_url:
+    # doc_source_url:
+    license: GPL-3.0+
+    # license_url:
+    license_file: LICENSE
+    license_family: GPL
+    summary: "E. Johnson and A. Otero de la Roza's exchange-hold dipole moment (XDM) dispersion correction for DFT"
+    # description: >
+
+## History
+

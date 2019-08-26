@@ -13,7 +13,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_C_COMPILER=icc \
         -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DINSTALL_PYMOD=ON \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_XHOST=OFF \
@@ -26,6 +26,14 @@ fi
 
 
 if [ "$(uname)" == "Linux" ]; then
+
+# to practice c-f
+#  * ldd -r -u need && return 0 toggled
+#  * not Intel compilers
+#  * source/path: ../../../gau2grid
+#    ALLOPTS="-gnu-prefix=${HOST}-"
+#        -DCMAKE_C_COMPILER=${CC} \
+#        -DCMAKE_C_FLAGS="${CFLAGS}" \
 
     # load Intel compilers
     set +x
@@ -44,7 +52,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_C_COMPILER=icc \
         -DCMAKE_C_FLAGS="${ALLOPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DINSTALL_PYMOD=ON \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_XHOST=OFF \

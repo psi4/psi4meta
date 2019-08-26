@@ -92,3 +92,12 @@ ${PYTHON} ${RECIPE_DIR}/run_coverage.py
 TOKEN=$(cat ${RECIPE_DIR}/token-codecov)
 bash <(curl -s https://codecov.io/bash) -x $HOST-gcov -r psi4/psi4 -t ${TOKEN}
 
+
+# NOTES
+# -----
+#
+# * Running by hand
+#   >>> bash <(curl -s https://codecov.io/bash) -x $HOST-gcov -t TOKEN-GOES-HERE -X gcov
+#   >>> coverage run --parallel-mode stage/bin/psi4 ../tests/tu2-ch2-energy/input.dat
+#   >>> coverage combine
+#   >>> coverage report

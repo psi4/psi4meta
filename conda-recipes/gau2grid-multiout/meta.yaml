@@ -77,7 +77,7 @@ outputs:
               - numpy
               - {{ pin_compatible('python', max_pin='x.x') }}
       files:
-          - lib{{ PYMOD_INSTALL_LIBDIR }}/gau2grid
+          - lib/python{{ PY_VER }}/site-packages/gau2grid
       test:
           requires:
               - pytest
