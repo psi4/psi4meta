@@ -10,11 +10,11 @@ source:
     git_url: git@github.com:loriab/pylibefp.git         # [linux]
     git_url: https://github.com/loriab/pylibefp.git     # [osx]
     # git_tag: v{{ version }}
-    git_tag: v0.5
+    git_tag: v0.6
 
 build:
-    number: 3                                            # [linux]
-    number: 3                                            # [osx]
+    number: 0                                            # [linux]
+    number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
 
@@ -29,11 +29,11 @@ requirements:
         - pybind11 {{ pybind11 }}  # trouble at dep metadata time
         - python {{ python }}
         - qcelemental {{ qcelemental }}
-        # docs
-        - python-graphviz                               # [linux and py==37]
-        - sphinx >=1.5,<2                               # [linux and py==37]
-        - sphinx-automodapi                             # [linux and py==37]
-        - sphinx-psi-theme                              # [linux and py==37]
+        ## docs
+        #- python-graphviz                               # [linux and py==37]
+        #- sphinx >=1.5,<2                               # [linux and py==37]
+        #- sphinx-automodapi                             # [linux and py==37]
+        #- sphinx-psi-theme                              # [linux and py==37]
 
 outputs:
     - name: libefp
@@ -102,8 +102,7 @@ outputs:
               - {{ pin_compatible('python', max_pin='x.x') }}
               - {{ pin_compatible('qcelemental', max_pin='x') }}
       files:
-          - lib/python*/site-packages/pylibefp/*
-          - lib/python*/site-packages/pylibefp/tests/*
+          - lib/python{{ PY_VER }}/site-packages/pylibefp
           - share/cmake/pylibefp/*
       test:
           requires:
@@ -135,22 +134,22 @@ outputs:
           summary: "L. A. Burns's python bindings to libefp"
           # description: >
 
-    - name: pylibefp-docs
-      build:
-           number: 0
-           skip: true  # [win or osx or not py==37]
-      requirements:
-          host:
-              - python {{ python }}
-              - python-graphviz
-              - sphinx >=1.5
-              - sphinx-automodapi
-              - sphinx-psi-theme
-      files:
-          - share/doc/pylibefp
-      test:
-          commands:
-              - test -f $PREFIX/share/doc/pylibefp/html/index.html
+    #- name: pylibefp-docs
+    #  build:
+    #       number: 0
+    #       skip: true  # [win or osx or not py==37]
+    #  requirements:
+    #      host:
+    #          - python {{ python }}
+    #          - python-graphviz
+    #          - sphinx >=1.5
+    #          - sphinx-automodapi
+    #          - sphinx-psi-theme
+    #  files:
+    #      - share/doc/pylibefp
+    #  test:
+    #      commands:
+    #          - test -f $PREFIX/share/doc/pylibefp/html/index.html
 
 # NOTES
 # -----

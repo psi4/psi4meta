@@ -153,6 +153,9 @@
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.7.0/noarch/qcelemental-0.7.0-py_0.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.10.0/noarch/qcengine-0.10.0-py_0.tar.bz2
 
+# [LAB 13 Sep 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.8.0/noarch/qcelemental-0.8.0-py_0.tar.bz2
+
 import os
 import sys
 import json
@@ -475,7 +478,7 @@ if host == "psinet":
 
 # L/RT: if psi4-rt tests fail, build the downstreams as needed.
 # -------------------------------------------------------------
-#{'recipe': 'libefp-multiout', 'build_channels': ['psi4', 'defaults', 'conda-forge']},  # chnl: qcel, pb11, docs-stuff
+#{'recipe': 'libefp-multiout', 'build_channels': ['psi4/label/dev']}, #, 'defaults', 'conda-forge']},  # chnl: qcel, pb11, docs-stuff
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
 #{'recipe': 'gpudfcc', 'build_channels': ['psi4/label/dev']},  # chnl: psi4

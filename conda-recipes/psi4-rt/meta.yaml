@@ -24,7 +24,7 @@ requirements:
         - scipy >=1.1.0,<1.3  # delete this line after new ofermi release. this prevents selecting old _1 build
         - {{ pin_compatible('python', max_pin='x.x') }}
         - {{ pin_compatible('dftd3', max_pin='x.x') }}
-        - pylibefp {{ pylibefp }}*  *{{ pylibefp_bld }}  # can't do max_pin while version is +git
+        - pylibefp {{ pylibefp }}*  # can't do max_pin while version is +git  *{{ pylibefp_bld }}
         - {{ pin_compatible('gcp', max_pin='x.x') }}
         - {{ pin_compatible('mp2d', max_pin='x.x') }}
         - openfermion {{ openfermion }} *{{ openfermion_bld }}  # temp

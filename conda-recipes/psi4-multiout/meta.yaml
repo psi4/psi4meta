@@ -86,7 +86,7 @@ outputs:
       files:
           - bin/psi4
           - include/psi4
-          - lib{{ PYMOD_INSTALL_LIBDIR }}/psi4
+          - lib/python{{ PY_VER }}/site-packages/psi4
           - share/cmake/psi4
           - share/cmake/Target*/*
           - share/psi4

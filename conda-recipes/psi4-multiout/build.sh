@@ -29,7 +29,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_CXX_FLAGS="${CXXFLAGS} ${OPTS}" \
         -DCMAKE_Fortran_FLAGS="${FFLAGS} ${OPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DPYTHON_EXECUTABLE=${PYTHON} \
         -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}${SHLIB_EXT}" \
@@ -121,7 +121,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_CXX_FLAGS="${ALLOPTS}" \
         -DCMAKE_Fortran_FLAGS="${ALLOPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DPYTHON_EXECUTABLE=${PYTHON} \
         -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}${SHLIB_EXT}" \

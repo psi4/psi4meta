@@ -17,7 +17,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_C_FLAGS="${CFLAGS} ${OPTS}" \
         -DCMAKE_CXX_FLAGS="${CXXFLAGS} ${OPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DPYTHON_EXECUTABLE=${PYTHON} \
         -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}${SHLIB_EXT}" \
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
@@ -60,7 +60,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_C_FLAGS="${ALLOPTS}" \
         -DCMAKE_CXX_FLAGS="${ALLOPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DPYTHON_EXECUTABLE=${PYTHON} \
         -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.so" \
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
