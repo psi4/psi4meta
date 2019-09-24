@@ -19,8 +19,6 @@ if [ "$(uname)" == "Darwin" ]; then
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=OFF \
         -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DCARTESIAN_ORDER=row \
-        -DSPHERICAL_ORDER=gaussian \
         -DMAX_AM=8
 fi
 
@@ -58,8 +56,6 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=ON \
         -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DCARTESIAN_ORDER=row \
-        -DSPHERICAL_ORDER=gaussian \
         -DMAX_AM=8
 fi
 
@@ -72,3 +68,9 @@ make install
 
 # test
 # outside build phase
+
+# NOTES
+
+# retired with 2.0
+#        -DCARTESIAN_ORDER=row \
+#        -DSPHERICAL_ORDER=gaussian \
