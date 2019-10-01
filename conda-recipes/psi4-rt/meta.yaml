@@ -26,8 +26,8 @@ requirements:
         - {{ pin_compatible('python', max_pin='x.x') }}
         - {{ pin_compatible('cppe', max_pin='x.x') }}
         - {{ pin_compatible('dftd3', max_pin='x.x') }}
-        - pylibefp {{ pylibefp }}*  # can't do max_pin while version is +git 
-        #  *{{ pylibefp_bld }}
+        - pylibefp {{ pylibefp }}*  # can't do max_pin while version is +git
+        # *{{ pylibefp_bld }}
         - {{ pin_compatible('gcp', max_pin='x.x') }}
         - {{ pin_compatible('mp2d', max_pin='x.x') }}
         - openfermion {{ openfermion }} *{{ openfermion_bld }}  # temp

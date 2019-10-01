@@ -396,7 +396,7 @@ if host == "macpsinet":
 
 # M/RT: if psi4-rt tests fail, build the downstreams as needed.
 # -------------------------------------------------------------
-#{'recipe': 'libefp-multiout', 'build_channels': ['psi4']},  # chnl: qcel, pb11
+#{'recipe': 'libefp-multiout', 'build_channels': ['psi4/label/dev']},  # chnl: qcel, pb11
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
 # 'resp' converted to noarch Aug 2019, so builds on L
