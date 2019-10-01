@@ -156,6 +156,10 @@
 # [LAB 13 Sep 2019]
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.8.0/noarch/qcelemental-0.8.0-py_0.tar.bz2
 
+# [LAB 1 Oct 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.9.0/noarch/qcelemental-0.9.0-py_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.11.0/noarch/qcengine-0.11.0-py_0.tar.bz2
+
 import os
 import sys
 import json
