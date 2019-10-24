@@ -160,6 +160,12 @@
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.9.0/noarch/qcelemental-0.9.0-py_0.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.11.0/noarch/qcengine-0.11.0-py_0.tar.bz2
 
+# [LAB 17 Oct 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.10.0/noarch/qcelemental-0.10.0-py_0.tar.bz2
+
+# [LAB 24 Oct 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.11.0/noarch/qcelemental-0.11.0-py_0.tar.bz2
+
 import os
 import sys
 import json
@@ -456,10 +462,10 @@ if host == "psinet":
 #{'recipe': 'chemps2-multiout'},
 #{'recipe': 'cppe', 'build_channels': ['psi4/label/dev']},  # chnl: pybind11
 #{'recipe': 'dkh'},
-#{'recipe': 'gau2grid-multiout'},
-###{'recipe': 'gau2grid-multiout', 'build_channels': ['conda-forge']},  # c-f prep
+#{'recipe': 'gau2grid-multiout', 'build_channels': ['conda-forge']},  # chnl: avoid test solve error
 #{'recipe': 'gdma'},
 #{'recipe': 'libint'},
+#{'recipe': 'libint2'},
 #{'recipe': 'pcmsolver'},
 #{'recipe': 'simint'},
 #{'recipe': 'libxc'},

@@ -11,7 +11,7 @@ build:
 requirements:
     host:
         - python {{ python }}
-        - cppe {{ cppe }}
+        - pycppe {{ pycppe }}
         - dftd3 {{ dftd3 }}
         # - pylibefp {{ pylibefp }}
         - gcp {{ gcp }}
@@ -24,7 +24,7 @@ requirements:
     run:
         - scipy >=1.1.0,<1.3  # delete this line after new ofermi release. this prevents selecting old _1 build
         - {{ pin_compatible('python', max_pin='x.x') }}
-        - {{ pin_compatible('cppe', max_pin='x.x') }}
+        - {{ pin_compatible('pycppe', max_pin='x.x') }}
         - {{ pin_compatible('dftd3', max_pin='x.x') }}
         - pylibefp {{ pylibefp }}*  # can't do max_pin while version is +git
         # *{{ pylibefp_bld }}
@@ -43,8 +43,9 @@ requirements:
 test:
     requires:
 #        - gpu_dfcc                              # [linux]  # test, even if too fat to include
-        - psi4 {{ psi4ver }}
+        - psi4 {{ psi4ver }}                     # sometimes need psi4ver 1.4a2*
     imports:
+        - cppe
         - pylibefp
 #        - gpu_dfcc                              # [linux]
         - openfermionpsi4
