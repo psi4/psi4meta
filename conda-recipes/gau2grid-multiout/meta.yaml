@@ -115,7 +115,7 @@ outputs:
         # Actually test
         - export GAU2GRID_FORCE_C_TEST=1                  # [unix]
         - set GAU2GRID_FORCE_C_TEST=1                     # [win]
-        - python -c "import sys; import gau2grid as gg; sys.exit(gg.test())"
+        - python -c "import sys, gau2grid; sys.exit(gau2grid.test())"
     about:
       home: https://github.com/dgasmith/gau2grid
       dev_url: https://github.com/dgasmith/gau2grid
