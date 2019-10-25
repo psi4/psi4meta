@@ -166,6 +166,15 @@
 # [LAB 24 Oct 2019]
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.11.0/noarch/qcelemental-0.11.0-py_0.tar.bz2
 
+# [LAB 25 Oct 2019]
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.0/linux-64/pydantic-1.0-py37h516909a_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.0/linux-64/pydantic-1.0-py36h516909a_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.0/osx-64/pydantic-1.0-py36h0b31af3_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.0/osx-64/pydantic-1.0-py37h0b31af3_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.0/win-64/pydantic-1.0-py37hfa6e2cd_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.0/win-64/pydantic-1.0-py36hfa6e2cd_0.tar.bz2
+
+
 import os
 import sys
 import json

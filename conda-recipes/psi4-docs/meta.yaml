@@ -30,7 +30,7 @@ requirements:
         # run: for build-time testing or docs
         - dftd3 {{ dftd3 }}
         - gcp {{ gcp }}
-        - networkx
+        - networkx {{ networkx }}
         - numpy
         - pylibefp {{ pylibefp }}              # for efp fragment autodoc
         - qcelemental {{ qcelemental }}*
