@@ -39,7 +39,7 @@ requirements:
         - simint {{ simint }}
         - libxc {{ libxc }}
         # rt for ctest
-        - networkx >=2.4
+        - networkx {{ networkx }}
         - numpy
         - qcelemental {{ qcelemental }}
         - qcengine {{ qcengine }}
@@ -77,7 +77,7 @@ outputs:
               - libxc {{ libxc }}
           run:
               - intel-openmp
-              - networkx >=2.4
+              - networkx {{ networkx }}
               - numpy
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
