@@ -114,7 +114,7 @@ if sys.platform.startswith('linux'):
 if sys.platform == 'darwin':
     if args.clang:
         recc.insert(-1, '-C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsClangCache.cmake')
-        recc.insert(0, 'CONDA_BUILD_SYSROOT=~/SDKs/MacOSX10.9.sdk')
+    #    recc.insert(0, 'CONDA_BUILD_SYSROOT=~/SDKs/MacOSX10.9.sdk')
     #    recc.insert(-1, '-C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsAppleClangCache.cmake')
     #if args.gcc:
     #    recc.insert(-1, '-C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsGNUCache.cmake')

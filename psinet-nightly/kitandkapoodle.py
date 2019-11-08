@@ -174,6 +174,20 @@
 # anaconda copy --to-owner psi4 conda-forge/pydantic/1.0/win-64/pydantic-1.0-py37hfa6e2cd_0.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/pydantic/1.0/win-64/pydantic-1.0-py36hfa6e2cd_0.tar.bz2
 
+# [LAB 7 Nov 2019]
+# anaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/osx-64/pybind11-2.4.3-py36ha1b3eb9_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/osx-64/pybind11-2.4.3-py37ha1b3eb9_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/linux-64/pybind11-2.4.3-py36hc9558a2_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/linux-64/pybind11-2.4.3-py37hc9558a2_0.tar.bz2
+
+# anaconda copy --to-owner psi4 conda-forge/hdf5/1.10.5/osx-64/hdf5-1.10.5-nompi_h3e39495_1104.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/hdf5/1.10.5/linux-64/hdf5-1.10.5-nompi_h3c11f04_1104.tar.bz2
+
+# anaconda copy --to-owner psi4 conda-forge/h5py/2.10.0/osx-64/h5py-2.10.0-nompi_py36h6248fd5_100.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/h5py/2.10.0/osx-64/h5py-2.10.0-nompi_py37h6248fd5_100.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/h5py/2.10.0/linux-64/h5py-2.10.0-nompi_py36h513d04c_100.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/h5py/2.10.0/linux-64/h5py-2.10.0-nompi_py37h513d04c_100.tar.bz2
+
 
 import os
 import sys
@@ -457,7 +471,7 @@ if host == "psinet":
 #{'recipe': 'pybind11'},
 #{'recipe': 'pytest-shutil', 'build_channels': ['defaults', 'conda-forge']},  # chnl: setuptools-git  # neededby: v2rdm  # Note: recipe fine but useless as c-b & pytest-shutil don't mix
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
-#{'recipe': 'openfermion', 'build_channels': ['defaults', 'bioconda']},  # chnl: pubchempy  # neededby: openfermionpsi4
+#{'recipe': 'openfermion', 'build_channels': ['defaults', 'psi4/label/dev', 'bioconda']},  # chnl: pubchempy(bioconda), hdf5(psi4)  # neededby: openfermionpsi4
 #{'recipe': 'pint'},  # neededby: qcelemental
 #{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint  # neededby: psi4
 #{'recipe': 'helpme'},  #, 'build_channels': ['psi4']},  # chnl: pybind11
@@ -467,8 +481,8 @@ if host == "psinet":
 #       bump in recipe any upstream versions Psi means to support. rebuild packages.
 #       upon any failure, adjust source of Psi & upstream.
 # ----------------------------------------------------------------------------------
-#{'recipe': 'ambit'},
-#{'recipe': 'chemps2-multiout'},
+#{'recipe': 'ambit', 'build_channels': ['psi4/label/dev']},  # chnl: hdf5
+#{'recipe': 'chemps2-multiout', 'build_channels': ['psi4/label/dev']},  # chnl: hdf5
 #{'recipe': 'cppe', 'build_channels': ['psi4/label/dev']},  # chnl: pybind11
 #{'recipe': 'dkh'},
 #{'recipe': 'gau2grid-multiout', 'build_channels': ['conda-forge']},  # chnl: avoid test solve error

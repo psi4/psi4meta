@@ -32,8 +32,8 @@ if [ "$(uname)" == "Darwin" ]; then
         -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}${SHLIB_EXT}" \
-        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/libpython${PY_VER}m${SHLIB_EXT}" \
+        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \
@@ -96,7 +96,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers
     set +x
-    source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
+    source /theoryfs2/common/software/intel2019/bin/compilervars.sh intel64
     set -x
 
     # link against conda MKL & GCC
@@ -124,8 +124,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}${SHLIB_EXT}" \
-        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/libpython${PY_VER}m${SHLIB_EXT}" \
+        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \

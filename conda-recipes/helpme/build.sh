@@ -60,11 +60,11 @@ if [ "$(uname)" == "Linux" ]; then
         -DINSTALL_PYMOD=ON \
         -DFFTW_ROOT=${PREFIX} \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DBUILD_SHARED_LIBS=ON \
         -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}${SHLIB_EXT}" \
-        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/libpython${PY_VER}m${SHLIB_EXT}" \
+        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF

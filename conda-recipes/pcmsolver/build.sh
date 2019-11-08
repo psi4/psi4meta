@@ -30,7 +30,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}" \
         -DCMAKE_Fortran_FLAGS="${CMAKE_Fortran_FLAGS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR=${PYMOD_INSTALL_LIBDIR} \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DPYTHON_INTERPRETER=${PYTHON} \
         -DENABLE_OPENMP=OFF \
         -DENABLE_GENERIC=OFF \
@@ -69,7 +69,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_Fortran_COMPILER=ifort \
         -DCMAKE_Fortran_FLAGS="${ALLOPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR=${PYMOD_INSTALL_LIBDIR} \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DPYTHON_INTERPRETER=${PYTHON} \
         -DENABLE_OPENMP=OFF \
         -DENABLE_GENERIC=OFF \

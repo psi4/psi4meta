@@ -71,7 +71,7 @@ outputs:
           run:
               - {{ pin_compatible('python', max_pin='x.x') }}
       files:
-          - lib{{ PYMOD_INSTALL_LIBDIR }}/cppe*
+          - lib/python{{ PY_VER }}/site-packages/cppe*
       test:
           imports:
               - cppe

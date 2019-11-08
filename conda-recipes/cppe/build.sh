@@ -20,12 +20,12 @@ ${BUILD_PREFIX}/bin/cmake \
         -DENABLE_OPENMP=OFF \
         -DENABLE_XHOST=OFF \
         -DPYTHON_EXECUTABLE="${PYTHON}" \
-        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}${SHLIB_EXT}" \
-        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/libpython${PY_VER}m${SHLIB_EXT}" \
+        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DENABLE_PYTHON_INTERFACE=ON \
         -Dpybind11_DIR="${PREFIX}/share/cmake/pybind11" \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
-        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DCMAKE_PREFIX_PATH="${PREFIX}"
 
 # TODO OpenMP is off b/c getting gomp

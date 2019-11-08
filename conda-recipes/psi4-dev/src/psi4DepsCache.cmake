@@ -13,8 +13,8 @@
 #
 
 set(PYTHON_EXECUTABLE      "/opt/anaconda1anaconda2anaconda3/bin/python" CACHE STRING "")
-set(PYTHON_LIBRARY         "/opt/anaconda1anaconda2anaconda3/lib/lib@PY_ABBR@.so" CACHE STRING "")
-set(PYTHON_INCLUDE_DIR     "/opt/anaconda1anaconda2anaconda3/include/@PY_ABBR@" CACHE STRING "")
+set(PYTHON_LIBRARY         "/opt/anaconda1anaconda2anaconda3/lib/libpython@PY_VER@m.so" CACHE STRING "")
+set(PYTHON_INCLUDE_DIR     "/opt/anaconda1anaconda2anaconda3/include/python@PY_VER@m" CACHE STRING "")
 
 set(pybind11_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/pybind11" CACHE PATH "")
 

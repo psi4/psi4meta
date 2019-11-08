@@ -1,4 +1,4 @@
-{% set version = "0.3" %}
+{% set version = "0.4" %}
 
 package:
     name: ambit
@@ -7,11 +7,10 @@ package:
 source:
     git_url: git@github.com:jturney/ambit.git            # [linux]
     git_url: https://github.com/jturney/ambit.git        # [osx]
-    git_tag: v{{ version }}  # L0,1,M0: 0.3
-    #git_tag: # 0.2: 9c7049a  # v0.2 + 37
+    git_tag: v{{ version }}
 
 build:
-    number: 1                                            # [linux]
+    number: 0                                            # [linux]
     number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
@@ -59,3 +58,8 @@ about:
     license_family: LGPL
     summary: "J. Turney's C++ library for the implementation of tensor product calculations"
     #description: >
+
+
+# History
+    #git_tag: v{{ version }}  # L0,1,M0: 0.3
+    #git_tag: # 0.2: 9c7049a  # v0.2 + 37

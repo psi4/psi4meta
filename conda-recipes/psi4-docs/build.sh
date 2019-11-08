@@ -15,11 +15,11 @@ ${BUILD_PREFIX}/bin/cmake \
     -DCMAKE_CXX_COMPILER=${CXX} \
     -DCMAKE_CXX_FLAGS="--coverage" \
     -DCMAKE_INSTALL_LIBDIR=lib \
-    -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+    -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
     -DMAX_AM_ERI=5 \
     -DPYTHON_EXECUTABLE=${PYTHON} \
-    -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.so" \
-    -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
+    -DPYTHON_LIBRARY="${PREFIX}/lib/libpython${PY_VER}m${SHLIB_EXT}" \
+    -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
     -DCMAKE_PREFIX_PATH="${PREFIX}" \
     -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON \
     -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \

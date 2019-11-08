@@ -41,7 +41,7 @@ outputs:
               - {{ compiler('fortran') }}
               - llvm-openmp                    # [osx]
               - mkl-devel {{ mkl }}*
-              - {{ pin_compatible('pybind11', max_pin='x.x.x') }}
+              - {{ pin_compatible('pybind11', max_pin='x.x') }}
               - {{ pin_compatible('python', max_pin='x.x') }}
               # rt
               - networkx {{ networkx }}
@@ -67,7 +67,7 @@ outputs:
               # Actually test
               - conda list
               - git clone https://github.com/psi4/psi4.git
-              - cd psi4 && git checkout v{{ psi4ver }} && cd ..                           # [psi4ver != '']
+              - cd psi4 && git checkout v{{ psi4vergit }} && cd ..                       # [psi4vergit != '']
 
               # Part I: GNU/Clang
               - printf "\n\n   <<  I.A psi4-dev@conda --> $CONDA_CPLR Psi4  >>\n\n\n"
@@ -112,7 +112,7 @@ outputs:
               - printf "\n\n   <<  II.A psi4-dev@conda --> Intel Psi4  >>\n\n\n"         # [linux]
               - cd psi4                                                                  # [linux]
               - PPAOUT="$(psi4-path-advisor --intel)"                                    # [linux]
-              - source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64  # [linux]
+              - source /theoryfs2/common/software/intel2019/bin/compilervars.sh intel64  # [linux]
               - >                                                                        # [linux]
                   eval                                                                   # [linux]
                   ${PPAOUT}-intel                                                        # [linux]
