@@ -1,5 +1,5 @@
-{% set version = "2.2.3" %}
-{% set sha256 = "3a3b7b651afab1c5ba557f4c37d785a522b8030dfc765da26adc2ecd1de940ea" %}
+{% set version = "2.4.3" %}
+{% set sha256 = "1eed57bc6863190e35637290f97a20c81cfe4d9090ac0a24f3bbf08f265eb71d" %}
 
 package:
     name: pybind11
@@ -12,11 +12,17 @@ source:
 
 build:
     number: 0
+    ignore_run_exports:
+        # really compiler's job to impose this
+        - libcxx  # [osx]
 
 requirements:
     build:
-        - python
         - cmake
+        - make  # [unix]
+        - {{ compiler('cxx') }}
+    host:
+        - python
         - setuptools
     run:
         - python
@@ -25,16 +31,19 @@ test:
     imports:
         - pybind11
     commands:
-        - test -f ${PREFIX}/share/cmake/pybind11/pybind11Config.cmake                         # [unix]
-        - if exist %PREFIX%\share\cmake\pybind11\pybind11Config.cmake (exit 0) else (exit 1)  # [win]
-
+        - test -f ${PREFIX}/share/cmake/pybind11/pybind11Config.cmake                                 # [unix]
+        - if exist %LIBRARY_PREFIX%\share\cmake\pybind11\pybind11Config.cmake (exit 0) else (exit 1)  # [win]
+        - test $(python -c "import pybind11 as py; print(py.get_include())") == "${PREFIX}/include"         # [unix]
+        - test $(python -c "import pybind11 as py; print(py.get_include())") == "%LIBRARY_PREFIX%\include"  # [win]
 
 about:
     home: https://github.com/pybind/pybind11/
     license: BSD 3-Clause
     summary: Seamless operability between C++11 and Python
+    license_file: LICENSE
 
 extra:
   recipe-maintainers:
+    - ax3l
     - SylvainCorlay
     - wjakob

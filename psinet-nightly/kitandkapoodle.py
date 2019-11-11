@@ -175,8 +175,8 @@
 # anaconda copy --to-owner psi4 conda-forge/pydantic/1.0/win-64/pydantic-1.0-py36hfa6e2cd_0.tar.bz2
 
 # [LAB 7 Nov 2019]
-# anaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/osx-64/pybind11-2.4.3-py36ha1b3eb9_0.tar.bz2
-# anaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/osx-64/pybind11-2.4.3-py37ha1b3eb9_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/osx-64/pybind11-2.4.3-py36ha1b3eb9_0.tar.bz2     # REMOVED b/c tied to clang9
+# anaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/osx-64/pybind11-2.4.3-py37ha1b3eb9_0.tar.bz2     # REMOVED b/c tied to clang9
 # anaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/linux-64/pybind11-2.4.3-py36hc9558a2_0.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/linux-64/pybind11-2.4.3-py37hc9558a2_0.tar.bz2
 

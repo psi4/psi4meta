@@ -7,7 +7,7 @@ package:
 source:
     git_url: git@github.com:SebWouters/CheMPS2.git       # [linux]
     git_url: https://github.com/SebWouters/CheMPS2.git   # [osx]
-    git_tag: d8ac508  # L0/M0/L1: v1.8.9 + 1 = d8ac508, L1/M1: mkl 2019, hdf5 1.10.5
+    git_tag: d8ac508  # L0,1/M0,1: v1.8.9 + 1 = d8ac508, L1/M1: mkl 2019, hdf5 1.10.5
 
 build:
     number: 1                                            # [linux]
