@@ -188,6 +188,10 @@
 # anaconda copy --to-owner psi4 conda-forge/h5py/2.10.0/linux-64/h5py-2.10.0-nompi_py36h513d04c_100.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/h5py/2.10.0/linux-64/h5py-2.10.0-nompi_py37h513d04c_100.tar.bz2
 
+# [LAB 14 Nov 2019]
+
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.12.0/noarch/qcelemental-0.12.0-py_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.12.0/noarch/qcengine-0.12.0-py_0.tar.bz2
 
 import os
 import sys
