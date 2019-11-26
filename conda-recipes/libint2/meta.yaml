@@ -13,7 +13,7 @@ source:
     git_tag: l2cmake
 
 build:
-    number: 1                                            # [linux]  # 2 turns off sph eri3
+    number: 2                                            # [linux]  # 2 turns off sph eri3
     number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
@@ -56,3 +56,9 @@ about:
     license_family: LGPL
     summary: "E. Valeev and J. Fermann's two-body Gaussian molecular integrals"
     # description: >
+
+
+# NOTES
+# -----
+
+# * tried to build an AM6 for linux build/number: 2 at libint2_1574565922374 but it stopped compiling. could be fixable

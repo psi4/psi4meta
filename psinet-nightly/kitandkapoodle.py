@@ -193,6 +193,11 @@
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.12.0/noarch/qcelemental-0.12.0-py_0.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.12.0/noarch/qcengine-0.12.0-py_0.tar.bz2
 
+# [LAB 18 Nov 2019]
+# NOT COPYEDanaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/osx-64/pybind11-2.4.3-py38ha1b3eb9_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/linux-64/pybind11-2.4.3-py38hc9558a2_0.tar.bz2
+
+
 import os
 import sys
 import json

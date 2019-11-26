@@ -54,13 +54,6 @@ zlib:
 
 # <<<  Psi Stuff  >>>
 
-#PY_ABBR:
-#    - python3.7m
-#    - python3.6m
-#PYMOD_INSTALL_LIBDIR:
-#    - '/python3.7/site-packages'
-#    - '/python3.6/site-packages'
-
 psi4ver:
     # toggle between '' for nightly builds, which goes with `git_tag: master` for psi4-multiout and psi4-docs
     #   but sometimes needs a specific version or range like 1.4a2* when wrong psi picked up by resolver
@@ -217,11 +210,6 @@ libxc:
 
 # <<<  Concluding Stuff  >>>
 
-#zip_keys:
-#    - python
-#    - PYMOD_INSTALL_LIBDIR
-#    - PY_ABBR
-
 # NOTES
 # -----
 
@@ -239,3 +227,16 @@ libxc:
     # - python2.7
     # - '/python3.5/site-packages'
     # - '/python2.7/site-packages'
+
+# * drop specialized subst
+#zip_keys:
+#    - python
+#    - PYMOD_INSTALL_LIBDIR
+#    - PY_ABBR
+
+#PY_ABBR:
+#    - python3.7m
+#    - python3.6m
+#PYMOD_INSTALL_LIBDIR:
+#    - '/python3.7/site-packages'
+#    - '/python3.6/site-packages'
