@@ -59,17 +59,16 @@ if [ "$(uname)" == "Linux" ]; then
         -DERI2_PURE_SH=OFF \
         -DMPFR_ROOT=${PREFIX} \
         -DBOOST_ROOT=${PREFIX} \
-        -DEigen3_ROOT=${PREFIX}
+        -DEigen3_ROOT=${PREFIX} \
+        -DLIBINT_GENERATE_FMA=ON \
+        -DENABLE_XHOST=OFF \
+        -DENABLE_CXX11API=ON \
+        -DENABLE_FORTRAN=OFF \
+        -DBUILD_TESTING=ON
 
         #-DEigen3_DIR=${PREFIX}/share/eigen3/cmake/
 fi
 
-# build
+# build & install & test
 cd build
-cmake --build . -j${CPU_COUNT}
-
-# install
-cmake --build . --target install
-
-# test
-# Coming!
+cmake --build . --target install -j${CPU_COUNT}

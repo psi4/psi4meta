@@ -5,15 +5,13 @@ package:
     version: {{ version }}
 
 source:
-    url: https://github.com/loriab/libint/archive/l2cmake.zip
+    url: https://github.com/loriab/libint/archive/8f26ac59822b093e35cd528119d9efc8c1d31b8e.zip
     #git_url: git@github.com:evaleev/libint.git           # [linux]
     #git_url: https://github.com/evaleev/libint.git       # [osx]
     #git_tag: 5c89451  # L5-6: v1, 1.2.1 + 13 = 5c89451, L5: am8, L6M2: hand-edited to incl libderiv/libderiv.h
-    #                  # L3-4,M1: v1, ~1.2.1 = 3f14ff0, am6 L4: AVX-512
-    git_tag: l2cmake
 
 build:
-    number: 2                                            # [linux]  # 2 turns off sph eri3
+    number: 4                                            # [linux]  # 4 is to have components and fma # 3 is to get tarball # 2 turns off sph eri3
     number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
@@ -49,7 +47,7 @@ about:
     home: https://github.com/evaleev/libint
     dev_url: https://github.com/evaleev/libint
     doc_url: http://evaleev.github.io/libint/
-    # doc_source_url:
+    doc_source_url: https://github.com/evaleev/libint/blob/master/doc/progman/progman.tex
     license: LGPL-3.0+
     license_url: https://opensource.org/licenses/LGPL-3.0+
     license_file: LICENSE
