@@ -501,6 +501,7 @@ if host == "psinet":
 #{'recipe': 'pcmsolver'},
 #{'recipe': 'simint'},
 #{'recipe': 'libxc'},
+#{'recipe': 'optking', 'build_channels': ['conda-forge']},
 
 # L/CBCY1: if anything in LT changed, edit cbcy.
 #          start new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.
