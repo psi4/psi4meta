@@ -1,4 +1,4 @@
-{% set version = "0.4" %}
+{% set version = "0.4.1" %}
 
 package:
     name: ambit
@@ -19,6 +19,7 @@ build:
     ignore_run_exports:
         # not using hdf5's fortran interface
         - libgfortran-ng
+        - mkl
     run_exports:
         - {{ pin_subpackage('ambit', max_pin='x.x') }}
 
@@ -35,6 +36,7 @@ requirements:
         - zlib {{ zlib }}
     run:
         - intel-openmp
+        - {{ pin_compatible('mkl', upper_bound='2021.0') }}
 
 test:
     commands:

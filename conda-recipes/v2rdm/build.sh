@@ -52,7 +52,12 @@ if [ "$(uname)" == "Linux" ]; then
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=OFF \
+        -DPYTHON_EXECUTABLE=${PYTHON} \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/libpython${PY_VER}m${SHLIB_EXT}" \
+        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DLIBC_INTERJECT=${LIBC_INTERJECT}
+
+# python trio isn't generally necessary. revisit after psi4-dev ready
 fi
 
 # build

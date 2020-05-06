@@ -197,6 +197,42 @@
 # NOT COPYEDanaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/osx-64/pybind11-2.4.3-py38ha1b3eb9_0.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/pybind11/2.4.3/linux-64/pybind11-2.4.3-py38hc9558a2_0.tar.bz2
 
+# [LAB 12 Dec 2019]
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.13.0/noarch/qcengine-0.13.0-py_0.tar.bz2
+
+# [LAB 6 Jan 2020]
+# anaconda copy --to-owner psi4 conda-forge/pint/0.10/noarch/pint-0.10-py_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/py-cpuinfo/5.0.0/noarch/py-cpuinfo-5.0.0-py_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.3/osx-64/pydantic-1.3-py36h0b31af3_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.3/osx-64/pydantic-1.3-py38h0b31af3_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.3/osx-64/pydantic-1.3-py37h0b31af3_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.3/linux-64/pydantic-1.3-py36h516909a_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.3/linux-64/pydantic-1.3-py38h516909a_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.3/linux-64/pydantic-1.3-py37h516909a_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.3/win-64/pydantic-1.3-py36hfa6e2cd_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.3/win-64/pydantic-1.3-py38hfa6e2cd_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/pydantic/1.3/win-64/pydantic-1.3-py37hfa6e2cd_0.tar.bz2
+
+# [LAB 6 Mar 2020]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.14.0/noarch/qcelemental-0.14.0-py_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.14.0/noarch/qcengine-0.14.0-py_0.tar.bz2
+
+# [LAB 6 May 2020]
+# anaconda copy --to-owner psi4 conda-forge/h5py/2.10.0/linux-64/h5py-2.10.0-nompi_py36h513d04c_102.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/h5py/2.10.0/linux-64/h5py-2.10.0-nompi_py37h513d04c_102.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/h5py/2.10.0/linux-64/h5py-2.10.0-nompi_py38h513d04c_102.tar.bz2
+
+#nyi
+#win-64/h5py-2.10.0-nompi_py38h422b98e_102.tar.bz2
+#win-64/h5py-2.10.0-nompi_py36h422b98e_102.tar.bz2
+#win-64/h5py-2.10.0-nompi_py37h422b98e_102.tar.bz2
+#osx-64/h5py-2.10.0-nompi_py37h106b333_102.tar.bz2
+#osx-64/h5py-2.10.0-nompi_py38h106b333_102.tar.bz2
+#osx-64/h5py-2.10.0-nompi_py36h106b333_102.tar.bz2
+#linux-64/h5py-2.10.0-nompi_py38h513d04c_102.tar.bz2
+#linux-64/h5py-2.10.0-nompi_py36h513d04c_102.tar.bz2
+#linux-64/h5py-2.10.0-nompi_py37h513d04c_102.tar.bz2
+
 
 import os
 import sys
@@ -480,7 +516,7 @@ if host == "psinet":
 #{'recipe': 'pybind11'},
 #{'recipe': 'pytest-shutil', 'build_channels': ['defaults', 'conda-forge']},  # chnl: setuptools-git  # neededby: v2rdm  # Note: recipe fine but useless as c-b & pytest-shutil don't mix
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
-#{'recipe': 'openfermion', 'build_channels': ['defaults', 'psi4/label/dev', 'bioconda']},  # chnl: pubchempy(bioconda), hdf5(psi4)  # neededby: openfermionpsi4
+#{'recipe': 'openfermion', 'build_channels': ['defaults', 'psi4/label/dev', 'conda-forge']},  # chnl: pubchempy(c-f), hdf5(psi4)  # neededby: openfermionpsi4
 #{'recipe': 'pint'},  # neededby: qcelemental
 #{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint  # neededby: psi4
 #{'recipe': 'helpme'},  #, 'build_channels': ['psi4']},  # chnl: pybind11
@@ -517,7 +553,7 @@ if host == "psinet":
 #                       -OR- step forward, rebuilding downstream against new Psi ABI or adjusting source of downstream.
 #          upon success, continue at L/DEV.
 # ---------------------------------------------------------------------------------------------------------------------
-{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},
+{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev', 'adcc']},
 
 # L/RT: if psi4-rt tests fail, build the downstreams as needed.
 # -------------------------------------------------------------

@@ -11,6 +11,7 @@ build:
 requirements:
     host:
         - python {{ python }}
+#        - adcc {{ adcc }}                        # [py!=38]
         - pycppe {{ pycppe }}
         - dftd3 {{ dftd3 }}
         # - pylibefp {{ pylibefp }}
@@ -24,6 +25,7 @@ requirements:
     run:
         - scipy >=1.1.0
         - {{ pin_compatible('python', max_pin='x.x') }}
+#        - {{ pin_compatible('adcc', max_pin='x.x') }}  # [py!=38]
         - {{ pin_compatible('pycppe', max_pin='x.x') }}
         - {{ pin_compatible('dftd3', max_pin='x.x') }}
         - pylibefp {{ pylibefp }}*  # can't do max_pin while version is +git
@@ -45,6 +47,7 @@ test:
 #        - gpu_dfcc                              # [linux]  # test, even if too fat to include
         - psi4 {{ psi4ver }}                     # sometimes need psi4ver 1.4a2*
     imports:
+#        - adcc                                   # [py!=38]
         - cppe
         - pylibefp
 #        - gpu_dfcc                              # [linux]
