@@ -21,7 +21,7 @@ requirements:
         - {{ compiler('cxx') }}                # gcov, too
     host:
         - mkl-devel {{ mkl }}
-        - pybind11 {{ pybind11 }}
+        - pybind11-headers {{ pybind11 }}
         - python {{ python }}
         # qc
         - gau2grid {{ gau2grid }}
@@ -31,7 +31,7 @@ requirements:
         - dftd3 {{ dftd3 }}
         - gcp {{ gcp }}
         - networkx {{ networkx }}
-        - numpy
+        - numpy >=0.12.0
         - pylibefp {{ pylibefp }}              # for efp fragment autodoc
         - qcelemental {{ qcelemental }}*
         - qcengine {{ qcengine }}*

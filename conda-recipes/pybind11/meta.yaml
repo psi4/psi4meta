@@ -1,49 +1,41 @@
-{% set version = "2.4.3" %}
-{% set sha256 = "1eed57bc6863190e35637290f97a20c81cfe4d9090ac0a24f3bbf08f265eb71d" %}
+{% set version = "2.5.0" %}
+{% set sha256 = "97504db65640570f32d3fdf701c25a340c8643037c3b69aec469c10c93dc8504" %}
 
 package:
-    name: pybind11
-    version: {{ version }}
+  name: pybind11-headers
+  version: {{ version }}
 
 source:
-    fn: pybind11-{{ version }}.tar.gz
-    url: https://github.com/pybind/pybind11/archive/v{{ version }}.tar.gz
-    sha256: {{ sha256 }}
+  fn: pybind11-{{ version }}.tar.gz
+  url: https://github.com/pybind/pybind11/archive/v{{ version }}.tar.gz
+  sha256: {{ sha256 }}
 
 build:
-    number: 0
-    ignore_run_exports:
-        # really compiler's job to impose this
-        - libcxx  # [osx]
+  number: 0
+  ignore_run_exports:
+    # really compiler's job to impose this
+    - libgcc-ng     # [linux]
+    - libstdcxx-ng  # [linux]
+    - libcxx        # [osx]
 
 requirements:
-    build:
-        - cmake
-        - make  # [unix]
-        - {{ compiler('cxx') }}
-    host:
-        - python
-        - setuptools
-    run:
-        - python
+  build:
+    - cmake
+    - make      # [unix]
+    - {{ compiler('cxx') }}
+  host:
+    - python 3.8*   # avert building same package thrice
 
 test:
-    imports:
-        - pybind11
-    commands:
-        - test -f ${PREFIX}/share/cmake/pybind11/pybind11Config.cmake                                 # [unix]
-        - if exist %LIBRARY_PREFIX%\share\cmake\pybind11\pybind11Config.cmake (exit 0) else (exit 1)  # [win]
-        - test $(python -c "import pybind11 as py; print(py.get_include())") == "${PREFIX}/include"         # [unix]
-        - test $(python -c "import pybind11 as py; print(py.get_include())") == "%LIBRARY_PREFIX%\include"  # [win]
+  commands:
+    - test -f ${PREFIX}/share/cmake/pybind11/pybind11Config.cmake                                     # [unix]
+    - if exist %LIBRARY_PREFIX%\share\cmake\pybind11\pybind11Config.cmake (exit 0) else (exit 1)      # [win]
+    - test -f ${PREFIX}/include/pybind11/pybind11.h      # [unix]
+    - if exist %LIBRARY_INC%\pybind11\pybind11.h (exit 0) else (exit 1)      # [win]
 
 about:
-    home: https://github.com/pybind/pybind11/
-    license: BSD 3-Clause
-    summary: Seamless operability between C++11 and Python
-    license_file: LICENSE
+  home: https://github.com/pybind/pybind11/
+  license: BSD-3-Clause
+  summary: Seamless operability between C++11 and Python
+  license_file: LICENSE
 
-extra:
-  recipe-maintainers:
-    - ax3l
-    - SylvainCorlay
-    - wjakob

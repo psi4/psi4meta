@@ -29,7 +29,7 @@ requirements:
 #cy        - cython
         - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
         - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
-        - pybind11 {{ pybind11 }}
+        - pybind11-headers {{ pybind11 }}
         - python {{ python }}
         # qc
         - ambit {{ ambit }}
@@ -67,7 +67,7 @@ outputs:
 #cy              - cython
               - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
               - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
-              - pybind11 {{ pybind11 }}
+              - pybind11-headers {{ pybind11 }}
               - python {{ python }}
               # qc
               - ambit {{ ambit }}

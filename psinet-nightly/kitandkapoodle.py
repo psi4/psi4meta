@@ -222,6 +222,11 @@
 # anaconda copy --to-owner psi4 conda-forge/h5py/2.10.0/linux-64/h5py-2.10.0-nompi_py37h513d04c_102.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/h5py/2.10.0/linux-64/h5py-2.10.0-nompi_py38h513d04c_102.tar.bz2
 
+# [LAB 31 May 2020]
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.0/linux-64/adcc-0.15.0-py37he6710b0_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.0/linux-64/adcc-0.15.0-py38he6710b0_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.0/linux-64/adcc-0.15.0-py36he6710b0_0.tar.bz2
+
 #nyi
 #win-64/h5py-2.10.0-nompi_py38h422b98e_102.tar.bz2
 #win-64/h5py-2.10.0-nompi_py36h422b98e_102.tar.bz2
