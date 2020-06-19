@@ -154,6 +154,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DSITE="gatech-conda" \
         -DSPHINX_ROOT=${PREFIX}
 
+#cy        -DENABLE_CYTHONIZE=ON \
         #-DENABLE_erd=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_GTFock=ON \
