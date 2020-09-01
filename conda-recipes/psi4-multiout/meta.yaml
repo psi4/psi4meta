@@ -26,7 +26,7 @@ requirements:
     host:
         - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
         - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
-        - pybind11 {{ pybind11 }}
+        - pybind11-headers {{ pybind11 }}
         - python {{ python }}
         # qc
         - ambit {{ ambit }}
@@ -40,7 +40,7 @@ requirements:
         - libxc {{ libxc }}
         # rt for ctest
         - networkx {{ networkx }}
-        - numpy
+        - numpy >=1.12.0
         - qcelemental {{ qcelemental }}
         - qcengine {{ qcengine }}
 
@@ -49,6 +49,8 @@ outputs:
       build:
           requires_features:
               blas: {{ blas_impl }}
+          ignore_run_exports:
+              - mkl
           run_exports:
               - {{ pin_subpackage('psi4', max_pin='x.x') }}
       requirements:
@@ -61,7 +63,7 @@ outputs:
           host:
               - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
               - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
-              - pybind11 {{ pybind11 }}
+              - pybind11-headers {{ pybind11 }}
               - python {{ python }}
               # qc
               - ambit {{ ambit }}
@@ -77,8 +79,9 @@ outputs:
               - libxc {{ libxc }}
           run:
               - intel-openmp
+              - {{ pin_compatible('mkl', upper_bound='2021.0') }}
               - networkx {{ networkx }}
-              - numpy
+              - numpy >=1.12.0
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
               - {{ pin_compatible('qcelemental', max_pin='x') }}
@@ -154,3 +157,16 @@ outputs:
 # * define slight compatible range
 #   - {{ pin_compatible('qcelemental', upper_bound='0.6') }}
 #   - {{ pin_compatible('qcengine', upper_bound='0.8') }}
+
+# * cythonize #cy
+#   source:
+#       git_url: git@github.com:loriab/psi4.git      # [linux]
+#       git_tag: cythonize
+#   requirements:
+#       host:
+#           - cython
+#   outputs:
+#       - name: psi4
+#         requirements:
+#             host:
+#                 - cython

@@ -44,8 +44,6 @@ if [ "$(uname)" == "Linux" ]; then
     set -x
 
     # link against conda GCC
-    # * lang defined as CXX in CMake (file extension reasons), so $OPTS brings
-    #   libstdc++, hence the ENABLE_GENERIC=ON
     ALLOPTS="-gnu-prefix=${HOST}- ${OPTS}"
 
     # configure
@@ -69,21 +67,20 @@ if [ "$(uname)" == "Linux" ]; then
         -DWITH_ERI_MAX_AM:STRING="5;5;5" \
         -DWITH_ERI3_MAX_AM=6 \
         -DWITH_ERI2_MAX_AM=6 \
+        -DERI3_PURE_SH=OFF \
+        -DERI2_PURE_SH=OFF \
         -DMPFR_ROOT=${PREFIX} \
         -DBOOST_ROOT=${PREFIX} \
-        -DEigen3_ROOT=${PREFIX}
+        -DEigen3_ROOT=${PREFIX} \
+        -DLIBINT_GENERATE_FMA=ON \
+        -DENABLE_XHOST=OFF \
+        -DENABLE_CXX11API=ON \
+        -DENABLE_FORTRAN=OFF \
+        -DBUILD_TESTING=ON
 
         #-DEigen3_DIR=${PREFIX}/share/eigen3/cmake/
-        #-DERI3_PURE_SH=ON \
-        #-DERI2_PURE_SH=ON \
 fi
 
-# build
+# build & install & test
 cd build
-cmake --build . -j${CPU_COUNT}
-
-# install
-cmake --build . --target install
-
-# test
-# Coming!
+cmake --build . --target install -j${CPU_COUNT}

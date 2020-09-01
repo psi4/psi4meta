@@ -214,3 +214,7 @@ fi
 
 # * downstream (v2, sns) are built and tested downstream
 # * downstream py (sns) won't register properly anyways w/o psi4 and CM config time
+
+# * cythonize #cy
+#   -DENABLE_CYTHONIZE=ON \
+

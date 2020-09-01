@@ -1,0 +1,63 @@
+{% set name = "optking" %}
+{% set version = "0.1.0" %}
+#{% set sha256 = "55e16cc13b6b8f69153d1de287a32b80008b7433ab824cec21194f5c78d91c34" %}
+
+package:
+    name: {{ name|lower }}
+    version: {{ version }}
+
+source:
+    git_url: git@github.com:psi-rking/{{ name  }}.git
+    git_tag: master
+    #v0.6.1
+
+#source:
+#    url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+#    sha256: {{ sha256 }}
+
+build:
+    noarch: python
+    number: 3
+    script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+
+requirements:
+    host:   
+        - python >=3.6
+        - pip
+    run:
+        - numpy
+#        - pint
+#        - pydantic >=1.0.0
+        - python >=3.6.0
+        - qcelemental >=0.12.0
+        - qcengine >=0.12.0
+
+test:
+    imports:
+        - optking
+#    requires:
+#        - networkx
+#        - nglview
+#        - pytest >=4.0.0
+#        - scipy
+#    commands:
+#        - pytest --pyargs qcelemental
+
+about:
+    home: https://github.com/psi-rking/optking
+    dev_url: https://github.com/psi-rking/optking
+#    doc_url: https://qcelemental.readthedocs.io/en/latest/
+#    doc_source_url: https://github.com/MolSSI/QCElemental/blob/master/docs/source/index.rst
+    license: BSD-3-Clause
+    license_url: https://opensource.org/licenses/BSD-3-Clause
+    license_file: LICENSE
+    license_family: BSD
+    summary: A geometry optimizer for quantum chemistry.
+
+#extra:
+#    recipe-maintainers:
+#        - AlexHeide
+#        - dgasmith
+#        - loriab
+#        - lnaden
+#        - psi-rking
