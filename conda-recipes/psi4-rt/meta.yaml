@@ -15,6 +15,7 @@ requirements:
         - pycppe {{ pycppe }}
         - dftd3 {{ dftd3 }}
         # - pylibefp {{ pylibefp }}
+        - fockci {{ fockci }}
         - gcp {{ gcp }}
         - mp2d {{ mp2d }}
         - openfermion {{ openfermion }}
@@ -30,6 +31,7 @@ requirements:
         - {{ pin_compatible('dftd3', max_pin='x.x') }}
         - pylibefp {{ pylibefp }}*  # can't do max_pin while version is +git
         # *{{ pylibefp_bld }}
+        - {{ pin_compatible('fockci', max_pin='x.x') }}
         - {{ pin_compatible('gcp', max_pin='x.x') }}
         - {{ pin_compatible('mp2d', max_pin='x.x') }}
         - openfermion {{ openfermion }}
@@ -50,6 +52,7 @@ test:
         - adcc
         - cppe
         - pylibefp
+        - psi4fockci
 #        - gpu_dfcc                              # [linux]
         - openfermionpsi4
         - resp
@@ -64,6 +67,7 @@ test:
         - python -c "import pylibefp, sys; sys.exit(pylibefp.test('long'))"
         - python -c "import resp, sys; sys.exit(resp.test('long'))"
         - python -c "import v2rdm_casscf as v2; import sys; sys.exit(v2.test('long', extras=['-k', 'psiapi']))"
+#        - pytest -rwsx -v $SP_DIR/psi4fockci  # seems to hang on whichever python last
         - python -c "import psi4; print(f'*** Psi4 {psi4.__version__} compatible!')"
         - python -c "import pylibefp; print(f'*** pylibefp {pylibefp.__version__} compatible!')"
         - python -c "import resp; print(f'*** resp {resp.__version__} compatible!')"

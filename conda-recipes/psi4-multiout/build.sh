@@ -154,7 +154,6 @@ if [ "$(uname)" == "Linux" ]; then
         -DSITE="gatech-conda" \
         -DSPHINX_ROOT=${PREFIX}
 
-#cy        -DENABLE_CYTHONIZE=ON \
         #-DENABLE_erd=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_GTFock=ON \
@@ -215,3 +214,7 @@ fi
 
 # * downstream (v2, sns) are built and tested downstream
 # * downstream py (sns) won't register properly anyways w/o psi4 and CM config time
+
+# * cythonize #cy
+#   -DENABLE_CYTHONIZE=ON \
+
