@@ -1,0 +1,79 @@
+{% set version = "0.1" %}
+
+package:
+    name: miniforte
+    version: {{ version }}
+
+source:
+    git_url: git@github.com:evangelistalab/miniforte.git
+    git_tag: master
+
+build:
+    number: 0                                            # [linux]
+    binary_relocation: true
+    #requires_features:
+    #    blas: {{ blas_impl }}
+    ignore_run_exports:
+    #    # not using hdf5's fortran interface
+    #    - libgfortran-ng
+    #    - mkl
+    #run_exports:
+    #    - {{ pin_subpackage('ambit', max_pin='x.x') }}
+        # interferes with solving build env (at least for prereleases?)
+        - psi4
+        # unused libraries
+        - libgfortran-ng
+        # allow pin_compatible below to trump native mkl run_exports to permit 2019/2020 compatibility
+        - mkl
+
+requirements:
+    build:
+        - cmake >=3.3
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+    host:
+        - mkl-devel {{ mkl }}
+        - psi4 {{ psi4ver }}                              # for psi4OptionsTools to initiate plugin and to link against
+        - pybind11-headers {{ pybind11 }}
+        - python {{ python }}                             # to resolve site-packages dir name
+    run:
+        - intel-openmp
+        - {{ pin_compatible('mkl', upper_bound='2021.0') }}
+        - {{ pin_compatible('python', max_pin='x.x') }}
+
+test:
+    requires:
+        - psi4 {{ psi4ver }}
+    imports:
+        - miniforte
+        - psi4
+    commands:
+        ## Verify module
+        #- test -f $SP_DIR/v2rdm_casscf/v2rdm_casscf.so
+        #- test -f $PREFIX/share/cmake/v2rdm_casscf/v2rdm_casscfConfig.cmake
+        ## Inspect linkage
+        #- ldd -v $SP_DIR/v2rdm_casscf/v2rdm_casscf.so                 # [linux]
+        #- conda inspect linkages --show-files --groupby=dependency v2rdm_casscf
+        ## Actually test
+        #- psi4 --test
+        ## * conda-build and pytest-shutil don't get along
+        #- python -c "import v2rdm_casscf as v2, sys; sys.exit(v2.test('long', extras=['-k', 'psiapi']))"
+        #- python -c "import v2rdm_casscf as v2; import psi4; print('*** v2rdm_casscf {} built successfully against Psi4 {}. Buy psinet a beer.'.format(v2.__version__, psi4.__version__))"
+
+
+#about:
+#    home: https://github.com/jturney/ambit
+#    dev_url: https://github.com/jturney/ambit
+#    # doc_url:
+#    # doc_source_url:
+#    license: LGPL-3.0
+#    license_url: https://opensource.org/licenses/LGPL-3.0
+#    license_file: COPYING.LESSER
+#    license_family: LGPL
+#    summary: "J. Turney's C++ library for the implementation of tensor product calculations"
+#    #description: >
+
+
+# History
+    #git_tag: v{{ version }}  # L0,1,M0: 0.3
+    #git_tag: # 0.2: 9c7049a  # v0.2 + 37
