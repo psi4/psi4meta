@@ -39,7 +39,7 @@ requirements:
         - simint {{ simint }}
         - libxc {{ libxc }}
         # rt for ctest
-        - networkx {{ networkx }}
+        - networkx >=2.4
         - numpy >=1.12.0
         - qcelemental {{ qcelemental }}
         - qcengine {{ qcengine }}
@@ -50,7 +50,7 @@ outputs:
           requires_features:
               blas: {{ blas_impl }}
           ignore_run_exports:
-              - mkl
+              - mkl                            # [linux]
           run_exports:
               - {{ pin_subpackage('psi4', max_pin='x.x') }}
       requirements:
@@ -79,8 +79,8 @@ outputs:
               - libxc {{ libxc }}
           run:
               - intel-openmp
-              - {{ pin_compatible('mkl', upper_bound='2021.0') }}
-              - networkx {{ networkx }}
+              - {{ pin_compatible('mkl', upper_bound='2021.0') }}  # [linux]
+              - networkx >=2.4
               - numpy >=1.12.0
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}

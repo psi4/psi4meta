@@ -8,7 +8,7 @@ source:
     git_url: git@github.com:edeprince3/v2rdm_casscf.git      # [linux]
     git_url: https://github.com/edeprince3/v2rdm_casscf.git  # [osx]
     # git_tag: v{{ version }}
-    git_tag: d799503                                     # L3,L4: P::e L2: pb11 250 L1: mkl2019/2020, L0: v2rdm8 = v0.9 + 6 (edp) + 2 (lab)
+    git_tag: d799503                                     # M0,L3,L4: P::e L2: pb11 250 L1: mkl2019/2020, L0: v2rdm8 = v0.9 + 6 (edp) + 2 (lab)
     #path: ../../../v2rdm_casscf
 
 build:
@@ -22,7 +22,7 @@ build:
         # unused libraries
         - libgfortran-ng
         # allow pin_compatible below to trump native mkl run_exports to permit 2019/2020 compatibility
-        - mkl
+        - mkl                                            # [linux]
 
 requirements:
     build:
@@ -38,7 +38,7 @@ requirements:
         - python {{ python }}                             # to resolve site-packages dir name
     run:
         - intel-openmp
-        - {{ pin_compatible('mkl', upper_bound='2021.0') }}
+        - {{ pin_compatible('mkl', upper_bound='2021.0') }}  # [linux]
         - {{ pin_compatible('python', max_pin='x.x') }}
 
 test:

@@ -43,7 +43,7 @@ outputs:
           ignore_run_exports:
               # gcc symbols linked statically
               - libgcc-ng                               # [linux]
-              - mkl
+              - mkl                                     # [linux]
       requirements:
           build:
               - {{ compiler('c') }}
@@ -51,7 +51,7 @@ outputs:
               - mkl-devel {{ mkl }}                           # [blas_impl == 'mkl']
               - openblas-devel {{ openblas }}                 # [blas_impl == 'openblas']
           run:
-              - {{ pin_compatible('mkl', upper_bound='2021.0') }}
+              - {{ pin_compatible('mkl', upper_bound='2021.0') }}  # [linux]
       files:
           - include/efp.h
           - include/libefp/*
