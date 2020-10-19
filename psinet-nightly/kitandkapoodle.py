@@ -235,6 +235,10 @@
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.16.0/noarch/qcelemental-0.16.0-py_0.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.16.0/noarch/qcengine-0.16.0-py_0.tar.bz2
 
+# [LAB 7 Oct 2020]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.17.0/noarch/qcelemental-0.17.0-py_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.17.0/noarch/qcengine-0.17.0-py_0.tar.bz2
+
 #nyi
 #win-64/h5py-2.10.0-nompi_py38h422b98e_102.tar.bz2
 #win-64/h5py-2.10.0-nompi_py36h422b98e_102.tar.bz2
@@ -582,6 +586,7 @@ if host == "psinet":
 #{'recipe': 'postg'},
 #{'recipe': 'fockci', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'cct3', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
+#{'recipe': 'miniforte', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 
 # L/CBCY2: if anything in RT changed, edit cbcy.
 #          start or continue editing new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.
