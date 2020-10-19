@@ -465,6 +465,7 @@ if host == "macpsinet":
 #{'recipe': 'gau2grid-multiout'},
 #{'recipe': 'gdma'},
 #{'recipe': 'libint'},
+#{'recipe': 'libint2'},
 #{'recipe': 'pcmsolver'},
 #{'recipe': 'simint'},
 #{'recipe': 'libxc'},
