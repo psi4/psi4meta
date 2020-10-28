@@ -67,3 +67,13 @@ about:
      #build/number: 3  # [osx]    # 3 is am5_1 w/boost, 2 is build36 to have clang 10,  1 is build30
 
 # * tried to build an AM6 for linux build/number: 2 at libint2_1574565922374 but it stopped compiling. could be fixable
+
+# * history toward production build
+    #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_0.tgz  # L7
+    #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export31-7-7-4.tgz
+    #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export29-7-7-5.tgz
+    #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-7-7-5.tgz
+    #url: https://github.com/loriab/libint/archive/ebe3fad10e7b44ea69dd07709e42293f6286279f.zip  # Sept loriab repo
+    #url: https://github.com/loriab/libint/archive/8f26ac59822b093e35cd528119d9efc8c1d31b8e.zip
+
+    #build/number: 8  # [linux]  # 8 is copy-in # 7 is for med 543z w/o center_dep w/eri3_e4 # 6 is for am7;7;5 # 5 is for am6;6;5 # 4 is to have components and fma # 3 is to get tarball # 2 turns off sph eri3

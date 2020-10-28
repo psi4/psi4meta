@@ -35,7 +35,7 @@ blas_impl:
 hdf5:
     # - 1.10.2  # retired 7 Nov 2019 # this recipe pins to x.x.x which I trust more than the 1.8 recipe x.x  # no need to bump build no. for dep pkgs
     # - 1.10.4                           # [osx]    # retired 29 Sep 2020
-    # - 1.10.5                           # [linux]  # retired 29 Sep 2020
+    # - 1.10.5                           # [linux]  # retired 7 Oct 2020
     - 1.10.6
 # ipywidgets:
 #     - 7.5

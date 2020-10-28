@@ -26,7 +26,7 @@ requirements:
         - hdf5 {{ hdf5 }}
         - mkl-devel {{ mkl }}                           # [blas_impl == 'mkl']
         - openblas-devel {{ openblas }}                 # [blas_impl == 'openblas']
-        - numpy
+        - numpy >=1.12.0
         - python {{ python }}
 
 outputs:
@@ -100,11 +100,11 @@ outputs:
           host:
               - {{ pin_subpackage('chemps2', exact=True) }}
               - cython
-              - numpy
+              - numpy >=1.12.0
               - python {{ python }}
           run:
               - {{ pin_subpackage('chemps2', exact=True) }}
-              - numpy
+              - numpy >=1.12.0
               - {{ pin_compatible('python', max_pin='x.x') }}
       files:
           - lib/python{{ PY_VER }}/site-packages/PyCheMPS2*
