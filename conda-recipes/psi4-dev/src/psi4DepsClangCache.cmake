@@ -17,7 +17,7 @@
 
 set(CMAKE_C_COMPILER       "/opt/anaconda1anaconda2anaconda3/bin/@HOST@-clang" CACHE STRING "")
 set(CMAKE_CXX_COMPILER     "/opt/anaconda1anaconda2anaconda3/bin/@HOST@-clang++" CACHE STRING "")
-set(CMAKE_CXX_FLAGS        "-stdlib=libc++" CACHE STRING "")
+#set(CMAKE_CXX_FLAGS        "-stdlib=libc++" CACHE STRING "")
 set(CMAKE_Fortran_COMPILER "/opt/anaconda1anaconda2anaconda3/bin/@HOST@-gfortran" CACHE STRING "")
 
 # aka

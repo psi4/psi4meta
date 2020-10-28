@@ -78,7 +78,7 @@ outputs:
               - simint {{ simint }}
               - libxc {{ libxc }}
           run:
-              - intel-openmp
+              - intel-openmp                   # [linux]
               - {{ pin_compatible('mkl', upper_bound='2021.0') }}  # [linux]
               - networkx >=2.4
               - numpy >=1.12.0
