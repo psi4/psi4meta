@@ -4,7 +4,7 @@ package:
 
 build:
     number: 0                                  # [linux]  1.2_1: removes gpu_dfcc, dev13_1: fix wrong v2
-    number: 0                                  # [osx]                             dev13_1: fix wrong v2
+    number: 1                                  # [osx]                             dev13_1: fix wrong v2
     binary_relocation: true
     skip: true                                 # [win]
 
@@ -15,7 +15,7 @@ requirements:
         - pycppe {{ pycppe }}
         - dftd3 {{ dftd3 }}
         # - pylibefp {{ pylibefp }}
-        - fockci {{ fockci }}
+        - fockci {{ fockci }}                   # [linux]
         - gcp {{ gcp }}
         - mp2d {{ mp2d }}
         - openfermion {{ openfermion }}
@@ -31,7 +31,7 @@ requirements:
         - {{ pin_compatible('dftd3', max_pin='x.x') }}
         - pylibefp {{ pylibefp }}*  # can't do max_pin while version is +git
         # *{{ pylibefp_bld }}
-        - {{ pin_compatible('fockci', max_pin='x.x') }}
+        - {{ pin_compatible('fockci', max_pin='x.x') }}  # [linux]
         - {{ pin_compatible('gcp', max_pin='x.x') }}
         - {{ pin_compatible('mp2d', max_pin='x.x') }}
         - openfermion {{ openfermion }}
@@ -52,7 +52,7 @@ test:
         - adcc
         - cppe
         - pylibefp
-        - psi4fockci
+        - psi4fockci                             # [linux]
 #        - gpu_dfcc                              # [linux]
         - openfermionpsi4
         - resp

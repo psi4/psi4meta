@@ -44,7 +44,7 @@ outputs:
               - {{ pin_compatible('pybind11-headers', max_pin='x.x') }}
               - {{ pin_compatible('python', max_pin='x.x') }}
               # rt
-              - networkx {{ networkx }}
+              - networkx >=2.4
               - numpy >=0.12.0
               - pytest
               - qcelemental >={{ qcelemental }},<1.0

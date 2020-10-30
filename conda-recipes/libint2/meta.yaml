@@ -5,16 +5,14 @@ package:
     version: {{ version }}
 
 source:
-    url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-7-7-4-7-7-5_1.tgz  # L9
-    #git_url: git@github.com:evaleev/libint.git           # [linux]
-    #git_url: https://github.com/evaleev/libint.git       # [osx]
-    #git_tag: 5c89451  # L5-6: v1, 1.2.1 + 13 = 5c89451, L5: am8, L6M2: hand-edited to incl libderiv/libderiv.h
+    url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-7-7-4-7-7-5_1.tgz  # [linux]
+    url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_1.tgz  # [osx or win]
 
 build:
-    number: 9                                            # [linux]
-    number: 0                                            # [osx]
+    number: 9                                            # [linux]  # 9 is am7_1 w/boost
+    number: 3                                            # [osx]    # 3 is am5_1 w/boost
+    number: 0                                            # [win]
     binary_relocation: true
-    skip: true                                           # [win]
     run_exports:
         - {{ pin_subpackage('libint2', max_pin='x') }}
     ignore_run_exports:
@@ -26,7 +24,7 @@ requirements:
         - {{ compiler('cxx') }}
         - ninja
     host:
-        # want NO boost so that include/libint2/boost installs
+        # want NO boost so that include/libint2/boost/ installs
         - eigen
         - mpfr
 
@@ -55,6 +53,18 @@ about:
 
 # NOTES
 # -----
+
+# * history toward production build
+     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-7-7-4-7-7-5_0.tgz  # L8
+     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_0.tgz  # L7
+     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export31-7-7-4.tgz
+     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export29-7-7-5.tgz
+     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-7-7-5.tgz
+     #url: https://github.com/loriab/libint/archive/ebe3fad10e7b44ea69dd07709e42293f6286279f.zip  # Sept loriab repo
+     #url: https://github.com/loriab/libint/archive/8f26ac59822b093e35cd528119d9efc8c1d31b8e.zip
+
+     #build/number: 8  # [linux]  # 9 is am7_1 w/boost, # 8 is am7 # 7 is for med 543z w/o center_dep w/eri3_e4 # 6 is for am7;7;5 # 5 is for am6;6;5 # 4 is to have components and fma # 3 is to get tarball # 2 turns off sph eri3
+     #build/number: 3  # [osx]    # 3 is am5_1 w/boost, 2 is build36 to have clang 10,  1 is build30
 
 # * tried to build an AM6 for linux build/number: 2 at libint2_1574565922374 but it stopped compiling. could be fixable
 

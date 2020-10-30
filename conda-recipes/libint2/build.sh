@@ -5,7 +5,9 @@ if [ "$(uname)" == "Darwin" ]; then
 #    # * -fno-exceptions squashes `___gxx_personality_v0` symbol and thus libc++ dependence
 #    ALLOPTS="-clang-name=${CLANG} ${OPTS} -fno-exceptions"
 #    ALLOPTSCXX="-clang-name=${CLANG} -clangxx-name=${CLANGXX} -stdlib=libc++ -I${PREFIX}/include/c++/v1 ${OPTS} -fno-exceptions -mmacosx-version-min=10.9"
-    ALLOPTS="-clang-name=${CLANG} -clangxx-name=${CLANGXX} -stdlib=libc++ -I${PREFIX}/include/c++/v1 ${OPTS} -mmacosx-version-min=10.9"
+#    ALLOPTS="-clang-name=${CLANG} -clangxx-name=${CLANGXX} -stdlib=libc++ -I${PREFIX}/include/c++/v1 ${OPTS} -mmacosx-version-min=10.9"
+#        -DCMAKE_CXX_COMPILER=icpc \
+#        -DCMAKE_CXX_FLAGS="${ALLOPTS}" \
 
     # configure
     ${BUILD_PREFIX}/bin/cmake \
@@ -14,27 +16,20 @@ if [ "$(uname)" == "Darwin" ]; then
         -GNinja \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_CXX_COMPILER=icpc \
-        -DCMAKE_CXX_FLAGS="${ALLOPTS}" \
+        -DCMAKE_CXX_COMPILER=${CLANGXX} \
+        -DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DBUILD_SHARED=ON \
         -DBUILD_STATIC=OFF \
         -DLIBINT2_SHGAUSS_ORDERING=gaussian \
         -DLIBINT2_CARTGAUSS_ORDERING=standard \
         -DLIBINT2_SHELL_SET=standard \
-        -DENABLE_ERI=2 \
-        -DENABLE_ERI3=2 \
-        -DENABLE_ERI2=2 \
-        -DWITH_ERI_MAX_AM:STRING="3;3;3" \
-        -DWITH_ERI3_MAX_AM=4 \
-        -DWITH_ERI2_MAX_AM=4 \
         -DMPFR_ROOT=${PREFIX} \
         -DBOOST_ROOT=${PREFIX} \
-        -DEigen3_ROOT=${PREFIX}
+        -DEigen3_ROOT=${PREFIX} \
+        -DENABLE_FORTRAN=OFF \
+        -DBUILD_TESTING=ON
 fi
-        #-DWITH_ERI_MAX_AM:STRING="5;5;5" \
-        #-DWITH_ERI3_MAX_AM=6 \
-        #-DWITH_ERI2_MAX_AM=6 \
 
 if [ "$(uname)" == "Linux" ]; then
 
@@ -76,23 +71,12 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_CXX11API=ON \
         -DENABLE_FORTRAN=OFF \
         -DBUILD_TESTING=ON
-
-        # _6
-        # -DENABLE_ERI=2 \
-        # -DENABLE_ERI3=2 \
-        # -DENABLE_ERI2=2 \
-        # -DWITH_ERI_MAX_AM="7;7;5" \
-        # -DWITH_ERI3_MAX_AM="7;7;6" \
-        # -DWITH_ERI2_MAX_AM="7;7;6" \
-
-        #-DEigen3_DIR=${PREFIX}/share/eigen3/cmake/
-        #-DCMAKE_VERBOSE_MAKEFILE=ON \
+fi
 
 # build & install & test
 cd build
 cmake --build . --target install -j${CPU_COUNT}
 
-fi
 
 # This works for making a conda package out of a pre-built install
 #
@@ -106,3 +90,4 @@ sed "s|$PREBUILT|/opt/anaconda1anaconda2anaconda3|g" tmp0 > tmp1
 cp tmp1 ${PREFIX}/lib/pkgconfig/libint2.pc
 
 fi
+

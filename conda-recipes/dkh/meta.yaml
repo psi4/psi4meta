@@ -7,11 +7,11 @@ package:
 source:
     git_url: git@github.com:psi4/dkh.git                 # [linux]
     git_url: https://github.com/psi4/dkh.git             # [osx]
-    git_tag: 6f02ca0  # v1.2 + 2
+    git_tag: 6f02ca0  # M4 drop intel-openmp  # v1.2 + 2
 
 build:
     number: 2                                            # [linux]
-    number: 3                                            # [osx]
+    number: 4                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
     run_exports:
@@ -27,7 +27,6 @@ requirements:
         - {{ compiler('c') }}                            # [osx]
         - {{ compiler('fortran') }}
         - llvm-openmp                                    # [osx]
-        - intel-openmp                                   # [osx]
 
 test:
     commands:

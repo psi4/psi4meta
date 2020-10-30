@@ -9,11 +9,11 @@ package:
 source:
     git_url: git@github.com:quantumlib/OpenFermion.git              # [linux]
     git_url: https://github.com/quantumlib/OpenFermion.git          # [osx]
-    git_tag: v{{ version }}
+    git_tag: v{{ version }}                                                     # M1: hdf5 1.10.6
 
 build:
     number: 0                                               # [linux]
-    number: 0                                               # [osx]
+    number: 1                                               # [osx]
     skip: true                                              # [win]
 
 requirements:
