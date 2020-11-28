@@ -61,8 +61,8 @@ psi4ver:
     # toggle between '' for nightly builds, which goes with `git_tag: master` for psi4-multiout and psi4-docs
     #   but sometimes needs a specific version or range like 1.4a2* when wrong psi picked up by resolver
     - ''
-#    - '1.4a2.dev1058'                   # [osx]
-#    - '1.4a2.dev1058'                   # [linux]
+#    - '1.4a2.dev1136'                   # [osx]
+#    - '1.4a2.dev1136'                   # [linux]
     # toggle between specific version for targeted build, which goes with e.g., `git_tag: v1.3.1` for psi4-multiout and psi4-docs
     #- 1.3.2
 
@@ -125,7 +125,8 @@ ltrtver:
     # - "1.4.dev17"   # (22 Jun 2020)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      ...    ...   ...  ...      ..._L3    ...   ...    ...     ...      ...    ...      ...      ...   ...    0.1.0  ...  ...      ...
     # - "1.4.dev18"   # (19 Aug 2020)    0.5.1    ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      0.15.1 ...   ...  ...      ..._L4    ...   0.15.0 ...     ...      ...    ...      ...      ...   ...           ...  ...      ...
     # - "1.4.dev19"   # ( 1 Sep 2020)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      0.16.0 ...   ...  ...      ..._M0    ...   0.16.0 ...     ...      ...    ...      ...      ...   ...           ...  ...      ...
-    - "1.4.dev20"     # (26 Oct 2020)    ..._L0M1 ...    ..._L2M2 ...    ..._M4   ...          ...   ...    ..._M6   ...   ...      ...      0.17.0 ...   ...  ...      ...       ...   0.17.0 ...     ...      1.10.6 ..._L0M1 ...      ...   ...           ...  ...      ...
+    # - "1.4.dev20"   # (26 Oct 2020)    ..._L0M1 ...    ..._L2M2 ...    ..._M4   ...          ...   ...    ..._M6   ...   ...      ...      0.17.0 ...   ...  ...      ...       ...   0.17.0 ...     ...      1.10.6 ..._L0M1 ...      ...   ...           ...  ...      ...
+    - "1.4.dev21"     # (24 Nov 2020)    ...      ...    ...      ..._M1 ...      ...          ...   ...    ...      ...   2.6_M3   ...      ...    ...   ...  ...      ..._M1    ...   ...    ...     ...      ...    ...      ...      0.3.1 ...           ...  ...      ...
 
     # - "XXX"         # (   WIP 2020)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    ...      ...      ...   ...           ...  ...      ...
     # !* sns in 1.3.dev10: 1.0.3 was ready but forgot to include it again until 1.4.dev2 (at L2M1)
@@ -161,7 +162,7 @@ ambit:
 chemps2:
     - 1.8.9
 pycppe:
-    - 0.2.1
+    - 0.3.1
 dftd3:
     - 3.2.1
 dkh:
@@ -218,7 +219,7 @@ v2rdm_casscf:
 v2rdm_casscf_bld:
     # ordinary master (sometimes have to pin for resolver)
     - ''
-#    - _0  [osx]
+#    - _1  [osx]
 #    - _4  [linux]
     # c. v1.3.x _L6M5
     #- _5  [osx]
