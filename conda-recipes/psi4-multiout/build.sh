@@ -36,7 +36,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON \
-        -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_Libint2=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON \
@@ -136,7 +136,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON \
-        -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_Libint2=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON \

@@ -29,7 +29,7 @@ outputs:
               - dkh {{ dkh }}
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}
-              - libint {{ libint }} {{ libint_bld }}
+              - libint2 {{ libint }} {{ libint_bld }}
               - pcmsolver {{ pcmsolver }}
               - simint {{ simint }}
               - libxc {{ libxc }}
@@ -39,8 +39,10 @@ outputs:
               - {{ compiler('c') }}
               - {{ compiler('cxx') }}
               - {{ compiler('fortran') }}
+              - eigen
               - llvm-openmp                    # [osx]
               - mkl-devel {{ mkl }}*
+              - mpfr
               - {{ pin_compatible('pybind11-headers', max_pin='x.x') }}
               - {{ pin_compatible('python', max_pin='x.x') }}
               # rt
@@ -51,7 +53,7 @@ outputs:
               - pytest-xdist
               - qcelemental >={{ qcelemental }},<1.0
               - qcengine >={{ qcengine }},<1.0
-              - libint {{ libint }} {{ libint_bld }}
+              - libint2 {{ libint }} {{ libint_bld }}
       files:
           - bin/psi4-path-advisor
           - share/cmake/psi4
@@ -79,7 +81,7 @@ outputs:
                   eval
                   ${PPAOUT}-${CONDA_CPLR}
                   -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_Libint2=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON
@@ -119,7 +121,7 @@ outputs:
                   eval                                                                   # [linux]
                   ${PPAOUT}-intel                                                        # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON                                # [linux]
-                  -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON                                  # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_Libint2=ON                                 # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON                                # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON                                   # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON                             # [linux]

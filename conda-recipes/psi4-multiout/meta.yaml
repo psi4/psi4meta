@@ -24,7 +24,9 @@ requirements:
         - {{ compiler('fortran') }}      # [osx]     # nofortran
         - llvm-openmp                    # [osx]
     host:
+        - eigen
         - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
+        - mpfr
         - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
         - pybind11-headers {{ pybind11 }}
         - python {{ python }}
@@ -34,7 +36,7 @@ requirements:
         - dkh {{ dkh }}                             # nofortran
         - gau2grid {{ gau2grid }}
         - gdma {{ gdma }}                           # nofortran
-        - libint {{ libint }} {{ libint_bld }}
+        - libint2 {{ libint }} {{ libint_bld }}
         - pcmsolver {{ pcmsolver }}                 # nofortran
         - simint {{ simint }}
         - libxc {{ libxc }}
@@ -61,7 +63,9 @@ outputs:
               - {{ compiler('fortran') }}      # [osx]       # nofortran
               - llvm-openmp                    # [osx]
           host:
+              - eigen
               - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
+              - mpfr
               - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
               - pybind11-headers {{ pybind11 }}
               - python {{ python }}
@@ -71,7 +75,7 @@ outputs:
               - dkh {{ dkh }}                    # nofortran
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}                  # nofortran
-              - libint {{ libint }} {{ libint_bld }}
+              - libint2 {{ libint }} {{ libint_bld }}
               - pcmsolver {{ pcmsolver }}        # nofortran
               - qcelemental {{ qcelemental }}
               - qcengine {{ qcengine }}
@@ -109,7 +113,7 @@ outputs:
               - ldd -r -u $SP_DIR/psi4/core$PYLIB_EXT  # [linux]
               - ldd -v $SP_DIR/psi4/core$PYLIB_EXT     # [linux]
               - otool -L $SP_DIR/psi4/core$PYLIB_EXT   # [osx]
-              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint pcmsolver simint libxc psi4  # erd ; comment for  # nofortran
+              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint2 pcmsolver simint libxc psi4  # erd ; comment for  # nofortran
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               - grep -r theoryfs2 $PREFIX/share/cmake/ || true  # [linux]
               # Actually test

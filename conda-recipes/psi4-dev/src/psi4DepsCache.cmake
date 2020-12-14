@@ -38,8 +38,8 @@ set(gau2grid_DIR           "/opt/anaconda1anaconda2anaconda3/share/cmake/gau2gri
 set(ENABLE_gdma            ON CACHE BOOL "")
 set(gdma_DIR               "/opt/anaconda1anaconda2anaconda3/share/cmake/gdma" CACHE PATH "")
 
-set(MAX_AM_ERI             "6" CACHE STRING "")
-set(Libint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/Libint" CACHE PATH "")
+set(MAX_AM_ERI             "5" CACHE STRING "")
+set(Libint2_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/Libint2" CACHE PATH "")
 
 set(ENABLE_PCMSolver       ON CACHE BOOL "")
 set(PCMSolver_DIR          "/opt/anaconda1anaconda2anaconda3/share/cmake/PCMSolver" CACHE PATH "")
@@ -51,4 +51,6 @@ set(Libxc_DIR              "/opt/anaconda1anaconda2anaconda3/share/cmake/Libxc" 
 
 set(SPHINX_ROOT            "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
 set(CMAKE_PROGRAM_PATH     "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
+set(Eigen3_DIR             "/opt/anaconda1anaconda2anaconda3/share/eigen3/cmake/" CACHE PATH "")
+set(MPFR_ROOT              "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
 
