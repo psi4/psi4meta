@@ -25,7 +25,7 @@ requirements:
     - {{ compiler('c') }}
     - ninja  # [win]
   host:
-    - numpy
+    - numpy >=1.12.0
     - python  {{ python }}
 
 outputs:
@@ -39,7 +39,7 @@ outputs:
         - {{ compiler('c') }}
         - ninja  # [win]
       host:
-        - numpy
+        - numpy >=1.12.0
         - python {{ python }}
     files:
       - include/gau2grid              # [unix]
@@ -87,10 +87,10 @@ outputs:
         - {{ compiler('c') }}
         - ninja  # [win]
       host:
-        - numpy
+        - numpy >=1.12.0
         - python  {{ python }}
       run:
-        - numpy
+        - numpy >=1.12.0
         - {{ pin_compatible('python', max_pin='x.x') }}
     files:
       - lib/python{{ PY_VER }}/site-packages/gau2grid  # [unix]
@@ -98,7 +98,6 @@ outputs:
     test:
       requires:
         - pytest
-        - mkl                                             # [linux]  strange env resolve failure without this
       imports:
         - gau2grid
       commands:

@@ -11,7 +11,7 @@ source:
     git_tag: v{{ version }}
 
 build:
-    number: 0                                            # [linux]
+    number: 1                                            # [linux]
     number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
@@ -21,7 +21,7 @@ requirements:
         - cmake >=3.5
         - {{ compiler('cxx') }}
     host:
-        - pybind11 {{ pybind11 }}
+        - pybind11-headers {{ pybind11 }}
         - python {{ python }}
 
 outputs:
@@ -66,7 +66,7 @@ outputs:
           build:
               - {{ compiler('cxx') }}
           host:
-              - pybind11 {{ pybind11 }}
+              - pybind11-headers {{ pybind11 }}
               - python {{ python }}
           run:
               - {{ pin_compatible('python', max_pin='x.x') }}

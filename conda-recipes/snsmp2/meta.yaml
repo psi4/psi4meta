@@ -14,7 +14,6 @@ source:
     #git_tag: fcce1d0  # v1.0.3  L1/M0: 1.0 + 24  L2/M1: narrows to x.x.x
     git_tag: 12462c6  # v1.0.4  L0/M0: 1.0 + 26
 
-
 build:
     number: 0                                               # [linux]
     number: 0                                               # [osx]

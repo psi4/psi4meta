@@ -31,7 +31,7 @@ requirements:
         - dftd3 {{ dftd3 }}
         - gcp {{ gcp }}
         - networkx {{ networkx }}
-        - numpy >=0.12.0
+        - numpy >=1.12.0
         - pylibefp {{ pylibefp }}              # for efp fragment autodoc
         - qcelemental {{ qcelemental }}*
         - qcengine {{ qcengine }}*

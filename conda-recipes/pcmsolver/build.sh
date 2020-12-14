@@ -47,7 +47,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers
     set +x
-    source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
+    source /theoryfs2/common/software/intel2019/bin/compilervars.sh intel64
     set -x
 
     # link against conda GCC
@@ -108,6 +108,9 @@ if [ "$(uname)" == "Darwin" ]; then
     install_name_tool -add_rpath ${PREFIX}/lib/ bin/unit_tests
     install_name_tool -add_rpath ${PREFIX}/lib/ bin/Fortran_host
     ctest -j${CPU_COUNT}
+fi
+if [ "$(uname)" == "Linux" ]; then
+    ctest -E "green_spherical_diffuse" -j${CPU_COUNT}
 fi
 
 export CFLAGS=KEEPCFLAGS

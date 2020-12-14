@@ -8,25 +8,27 @@ build:
     binary_relocation: true
     skip: true                                 # [win]
 
+# openfermion and adcc need defaults h5py
+
 requirements:
     host:
         - python {{ python }}
-        - adcc {{ adcc }}
+        - adcc {{ adcc }}                                  # [not py==39]
         - pycppe {{ pycppe }}
         - dftd3 {{ dftd3 }}
         # - pylibefp {{ pylibefp }}
         - fockci {{ fockci }}                   # [linux]
         - gcp {{ gcp }}
         - mp2d {{ mp2d }}
-        - openfermion {{ openfermion }}
-        - openfermionpsi4 {{ openfermionpsi4 }}
+        - openfermion {{ openfermion }}                    # [not py==39]
+        - openfermionpsi4 {{ openfermionpsi4 }}            # [not py==39]
         - resp {{ resp }}
         - snsmp2 {{ snsmp2 }}
         - v2rdm_casscf {{ v2rdm_casscf }} *{{ v2rdm_casscf_bld }}
     run:
         - scipy >=1.1.0
         - {{ pin_compatible('python', max_pin='x.x') }}
-        - {{ pin_compatible('adcc', max_pin='x.x') }}
+        - {{ pin_compatible('adcc', max_pin='x.x') }}      # [not py==39]
         - {{ pin_compatible('pycppe', max_pin='x.x') }}
         - {{ pin_compatible('dftd3', max_pin='x.x') }}
         - pylibefp {{ pylibefp }}*  # can't do max_pin while version is +git
@@ -34,8 +36,8 @@ requirements:
         - {{ pin_compatible('fockci', max_pin='x.x') }}  # [linux]
         - {{ pin_compatible('gcp', max_pin='x.x') }}
         - {{ pin_compatible('mp2d', max_pin='x.x') }}
-        - openfermion {{ openfermion }}
-        - {{ pin_compatible('openfermionpsi4', max_pin='x.x') }}
+        - openfermion {{ openfermion }}                       # [not py==39]
+        - {{ pin_compatible('openfermionpsi4', max_pin='x.x') }}    # [not py==39]
         - {{ pin_compatible('resp', max_pin='x.x') }}
         - {{ pin_compatible('snsmp2', max_pin='x.x') }}
       {% for package in resolved_packages('host') %}
@@ -49,20 +51,20 @@ test:
 #        - gpu_dfcc                              # [linux]  # test, even if too fat to include
         - psi4 {{ psi4ver }}                     # sometimes need psi4ver 1.4a2*
     imports:
-        - adcc
+        - adcc                                                 # [not py==39]
         - cppe
         - pylibefp
         - psi4fockci                             # [linux]
 #        - gpu_dfcc                              # [linux]
-        - openfermionpsi4
+        - openfermionpsi4                                     # [not py==39]
         - resp
         - snsmp2
         - v2rdm_casscf
         - psi4
     files:
-        - tests/openfermionpsi4_demo.py
+        - tests/openfermionpsi4_demo.py                           # [not py==39]
     commands:
-        - psi4 --test
+#        - psi4 --test
 #        - python -c "import gpu_dfcc, sys; sys.exit(gpu_dfcc.test())"  # [linux]
         - python -c "import pylibefp, sys; sys.exit(pylibefp.test('long'))"
         - python -c "import resp, sys; sys.exit(resp.test('long'))"
@@ -73,7 +75,8 @@ test:
         - python -c "import resp; print(f'*** resp {resp.__version__} compatible!')"
         - python -c "import v2rdm_casscf as v2; print(f'*** v2rdm_casscf {v2.__version__} compatible!')"
 #        - python -c "import psi4, gpu_dfcc; print('*** Psi4 {}, gpu_dfcc {} compatible!'.format(psi4.__version__, gpu_dfcc.__version__))"  # [linux]
-        - python tests/openfermionpsi4_demo.py
+        - python tests/openfermionpsi4_demo.py    # [not py==39]
+        - pytest -v $SP_DIR/psi4/tests -k "addon and not resp"
 
 about:
     home: http://psicode.org

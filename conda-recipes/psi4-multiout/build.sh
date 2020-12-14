@@ -149,7 +149,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON \
         -DENABLE_gdma=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
-        -DENABLE_PCMSolver=ON \
+        -DENABLE_PCMSolver=OFF \
         -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON \
         -DENABLE_simint=ON \
         -DSIMINT_VECTOR=sse \

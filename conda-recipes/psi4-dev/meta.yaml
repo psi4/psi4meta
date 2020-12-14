@@ -21,6 +21,7 @@ outputs:
     - name: psi4-dev
       requirements:
           host:
+              - hdf5 {{ hdf5 }}
               - pybind11-headers {{ pybind11 }}
               - python {{ python }}
               # qc: libs here in "host:" imposes them to "run:" with proper version ranges
@@ -30,7 +31,7 @@ outputs:
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}
               - libint2 {{ libint }} {{ libint_bld }}
-              - pcmsolver {{ pcmsolver }}
+#              - pcmsolver {{ pcmsolver }}
               - simint {{ simint }}
               - libxc {{ libxc }}
           run:
@@ -48,7 +49,7 @@ outputs:
               # rt
               - msgpack-python
               - networkx >=2.4
-              - numpy >=0.12.0
+              - numpy >=1.12.0
               - pytest
               - pytest-xdist
               - qcelemental >={{ qcelemental }},<1.0
@@ -90,26 +91,26 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=OFF
                   -DCMAKE_INSIST_FIND_PACKAGE_simint=ON
                   #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON
                   #-DENABLE_PLUGIN_TESTING=ON
               # * build psi4 and test its threading
               # * evade long prefix
-              - cd objdir-${CONDA_CPLR} && make -j${CPU_COUNT}                           # [py==38]
-              - sed -r -i     's;^(.!/).*;\1usr/bin/env python;' stage/bin/psi4          # [py==38 and linux]
-              - sed -E -i.bak 's;^(.!/).*;\1usr/bin/env python;' stage/bin/psi4          # [py==38 and osx]
-              - PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py --passfail --ldd  # [py==38]
-              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n${NTH}  # [py==38]
-              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${NTH}  # [py==38 and not osx]
+              - cd objdir-${CONDA_CPLR} && make -j${CPU_COUNT}                           # [py==39]
+              - sed -r -i     's;^(.!/).*;\1usr/bin/env python;' stage/bin/psi4          # [py==39 and linux]
+              - sed -E -i.bak 's;^(.!/).*;\1usr/bin/env python;' stage/bin/psi4          # [py==39 and osx]
+              - PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py --passfail --ldd  # [py==39]
+              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n${NTH}  # [py==39]
+              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n${NTH}  # [py==39 and not osx]
               # * build an OpenMP plugin and test its threading
-              - printf "\n\n   <<  I.B psi4-dev@conda + $CONDA_CPLR Psi4 --> $CONDA_CPLR plugin  >>\n\n\n"  # [py==38]
-              - PLUG="plugdfmp2"                                                         # [py==38]
-              - stage/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2               # [py==38]
-              - cd $PLUG && `../stage/bin/psi4 --plugin-compile` && make && cd ..        # [py==38]
-              - PYTHONPATH=stage/lib/:. python stage/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG"  # [py==38]
-              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/:. python stage/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [py==38 and not osx]
-              - cd ..                                                                    # [py==38]
+              - printf "\n\n   <<  I.B psi4-dev@conda + $CONDA_CPLR Psi4 --> $CONDA_CPLR plugin  >>\n\n\n"  # [py==39]
+              - PLUG="plugdfmp2"                                                         # [py==39]
+              - stage/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2               # [py==39]
+              - cd $PLUG && `../stage/bin/psi4 --plugin-compile` && make && cd ..        # [py==39]
+              - PYTHONPATH=stage/lib/:. python stage/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG"  # [py==39]
+              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/:. python stage/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [py==39 and not osx]
+              - cd ..                                                                    # [py==39]
               - cd ..
 
               # Part II: Intel
@@ -130,22 +131,22 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON                                 # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON                                     # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON                                    # [linux]
-                  -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON                               # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=OFF                              # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_simint=ON                                  # [linux]
               # * build psi4 and test its threading
               # * evade long prefix
-              - cd objdir-intel && make -j${CPU_COUNT}                                   # [linux and py==38]
-              - sed -r -i 's;^(.!/).*;\1usr/bin/env python;' stage/bin/psi4              # [linux and py==38]
-              - PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py --passfail --ldd  # [linux and py==38]
-              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py --passfail -n${NTH}  # [linux and py==38]
+              - cd objdir-intel && make -j${CPU_COUNT}                                   # [linux and py==39]
+              - sed -r -i 's;^(.!/).*;\1usr/bin/env python;' stage/bin/psi4              # [linux and py==39]
+              - PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py --passfail --ldd  # [linux and py==39]
+              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/ python stage/share/psi4/scripts/test_threading.py --passfail -n${NTH}  # [linux and py==39]
               # * build an OpenMP plugin and test its threading
-              - printf "\n\n   <<  II.B psi4-dev@conda + Intel Psi4 --> Intel plugin  >>\n\n\n"  # [linux and py==38]
-              - PLUG="plugdfmp2"                                                         # [linux and py==38]
-              - stage/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2               # [linux and py==38]
-              - cd $PLUG && `../stage/bin/psi4 --plugin-compile` && make && cd ..        # [linux and py==38]
-              - PYTHONPATH=stage/lib/:. python stage/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG"  # [linux and py==38]
-              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/:. python stage/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [linux and py==38]
-              - cd ..                                                                    # [linux and py==38]
+              - printf "\n\n   <<  II.B psi4-dev@conda + Intel Psi4 --> Intel plugin  >>\n\n\n"  # [linux and py==39]
+              - PLUG="plugdfmp2"                                                         # [linux and py==39]
+              - stage/bin/psi4 --plugin-name $PLUG --plugin-template dfmp2               # [linux and py==39]
+              - cd $PLUG && `../stage/bin/psi4 --plugin-compile` && make && cd ..        # [linux and py==39]
+              - PYTHONPATH=stage/lib/:. python stage/share/psi4/scripts/test_threading.py --passfail --ldd --module="$PLUG/$PLUG"  # [linux and py==39]
+              - PATH=stage/bin/:$PATH PYTHONPATH=stage/lib/:. python stage/share/psi4/scripts/test_threading.py --plugin-dfmp2 --module="$PLUG" -n${NTH}  # [linux and py==39]
+              - cd ..                                                                    # [linux and py==39]
               - cd ..                                                                    # [linux]
 
               # Part III: Conda distribution

@@ -41,7 +41,7 @@ set(gdma_DIR               "/opt/anaconda1anaconda2anaconda3/share/cmake/gdma" C
 set(MAX_AM_ERI             "5" CACHE STRING "")
 set(Libint2_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/Libint2" CACHE PATH "")
 
-set(ENABLE_PCMSolver       ON CACHE BOOL "")
+set(ENABLE_PCMSolver       OFF CACHE BOOL "")
 set(PCMSolver_DIR          "/opt/anaconda1anaconda2anaconda3/share/cmake/PCMSolver" CACHE PATH "")
 
 set(ENABLE_simint          ON CACHE BOOL "")

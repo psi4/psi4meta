@@ -12,7 +12,7 @@ source:
     #path: ../../../v2rdm_casscf
 
 build:
-    number: 4                                            # [linux]
+    number: 5                                            # [linux]
     number: 2                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]

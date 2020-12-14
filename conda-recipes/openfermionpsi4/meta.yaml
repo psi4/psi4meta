@@ -12,18 +12,18 @@ source:
     git_tag: c6b0a37  # L1: of 0.10, L0: 0.4 = c6b0a37
 
 build:
-    number: 1                                               # [linux]
-    number: 0                                               # [osx]
-    skip: true                                              # [win]
+    noarch: python
+    number: 2
     script: python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
     build:
-        - python {{ python }}
+        - python >=3.6
         - setuptools
     run:
+        - python >=3.6
+        - numpy >=1.12.0
         - openfermion >={{ openfermion }}
-        - {{ pin_compatible('python', max_pin='x.x') }}
 
 test:
     requires:

@@ -69,6 +69,7 @@ about:
 # * tried to build an AM6 for linux build/number: 2 at libint2_1574565922374 but it stopped compiling. could be fixable
 
 # * history toward production build
+    #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-7-7-4-7-7-5_0.tgz  # L8
     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_0.tgz  # L7
     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export31-7-7-4.tgz
     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export29-7-7-5.tgz
