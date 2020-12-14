@@ -24,7 +24,9 @@ requirements:
         - {{ compiler('fortran') }}      # [osx]
         - llvm-openmp                    # [osx]
     host:
+        - eigen
         - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
+        - mpfr
         - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
         - pybind11-headers {{ pybind11 }}
         - python {{ python }}
@@ -34,12 +36,12 @@ requirements:
         - dkh {{ dkh }}
         - gau2grid {{ gau2grid }}
         - gdma {{ gdma }}
-        - libint {{ libint }} {{ libint_bld }}
-        - pcmsolver {{ pcmsolver }}
+        - libint2 {{ libint }} {{ libint_bld }}
+#        - pcmsolver {{ pcmsolver }}
         - simint {{ simint }}
         - libxc {{ libxc }}
         # rt for ctest
-        - networkx >=2.4
+        - networkx
         - numpy >=1.12.0
         - qcelemental {{ qcelemental }}
         - qcengine {{ qcengine }}
@@ -61,7 +63,9 @@ outputs:
               - {{ compiler('fortran') }}      # [osx]
               - llvm-openmp                    # [osx]
           host:
+              - eigen
               - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
+              - mpfr
               - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
               - pybind11-headers {{ pybind11 }}
               - python {{ python }}
@@ -71,8 +75,8 @@ outputs:
               - dkh {{ dkh }}
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}
-              - libint {{ libint }} {{ libint_bld }}
-              - pcmsolver {{ pcmsolver }}
+              - libint2 {{ libint }} {{ libint_bld }}
+#              - pcmsolver {{ pcmsolver }}
               - qcelemental {{ qcelemental }}
               - qcengine {{ qcengine }}
               - simint {{ simint }}
@@ -80,7 +84,7 @@ outputs:
           run:
               - intel-openmp                   # [linux]
               - {{ pin_compatible('mkl', upper_bound='2021.0') }}  # [linux]
-              - networkx >=2.4
+              - networkx
               - numpy >=1.12.0
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
@@ -109,7 +113,8 @@ outputs:
               - ldd -r -u $SP_DIR/psi4/core$PYLIB_EXT  # [linux]
               - ldd -v $SP_DIR/psi4/core$PYLIB_EXT     # [linux]
               - otool -L $SP_DIR/psi4/core$PYLIB_EXT   # [osx]
-              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint pcmsolver simint libxc psi4  # erd
+#              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint2 pcmsolver simint libxc psi4  # erd
+              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint2 simint libxc psi4  # erd
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               - grep -r theoryfs2 $PREFIX/share/cmake/ || true  # [linux]
               # Actually test

@@ -549,7 +549,7 @@ if host == "psinet":
 #{'recipe': 'chemps2-multiout', 'build_channels': ['psi4/label/dev']},  # chnl: hdf5
 #{'recipe': 'cppe', 'build_channels': ['psi4/label/dev']},  # chnl: pybind11
 #{'recipe': 'dkh'},
-#{'recipe': 'gau2grid-multiout', 'build_channels': ['conda-forge']},  # chnl: avoid test solve error
+#{'recipe': 'gau2grid-multiout'},
 #{'recipe': 'gdma'},
 #{'recipe': 'libint'},
 #{'recipe': 'libint2'},
@@ -557,6 +557,9 @@ if host == "psinet":
 #{'recipe': 'simint'},
 #{'recipe': 'libxc'},
 #{'recipe': 'optking', 'build_channels': ['conda-forge']},
+
+# py39: pybind11, openfermion, chemps2-multiout, cppe, gau2grid-multiout, pcmsolver
+# --39: ambit, dkh, gdma, libint, libint2, simint, libxc
 
 # L/CBCY1: if anything in LT changed, edit cbcy.
 #          start new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.
@@ -589,6 +592,8 @@ if host == "psinet":
 #{'recipe': 'fockci', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'cct3', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'miniforte', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
+
+# py39: libefp-multiout, resp, snsmp2, v2rdm, openfermionpsi4, fockci
 
 # L/CBCY2: if anything in RT changed, edit cbcy.
 #          start or continue editing new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.

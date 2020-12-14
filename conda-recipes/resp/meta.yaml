@@ -1,5 +1,5 @@
 {% set name = "resp" %}
-{% set version = "0.8.1" %}
+{% set version = "1.0" %}
 
 package:
     name: {{ name|lower }}
@@ -50,3 +50,4 @@ about:
     license_family: BSD
     summary: "A. Alenaizan's restrained electrostatic potential (RESP) plugin to Psi4"
     # description: >
+

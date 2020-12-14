@@ -36,7 +36,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON \
-        -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_Libint2=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON \
@@ -128,7 +128,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON \
-        -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_Libint2=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON \
@@ -141,7 +141,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON \
         -DENABLE_gdma=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
-        -DENABLE_PCMSolver=ON \
+        -DENABLE_PCMSolver=OFF \
         -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON \
         -DENABLE_simint=ON \
         -DSIMINT_VECTOR=sse \

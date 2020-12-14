@@ -1,6 +1,5 @@
 {% set name = "openfermion" %}
-{% set version = "0.10.0" %}
-#{% set version = "0.11.0" %} # also kill future
+{% set version = "0.11.0" %}
 
 package:
     name: {{ name|lower }}
@@ -9,24 +8,24 @@ package:
 source:
     git_url: git@github.com:quantumlib/OpenFermion.git              # [linux]
     git_url: https://github.com/quantumlib/OpenFermion.git          # [osx]
-    git_tag: v{{ version }}                                                     # M1: hdf5 1.10.6
+    git_tag: v{{ version }}
 
 build:
-    number: 0                                               # [linux]
-    number: 1                                               # [osx]
+    noarch: python
+    number: 1                                               # [linux]
+    number: 0                                               # [osx]
     skip: true                                              # [win]
 
 requirements:
     host:
-        - python {{ python }}
+        - python >=3.6
         - setuptools
     run:
-        - future
         - h5py >=2.8
         - hdf5 {{ hdf5 }}*                                  # explicit (from hdf5) for pinning
         - networkx
-        - numpy >=1.11.0
-        - {{ pin_compatible('python', max_pin='x.x') }}
+        - numpy >=1.12.0
+        - python >=3.6
         - scipy >=1.1.0
 
 test:
@@ -45,7 +44,7 @@ test:
         - conda inspect linkages --show-files --groupby=dependency openfermion
         - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
         # Actually test
-        - pytest -rws --capture=sys $SP_DIR/openfermion
+        - pytest -rws --capture=sys $SP_DIR/openfermion -k "not signal"  # can remove not signal with 0.12.0
 
 about:
     home: https://www.openfermion.org
@@ -60,6 +59,9 @@ about:
     # description: >
 
 # History
+#
+# * v0.10.0
+#    git_tag: v{{ version }}                                                     # M1: hdf5 1.10.6
 #
 # * {% set version = "0.7" %}
 #    git_tag: 7734093  # v0.7 + 1 (installed testing)

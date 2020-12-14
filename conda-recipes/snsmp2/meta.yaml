@@ -1,5 +1,5 @@
 # this version is an invention. official upstream is 1.0
-{% set version = "1.0.3" %}
+{% set version = "1.0.4" %}
 
 package:
     name: snsmp2
@@ -11,11 +11,12 @@ source:
     # git_tag: {{ version }}
     #git_tag: # v1.0.1 2: a70c56f  # 1.0 + 13
     #git_tag: 99e2a9c  # v1.0.2  0: 1.0 + 16
-    git_tag: fcce1d0  # v1.0.3  L1/M0: 1.0 + 24  L2/M1: narrows to x.x.x
+    #git_tag: fcce1d0  # v1.0.3  L1/M0: 1.0 + 24  L2/M1: narrows to x.x.x
+    git_tag: 12462c6  # v1.0.4  L0/M0: 1.0 + 26
 
 build:
-    number: 2                                               # [linux]
-    number: 1                                               # [osx]
+    number: 0                                               # [linux]
+    number: 0                                               # [osx]
     skip: true                                              # [win]
     script: python setup.py install --single-version-externally-managed --record=record.txt
 
