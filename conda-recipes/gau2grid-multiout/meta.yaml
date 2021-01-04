@@ -38,9 +38,6 @@ outputs:
         - cmake >=3.0
         - {{ compiler('c') }}
         - ninja  # [win]
-      host:
-        - numpy >=1.12.0
-        - python {{ python }}
     files:
       - include/gau2grid              # [unix]
       - lib/libgg*                    # [unix]
@@ -76,18 +73,12 @@ outputs:
         , where the returned matrix dimension are the angular momentum (L) by number of requested points (p).
 
   - name: pygau2grid
-    build:
-      ignore_run_exports:
-        # these needed as tools to build and interpreter/module to run, but generic version in both cases
-        - numpy
-        - python
     requirements:
       build:
         - cmake >=3.0
         - {{ compiler('c') }}
         - ninja  # [win]
       host:
-        - numpy >=1.12.0
         - python  {{ python }}
       run:
         - numpy >=1.12.0
