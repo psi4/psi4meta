@@ -1,19 +1,19 @@
 # TOGGLE: clang/gcc for c-f
-#if [ "$(uname)" == "Darwin" ]; then
-#    ALLOPTS="${CFLAGS}"
-#fi
+if [ "$(uname)" == "Darwin" ]; then
+    ALLOPTS="${CFLAGS}"
+fi
 #if [ "$(uname)" == "Linux" ]; then
 #    # revisit when c-f moves to gcc8
 #    ALLOPTS="${CFLAGS} -D__GG_NO_PRAGMA"
 #fi
 
 # TOGGLE: intel for psi4
-if [ "$(uname)" == "Darwin" ]; then
-
-    # Intel atop conda Clang
-    ALLOPTS="-clang-name=${CLANG} -msse4.1 -axCORE-AVX2"
-    CC=icc
-fi
+#if [ "$(uname)" == "Darwin" ]; then
+#
+#    # Intel atop conda Clang
+#    ALLOPTS="-clang-name=${CLANG} -msse4.1 -axCORE-AVX2"
+#    CC=icc
+#fi
 if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers
