@@ -61,7 +61,7 @@ psi4ver:
     # toggle between '' for nightly builds, which goes with `git_tag: master` for psi4-multiout and psi4-docs
     #   but sometimes needs a specific version or range like 1.4a2* when wrong psi picked up by resolver
     - ''
-#    - '1.4a3.dev1'                      # [osx]
+#    - '1.4a3.dev40'                      # [osx]
 #    - '1.4a3.dev63'                      # [linux]
     # toggle between specific version for targeted build, which goes with e.g., `git_tag: v1.3.1` for psi4-multiout and psi4-docs
     #- 1.3.2
@@ -130,7 +130,7 @@ ltrtver:
     # - "1.4.dev23"   # (14 Dec 2020)    ...      2.6.1  ...      ...    ...      ...          ...   ...    ...      ...   ...      !        ...    1.0   ...  1.0.4    ...       ...   ...    ...     ...      ...    0.11.0!  ...      ..._L1   0.15.6!       ...  ...      ...
     # - "1.4.dev24"   # (24 Dec 2020)    ...      ...    ...      ...    ...      ...          2.0.5 ...    ...      ...   ...      1.2.1.1  ...    ...   ...  ..._1    ..._L6    ...   ...    ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
 
-    - "1.4.dev25"     # ( 4 Jan 2020)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    0.11.0   ...      ...      0.15.6        ...  ...      ...
+    - "1.4.dev25"     # ( 4 Jan 2020)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    0.11.0   ...      ..._M1   0.15.6        ...  ...      ...
 
     # - "XXX"         # (   WIP 2020)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
     # !* sns in 1.3.dev10: 1.0.3 was ready but forgot to include it again until 1.4.dev2 (at L2M1)
