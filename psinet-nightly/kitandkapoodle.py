@@ -239,6 +239,31 @@
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.17.0/noarch/qcelemental-0.17.0-py_0.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.17.0/noarch/qcengine-0.17.0-py_0.tar.bz2
 
+# c. 10 Dec 2020
+#anaconda-client           1.7.2                    py36_0
+#conda                     4.8.3                    py36_0
+#conda-build               3.18.11                  py36_0
+#conda-env                 2.6.0                         1
+#conda-package-handling    1.6.1            py36h7b6447c_0
+#conda-verify              3.1.1                    py36_0
+# ->
+#anaconda-client           1.7.2                    py36_0
+#conda                     4.9.2            py36h06a4308_0
+#conda-build               3.20.5                   py36_1
+#conda-env                 2.6.0                         1
+#conda-package-handling    1.7.2            py36h03888b9_0
+#conda-verify              3.4.2                      py_1
+
+# [LAB 4 Jan 2020]
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.6/osx-64/adcc-0.15.6-py38h4be1084_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.6/osx-64/adcc-0.15.6-py36h4be1084_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.6/osx-64/adcc-0.15.6-py39h4be1084_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.6/osx-64/adcc-0.15.6-py37h4be1084_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.6/linux-64/adcc-0.15.6-py39heb0550a_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.6/linux-64/adcc-0.15.6-py38heb0550a_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.6/linux-64/adcc-0.15.6-py37heb0550a_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.6/linux-64/adcc-0.15.6-py36heb0550a_0.tar.bz2
+
 #nyi
 #win-64/h5py-2.10.0-nompi_py38h422b98e_102.tar.bz2
 #win-64/h5py-2.10.0-nompi_py36h422b98e_102.tar.bz2
