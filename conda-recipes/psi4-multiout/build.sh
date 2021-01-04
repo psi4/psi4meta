@@ -60,6 +60,14 @@ if [ "$(uname)" == "Darwin" ]; then
         -DSITE=gatech-mac-conda \
         -DCMAKE_OSX_DEPLOYMENT_TARGET=''
 
+# nofortran
+#        -DENABLE_dkh=ON \
+#        -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON \
+#        -DENABLE_gdma=ON \
+#        -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
+#        -DENABLE_PCMSolver=ON \
+#        -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON \
+
 #        -DBUILD_SHARED_LIBS=ON \
 #        -DENABLE_erd=ON \
 #        -DCMAKE_INSIST_FIND_PACKAGE_erd=ON \

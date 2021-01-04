@@ -4,7 +4,7 @@ package:
 
 build:
     number: 0                                  # [linux]  1.2_1: removes gpu_dfcc, dev13_1: fix wrong v2
-    number: 1                                  # [osx]                             dev13_1: fix wrong v2
+    number: 0                                  # [osx]                             dev13_1: fix wrong v2
     binary_relocation: true
     skip: true                                 # [win]
 

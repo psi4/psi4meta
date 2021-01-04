@@ -2,7 +2,7 @@
 if [ "$(uname)" == "Darwin" ]; then
 
     # for FortranCInterface
-    CMAKE_Fortran_FLAGS="${FFLAGS} -L${CONDA_BUILD_SYSROOT}/usr/lib/system/ ${OPTS}"
+    CMAKE_Fortran_FLAGS="${FFLAGS} -L${CONDA_BUILD_SYSROOT}/usr/lib/system/ ${OPTS} -O0"
 
     # configure
     ${BUILD_PREFIX}/bin/cmake \
@@ -48,6 +48,8 @@ make install
 # no independent tests
 
 # NOTES
+#
+# * added O0 to Mac after some segfault problems hokru reported
 #
 # removed b/c WSL and some Linux segfaulted
 #   -DCMAKE_Fortran_FLAGS="${ALLOPTS} -static" \

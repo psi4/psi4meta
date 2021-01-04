@@ -12,9 +12,7 @@ source:
 
 build:
     noarch: python
-    number: 1                                               # [linux]
-    number: 0                                               # [osx]
-    skip: true                                              # [win]
+    number: 1
 
 requirements:
     host:
