@@ -31,7 +31,7 @@ outputs:
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}
               - libint2 {{ libint }} {{ libint_bld }}
-#              - pcmsolver {{ pcmsolver }}
+              - pcmsolver {{ pcmsolver }}
               - simint {{ simint }}
               - libxc {{ libxc }}
           run:
@@ -91,7 +91,7 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON
-                  -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=OFF
+                  -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_simint=ON
                   #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON
                   #-DENABLE_PLUGIN_TESTING=ON
@@ -131,7 +131,7 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON                                 # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON                                     # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON                                    # [linux]
-                  -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=OFF                              # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON                               # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_simint=ON                                  # [linux]
               # * build psi4 and test its threading
               # * evade long prefix

@@ -15,18 +15,17 @@ source:
     git_tag: 12462c6  # v1.0.4  L0/M0: 1.0 + 26
 
 build:
-    number: 0                                               # [linux]
-    number: 0                                               # [osx]
-    skip: true                                              # [win]
+    noarch: python
+    number: 1
     script: python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
     build:
         - pbr >=1.9
-        - python {{ python }}
+        - python >=3.6
         - setuptools >=17.1
     run:
-        - {{ pin_compatible('python', max_pin='x.x.x') }}
+        - python >=3.6
         - scipy
 
 test:

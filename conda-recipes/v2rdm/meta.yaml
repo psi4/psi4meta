@@ -8,11 +8,12 @@ source:
     git_url: git@github.com:loriab/v2rdm_casscf.git      # [linux]
     git_url: https://github.com/loriab/v2rdm_casscf.git  # [osx]
     # git_tag: v{{ version }}
-    git_tag: ae46114                                     # L4,M2: l2 for v2rdm4
+    # git_tag: ae46114                                     # L4,M2: l2 for v2rdm4
+    git_tag: f3dbac4                                     # L6: lagrangian
     #path: ../../../v2rdm_casscf
 
 build:
-    number: 5                                            # [linux]
+    number: 6                                            # [linux]
     number: 2                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]

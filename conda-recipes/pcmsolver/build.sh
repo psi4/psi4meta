@@ -110,7 +110,7 @@ if [ "$(uname)" == "Darwin" ]; then
     ctest -j${CPU_COUNT}
 fi
 if [ "$(uname)" == "Linux" ]; then
-    ctest -E "green_spherical_diffuse" -j${CPU_COUNT}
+    ctest -E "(from-file|green_spherical_diffuse)" -j${CPU_COUNT}
 fi
 
 export CFLAGS=KEEPCFLAGS

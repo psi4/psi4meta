@@ -37,7 +37,7 @@ requirements:
         - gau2grid {{ gau2grid }}
         - gdma {{ gdma }}
         - libint2 {{ libint }} {{ libint_bld }}
-#        - pcmsolver {{ pcmsolver }}
+        - pcmsolver {{ pcmsolver }}
         - simint {{ simint }}
         - libxc {{ libxc }}
         # rt for ctest
@@ -76,7 +76,7 @@ outputs:
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}
               - libint2 {{ libint }} {{ libint_bld }}
-#              - pcmsolver {{ pcmsolver }}
+              - pcmsolver {{ pcmsolver }}
               - qcelemental {{ qcelemental }}
               - qcengine {{ qcengine }}
               - simint {{ simint }}
@@ -113,8 +113,7 @@ outputs:
               - ldd -r -u $SP_DIR/psi4/core$PYLIB_EXT  # [linux]
               - ldd -v $SP_DIR/psi4/core$PYLIB_EXT     # [linux]
               - otool -L $SP_DIR/psi4/core$PYLIB_EXT   # [osx]
-#              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint2 pcmsolver simint libxc psi4  # erd
-              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint2 simint libxc psi4  # erd
+              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint2 pcmsolver simint libxc psi4  # erd
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               - grep -r theoryfs2 $PREFIX/share/cmake/ || true  # [linux]
               # Actually test
