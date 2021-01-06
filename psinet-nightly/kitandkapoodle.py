@@ -517,7 +517,7 @@ if host == "macpsinet":
 #{'recipe': 'dftd3'},
 #{'recipe': 'gcp'},
 # 'resp' converted to noarch Aug 2019, so builds on L
-#{'recipe': 'snsmp2', 'build_channels': ['psi4/label/dev', 'psi4']},  # chnl: psi4
+# 'snsmp2' converted to noarch late 2020, so builds on L
 #{'recipe': 'v2rdm', 'build_channels': ['psi4/label/dev', 'psi4']},  # chnl: psi4
 # 'openfermionpsi4' converted to noarch Dec 2020, so builds on L
 #{'recipe': 'mp2d'},
