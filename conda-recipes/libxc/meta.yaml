@@ -1,12 +1,14 @@
-{% set version = "4.3.4" %}
+{% set name = "libxc" %}
+{% set version = "5.1.0" %}
+{% set sha256 = "36136909c919ef21c5605cbaec070a0b7b5cc5819cba26b6a40fe45b82e828ea" %}
 
 package:
-    name: libxc
+    name: {{ name }}
     version: {{ version }}
 
 source:
-    git_url: https://gitlab.com/libxc/libxc.git
-    git_tag: 4.3.4  # L0/M0: 4.3.4, broadens to x
+    url: https://gitlab.com/libxc/libxc/-/archive/{{ version }}/libxc-{{ version }}.tar.bz2
+    sha256: {{ sha256 }}
 
 build:
     number: 0                                            # [linux]

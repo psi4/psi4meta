@@ -1,8 +1,12 @@
 
 if [ "$(uname)" == "Darwin" ]; then
 
+    # TOGGLE: intel for psi4
     # Intel atop conda Clang
-    CMAKE_C_FLAGS="${CFLAGS} -clang-name=${CLANG} -msse4.1 -axCORE-AVX2"
+    #CMAKE_C_FLAGS="${CFLAGS} -clang-name=${CLANG} -msse4.1 -axCORE-AVX2"
+    #-DCMAKE_C_COMPILER=icc \
+
+    CMAKE_C_FLAGS="${CFLAGS}"
 
     # configure
     ${BUILD_PREFIX}/bin/cmake \
@@ -10,7 +14,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER=icc \
+        -DCMAKE_C_COMPILER=${CC} \
         -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DNAMESPACE_INSTALL_INCLUDEDIR="/" \
