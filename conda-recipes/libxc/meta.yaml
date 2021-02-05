@@ -61,6 +61,10 @@ about:
 #   * number: 0                                            # [osx]
 #   * test -f $PREFIX/lib/libxc$SHLIB_EXT
 
+#    git_url: https://gitlab.com/libxc/libxc.git
+#    git_tag: hotfix5.1.0
+
+#    git_tag: 4.3.4  # L0/M0: 4.3.4, broadens to x
 #    git_tag: 4.3.3  # L0/M0: 4.3.3
 #    git_tag: 4.3.0  # L1/M1 4.3.0, L2 c-b 3.17
 #                    # L0/M0 loriab branch
