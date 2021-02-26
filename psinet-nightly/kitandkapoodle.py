@@ -264,6 +264,10 @@
 # anaconda copy --to-owner psi4 adcc/adcc/0.15.6/linux-64/adcc-0.15.6-py37heb0550a_0.tar.bz2
 # anaconda copy --to-owner psi4 adcc/adcc/0.15.6/linux-64/adcc-0.15.6-py36heb0550a_0.tar.bz2
 
+# [LAB 16 Feb 2020]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.18.0/noarch/qcelemental-0.18.0-pyhd8ed1ab_1.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.18.0/noarch/qcengine-0.18.0-pyhd8ed1ab_0.tar.bz2
+
 #nyi
 #win-64/h5py-2.10.0-nompi_py38h422b98e_102.tar.bz2
 #win-64/h5py-2.10.0-nompi_py36h422b98e_102.tar.bz2
@@ -582,6 +586,7 @@ if host == "psinet":
 #{'recipe': 'simint'},
 #{'recipe': 'libxc'},
 #{'recipe': 'optking', 'build_channels': ['conda-forge']},
+#{"recipe": "optking", "build_channels": ["psi4/label/dev"]},  # chnl: psi4
 
 # py39: pybind11, openfermion, chemps2-multiout, cppe, gau2grid-multiout, pcmsolver
 # --39: ambit, dkh, gdma, libint, libint2, simint, libxc
