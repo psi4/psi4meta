@@ -17,6 +17,9 @@ with open(join(cookiecutter_path, "cookiecutter.json")) as fp:
 def generate():
     for platform in cc["platform"]:
         for py in cc["python"]:
+            if platform == "win-64" and py not in cc["win_python"]:
+                continue
+            print(f"{platform=} {py=} {cookiecutter_path=}")
             cookiecutter(
                 template=cookiecutter_path,
                 no_input=True,
