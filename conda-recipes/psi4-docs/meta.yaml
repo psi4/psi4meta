@@ -20,17 +20,19 @@ requirements:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}                # gcov, too
     host:
+        - eigen
         - mkl-devel {{ mkl }}
+        - mpfr
         - pybind11-headers {{ pybind11 }}
         - python {{ python }}
         # qc
         - gau2grid {{ gau2grid }}
-        - libint {{ libint }}
+        - libint2 {{ libint }} {{ libint_bld }}
         - libxc {{ libxc }}
         # run: for build-time testing or docs
         - dftd3 {{ dftd3 }}
         - gcp {{ gcp }}
-        - networkx {{ networkx }}
+        - networkx
         - numpy >=1.12.0
         - pylibefp {{ pylibefp }}              # for efp fragment autodoc
         - qcelemental {{ qcelemental }}*
