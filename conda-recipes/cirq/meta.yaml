@@ -1,0 +1,67 @@
+{% set name = "cirq" %}
+{% set version = "0.9.1" %}
+
+package:
+    name: {{ name|lower }}
+    version: {{ version }}
+
+source:
+    git_url: git@github.com:quantumlib/Cirq.git              # [linux]
+    git_url: https://github.com/quantumlib/Cirq.git          # [osx]
+    git_tag: v{{ version }}
+
+build:
+    noarch: python
+    number: 1
+    script: python setup.py install --single-version-externally-managed --record=record.txt
+
+requirements:
+    host:
+        - python >=3.7
+        - setuptools
+    run:
+        - google-api-core-grpc >=1.14.0
+        - matplotlib >=3.0
+        - networkx
+        - numpy >=1.16.0
+        - pandas
+        - python >=3.7
+        - scipy >=1.1.0
+        - sortedcontainers >=2.0
+        - sympy
+        - typing_extensions
+
+test:
+    requires:
+#        - autoray
+        - freezegun
+#        - opt_einsum
+        - ply
+        - pytest
+#        - pyquil  # c-f
+#        - quimb
+    imports:
+        - cirq
+    commands:
+        # Verify module
+        - test -f $SP_DIR/cirq/__init__.py
+        # Inspect linkage
+        - conda inspect linkages --show-files --groupby=dependency cirq
+        - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+        # Actually test
+        #- pytest -rws --capture=sys --ignore=cirq/contrib --benchmark-skip $SP_DIR/cirq
+#        - pytest -rws --capture=sys -k "not (async or pauli or kak)" $SP_DIR/cirq
+#        - pytest -rws --ignore=cirq/contrib $SP_DIR/cirq
+
+about:
+    home: https://quantumai.google/cirq
+    dev_url: https://github.com/quantumlib/Cirq
+    doc_url: https://quantumai.google/cirq
+    doc_source_url: https://github.com/quantumlib/Cirq/tree/master/docs
+    license: Apache-2.0
+    license_url: https://opensource.org/licenses/Apache-2.0
+    license_file: LICENSE
+    license_family: APACHE
+    summary: "Google's python framework for creating, editing, and invoking Noisy Intermediate Scale Quantum (NISQ) circuits"
+    # description: >
+

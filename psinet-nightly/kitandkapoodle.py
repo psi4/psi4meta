@@ -254,7 +254,7 @@
 #conda-package-handling    1.7.2            py36h03888b9_0
 #conda-verify              3.4.2                      py_1
 
-# [LAB 4 Jan 2020]
+# [LAB 4 Jan 2021]
 # anaconda copy --to-owner psi4 adcc/adcc/0.15.6/osx-64/adcc-0.15.6-py38h4be1084_0.tar.bz2
 # anaconda copy --to-owner psi4 adcc/adcc/0.15.6/osx-64/adcc-0.15.6-py36h4be1084_0.tar.bz2
 # anaconda copy --to-owner psi4 adcc/adcc/0.15.6/osx-64/adcc-0.15.6-py39h4be1084_0.tar.bz2
@@ -264,9 +264,13 @@
 # anaconda copy --to-owner psi4 adcc/adcc/0.15.6/linux-64/adcc-0.15.6-py37heb0550a_0.tar.bz2
 # anaconda copy --to-owner psi4 adcc/adcc/0.15.6/linux-64/adcc-0.15.6-py36heb0550a_0.tar.bz2
 
-# [LAB 16 Feb 2020]
+# [LAB 16 Feb 2021]
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.18.0/noarch/qcelemental-0.18.0-pyhd8ed1ab_1.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.18.0/noarch/qcengine-0.18.0-pyhd8ed1ab_0.tar.bz2
+
+# [LAB 4 Mar 2021]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.19.0/noarch/qcelemental-0.19.0-pyhd8ed1ab_0.tar.bz2
+
 
 #nyi
 #win-64/h5py-2.10.0-nompi_py38h422b98e_102.tar.bz2
@@ -564,6 +568,9 @@ if host == "psinet":
 #{'recipe': 'pybind11'},
 #{'recipe': 'pytest-shutil', 'build_channels': ['defaults', 'conda-forge']},  # chnl: setuptools-git  # neededby: v2rdm  # Note: recipe fine but useless as c-b & pytest-shutil don't mix
 #{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
+#{"recipe": "quimb", "build_channels": ["conda-forge"]},  # chnl: autoray(c-f)
+#{"recipe": "cirq", "build_channels": ["conda-forge"]},  # chnl: pyquil(c-f)
+#{"recipe": "cirq"},
 #{'recipe': 'openfermion', 'build_channels': ['defaults', 'psi4/label/dev', 'conda-forge']},  # chnl: pubchempy(c-f), hdf5(psi4)  # neededby: openfermionpsi4
 #{'recipe': 'pint'},  # neededby: qcelemental
 #{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint  # neededby: psi4

@@ -1,5 +1,5 @@
 {% set name = "openfermion" %}
-{% set version = "0.11.0" %}
+{% set version = "1.0" %}
 
 package:
     name: {{ name|lower }}
@@ -8,31 +8,37 @@ package:
 source:
     git_url: git@github.com:quantumlib/OpenFermion.git              # [linux]
     git_url: https://github.com/quantumlib/OpenFermion.git          # [osx]
-    git_tag: v{{ version }}
+    #git_tag: v{{ version }}
+    git_tag: master
 
 build:
     noarch: python
-    number: 1
+    number: 0
 
 requirements:
     host:
         - python >=3.6
         - setuptools
     run:
+        - cirq >=0.9.1
         - h5py >=2.8
         - hdf5 {{ hdf5 }}*                                  # explicit (from hdf5) for pinning
         - networkx
         - numpy >=1.12.0
         - python >=3.6
         - scipy >=1.1.0
+        - sympy
 
 test:
     requires:
+        - deprecation
         # - ipykernel  # giving failure to solve errors
         - matplotlib
         # - nbconvert  # giving failure to solve errors
+        - nbformat
         - pubchempy
         - pytest
+        - typing_extensions
     imports:
         - openfermion
     commands:
@@ -42,12 +48,12 @@ test:
         - conda inspect linkages --show-files --groupby=dependency openfermion
         - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
         # Actually test
-        - pytest -rws --capture=sys $SP_DIR/openfermion -k "not signal"  # can remove not signal with 0.12.0
+        - pytest -rws --capture=sys $SP_DIR/openfermion
 
 about:
-    home: https://www.openfermion.org
+    home: https://quantumai.google/openfermion
     dev_url: https://github.com/quantumlib/OpenFermion
-    doc_url: http://openfermion.readthedocs.io/en/latest/openfermion.html
+    doc_url: https://quantumai.google/openfermion
     doc_source_url: https://github.com/quantumlib/OpenFermion/tree/master/docs
     license: Apache-2.0
     license_url: https://opensource.org/licenses/Apache-2.0
@@ -65,3 +71,5 @@ about:
 #    git_tag: 7734093  # v0.7 + 1 (installed testing)
 #    git_tag: 0.9.0  # L0/M0: 0.9 = 9c2e029  # L1/M1: defaults cvxopt  # L2: scipy v1 constriant, drop cvxopt
 #        - scipy >=1.1.0,<1.3                                # max only until new release when special.comb, not misc.comb, see also temp line in psi4-rt
+#
+# *  - pytest -rws --capture=sys $SP_DIR/openfermion -k "not signal"  # can remove not signal with 0.12.0

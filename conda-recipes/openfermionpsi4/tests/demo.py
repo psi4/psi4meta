@@ -1,6 +1,6 @@
 import sys
 import math
-from openfermion.hamiltonians import MolecularData
+from openfermion.chem import MolecularData
 from openfermionpsi4 import run_psi4
 
 # Set molecule parameters.
