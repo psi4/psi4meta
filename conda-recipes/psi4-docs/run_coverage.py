@@ -9,7 +9,8 @@ objdir = Path(os.environ['SRC_DIR']) / 'build'
 cb_threads = int(os.environ['CPU_COUNT'])
 coverage_exe = Path(os.environ['PREFIX']) / 'bin' / 'coverage'
 lenv = copy.deepcopy(os.environ)
-lenv['PYTHONPATH'] = str(objdir / 'stage' / 'lib' / 'python' + os.environ['PY_VER'] / 'site-packages')
+pythonpath = objdir / 'stage' / 'lib' / ('python' + os.environ['PY_VER']) / 'site-packages'
+lenv['PYTHONPATH'] = str(pythonpath)
 
 os.chdir(objdir)
 test_time = time.time()

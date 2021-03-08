@@ -7,9 +7,8 @@ package:
     version: {{ version }}
 
 source:
-    git_url: git@github.com:psi-rking/{{ name  }}.git
+    git_url: git@github.com:psi-rking/{{ name }}.git
     git_tag: master
-    #v0.6.1
 
 #source:
 #    url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
@@ -17,17 +16,17 @@ source:
 
 build:
     noarch: python
-    number: 3
-    script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+    number: 6
+    script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
 
 requirements:
-    host:   
+    build:
         - python >=3.6
         - pip
+        - setuptools
     run:
+        - msgpack-python
         - numpy
-#        - pint
-#        - pydantic >=1.0.0
         - python >=3.6.0
         - qcelemental >=0.12.0
         - qcengine >=0.12.0
@@ -35,13 +34,13 @@ requirements:
 test:
     imports:
         - optking
-#    requires:
-#        - networkx
-#        - nglview
-#        - pytest >=4.0.0
-#        - scipy
-#    commands:
-#        - pytest --pyargs qcelemental
+    requires:
+        - dftd3
+        - psi4
+        - pytest >=4.0.0
+        - pytest-xdist
+    commands:
+        - pytest -rws -v $SP_DIR/optking -n $CPU_COUNT
 
 about:
     home: https://github.com/psi-rking/optking
@@ -54,10 +53,8 @@ about:
     license_family: BSD
     summary: A geometry optimizer for quantum chemistry.
 
-#extra:
-#    recipe-maintainers:
-#        - AlexHeide
-#        - dgasmith
-#        - loriab
-#        - lnaden
-#        - psi-rking
+extra:
+    recipe-maintainers:
+        - psi-rking
+        - AlexHeide
+        - loriab

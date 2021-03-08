@@ -12,9 +12,10 @@
 #       -Bobjdir
 #
 
-set(PYTHON_EXECUTABLE      "/opt/anaconda1anaconda2anaconda3/bin/python" CACHE STRING "")
-#set(PYTHON_LIBRARY         "/opt/anaconda1anaconda2anaconda3/lib/libpython@PY_VER@m.so" CACHE STRING "")
-#set(PYTHON_INCLUDE_DIR     "/opt/anaconda1anaconda2anaconda3/include/python@PY_VER@m" CACHE STRING "")
+set(Python_EXECUTABLE      "/opt/anaconda1anaconda2anaconda3/bin/python" CACHE STRING "")
+# below can return w/o "m" when min is py38 and lib/includes names are uniform again
+#set(Python_LIBRARY         "/opt/anaconda1anaconda2anaconda3/lib/libpython@PY_VER@m.so" CACHE STRING "")
+#set(Python_INCLUDE_DIR     "/opt/anaconda1anaconda2anaconda3/include/python@PY_VER@m" CACHE STRING "")
 
 set(pybind11_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/pybind11" CACHE PATH "")
 

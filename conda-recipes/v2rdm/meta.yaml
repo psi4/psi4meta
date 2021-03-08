@@ -10,11 +10,12 @@ source:
     # git_tag: v{{ version }}
     # git_tag: ae46114                                     # L4,M2: l2 for v2rdm4
     # git_tag: f3dbac4                                     # L6,M3: lagrangian
-    git_tag: 7a4204c                                     # L7,M4: new cmake
+    # git_tag: 7a4204c                                     # L7,M4: new cmake
+    git_tag: 929d7fc                                     # L8: sobasis_
     #path: ../../../v2rdm_casscf
 
 build:
-    number: 7                                            # [linux]
+    number: 8                                            # [linux]
     number: 4                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
