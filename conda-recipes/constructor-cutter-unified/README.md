@@ -1,7 +1,8 @@
+* As of March 2021, installers are built via GitHub Action. The cookiecutter method remains locally to test package availability.
 
 * run in an environment that has `cookiecutter` installed. `constructor` must also be accessible.
   * Feb 2021, constructor v3.2.0 (c-f) works while v3.0.2 (def) does not
-  * for Windows, also need pillow and nsis (c-f)
+  * for Windows, also need pillow and nsis (c-f). below allows packages to be collected for windows to test env solvability locally, but resulting installer exe probably bad
   * ln -s /home/psilocaluser/toolchainconda/envs/cookie2021/NSIS/Bin/ /home/psilocaluser/toolchainconda/envs/cookie2021/Bin
   * ln -s /home/psilocaluser/toolchainconda/envs/cookie2021/NSIS/Contrib/ /home/psilocaluser/toolchainconda/envs/cookie2021/Contrib
   * ln -s /home/psilocaluser/toolchainconda/envs/cookie2021/NSIS/Include/ /home/psilocaluser/toolchainconda/envs/cookie2021/Include
@@ -16,7 +17,7 @@
 
 * `CONSTRUCTOR_CACHE=/psi/gits/constructor_cache python run.py`
 
-* watch out for `py_` in buildstring as this means a noarch and must be eliminated
+* watch out for `py_` in buildstring as this means a noarch and must be eliminated (noarch ok c. 2021)
 
 * `scp -r build/Psi4*/Psi4*sh root@vergil.chemistry.gatech.edu:/var/www/html/psicode-download/`
                            exe

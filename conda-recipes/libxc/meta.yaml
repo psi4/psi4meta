@@ -3,12 +3,12 @@
 {% set sha256 = "164c37cdeba3d5b936b56fe6bbcbf0b84f1980f3feeb9273226a55a6f8d4872d" %}
 
 package:
-   name: {{ name }}
-   version: {{ version }}
+    name: {{ name }}
+    version: {{ version }}
 
 source:
-   url: https://gitlab.com/libxc/libxc/-/archive/{{ version }}/libxc-{{ version }}.tar.bz2
-   sha256: {{ sha256 }}
+    url: https://gitlab.com/libxc/libxc/-/archive/{{ version }}/libxc-{{ version }}.tar.bz2
+    sha256: {{ sha256 }}
 
 build:
     number: 0                                            # [linux]
