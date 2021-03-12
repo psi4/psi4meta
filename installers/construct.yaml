@@ -1,8 +1,8 @@
 ###  Configuration
 
-{% set release = "1.4a3.dev225" %}           # [unix]
-{% set release = "1.4a3.dev245" %}           # [win]
-{% set ltrtver = "1.4.dev28" %}
+{% set release = "1.4rc1" %}           # [unix]
+{% set release = "1.4rc2.dev1" %}           # [win]
+{% set ltrtver = "1.4.dev30" %}
 
 {% set python = "3.8" %}
 
