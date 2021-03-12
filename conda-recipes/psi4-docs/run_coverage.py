@@ -20,15 +20,21 @@ errfile = open("error_coverage", "w")
 print('objdir/CWD:', os.getcwd())
 
 exclude_addons_missing = [
+    'adcc',
+    'brianqc',
     'cfour',
     'chemps2',
+    'cppe',
     'dkh',
+    'erd',
+    'gcp',
     'gdma',
     'gpu_dfcc',
     'mrcc',
     'optking',  # RAK scratch
     'pasture',
     'pcmsolver',
+    'simint',
     'snsmp2',
     'v2rdm_casscf',
 ]
@@ -42,6 +48,7 @@ exclude_need_ctest_file_manipulation = [
     'dftd3-psithon2',
     'fcidump',
     'fsapt-terms',
+    'fsaptd-terms',
     'mp2-property',
     'psiaux1-myplugin1',
     'psithon2',
