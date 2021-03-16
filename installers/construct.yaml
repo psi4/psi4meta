@@ -4,7 +4,7 @@
 {% set release = "1.4rc2.dev1" %}           # [win]
 {% set ltrtver = "1.4.dev30" %}
 
-{% set python = "3.8" %}
+{% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L76
 
 {% set name = "Psi4conda" %}
 {% set repo = "https://conda.anaconda.org/" %}
