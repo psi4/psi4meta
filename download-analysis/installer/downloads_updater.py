@@ -14,7 +14,7 @@ buf = "%s %s" % (date, time)
 lastdl = datetime.datetime.strptime(buf, '%Y-%m-%d %H:%M')
 #print lastdl
 
-p4dl = re.compile(r"""^(?P<loc>[0-9.]+) - - \[(?P<day>[0-9]*)\/(?P<month>.*)\/(?P<year>[0-9]*):(?P<hour>[0-9]*):(?P<min>[0-9]*).*\] "GET\s*./psicode-download/[Pp]si4conda-(?P<p4ver>.*?)-py(?P<p4py>[23][0-9])-(?P<p4os>.*?)-x86_64.sh.*$""", re.MULTILINE)
+p4dl = re.compile(r"""^(?P<loc>[0-9.]+) - - \[(?P<day>[0-9]*)\/(?P<month>.*)\/(?P<year>[0-9]*):(?P<hour>[0-9]*):(?P<min>[0-9]*).*\] "GET\s*./psicode-download/[Pp]si4conda-(?P<p4ver>.*?)-py(?P<p4py>[23][0-9]+)-(?P<p4os>.*?)-x86_64.(sh|exe).*$""", re.MULTILINE)
 
 # copy the access_log from /etc/httpd/logs/access_log
 lines = open('access_log').read()

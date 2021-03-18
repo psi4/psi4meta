@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import datetime
 import collections
+from pathlib import Path
 
 # conda install PIL
 # conda install -c scitools cartopy
@@ -17,6 +18,7 @@ def main(argv):
     input_filename = ''
     output_filename = ''
     unique = False
+    odir = Path('.')
 
 # getopt(argv, options_string, long_options)
 # options_string: colon means takes an argument
@@ -32,19 +34,19 @@ def main(argv):
 
     try:
         opts, args = getopt.getopt(argv,
-            "hui:o:c:",["unique","ifile=","ofile=","countries_to_plot="])
+            "hui:o:d:",["unique","ifile=","ofile=","odir="])
 
     except getopt.GetoptError:
-        print('parse-psi-dl.py -i <inputfile> -o <outputfile> [--unique] [-c]')
+        print('parse-psi-dl.py -i <inputfile> -o <outputfile> [--unique] [-d]')
         sys.exit(2)
 
     if len(argv) < 1: # note, we already stripped one out before calling main
-        print('parse-psi-dl.py -i <inputfile> -o <outputfile> [--unique] -[-c]')
+        print('parse-psi-dl.py -i <inputfile> -o <outputfile> [--unique] -[-d]')
         sys.exit(2)
 
     for opt, arg in opts:
         if opt == '-h':
-            print('parse-psi-dl.py -i <inputfile> -o <outputfile> [--unique] -[c]')
+            print('parse-psi-dl.py -i <inputfile> -o <outputfile> [--unique] -[d]')
             sys.exit()
         elif opt in ("-i", "--ifile"):
             input_filename = arg
@@ -52,10 +54,14 @@ def main(argv):
             output_filename = arg
         elif opt in ("-u", "--unique"):
             unique = True
+        elif opt in ("-d", "--odir"):
+            odir = Path(arg)
+
 
     print(f"Input file is  {input_filename}")
     print(f"Output file is {output_filename}")
     print(f"unique flag is {unique}")
+    print(f"Output dir is  {odir}")
 
     flag_colors = {
         'Mac':      '#4b6ba9',
@@ -72,13 +78,20 @@ def main(argv):
         'Lin-Py36': '#1a4162',
         'Lin-Py35': '#1a4162',
         'Lin-Py27': '#1a4162',
-        'Win':      '#a7b2c6',
-        'Win-Py39': '#a7b2c6',
-        'Win-Py38': '#a7b2c6',
-        'Win-Py37': '#a7b2c6',
-        'Win-Py36': '#a7b2c6',
-        'Win-Py35': '#a7b2c6',
-        'Win-Py27': '#a7b2c6',
+        'WSL':      '#a7b2c6',
+        'WSL-Py39': '#a7b2c6',
+        'WSL-Py38': '#a7b2c6',
+        'WSL-Py37': '#a7b2c6',
+        'WSL-Py36': '#a7b2c6',
+        'WSL-Py35': '#a7b2c6',
+        'WSL-Py27': '#a7b2c6',
+        'Win':      '#394458',
+        'Win-Py39': '#394458',
+        'Win-Py38': '#394458',
+        'Win-Py37': '#394458',
+        'Win-Py36': '#394458',
+        'Win-Py35': '#394458',
+        'Win-Py27': '#394458',
         }
 
 # note: the newlines will be part of the lines read,
@@ -97,32 +110,71 @@ def main(argv):
     dl_by_pyos_v11 = collections.defaultdict(int)
     dl_by_pyos_v12 = collections.defaultdict(int)
     dl_by_pyos_v13 = collections.defaultdict(int)
+    dl_by_pyos_v14 = collections.defaultdict(int)
+    dl_by_pyos_v15 = collections.defaultdict(int)
+    dl_by_pyos_v16 = collections.defaultdict(int)
+    dl_by_pyos_v17 = collections.defaultdict(int)
 
     dl_by_pyos_2017 = collections.defaultdict(int)
     dl_by_pyos_2018 = collections.defaultdict(int)
     dl_by_pyos_2019 = collections.defaultdict(int)
+    dl_by_pyos_2020 = collections.defaultdict(int)
+    dl_by_pyos_2021 = collections.defaultdict(int)
+    dl_by_pyos_2022 = collections.defaultdict(int)
+    dl_by_pyos_2023 = collections.defaultdict(int)
+    dl_by_pyos_2024 = collections.defaultdict(int)
 
     for line in lines:
         (date, time, ip, vers, osname, py) = line.split()
+
+        if osname == "Windows" and vers == "1.1":
+            osname = "WSL"
+        elif osname == "WindowsWSL":
+            osname = "WSL"
+        else:
+            osname = osname[:3]
+
         # if --unique, add to list only if we don't already have that ip
         if (not unique or ip_list.count(ip) == 0):
             if vers.startswith('1.0'):
-                dl_by_pyos_v10[f'{osname[:3]}-Py{py}'] += 1
+                dl_by_pyos_v10[f'{osname}-Py{py}'] += 1
             elif vers.startswith('1.1'):
-                dl_by_pyos_v11[f'{osname[:3]}-Py{py}'] += 1
+                dl_by_pyos_v11[f'{osname}-Py{py}'] += 1
             elif vers.startswith('1.2'):
-                dl_by_pyos_v12[f'{osname[:3]}-Py{py}'] += 1
+                dl_by_pyos_v12[f'{osname}-Py{py}'] += 1
             elif vers.startswith('1.3'):
-                dl_by_pyos_v13[f'{osname[:3]}-Py{py}'] += 1
+                dl_by_pyos_v13[f'{osname}-Py{py}'] += 1
+            elif vers.startswith('1.4'):
+                dl_by_pyos_v14[f'{osname}-Py{py}'] += 1
+            elif vers.startswith('1.5'):
+                dl_by_pyos_v15[f'{osname}-Py{py}'] += 1
+            elif vers.startswith('1.6'):
+                dl_by_pyos_v16[f'{osname}-Py{py}'] += 1
+            elif vers.startswith('1.7'):
+                dl_by_pyos_v17[f'{osname}-Py{py}'] += 1
 
             if date.startswith('2017'):
-                dl_by_pyos_2017[f'{osname[:3]}-v{vers}'] += 1
+                dl_by_pyos_2017[f'{osname}-v{vers}'] += 1
             elif date.startswith('2018'):
-                dl_by_pyos_2018[f'{osname[:3]}-v{vers}'] += 1
+                dl_by_pyos_2018[f'{osname}-v{vers}'] += 1
             elif date.startswith('2019'):
-                dl_by_pyos_2019[f'{osname[:3]}-v{vers}'] += 1
+                dl_by_pyos_2019[f'{osname}-v{vers}'] += 1
+            elif date.startswith('2020'):
+                dl_by_pyos_2020[f'{osname}-v{vers}'] += 1
+            elif date.startswith('2021'):
+                dl_by_pyos_2021[f'{osname}-v{vers}'] += 1
+            elif date.startswith('2022'):
+                dl_by_pyos_2022[f'{osname}-v{vers}'] += 1
+            elif date.startswith('2023'):
+                dl_by_pyos_2023[f'{osname}-v{vers}'] += 1
+            elif date.startswith('2024'):
+                dl_by_pyos_2024[f'{osname}-v{vers}'] += 1
+
 
     def figure_from_count_dict(label, dicary):
+        if len(dicary) == 0:
+            return
+
         print(f'\n<<<  {label}  >>>\n')
         # now sort them back so the small wedges are at starting point
         resorted_pyos = []
@@ -192,16 +244,25 @@ def main(argv):
         img = Image.open('psitmppyos.png')
         x1, y1 = img.size
         cropped_img = img.crop((0, y1/10, x1, y1-y1/10))
-        cropped_img.save(f'psi-downloads-pie-pyos-{label}.png')
+        cropped_img.save(odir / f'psi-downloads-pie-pyos-{label}.png')
 
     figure_from_count_dict('v1.0', dl_by_pyos_v10)
     figure_from_count_dict('v1.1', dl_by_pyos_v11)
     figure_from_count_dict('v1.2', dl_by_pyos_v12)
     figure_from_count_dict('v1.3', dl_by_pyos_v13)
+    figure_from_count_dict('v1.4', dl_by_pyos_v14)
+    figure_from_count_dict('v1.5', dl_by_pyos_v15)
+    figure_from_count_dict('v1.6', dl_by_pyos_v16)
+    figure_from_count_dict('v1.7', dl_by_pyos_v17)
 
     figure_from_count_dict('2017', dl_by_pyos_2017)
     figure_from_count_dict('2018', dl_by_pyos_2018)
     figure_from_count_dict('2019', dl_by_pyos_2019)
+    figure_from_count_dict('2020', dl_by_pyos_2020)
+    figure_from_count_dict('2021', dl_by_pyos_2021)
+    figure_from_count_dict('2022', dl_by_pyos_2022)
+    figure_from_count_dict('2023', dl_by_pyos_2023)
+    figure_from_count_dict('2024', dl_by_pyos_2024)
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ import cartopy.crs as ccrs
 import cartopy.io.shapereader as shpreader
 import datetime
 import collections
+from pathlib import Path
 
 # [original]
 # conda install PIL
@@ -20,6 +21,7 @@ import collections
 # [Jul 2019]
 # conda create -n py37 matplotlib pycountry cartopy pandas beautifulsoup4 python=3.7 -c conda-forge
 # pip install geoip2
+# * downloaded static database from https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz
 
 
 def main(argv):
@@ -27,6 +29,7 @@ def main(argv):
     output_filename = ''
     unique = False
     countries_to_plot = 12
+    odir = Path('.')
 
 # getopt(argv, options_string, long_options)
 # options_string: colon means takes an argument
@@ -42,7 +45,7 @@ def main(argv):
 
     try:
         opts, args = getopt.getopt(argv,\
-            "hui:o:c:",["unique","ifile=","ofile=","countries_to_plot="])
+            "hui:o:c:d:",["unique","ifile=","ofile=","countries_to_plot=","odir="])
 
     except getopt.GetoptError:
         print('parse-psi-dl.py -i <inputfile> -o <outputfile> [--unique] [-c]')
@@ -64,11 +67,14 @@ def main(argv):
             unique = True
         elif opt in ("-c", "--countries_to_plot"):
             countries_to_plot = arg
+        elif opt in ("-d", "--odir"):
+            odir = Path(arg)
 
     print(f"Input file is  {input_filename}")
     print(f"Output file is {output_filename}")
     print(f"unique flag is {unique}")
     print(f"countries to plot {countries_to_plot}")
+    print(f"Output dir is  {odir}")
 
 # note: the newlines will be part of the lines read,
 # so either strip them or don't print additional newlines
@@ -240,7 +246,7 @@ def main(argv):
     img = Image.open('psitmp.png')
     x1, y1 = img.size
     cropped_img = img.crop((0, y1/10, x1, y1-y1/10))
-    cropped_img.save('psi-downloads-pie.png')
+    cropped_img.save(odir / 'psi-downloads-pie.png')
 
 ### World Map! ###
 
@@ -298,7 +304,7 @@ def main(argv):
     img = Image.open('psitmp2.png')
     x1, y1 = img.size
     cropped_img = img.crop((x1/50, y1/20, x1-x1/50, y1-y1/20))
-    cropped_img.save('psi-downloads-map.png')
+    cropped_img.save(odir / 'psi-downloads-map.png')
 
 
 if __name__ == "__main__":
