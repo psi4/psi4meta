@@ -35,4 +35,36 @@ as cdsgroup on VERGIL, 'crontab -e' and enter:
       40 1 * * * PATH=/home/cdsgroup/miniconda/bin:$PATH bash /home/cdsgroup/psi4meta/download-analysis/installer/vergil_to_gh.sh > /home/cdsgroup/psi4meta/download-analysis/installer/crontab-hugo.log 2>&1
     * Future-proofed installer download analyzers to face Python 3.10 and years and versions ahead. Prepped for native Windows.
 
+    * Added script to /var/www/html/psicode-download/pull_gha_installers.sh to nab installers from GHA (archived for one day after build). not automated
+
+```
+# Usage:
+# > bash pull_gha_installers.sh 47226565 47226573 715...4f3
+
+# Then make WSL links
+# * ln -s Psi4conda-1.4rc1-py36-Linux-x86_64.sh Psi4conda-1.4rc1-py36-WindowsWSL-x86_64.sh
+# * ln -s Psi4conda-1.4rc1-py37-Linux-x86_64.sh Psi4conda-1.4rc1-py37-WindowsWSL-x86_64.sh
+# * ln -s Psi4conda-1.4rc1-py38-Linux-x86_64.sh Psi4conda-1.4rc1-py38-WindowsWSL-x86_64.sh
+# * ln -s Psi4conda-1.4rc1-py39-Linux-x86_64.sh Psi4conda-1.4rc1-py39-WindowsWSL-x86_64.sh
+# * ln -s Psi4conda-1.4rc2.dev1-py38-Windows-x86_64.exe Psi4conda-1.4rc1-py38-Windows-x86_64.exe
+
+# GitHub artifact range
+# * hover over artifacts in GH web interface to get addresses
+# * range is inclusive
+ARTIFACT_START=$1
+ARTIFACT_END=$2
+
+# GitHub token (use LAB's PAT)
+TOKEN=$3
+
+##############################################################
+
+for i in $(seq $ARTIFACT_START $ARTIFACT_END)
+do echo $i
+    rm -f zip
+    curl -L -O -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${TOKEN}" https://api.github.com/repos/psi4/psi4meta/actions/artifacts/$i/zip
+    unzip zip
+    rm -f zip
+done
+```
 
