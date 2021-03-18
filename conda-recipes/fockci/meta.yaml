@@ -1,0 +1,60 @@
+{% set name = "fockci" %}
+{% set version = "0.2.0" %}
+
+package:
+    name: {{ name|lower }}
+    version: {{ version }}
+
+source:
+    #git_url: https://github.com/shannonhouck/PyFockCI.git
+    git_url: https://github.com/loriab/PyFockCI.git
+#    git_tag: v{{ version }}
+    #git_tag: master
+    git_tag: loriab-patch-1
+                        # v0.2.0 ebd66da
+
+build:
+    noarch: python
+    number: 0
+    script: "{{ PYTHON }} -m pip install . --no-deps -vvv"
+
+requirements:
+    host:
+        - python >=3.6
+        - setuptools
+    run:
+        - numpy
+        - python >=3.6
+#        - {{ pin_compatible('python', max_pin='x.x') }}
+        - scipy
+
+test:
+    requires:
+        - psi4 {{ psi4ver }}
+        - pytest
+        - pytest-xdist
+    imports:
+        - sf_ip_ea
+        - psi4
+    commands:
+        # Verify module
+        - test -f $SP_DIR/sf_ip_ea/__init__.py
+        # Inspect linkage
+        - conda inspect linkages --show-files --groupby=dependency fockci
+        # Actually test
+#        - psi4 --test
+        - pytest -rws --capture=sys $SP_DIR/sf_ip_ea -v -k "not (bloch and test_1)" -n $CPU_COUNT
+        - python -c "import sf_ip_ea as qc; import psi4; print('*** fockci {} built successfully against Psi4 {}. Buy psinet a beer.'.format(qc.__version__, psi4.__version__))"
+
+about:
+    home: https://github.com/shannonhouck/PyFockCI
+    dev_url: https://github.com/shannonhouck/PyFockCI
+    doc_url: https://shannonhouck.github.io/psi4fockci/build/index.html
+    doc_source_url: https://github.com/shannonhouck/psi4fockci/blob/master/docs/source/introduction.rst
+    license: BSD-3-Clause
+    license_url: https://opensource.org/licenses/BSD-3-Clause
+#    license_file: LICENSE.txt  # revisit when nonempty
+    license_family: BSD
+    summary: "S. Houck's Fock-space CI (RAS-nSF-IP/EA) plugin to Psi4"
+    # description: >
+

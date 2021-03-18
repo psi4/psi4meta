@@ -1,16 +1,21 @@
-{% set version = "1.2.1" %}
+{% set version = "1.2.1.1" %}
 
 package:
     name: pcmsolver
     version: {{ version }}
 
 source:
-    git_url: git@github.com:PCMSolver/pcmsolver.git      # [linux]
-    git_url: https://github.com/PCMSolver/pcmsolver.git  # [osx]
-    git_tag: v{{ version }}  # v1.2.1  fa7c826
+    # v1.3.1 - has numerical errors with psi4
+    #git_url: git@github.com:PCMSolver/pcmsolver.git      # [linux]
+    #git_url: https://github.com/PCMSolver/pcmsolver.git  # [osx]
+    #git_tag: v{{ version }}  # v1.2.1  fa7c826
+    #git_tag: 183a20e
+    git_url: git@github.com:loriab/pcmsolver.git      # [linux]
+    git_url: https://github.com/loriab/pcmsolver.git  # [osx]
+    git_tag: v1211
 
 build:
-    number: 0                                            # [linux]
+    number: 2                                            # [linux]
     number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
@@ -27,12 +32,15 @@ requirements:
         - {{ compiler('cxx') }}
         - {{ compiler('fortran') }}
     host:
+#        - boost
         - python {{ python }}
         - zlib {{ zlib }}
     run:
         - {{ pin_compatible('python', max_pin='x.x') }}
 
 test:
+    imports:
+        - pcmsolver
     commands:
         # Verify library
         - test -f $PREFIX/lib/libpcm$SHLIB_EXT

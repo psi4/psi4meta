@@ -1,0 +1,52 @@
+###  Configuration
+
+{% set release = "1.4rc1" %}           # [unix]
+{% set release = "1.4rc2.dev1" %}           # [win]
+{% set ltrtver = "1.4.dev30" %}
+
+{% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L76
+
+{% set name = "Psi4conda" %}
+{% set repo = "https://conda.anaconda.org/" %}
+{% set channel = "psi4" %}
+{% set channel_tag = "/label/dev" %}  # toggle to empty string for releases, `-c psi4`
+
+
+###  Recipe
+
+name: {{ name }}
+version: {{ release }}
+
+{% set platform = "Linux-x86_64" %}          # [linux]
+{% set platform = "MacOSX-x86_64" %}         # [osx]
+{% set ext = "sh" %}                         # [unix]
+{% set platform = "Windows-x86_64" %}        # [win]
+{% set ext = "exe" %}                        # [win]
+
+installer_filename: {{ name }}-{{ release }}-py{{ python | replace(".", "") }}-{{ platform }}.{{ ext }}
+
+specs:
+  - conda
+  - python {{ python }}*
+  - psi4 =={{ release }}*
+  - psi4-rt =={{ ltrtver }}                  # [unix]
+  - console_shortcut                         # [win]
+  - menuinst                                 # [win]
+
+channels: &id1
+  - https://repo.anaconda.com/pkgs/main/
+  - https://repo.anaconda.com/pkgs/msys2/    # [win]
+  - {{ repo }}{{ channel }}{{ channel_tag }}
+  - https://conda.anaconda.org/conda-forge/  # [win]
+  - {{ repo }}adcc
+
+conda_default_channels: *id1
+
+keep_pkgs: false
+
+ignore_duplicate_files: true                 # [osx]  # for iomp5
+
+license_file: COPYING.LESSER
+
+welcome_image: psi4square.png                # [win]
+

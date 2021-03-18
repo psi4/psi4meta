@@ -16,22 +16,24 @@ build:
 
 requirements:
     build:
-        - cmake >=3.3
+        - cmake >=3.15
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}                # gcov, too
     host:
+        - eigen
         - mkl-devel {{ mkl }}
-        - pybind11 {{ pybind11 }}
+        - mpfr
+        - pybind11-headers {{ pybind11 }}
         - python {{ python }}
         # qc
         - gau2grid {{ gau2grid }}
-        - libint {{ libint }}
+        - libint2 {{ libint }} {{ libint_bld }}
         - libxc {{ libxc }}
         # run: for build-time testing or docs
         - dftd3 {{ dftd3 }}
         - gcp {{ gcp }}
         - networkx
-        - numpy
+        - numpy >=1.12.0
         - pylibefp {{ pylibefp }}              # for efp fragment autodoc
         - qcelemental {{ qcelemental }}*
         - qcengine {{ qcengine }}*

@@ -9,7 +9,8 @@ objdir = Path(os.environ['SRC_DIR']) / 'build'
 cb_threads = int(os.environ['CPU_COUNT'])
 coverage_exe = Path(os.environ['PREFIX']) / 'bin' / 'coverage'
 lenv = copy.deepcopy(os.environ)
-lenv['PYTHONPATH'] = str(objdir / 'stage' / 'lib' / os.environ['PYMOD_INSTALL_LIBDIR'])
+pythonpath = objdir / 'stage' / 'lib' / ('python' + os.environ['PY_VER']) / 'site-packages'
+lenv['PYTHONPATH'] = str(pythonpath)
 
 os.chdir(objdir)
 test_time = time.time()
@@ -19,15 +20,21 @@ errfile = open("error_coverage", "w")
 print('objdir/CWD:', os.getcwd())
 
 exclude_addons_missing = [
+    'adcc',
+    'brianqc',
     'cfour',
     'chemps2',
+    'cppe',
     'dkh',
+    'erd',
+    'gcp',
     'gdma',
     'gpu_dfcc',
     'mrcc',
     'optking',  # RAK scratch
     'pasture',
     'pcmsolver',
+    'simint',
     'snsmp2',
     'v2rdm_casscf',
 ]
@@ -41,6 +48,7 @@ exclude_need_ctest_file_manipulation = [
     'dftd3-psithon2',
     'fcidump',
     'fsapt-terms',
+    'fsaptd-terms',
     'mp2-property',
     'psiaux1-myplugin1',
     'psithon2',

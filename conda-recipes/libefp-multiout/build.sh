@@ -17,10 +17,10 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_C_FLAGS="${CFLAGS} ${OPTS}" \
         -DCMAKE_CXX_FLAGS="${CXXFLAGS} ${OPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}${SHLIB_EXT}" \
-        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/libpython${PY_VER}m${SHLIB_EXT}" \
+        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_OPENMP=OFF \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
@@ -38,7 +38,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers
     set +x
-    source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
+    source /theoryfs2/common/software/intel2019/bin/compilervars.sh intel64
     set -x
 
     # link against conda MKL & GCC
@@ -60,10 +60,10 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_C_FLAGS="${ALLOPTS}" \
         -DCMAKE_CXX_FLAGS="${ALLOPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}.so" \
-        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/libpython${PY_VER}m${SHLIB_EXT}" \
+        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DBUILD_SHARED_LIBS=ON \
         -DENABLE_OPENMP=OFF \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \

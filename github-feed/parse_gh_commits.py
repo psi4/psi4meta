@@ -54,8 +54,8 @@ commit_hashes_short = []
 # merge commits have multi-line stuff... just take first line
 for xtitle in xtitles:
     first_anchor = xtitle.find('a')
-    titles.append((first_anchor.get('title').split('\n'))[0])
-    href_string = first_anchor.get('href')
+    titles.append((first_anchor.get_text('title').split('\n'))[0])
+    href_string = first_anchor.get_text('href')
     commit_hrefs.append(href_string)
     commit_hashes_short.append(((href_string.split('/'))[-1])[0:7])
 

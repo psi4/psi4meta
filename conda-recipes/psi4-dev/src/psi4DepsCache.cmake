@@ -12,9 +12,10 @@
 #       -Bobjdir
 #
 
-set(PYTHON_EXECUTABLE      "/opt/anaconda1anaconda2anaconda3/bin/python" CACHE STRING "")
-set(PYTHON_LIBRARY         "/opt/anaconda1anaconda2anaconda3/lib/lib@PY_ABBR@.so" CACHE STRING "")
-set(PYTHON_INCLUDE_DIR     "/opt/anaconda1anaconda2anaconda3/include/@PY_ABBR@" CACHE STRING "")
+set(Python_EXECUTABLE      "/opt/anaconda1anaconda2anaconda3/bin/python" CACHE STRING "")
+# below can return w/o "m" when min is py38 and lib/includes names are uniform again
+#set(Python_LIBRARY         "/opt/anaconda1anaconda2anaconda3/lib/libpython@PY_VER@m.so" CACHE STRING "")
+#set(Python_INCLUDE_DIR     "/opt/anaconda1anaconda2anaconda3/include/python@PY_VER@m" CACHE STRING "")
 
 set(pybind11_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/pybind11" CACHE PATH "")
 
@@ -38,10 +39,10 @@ set(gau2grid_DIR           "/opt/anaconda1anaconda2anaconda3/share/cmake/gau2gri
 set(ENABLE_gdma            ON CACHE BOOL "")
 set(gdma_DIR               "/opt/anaconda1anaconda2anaconda3/share/cmake/gdma" CACHE PATH "")
 
-set(MAX_AM_ERI             "6" CACHE STRING "")
-set(Libint_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/Libint" CACHE PATH "")
+set(MAX_AM_ERI             "5" CACHE STRING "")
+set(Libint2_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/Libint2" CACHE PATH "")
 
-set(ENABLE_PCMSolver       ON CACHE BOOL "")
+set(ENABLE_PCMSolver       OFF CACHE BOOL "")
 set(PCMSolver_DIR          "/opt/anaconda1anaconda2anaconda3/share/cmake/PCMSolver" CACHE PATH "")
 
 set(ENABLE_simint          ON CACHE BOOL "")
@@ -51,4 +52,6 @@ set(Libxc_DIR              "/opt/anaconda1anaconda2anaconda3/share/cmake/Libxc" 
 
 set(SPHINX_ROOT            "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
 set(CMAKE_PROGRAM_PATH     "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
+set(Eigen3_DIR             "/opt/anaconda1anaconda2anaconda3/share/eigen3/cmake/" CACHE PATH "")
+set(MPFR_ROOT              "/opt/anaconda1anaconda2anaconda3" CACHE PATH "")
 

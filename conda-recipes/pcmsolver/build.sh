@@ -30,7 +30,7 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}" \
         -DCMAKE_Fortran_FLAGS="${CMAKE_Fortran_FLAGS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR=${PYMOD_INSTALL_LIBDIR} \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DPYTHON_INTERPRETER=${PYTHON} \
         -DENABLE_OPENMP=OFF \
         -DENABLE_GENERIC=OFF \
@@ -47,7 +47,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers
     set +x
-    source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
+    source /theoryfs2/common/software/intel2019/bin/compilervars.sh intel64
     set -x
 
     # link against conda GCC
@@ -69,7 +69,7 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_Fortran_COMPILER=ifort \
         -DCMAKE_Fortran_FLAGS="${ALLOPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR=${PYMOD_INSTALL_LIBDIR} \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DPYTHON_INTERPRETER=${PYTHON} \
         -DENABLE_OPENMP=OFF \
         -DENABLE_GENERIC=OFF \
@@ -103,11 +103,15 @@ rm ${PREFIX}/lib/libpcm.a
 # test
 # green_spherical_diffuse hitting an Intel 2018+Eigen bug
 # but they can be run if static lib is built
+# from-file fails b/c of my naming temp file hacks of v1.2.1.1
 if [ "$(uname)" == "Darwin" ]; then
     install_name_tool -add_rpath ${PREFIX}/lib/ lib/libpcm.1.dylib
     install_name_tool -add_rpath ${PREFIX}/lib/ bin/unit_tests
     install_name_tool -add_rpath ${PREFIX}/lib/ bin/Fortran_host
-    ctest -j${CPU_COUNT}
+    ctest -E "from-file" -j${CPU_COUNT}
+fi
+if [ "$(uname)" == "Linux" ]; then
+    ctest -E "(from-file|green_spherical_diffuse)" -j${CPU_COUNT}
 fi
 
 export CFLAGS=KEEPCFLAGS

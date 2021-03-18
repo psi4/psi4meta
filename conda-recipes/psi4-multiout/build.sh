@@ -29,14 +29,14 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_CXX_FLAGS="${CXXFLAGS} ${OPTS}" \
         -DCMAKE_Fortran_FLAGS="${FFLAGS} ${OPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}${SHLIB_EXT}" \
-        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/libpython${PY_VER}m${SHLIB_EXT}" \
+        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON \
-        -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_Libint2=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON \
@@ -59,6 +59,14 @@ if [ "$(uname)" == "Darwin" ]; then
         -DBUILDNAME="LAB-OSX-clang4.0.1-omp-mkl-py${CONDA_PY}-release-conda" \
         -DSITE=gatech-mac-conda \
         -DCMAKE_OSX_DEPLOYMENT_TARGET=''
+
+# nofortran
+#        -DENABLE_dkh=ON \
+#        -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON \
+#        -DENABLE_gdma=ON \
+#        -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
+#        -DENABLE_PCMSolver=ON \
+#        -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON \
 
 #        -DBUILD_SHARED_LIBS=ON \
 #        -DENABLE_erd=ON \
@@ -96,7 +104,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers
     set +x
-    source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
+    source /theoryfs2/common/software/intel2019/bin/compilervars.sh intel64
     set -x
 
     # link against conda MKL & GCC
@@ -121,14 +129,14 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_CXX_FLAGS="${ALLOPTS}" \
         -DCMAKE_Fortran_FLAGS="${ALLOPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DPYMOD_INSTALL_LIBDIR="${PYMOD_INSTALL_LIBDIR}" \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DMAX_AM_ERI=${MAX_AM_ERI} \
         -DPYTHON_EXECUTABLE=${PYTHON} \
-        -DPYTHON_LIBRARY="${PREFIX}/lib/lib${PY_ABBR}${SHLIB_EXT}" \
-        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/${PY_ABBR}" \
+        -DPYTHON_LIBRARY="${PREFIX}/lib/libpython${PY_VER}m${SHLIB_EXT}" \
+        -DPYTHON_INCLUDE_DIR="${PREFIX}/include/python${PY_VER}m" \
         -DCMAKE_PREFIX_PATH="${PREFIX}" \
         -DCMAKE_INSIST_FIND_PACKAGE_gau2grid=ON \
-        -DCMAKE_INSIST_FIND_PACKAGE_Libint=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_Libint2=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON \
@@ -214,3 +222,7 @@ fi
 
 # * downstream (v2, sns) are built and tested downstream
 # * downstream py (sns) won't register properly anyways w/o psi4 and CM config time
+
+# * cythonize #cy
+#   -DENABLE_CYTHONIZE=ON \
+

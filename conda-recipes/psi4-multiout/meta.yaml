@@ -18,29 +18,31 @@ build:
 
 requirements:
     build:
-        - cmake >=3.8
+        - cmake >=3.15
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        - {{ compiler('fortran') }}      # [osx]
+        - {{ compiler('fortran') }}      # [osx]     # nofortran
         - llvm-openmp                    # [osx]
     host:
+        - eigen
         - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
+        - mpfr
         - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
-        - pybind11 {{ pybind11 }}
+        - pybind11-headers {{ pybind11 }}
         - python {{ python }}
         # qc
         - ambit {{ ambit }}
         - chemps2 {{ chemps2 }}
-        - dkh {{ dkh }}
+        - dkh {{ dkh }}                             # nofortran
         - gau2grid {{ gau2grid }}
-        - gdma {{ gdma }}
-        - libint {{ libint }} {{ libint_bld }}
-        - pcmsolver {{ pcmsolver }}
+        - gdma {{ gdma }}                           # nofortran
+        - libint2 {{ libint }} {{ libint_bld }}
+        - pcmsolver {{ pcmsolver }}                 # nofortran
         - simint {{ simint }}
         - libxc {{ libxc }}
         # rt for ctest
         - networkx
-        - numpy
+        - numpy >=1.12.0
         - qcelemental {{ qcelemental }}
         - qcengine {{ qcengine }}
 
@@ -49,36 +51,43 @@ outputs:
       build:
           requires_features:
               blas: {{ blas_impl }}
+          ignore_run_exports:
+              - eigen
+              - mkl                            # [linux]
+              - mpfr
           run_exports:
               - {{ pin_subpackage('psi4', max_pin='x.x') }}
       requirements:
           build:
-              - cmake >=3.8
+              - cmake >=3.15
               - {{ compiler('c') }}
               - {{ compiler('cxx') }}
-              - {{ compiler('fortran') }}      # [osx]
+              - {{ compiler('fortran') }}      # [osx]       # nofortran
               - llvm-openmp                    # [osx]
           host:
+              - eigen
               - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
+              - mpfr
               - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
-              - pybind11 {{ pybind11 }}
+              - pybind11-headers {{ pybind11 }}
               - python {{ python }}
               # qc
               - ambit {{ ambit }}
               - chemps2 {{ chemps2 }}
-              - dkh {{ dkh }}
+              - dkh {{ dkh }}                    # nofortran
               - gau2grid {{ gau2grid }}
-              - gdma {{ gdma }}
-              - libint {{ libint }} {{ libint_bld }}
-              - pcmsolver {{ pcmsolver }}
+              - gdma {{ gdma }}                  # nofortran
+              - libint2 {{ libint }} {{ libint_bld }}
+              - pcmsolver {{ pcmsolver }}        # nofortran
               - qcelemental {{ qcelemental }}
               - qcengine {{ qcengine }}
               - simint {{ simint }}
               - libxc {{ libxc }}
           run:
-              - intel-openmp
+              - intel-openmp                   # [linux]
+              - {{ pin_compatible('mkl', upper_bound='2021.0') }}  # [linux]
               - networkx
-              - numpy
+              - numpy >=1.12.0
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
               - {{ pin_compatible('qcelemental', max_pin='x') }}
@@ -86,7 +95,7 @@ outputs:
       files:
           - bin/psi4
           - include/psi4
-          - lib{{ PYMOD_INSTALL_LIBDIR }}/psi4
+          - lib/python{{ PY_VER }}/site-packages/psi4
           - share/cmake/psi4
           - share/cmake/Target*/*
           - share/psi4
@@ -106,7 +115,7 @@ outputs:
               - ldd -r -u $SP_DIR/psi4/core$PYLIB_EXT  # [linux]
               - ldd -v $SP_DIR/psi4/core$PYLIB_EXT     # [linux]
               - otool -L $SP_DIR/psi4/core$PYLIB_EXT   # [osx]
-              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint pcmsolver simint libxc psi4  # erd
+              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint2 pcmsolver simint libxc psi4  # erd ; comment for  # nofortran
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               - grep -r theoryfs2 $PREFIX/share/cmake/ || true  # [linux]
               # Actually test
@@ -154,3 +163,16 @@ outputs:
 # * define slight compatible range
 #   - {{ pin_compatible('qcelemental', upper_bound='0.6') }}
 #   - {{ pin_compatible('qcengine', upper_bound='0.8') }}
+
+# * cythonize #cy
+#   source:
+#       git_url: git@github.com:loriab/psi4.git      # [linux]
+#       git_tag: cythonize
+#   requirements:
+#       host:
+#           - cython
+#   outputs:
+#       - name: psi4
+#         requirements:
+#             host:
+#                 - cython

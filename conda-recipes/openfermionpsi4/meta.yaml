@@ -1,5 +1,5 @@
 {% set name = "openfermionpsi4" %}
-{% set version = "0.4" %}
+{% set version = "0.5" %}
 
 package:
     name: {{ name|lower }}
@@ -9,21 +9,21 @@ source:
     git_url: git@github.com:quantumlib/OpenFermion-Psi4.git              # [linux]
     git_url: https://github.com/quantumlib/OpenFermion-Psi4.git          # [osx]
     # git_tag: v{{ version }}
-    git_tag: c6b0a37  # 0.4 = c6b0a37
+    git_tag: 472ba23  # L0: 0.5 472ba23
 
 build:
-    number: 0                                               # [linux]
-    number: 0                                               # [osx]
-    skip: true                                              # [win]
+    noarch: python
+    number: 0
     script: python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
     build:
-        - python {{ python }}
+        - python >=3.6
         - setuptools
     run:
+        - python >=3.6
+        - numpy >=1.12.0
         - openfermion >={{ openfermion }}
-        - {{ pin_compatible('python', max_pin='x.x') }}
 
 test:
     requires:
@@ -58,3 +58,4 @@ about:
 #
 # * {% set version = "0.3" %}
 #    git_tag: 98d94cf  # v0.3 + 2 (fix encoding)
+#    git_tag: c6b0a37  # L1: of 0.10, L0: 0.4 = c6b0a37

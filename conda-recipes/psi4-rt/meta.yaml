@@ -3,32 +3,41 @@ package:
     version: {{ ltrtver }}
 
 build:
-    number: 0                                  # [linux]  1.2_1: removes gpu_dfcc
-    number: 0                                  # [osx]
+    number: 0                                  # [linux]  1.2_1: removes gpu_dfcc, dev13_1: fix wrong v2
+    number: 0                                  # [osx]                             dev13_1: fix wrong v2
     binary_relocation: true
     skip: true                                 # [win]
+
+# openfermion and adcc need defaults h5py
 
 requirements:
     host:
         - python {{ python }}
+        - adcc {{ adcc }}
+        - pycppe {{ pycppe }}
         - dftd3 {{ dftd3 }}
         # - pylibefp {{ pylibefp }}
+        - fockci {{ fockci }}
         - gcp {{ gcp }}
         - mp2d {{ mp2d }}
-        - openfermion {{ openfermion }} *{{ openfermion_bld }}  # temp
-        - openfermionpsi4 {{ openfermionpsi4 }}
+        - openfermion {{ openfermion }}         # [py!=36]
+        - openfermionpsi4 {{ openfermionpsi4 }}  # [py!=36]
         - resp {{ resp }}
         - snsmp2 {{ snsmp2 }}
         - v2rdm_casscf {{ v2rdm_casscf }} *{{ v2rdm_casscf_bld }}
     run:
-        - scipy >=1.1.0,<1.3  # delete this line after new ofermi release. this prevents selecting old _1 build
+        - scipy >=1.1.0
         - {{ pin_compatible('python', max_pin='x.x') }}
+        - {{ pin_compatible('adcc', max_pin='x.x') }}
+        - {{ pin_compatible('pycppe', max_pin='x.x') }}
         - {{ pin_compatible('dftd3', max_pin='x.x') }}
-        - pylibefp {{ pylibefp }}*  *{{ pylibefp_bld }}  # can't do max_pin while version is +git
+        - pylibefp {{ pylibefp }}*  # can't do max_pin while version is +git
+        # *{{ pylibefp_bld }}
+        - {{ pin_compatible('fockci', max_pin='x.x') }}
         - {{ pin_compatible('gcp', max_pin='x.x') }}
         - {{ pin_compatible('mp2d', max_pin='x.x') }}
-        - openfermion {{ openfermion }} *{{ openfermion_bld }}  # temp
-        - {{ pin_compatible('openfermionpsi4', max_pin='x.x') }}
+        - openfermion {{ openfermion }}  # [py!=36]
+        - {{ pin_compatible('openfermionpsi4', max_pin='x.x') }}  # [py!=36]
         - {{ pin_compatible('resp', max_pin='x.x') }}
         - {{ pin_compatible('snsmp2', max_pin='x.x') }}
       {% for package in resolved_packages('host') %}
@@ -40,11 +49,14 @@ requirements:
 test:
     requires:
 #        - gpu_dfcc                              # [linux]  # test, even if too fat to include
-        - psi4 {{ psi4ver }}
+        - psi4 {{ psi4ver }}                     # sometimes need psi4ver 1.4a2*
     imports:
+        - adcc
+        - cppe
         - pylibefp
+        - sf_ip_ea
 #        - gpu_dfcc                              # [linux]
-        - openfermionpsi4
+        - openfermionpsi4                        # [py!=36]
         - resp
         - snsmp2
         - v2rdm_casscf
@@ -52,14 +64,19 @@ test:
     files:
         - tests/openfermionpsi4_demo.py
     commands:
-        - psi4 --test
+#        - psi4 --test
 #        - python -c "import gpu_dfcc, sys; sys.exit(gpu_dfcc.test())"  # [linux]
         - python -c "import pylibefp, sys; sys.exit(pylibefp.test('long'))"
         - python -c "import resp, sys; sys.exit(resp.test('long'))"
         - python -c "import v2rdm_casscf as v2; import sys; sys.exit(v2.test('long', extras=['-k', 'psiapi']))"
-        - python -c "import psi4, pylibefp, resp, v2rdm_casscf; print('*** Psi4 {}, pylibefp {}, resp {}, v2rdm_casscf {} compatible!'.format(psi4.__version__, pylibefp.__version__, resp.__version__, v2rdm_casscf.__version__))"
+        - pytest -rws -v --capture=sys $SP_DIR/sf_ip_ea -k "not (bloch and test_1)"
+        - python -c "import psi4; print(f'*** Psi4 {psi4.__version__} compatible!')"
+        - python -c "import pylibefp; print(f'*** pylibefp {pylibefp.__version__} compatible!')"
+        - python -c "import resp; print(f'*** resp {resp.__version__} compatible!')"
+        - python -c "import v2rdm_casscf as v2; print(f'*** v2rdm_casscf {v2.__version__} compatible!')"
 #        - python -c "import psi4, gpu_dfcc; print('*** Psi4 {}, gpu_dfcc {} compatible!'.format(psi4.__version__, gpu_dfcc.__version__))"  # [linux]
-        - python tests/openfermionpsi4_demo.py
+        - python tests/openfermionpsi4_demo.py  # [py!=36]
+        - pytest -v $SP_DIR/psi4/tests -k "addon and not resp"
 
 about:
     home: http://psicode.org
@@ -74,5 +91,10 @@ about:
     # description: >
 
 # NOTES:
+# how to cancel a python  [py!=38]
+
 # * below is perfectly good in requirements/host, but cudatools is enormous
 #        - gpu_dfcc {{ gpu_dfcc }}              # [linux]
+
+#        - scipy >=1.1.0,<1.3  # delete this line after new ofermi release. this prevents selecting old _1 build
+#        - openfermion {{ openfermion }} *{{ openfermion_bld }}  # temp

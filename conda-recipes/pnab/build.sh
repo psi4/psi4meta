@@ -1,12 +1,10 @@
 
-if [ "$(uname)" == "Linux" ]; then
-
-    # configure
-    ${BUILD_PREFIX}/bin/cmake \
+# configure
+${BUILD_PREFIX}/bin/cmake \
         -H${SRC_DIR} \
-        -Bbuild3 \
+        -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
-        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_C_COMPILER=${CC} \
         -DCMAKE_CXX_COMPILER=${CXX} \
         -DCMAKE_C_FLAGS="${CFLAGS}" \
@@ -23,14 +21,13 @@ if [ "$(uname)" == "Linux" ]; then
         -Dpybind11_DIR="${PREFIX}/share/cmake/pybind11" \
         -DCMAKE_PREFIX_PATH="${PREFIX}"
 
-fi
-
 # build
-cd build3
+cd build
 make -j${CPU_COUNT}
 cd ..
 
 # install
-cp -R pNAB ${SP_DIR}
-cp build3/bind.*.so ${SP_DIR}/pNAB
-ls -l ${SP_DIR}/pNAB
+cp -R pnab ${SP_DIR}
+cp build/bind.*.so ${SP_DIR}/pnab
+cp -R tests ${SP_DIR}/pnab
+ls -l ${SP_DIR}/pnab

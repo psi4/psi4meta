@@ -1,12 +1,13 @@
 package:
   name: pnab
-  version: "0.1.0"
+  version: "0.4.0"
 
 source:
   #path: ../../../pNAB
-  git_url: git@github.com:alenaizan/pNAB.git  # [linux]
-  git_url: https://github.com/alenaizan/pNAB.git  # [osx]
-  git_tag: labdriver
+  git_url: https://github.com/alenaizan/pnab.git  # [linux]
+  git_url: https://github.com/alenaizan/pnab.git  # [osx]
+#  git_tag: v0.4
+  git_tag: loriab-patch-1
 
 build:
   number: 2
@@ -24,18 +25,20 @@ requirements:
     - numpy
     - {{ pin_compatible('openbabel', max_pin='x.x') }}
     - {{ pin_compatible('python', max_pin='x.x') }}
+    - ipywidgets
     - py3dmol
+    - pyyaml
 
 test:
   imports:
-    - pNAB
+    - pnab
   requires:
     - pytest
   commands:
-    - pytest --pyargs pNAB
+    - python -c "import pnab; pnab.test()"
 
 about:
-  home: https://github.com/alenaizan/pNAB
+  home: https://github.com/alenaizan/pnab
   license: None
   license_family: None
-  summary: Nucleic Acid Builder
+  summary: proto-Nucleic Acid Builder
