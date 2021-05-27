@@ -20,6 +20,7 @@ requirements:
     build:
         - cmake >=3.5
         - {{ compiler('cxx') }}
+        - ninja
     host:
         - pybind11-headers {{ pybind11 }}
         - python {{ python }}

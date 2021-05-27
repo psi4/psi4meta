@@ -5,6 +5,7 @@ package:
     version: {{ version }}
 
 source:
+    #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-7-7-0-10-7-0_0.tgz  # [linux] Susi
     url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-7-7-4-7-7-5_1.tgz  # [linux]
     url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_1.tgz  # [osx or win]
 

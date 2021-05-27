@@ -10,20 +10,18 @@ source:
     git_tag: v{{ version }}
 
 build:
-    skip: true           # [win]
-    number: 0            # [osx]
-    number: 0            # [linux]
+    noarch: python
+    number: 1
     preserve_egg_dir: True
-    script: python setup.py install --single-version-externally-managed --record record.txt
+    script: python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
     build:
-        - python {{ python }}
+        - python >=3.6
         - setuptools
     run:
         - cloud_sptheme
-        - docutils #0.12*
-        - {{ pin_compatible('python', max_pin='x.x') }}
+        - python >=3.6
         - sphinx >=1.5
 
 test:

@@ -26,6 +26,7 @@ requirements:
         - snsmp2 {{ snsmp2 }}
         - v2rdm_casscf {{ v2rdm_casscf }} *{{ v2rdm_casscf_bld }}
     run:
+        - dataclasses  # [py==36]  # shouldn't be needed
         - scipy >=1.1.0
         - {{ pin_compatible('python', max_pin='x.x') }}
         - {{ pin_compatible('adcc', max_pin='x.x') }}

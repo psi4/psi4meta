@@ -1,5 +1,5 @@
 #!/Users/github/toolchainconda/bin/python
-#!/home/psilocaluser/toolchainconda/bin/python
+#!/psi/toolchainconda/bin/python
 
 #/usr/bin/env python3
 
@@ -271,6 +271,19 @@
 # [LAB 4 Mar 2021]
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.19.0/noarch/qcelemental-0.19.0-pyhd8ed1ab_0.tar.bz2
 
+# [LAB 4 May 2021]
+# switched to new conda installation at /psi/toolchainconda
+# conda install conda-build conda-verify anaconda-client
+
+# [LAB 17 May 2021]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.20.0/noarch/qcelemental-0.20.0-pyhd8ed1ab_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.19.0/noarch/qcengine-0.19.0-pyhd8ed1ab_0.tar.bz2
+
+# [LAB 21 May 2021]
+#  anaconda copy --to-owner psi4 conda-forge/pint/0.17/noarch/pint-0.17-pyhd8ed1ab_0.tar.bz2
+
+
+##   and _copy_, not _move_, to "main" via the online interface at Anaconda Cloud
 
 #nyi
 #win-64/h5py-2.10.0-nompi_py38h422b98e_102.tar.bz2
@@ -310,7 +323,7 @@ if sys.platform.startswith('linux'):
     lenv = {
         'CPU_COUNT': '12',
 #        'CPU_COUNT': '1',
-        'PATH': '/home/psilocaluser/toolchainconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
+        'PATH': '/psi/toolchainconda/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin',
         }
 elif sys.platform == 'darwin':
     host = "macpsinet"
@@ -480,7 +493,7 @@ if host == "macpsinet":
 #{'recipe': 'jsonpickle'},  # neededby: deepdiff, yesarch for constructor (otherwise, c-f)
 #{'recipe': 'deepdiff', 'build_channels': ['psi4']},  # chnl: jsonpickle  # neededby: pylibefp, psi4, yesarch for constructor
 #{'recipe': 'pybind11'},
-#{'recipe': 'sphinx-psi-theme', 'build_channels': ['conda-forge']},  # chnl: cloud_sptheme  # neededby: psi4-docs
+# 'sphinx-psi-theme' converted to noarch Mar 2021, so builds on L
 # 'openfermion' converted to noarch Dec 2020, so builds on L
 #{'recipe': 'pint'},  # neededby: qcelemental
 #{'recipe': 'pnab', 'build_channels': ['conda-forge']},
@@ -576,6 +589,7 @@ if host == "psinet":
 #{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint  # neededby: psi4
 #{'recipe': 'helpme'},  #, 'build_channels': ['psi4']},  # chnl: pybind11
 #{'recipe': 'pnab', 'build_channels': ['conda-forge']},
+#{"recipe": "qcdb", "build_channels": ["psi4/label/dev"]},
 
 # L/LT: build upstream deps.
 #       bump in recipe any upstream versions Psi means to support. rebuild packages.
@@ -618,6 +632,7 @@ if host == "psinet":
 # -------------------------------------------------------------
 #{'recipe': 'libefp-multiout', 'build_channels': ['psi4/label/dev']}, #, 'defaults', 'conda-forge']},  # chnl: qcel, pb11, docs-stuff
 #{'recipe': 'dftd3'},
+#{'recipe': 'dftd4', "build_channels": ["defaults", "psi4/label/dev"]},  # chnl: qcel
 #{'recipe': 'gcp'},
 #{'recipe': 'gpudfcc', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4

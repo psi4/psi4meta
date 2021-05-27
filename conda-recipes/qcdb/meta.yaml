@@ -1,0 +1,62 @@
+{% set name = "qcdb" %}
+{% set version = "0.1.0" %}
+#{% set sha256 = "55e16cc13b6b8f69153d1de287a32b80008b7433ab824cec21194f5c78d91c34" %}
+
+package:
+    name: {{ name|lower }}
+    version: {{ version }}
+
+source:
+#    git_url: git@github.com:{{ name }}/{{ name }}.git
+#    git_tag: master
+    path: /psi/gits/qccddb
+
+#source:
+#    url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+#    sha256: {{ sha256 }}
+
+build:
+    noarch: python
+    number: 0
+    script: "ls && pwd && {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+
+requirements:
+    build:
+        - python >=3.6
+        - pip
+        - setuptools
+    run:
+        - msgpack-python
+        - numpy
+        - python >=3.6.0
+        - qcelemental >=0.19.0
+        - qcengine >=0.18.0
+
+test:
+    imports:
+        - qcdb
+    requires:
+        - dftd3
+        - psi4
+        - pytest >=4.0.0
+        - pytest-xdist
+    commands:
+        - test -f $SP_DIR/qcdb/__init__.py
+        - test -f $SP_DIR/qcdb/databases/S22.py
+        - test -f $SP_DIR/qcdb/basis/sto-3g.gbs
+        - pytest -rws -v $SP_DIR/qcdb -k "standard_suite and adz" -n $CPU_COUNT
+
+about:
+    home: https://github.com/qcdb/qcdb
+    dev_url: https://github.com/qcdb/qcdb
+#    doc_url: https://qcelemental.readthedocs.io/en/latest/
+#    doc_source_url: https://github.com/MolSSI/QCElemental/blob/master/docs/source/index.rst
+    license: BSD-3-Clause
+    license_url: https://opensource.org/licenses/BSD-3-Clause
+    license_file: LICENSE
+    license_family: BSD
+    summary: Quantum chemistry common driver and databases.
+
+extra:
+    recipe-maintainers:
+        - loriab

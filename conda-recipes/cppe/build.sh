@@ -9,8 +9,9 @@
 
 # configure
 ${BUILD_PREFIX}/bin/cmake \
-        -H${SRC_DIR} \
+        -S${SRC_DIR} \
         -Bbuild \
+        -GNinja \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_CXX_COMPILER=${CXX} \
@@ -31,8 +32,7 @@ ${BUILD_PREFIX}/bin/cmake \
 # TODO OpenMP is off b/c getting gomp
 
 # build
-cd build
-make -j${CPU_COUNT}
+cmake --build build -- -j${CPU_COUNT}
 
 # install
-make install
+cmake --build build --target install

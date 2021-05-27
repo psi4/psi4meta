@@ -47,6 +47,7 @@ outputs:
               - {{ pin_compatible('pybind11-headers', max_pin='x.x') }}
               - {{ pin_compatible('python', max_pin='x.x') }}
               # rt
+              - dataclasses  # [py==36]
               - msgpack-python
               - networkx >=2.4
               - numpy >=1.12.0

@@ -24,6 +24,7 @@ requirements:
         - {{ compiler('fortran') }}      # [osx]     # nofortran
         - llvm-openmp                    # [osx]
     host:
+        - dataclasses                    # [py==36]
         - eigen
         - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
         - mpfr
@@ -58,6 +59,8 @@ outputs:
           run_exports:
               - {{ pin_subpackage('psi4', max_pin='x.x') }}
       requirements:
+          run_constrained:
+              - pymdi >={{ pymdi }}
           build:
               - cmake >=3.15
               - {{ compiler('c') }}
@@ -65,6 +68,7 @@ outputs:
               - {{ compiler('fortran') }}      # [osx]       # nofortran
               - llvm-openmp                    # [osx]
           host:
+              - dataclasses                    # [py==36]
               - eigen
               - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
               - mpfr
@@ -84,6 +88,7 @@ outputs:
               - simint {{ simint }}
               - libxc {{ libxc }}
           run:
+              - dataclasses                    # [py==36]
               - intel-openmp                   # [linux]
               - {{ pin_compatible('mkl', upper_bound='2021.0') }}  # [linux]
               - networkx
