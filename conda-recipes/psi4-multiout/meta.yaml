@@ -87,6 +87,8 @@ outputs:
               - qcengine {{ qcengine }}
               - simint {{ simint }}
               - libxc {{ libxc }}
+              - dftd3 {{ dftd3 }}
+              - gcp {{ gcp }}
           run:
               - dataclasses                    # [py==36]
               - intel-openmp                   # [linux]
@@ -97,6 +99,9 @@ outputs:
               - {{ pin_compatible('python', max_pin='x.x') }}
               - {{ pin_compatible('qcelemental', max_pin='x') }}
               - {{ pin_compatible('qcengine', max_pin='x') }}
+              # qc
+              - {{ pin_compatible('dftd3', max_pin='x.x') }}
+              - {{ pin_compatible('gcp', max_pin='x.x') }}
       files:
           - bin/psi4
           - include/psi4
