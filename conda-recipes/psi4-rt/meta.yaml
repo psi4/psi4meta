@@ -15,10 +15,10 @@ requirements:
         - python {{ python }}
         - adcc {{ adcc }}
         - pycppe {{ pycppe }}
-        - dftd3 {{ dftd3 }}
+        # - dftd3 {{ dftd3 }}
         # - pylibefp {{ pylibefp }}
         - fockci {{ fockci }}
-        - gcp {{ gcp }}
+        # - gcp {{ gcp }}
         - mp2d {{ mp2d }}
         - openfermion {{ openfermion }}         # [py!=36]
         - openfermionpsi4 {{ openfermionpsi4 }}  # [py!=36]
@@ -31,11 +31,11 @@ requirements:
         - {{ pin_compatible('python', max_pin='x.x') }}
         - {{ pin_compatible('adcc', max_pin='x.x') }}
         - {{ pin_compatible('pycppe', max_pin='x.x') }}
-        - {{ pin_compatible('dftd3', max_pin='x.x') }}
+        # - {{ pin_compatible('dftd3', max_pin='x.x') }}
         - pylibefp {{ pylibefp }}*  # can't do max_pin while version is +git
         # *{{ pylibefp_bld }}
         - {{ pin_compatible('fockci', max_pin='x.x') }}
-        - {{ pin_compatible('gcp', max_pin='x.x') }}
+        # - {{ pin_compatible('gcp', max_pin='x.x') }}
         - {{ pin_compatible('mp2d', max_pin='x.x') }}
         - openfermion {{ openfermion }}  # [py!=36]
         - {{ pin_compatible('openfermionpsi4', max_pin='x.x') }}  # [py!=36]

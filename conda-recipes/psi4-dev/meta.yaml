@@ -118,7 +118,7 @@ outputs:
               - printf "\n\n   <<  II.A psi4-dev@conda --> Intel Psi4  >>\n\n\n"         # [linux]
               - cd psi4                                                                  # [linux]
               - PPAOUT="$(psi4-path-advisor --intel)"                                    # [linux]
-              - source /theoryfs2/common/software/intel2019/bin/compilervars.sh intel64  # [linux]
+              - source /theoryfs2/common/software/intel2021/oneapi/setvars.sh --config="/theoryfs2/common/software/intel2021/oneapi/config-no-intelpython.txt" intel64  # [linux]
               - >                                                                        # [linux]
                   eval                                                                   # [linux]
                   ${PPAOUT}-intel                                                        # [linux]
