@@ -282,6 +282,8 @@
 # [LAB 21 May 2021]
 #  anaconda copy --to-owner psi4 conda-forge/pint/0.17/noarch/pint-0.17-pyhd8ed1ab_0.tar.bz2
 
+# [LAB 7 Jul 2021]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.21.0/noarch/qcelemental-0.21.0-pyhd8ed1ab_0.tar.bz2
 
 ##   and _copy_, not _move_, to "main" via the online interface at Anaconda Cloud
 

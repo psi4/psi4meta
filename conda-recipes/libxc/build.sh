@@ -27,7 +27,7 @@ fi
 if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers and mkl
-    source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
+    source /theoryfs2/common/software/intel2021/oneapi/setvars.sh --config="/theoryfs2/common/software/intel2021/oneapi/config-no-intelpython.txt" intel64
 
     # link against conda MKL & GCC
     ALLOPTS="-gnu-prefix=${HOST}- ${OPTS}"
@@ -57,3 +57,6 @@ make install
 
 # test
 #make test
+
+# Notes
+#    source /theoryfs2/common/software/intel2018/bin/compilervars.sh intel64
