@@ -34,10 +34,10 @@ specs:
   - menuinst                                 # [win]
 
 channels: &id1
+  - https://conda.anaconda.org/conda-forge/  # [win]
   - https://repo.anaconda.com/pkgs/main/
   - https://repo.anaconda.com/pkgs/msys2/    # [win]
   - {{ repo }}{{ channel }}{{ channel_tag }}
-  - https://conda.anaconda.org/conda-forge/  # [win]
   - {{ repo }}adcc
 
 conda_default_channels: *id1
