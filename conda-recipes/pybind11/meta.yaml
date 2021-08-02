@@ -1,5 +1,5 @@
-{% set version = "2.6.2" %}
-{% set sha256 = "8ff2fff22df038f5cd02cea8af56622bc67f5b64534f1b83b9f133b8366acff2" %}
+{% set version = "2.7.0" %}
+{% set sha256 = "6cd73b3d0bf3daf415b5f9b87ca8817cc2e2b64c275d65f9500250f9fee1677e" %}
 
 package:
   name: pybind11-headers
