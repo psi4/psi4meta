@@ -39,22 +39,16 @@ hdf5:
     # - 1.10.4                           # [osx]    # retired 29 Sep 2020
     # - 1.10.5                           # [linux]  # retired 7 Oct 2020
     - 1.10.6
-# ipywidgets:
-#     - 7.5
 mkl:
     # - 2018  # retired 15 Aug 2019
     - 2019
-# openbabel:
-#     - 2.4
-# openblas:
-#     - 0.2.20
 pybind11:
     - 2.7.0
 python:
     - 3.9  # added 9 Dec 2020 by 1.4.dev23
     - 3.8
     - 3.7
-    - 3.6
+    # - 3.6  # retired 5 Aug 2021
 zlib:
     - 1.2
 
