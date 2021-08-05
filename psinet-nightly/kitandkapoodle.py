@@ -285,6 +285,19 @@
 # [LAB 7 Jul 2021]
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.21.0/noarch/qcelemental-0.21.0-pyhd8ed1ab_0.tar.bz2
 
+# [LAB 4 Aug 2021]
+
+# anaconda copy --to-owner psi4 adcc/libtensorlight/3.0.1/osx-64/libtensorlight-3.0.1-h4be1084_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/libtensorlight/3.0.1/linux-64/libtensorlight-3.0.1-heb0550a_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.9/osx-64/adcc-0.15.9-py38h4be1084_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.9/osx-64/adcc-0.15.9-py39h4be1084_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.9/osx-64/adcc-0.15.9-py37h4be1084_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.9/osx-64/adcc-0.15.9-py36h4be1084_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.9/linux-64/adcc-0.15.9-py38heb0550a_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.9/linux-64/adcc-0.15.9-py36heb0550a_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.9/linux-64/adcc-0.15.9-py37heb0550a_0.tar.bz2
+# anaconda copy --to-owner psi4 adcc/adcc/0.15.9/linux-64/adcc-0.15.9-py39heb0550a_0.tar.bz2
+
 ##   and _copy_, not _move_, to "main" via the online interface at Anaconda Cloud
 
 #nyi

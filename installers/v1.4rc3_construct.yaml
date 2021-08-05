@@ -1,15 +1,15 @@
 ###  Configuration
 
-{% set release = "1.4" %}                 # [unix]
-{% set release = "1.4" %}            # [win]
-{% set ltrtver = "1.4" %}
+{% set release = "1.4rc3" %}                 # [unix]
+{% set release = "1.4rc4.dev1" %}            # [win]
+{% set ltrtver = "1.4.dev35" %}
 
 {% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L76
 
 {% set name = "Psi4conda" %}
 {% set repo = "https://conda.anaconda.org/" %}
 {% set channel = "psi4" %}
-{% set channel_tag = "" %}  # toggle to empty string for releases, `-c psi4`
+{% set channel_tag = "/label/dev" %}  # toggle to empty string for releases, `-c psi4`
 
 
 ###  Recipe

@@ -242,6 +242,9 @@ v2rdm_casscf_bld:
     - ''
 #    - _6  [osx]
 #    - _8  [linux]
+    # c. v1.4.x _L8M6
+    #- _6 [osx]
+    #- _8 [linux]
     # c. v1.3.x _L6M5
     #- _5  [osx]
     #- _6  [linux]
