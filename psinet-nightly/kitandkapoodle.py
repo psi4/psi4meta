@@ -298,6 +298,13 @@
 # anaconda copy --to-owner psi4 adcc/adcc/0.15.9/linux-64/adcc-0.15.9-py37heb0550a_0.tar.bz2
 # anaconda copy --to-owner psi4 adcc/adcc/0.15.9/linux-64/adcc-0.15.9-py39heb0550a_0.tar.bz2
 
+# [LAB 3 Sep 2021]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.22.0/noarch/qcelemental-0.22.0-pyhd8ed1ab_0.tar.bz2
+
+# [LAB 4 Oct 2021]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.23.0/noarch/qcelemental-0.23.0-pyhd8ed1ab_0.tar.bz2
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.20.0/noarch/qcengine-0.20.0-pyhd8ed1ab_0.tar.bz2
+
 ##   and _copy_, not _move_, to "main" via the online interface at Anaconda Cloud
 
 #nyi
@@ -602,9 +609,10 @@ if host == "psinet":
 #{'recipe': 'openfermion', 'build_channels': ['defaults', 'psi4/label/dev', 'conda-forge']},  # chnl: pubchempy(c-f), hdf5(psi4)  # neededby: openfermionpsi4
 #{'recipe': 'pint'},  # neededby: qcelemental
 #{'recipe': 'qcelemental', 'build_channels': ['psi4']},  # chnl: pint  # neededby: psi4
+#{"recipe": "qcengine", "build_channels": ["psi4/label/qcdb", "psi4"]},
 #{'recipe': 'helpme'},  #, 'build_channels': ['psi4']},  # chnl: pybind11
 #{'recipe': 'pnab', 'build_channels': ['conda-forge']},
-#{"recipe": "qcdb", "build_channels": ["psi4/label/dev"]},
+#{"recipe": "qcdb", "build_channels": ["psi4/label/qcdb", "psi4/label/dev"]},
 
 # L/LT: build upstream deps.
 #       bump in recipe any upstream versions Psi means to support. rebuild packages.
