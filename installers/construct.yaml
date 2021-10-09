@@ -1,8 +1,8 @@
 ###  Configuration
 
-{% set release = "1.4" %}                 # [unix]
-{% set release = "1.4" %}            # [win]
-{% set ltrtver = "1.4" %}
+{% set release = "1.4.1" %}                 # [unix]
+{% set release = "1.4.1" %}            # [win]
+{% set ltrtver = "1.4.1" %}
 
 {% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L76
 
