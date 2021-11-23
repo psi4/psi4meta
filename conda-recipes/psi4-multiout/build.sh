@@ -80,7 +80,7 @@ if [ "$(uname)" == "Darwin" ]; then
     make install
 
     # test (full suite too stressful for macpsinet)
-    ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} -L quick
+    ctest -j${CPU_COUNT} -L quick
 
     # remove conda-build-bound Cache file, to be replaced by psi4-dev
     rm ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake
@@ -158,9 +158,11 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_XHOST=OFF \
         -DENABLE_GENERIC=OFF \
         -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}" \
-        -DBUILDNAME="LAB-RHEL7-gcc7.3-intel18.0.3-mkl-py${CONDA_PY}-release-conda" \
-        -DSITE="gatech-conda" \
         -DSPHINX_ROOT=${PREFIX}
+
+
+        #-DBUILDNAME="LAB-RHEL7-gcc7.3-intel18.0.3-mkl-py${CONDA_PY}-release-conda" \
+        #-DSITE="gatech-conda" \
 
         #-DENABLE_erd=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
@@ -181,7 +183,7 @@ if [ "$(uname)" == "Linux" ]; then
     chmod u+x stage/bin/psi4
 
     stage/bin/psi4 ../tests/tu1-h2o-energy/input.dat
-    ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} #-L quick
+    MKL_CBWR=AVX ctest -j${CPU_COUNT} #-L quick
 
     mv -f stage/bin/psi4_reserve stage/bin/psi4
 
@@ -198,6 +200,8 @@ fi
 # NOTES
 # -----
 
+# * old dashboard upload
+#   MKL_CBWR=AVX ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} #-L quick
 # * source /theoryfs2/common/software/intel2019/bin/compilervars.sh intel64
 
 # * seems to slow down tests  #export PSI_SCRATCH=/scratch/psilocaluser/

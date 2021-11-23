@@ -65,7 +65,7 @@ outputs:
               - PASSFAIL=""                                                              # [osx]  # Mac threading occasionally bizarre
               - CONDA_CPLR=gcc                                                           # [linux]
               - CONDA_CPLR=clang                                                         # [osx]
-              - NTH=8                                                                    # [linux]
+              - NTH=6                                                                    # [linux]
               - NTH=2                                                                    # [osx]
               # Verify existence and execution
               - test -f $PREFIX/bin/psi4-path-advisor

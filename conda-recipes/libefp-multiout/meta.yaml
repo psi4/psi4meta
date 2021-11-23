@@ -12,7 +12,7 @@ source:
     git_tag: v0.6.1
 
 build:
-    number: 2                                            # [linux]
+    number: 3                                            # [linux]   # L3: mkl2021
     number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
@@ -43,15 +43,12 @@ outputs:
           ignore_run_exports:
               # gcc symbols linked statically
               - libgcc-ng                               # [linux]
-              - mkl                                     # [linux]
       requirements:
           build:
               - {{ compiler('c') }}
           host:
               - mkl-devel {{ mkl }}                           # [blas_impl == 'mkl']
               - openblas-devel {{ openblas }}                 # [blas_impl == 'openblas']
-          run:
-              - {{ pin_compatible('mkl', upper_bound='2021.0') }}  # [linux]
       files:
           - include/efp.h
           - include/libefp/*

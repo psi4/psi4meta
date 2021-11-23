@@ -54,7 +54,6 @@ outputs:
               blas: {{ blas_impl }}
           ignore_run_exports:
               - eigen
-              - mkl                            # [linux]
               - mpfr
           run_exports:
               - {{ pin_subpackage('psi4', max_pin='x.x') }}
@@ -92,7 +91,6 @@ outputs:
           run:
               - dataclasses                    # [py==36]
               - intel-openmp                   # [linux]
-              - {{ pin_compatible('mkl', upper_bound='2021.0') }}  # [linux]
               - networkx
               - numpy >=1.12.0
               - pytest                                         # drive psi4 --test
@@ -157,6 +155,17 @@ outputs:
 
 # NOTES
 # -----
+# * weird mkl 2019-2021 pinning:
+#      build:
+#          ignore_run_exports:
+#              # allow pin_compatible below to trump native mkl run_exports to permit 2019/2020 compatibility
+#              - mkl                            # [linux]
+#      requirements:
+#          host:
+#              - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
+#          run:
+#              - {{ pin_compatible('mkl', upper_bound='2021.0') }}  # [linux]
+
 # * to conda build package from local source rather than github, substitute like below
 #   package/version: 0.1.6
 #   source/path: ../../../hrw-conda

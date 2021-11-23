@@ -11,11 +11,11 @@ source:
     # git_tag: ae46114                                     # L4,M2: l2 for v2rdm4
     # git_tag: f3dbac4                                     # L6,M3: lagrangian
     # git_tag: 7a4204c                                     # L7,M4: new cmake
-    git_tag: 929d7fc                                     # L8M5: sobasis_
+    git_tag: 929d7fc                                     # L9: mkl2021  L8M5: sobasis_
     #path: ../../../v2rdm_casscf
 
 build:
-    number: 8                                            # [linux]
+    number: 9                                            # [linux]
     number: 6                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
@@ -24,8 +24,6 @@ build:
         - psi4
         # unused libraries
         - libgfortran-ng
-        # allow pin_compatible below to trump native mkl run_exports to permit 2019/2020 compatibility
-        - mkl                                            # [linux]
         - mpfr
         - eigen
 
@@ -45,7 +43,6 @@ requirements:
         - python {{ python }}                             # to resolve site-packages dir name
     run:
         - intel-openmp
-        - {{ pin_compatible('mkl', upper_bound='2021.0') }}  # [linux]
         - {{ pin_compatible('python', max_pin='x.x') }}
 
 test:

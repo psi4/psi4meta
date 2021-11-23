@@ -1,0 +1,97 @@
+{% set name = "dftd4" %}
+{% set version = "v3.3.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  #path: ../..
+  git_url: git@github.com:dftd4/dftd4.git      # [linux]
+  git_tag: {{ version }}
+#  patches:
+#    - 001-dynamic-ifcore.patch
+
+build:
+  number: 2                                                 # L2: mkl2021
+  binary_relocation: true
+#  ignore_run_exports:
+#    - mkl  # [linux]
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - cffi
+    - meson 0.57.1
+#    - mkl-devel 2019.*
+    - mkl-devel {{ mkl }}
+    - ninja
+    - python {{ python }}
+  host:
+    - blas=*=mkl
+    - cffi
+#    - mkl-devel 2019.*
+    - mkl-devel {{ mkl }}
+    - intel-openmp
+    - pip
+    - python {{ python }}
+  run:
+    - blas=*=mkl
+    - cffi
+    - numpy
+#    - {{ pin_compatible('mkl', upper_bound='2021.0') }}  # [linux]
+    - intel-openmp
+    - {{ pin_compatible('python') }}
+    - toml
+
+# ok mac conda create -n qwer clang_osx-64 cffi python mkl-devel numpy ninja toml meson=0.57.1 pip pytest pydantic pint qcelemental -c defaults -c psi4/label/dev
+
+test:
+  requires:
+    - pytest
+    - qcelemental >=0.19.0
+  commands:
+  imports:
+    - dftd4
+  commands:
+    - export PYLIB_EXT=`$PYTHON -c 'import sysconfig as s; print(s.get_config_var("EXT_SUFFIX"))'`
+    - dir %SP_DIR%\dftd4                                     # [win]
+    # Verify files and execution
+    - test -f $PREFIX/bin/dftd4                              # [unix]
+    - test -L $PREFIX/lib/libdftd4$SHLIB_EXT                 # [unix]
+    - test -f $SP_DIR/dftd4/parameters.toml                  # [unix]
+    - test -f $SP_DIR/dftd4/_libdftd4$PYLIB_EXT              # [unix]
+    - if not exist %PREFIX%\\Library\\bin\\dftd4.exe exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\dftd4.lib exit 1  # [win]
+    - if not exist %SP_DIR%\\dftd4\\parameters.toml exit 1   # [win]
+    - if not exist %SP_DIR%\\dftd4\\_libdftd4.dll exit 1     # [win]
+    - dftd4 --version
+    # Inspect linkage
+    - ldd -r -u $PREFIX/bin/dftd4                            # [linux]
+    - ldd $PREFIX/lib/libdftd4$SHLIB_EXT                     # [linux]
+    - ldd $SP_DIR/dftd4/_libdftd4$PYLIB_EXT                  # [linux]
+    - otool -L $PREFIX/bin/dftd4                             # [osx]
+    - otool -L $PREFIX/lib/libdftd4$SHLIB_EXT                # [osx]
+    - otool -L $SP_DIR/dftd4/_libdftd4$PYLIB_EXT             # [osx]
+    - conda inspect linkages --show-files --groupby=dependency dftd4  # [unix]
+    - conda inspect objects -p $PREFIX $PKG_NAME             # [osx]
+    # Actually test
+    - pytest -rws --capture=sys --ignore=$SP_DIR/dftd4/test_ase.py $SP_DIR/dftd4
+
+about:
+  home: https://github.com/{{ name }}/{{ name }}
+  license: LGPL-3.0-or-later
+  license_family: LGPL
+  license_file:
+    - "COPYING"
+    - "COPYING.LESSER"
+  summary: 'A generally applicable London dispersion correction'
+  dev_url: https://github.com/dftd4/dftd4
+  description: |
+    This program implements the D4 London dispersion correction
+    for molecular and 3D periodic systems.
+  doc_url: https://{{ name }}.github.io/dftd4
+
+extra:
+  recipe-maintainers:
+    - awvwgk

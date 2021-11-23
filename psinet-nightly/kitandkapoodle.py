@@ -305,6 +305,12 @@
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.23.0/noarch/qcelemental-0.23.0-pyhd8ed1ab_0.tar.bz2
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.20.0/noarch/qcengine-0.20.0-pyhd8ed1ab_0.tar.bz2
 
+# [LAB 18 Nov 2021]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.24.0/noarch/qcelemental-0.24.0-pyhd8ed1ab_0.tar.bz2
+
+# [LAB 22 Nov 2021]
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.21.0/noarch/qcengine-0.21.0-pyhd8ed1ab_0.tar.bz2
+
 ##   and _copy_, not _move_, to "main" via the online interface at Anaconda Cloud
 
 #nyi
@@ -655,7 +661,7 @@ if host == "psinet":
 # -------------------------------------------------------------
 #{'recipe': 'libefp-multiout', 'build_channels': ['psi4/label/dev']}, #, 'defaults', 'conda-forge']},  # chnl: qcel, pb11, docs-stuff
 #{'recipe': 'dftd3'},
-#{'recipe': 'dftd4', "build_channels": ["defaults", "psi4/label/dev"]},  # chnl: qcel
+#{'recipe': 'dftd4', "build_channels": ["defaults", "psi4/label/dev"]},  # chnl: qcel  # may need to avoid recursive
 #{'recipe': 'gcp'},
 #{'recipe': 'gpudfcc', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'resp', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
@@ -667,6 +673,7 @@ if host == "psinet":
 #{'recipe': 'fockci', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'cct3', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'miniforte', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
+#{'recipe': 'libtensorlight'},
 
 # py39: libefp-multiout, resp, snsmp2, v2rdm, openfermionpsi4, fockci
 
