@@ -181,6 +181,14 @@ outputs:
 
 # NOTES
 # -----
+# * had trouble with llvm-openmp 10 vs. 12. one soln was to have below in both host and run, plus further below in _local_ cbc.yaml
+#              - llvm-openmp 12.*                   # [osx]
+#       c_compiler_version:
+#         - 12                                 # [osx]
+#         - 7.5                                # [linux]
+#       cxx_compiler_version:
+#         - 12                                 # [osx]
+#         - 7.5                                # [linux]
 #
 # * when need to test local (unposted) package
 #              #- conda install psi4 -c psi4/label/dev -y
