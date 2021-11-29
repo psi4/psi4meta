@@ -311,6 +311,9 @@
 # [LAB 22 Nov 2021]
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.21.0/noarch/qcengine-0.21.0-pyhd8ed1ab_0.tar.bz2
 
+#anaconda copy --to-owner psi4 adcc/libtensorlight/3.0.1.dev/osx-64/libtensorlight-3.0.1.dev-h2caaeef_0.tar.bz2
+
+
 ##   and _copy_, not _move_, to "main" via the online interface at Anaconda Cloud
 
 #nyi
