@@ -9,7 +9,7 @@
 {% set name = "Psi4conda" %}
 {% set repo = "https://conda.anaconda.org/" %}
 {% set channel = "psi4" %}
-{% set channel_tag = "" %}  # toggle to empty string for releases, `-c psi4`
+{% set channel_tag = "" %}  # toggle to empty string for releases, `-c psi4`, vs. "/label/dev" for release candidates, `-c psi4/label/dev`
 
 
 ###  Recipe
