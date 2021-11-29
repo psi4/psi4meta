@@ -8,11 +8,11 @@ source:
     git_url: git@github.com:jturney/ambit.git            # [linux]
     git_url: https://github.com/jturney/ambit.git        # [osx]
     # git_tag: v{{ version }}                                        # M1: hdf5 1.10.6 no intel-openmp
-    git_tag: loriab-patch-1                                          # L1: mkl 2021 & pip
+    git_tag: loriab-patch-1                                          # L1M3: mkl 2021 & pip
 
 build:
     number: 1                                            # [linux]
-    number: 1                                            # [osx]
+    number: 3                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
     requires_features:
@@ -32,6 +32,7 @@ requirements:
         - pip                                           # [linux]
     host:
         - hdf5 {{ hdf5 }}
+        - llvm-openmp 10.*                              # [osx]  # temp, I hope to avoid 10 and 12 dep
         - mkl-devel {{ mkl }}                           # [blas_impl == 'mkl']
         - openblas-devel {{ openblas }}                 # [blas_impl == 'openblas']
         - zlib {{ zlib }}

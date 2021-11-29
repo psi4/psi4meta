@@ -56,8 +56,6 @@ if [ "$(uname)" == "Darwin" ]; then
         -DOpenMP_C_FLAG="-fopenmp=libiomp5" \
         -DOpenMP_CXX_FLAG="-fopenmp=libiomp5" \
         -DENABLE_XHOST=OFF \
-        -DBUILDNAME="LAB-OSX-clang4.0.1-omp-mkl-py${CONDA_PY}-release-conda" \
-        -DSITE=gatech-mac-conda \
         -DCMAKE_OSX_DEPLOYMENT_TARGET=''
 
 # nofortran
@@ -80,7 +78,7 @@ if [ "$(uname)" == "Darwin" ]; then
     make install
 
     # test (full suite too stressful for macpsinet)
-    ctest -j${CPU_COUNT} -L quick
+    ctest -j${CPU_COUNT} -L quick --test-timeout 3600
 
     # remove conda-build-bound Cache file, to be replaced by psi4-dev
     rm ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake
@@ -160,10 +158,6 @@ if [ "$(uname)" == "Linux" ]; then
         -DLAPACK_LIBRARIES="${LAPACK_INTERJECT}" \
         -DSPHINX_ROOT=${PREFIX}
 
-
-        #-DBUILDNAME="LAB-RHEL7-gcc7.3-intel18.0.3-mkl-py${CONDA_PY}-release-conda" \
-        #-DSITE="gatech-conda" \
-
         #-DENABLE_erd=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_erd=ON \
         #-DCMAKE_INSIST_FIND_PACKAGE_GTFock=ON \
@@ -202,6 +196,10 @@ fi
 
 # * old dashboard upload
 #   MKL_CBWR=AVX ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} #-L quick
+#        -DBUILDNAME="LAB-RHEL7-gcc7.3-intel18.0.3-mkl-py${CONDA_PY}-release-conda" \
+#        -DSITE="gatech-conda" \
+#        -DBUILDNAME="LAB-OSX-clang4.0.1-omp-mkl-py${CONDA_PY}-release-conda" \
+#        -DSITE=gatech-mac-conda \
 # * source /theoryfs2/common/software/intel2019/bin/compilervars.sh intel64
 
 # * seems to slow down tests  #export PSI_SCRATCH=/scratch/psilocaluser/

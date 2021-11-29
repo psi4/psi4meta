@@ -32,6 +32,7 @@ requirements:
         - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
         - pybind11-headers {{ pybind11 }}
         - python {{ python }}
+        - llvm-openmp 10.*                              # [osx]  # temp, I hope to avoid 10 and 12 dep
         # qc
         - ambit {{ ambit }}
         - chemps2 {{ chemps2 }}
@@ -89,6 +90,7 @@ outputs:
               - libxc {{ libxc }}
               - dftd3 {{ dftd3 }}
               - gcp {{ gcp }}
+              - llvm-openmp 10.*                              # [osx]  # temp, I hope to avoid 10 and 12 dep
           run:
               - dataclasses                    # [py==36]
               - intel-openmp                   # [linux]

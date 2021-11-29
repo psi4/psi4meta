@@ -13,7 +13,7 @@ source:
 
 build:
     number: 3                                            # [linux]   # L3: mkl2021
-    number: 0                                            # [osx]
+    number: 1                                            # [osx]     # M1: mkl2021
     binary_relocation: true
     skip: true                                           # [win]
 

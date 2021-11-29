@@ -11,12 +11,12 @@ source:
     # git_tag: ae46114                                     # L4,M2: l2 for v2rdm4
     # git_tag: f3dbac4                                     # L6,M3: lagrangian
     # git_tag: 7a4204c                                     # L7,M4: new cmake
-    git_tag: 929d7fc                                     # L9: mkl2021  L8M5: sobasis_
+    git_tag: 929d7fc                                     # L9M7: mkl2021  L8M5: sobasis_
     #path: ../../../v2rdm_casscf
 
 build:
     number: 9                                            # [linux]
-    number: 6                                            # [osx]
+    number: 7                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
     ignore_run_exports:
