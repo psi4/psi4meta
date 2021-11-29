@@ -1,8 +1,8 @@
 ###  Configuration
 
-{% set release = "1.5" %}                 # [unix]
-{% set release = "1.5" %}            # [win]
-{% set ltrtver = "1.5" %}
+{% set release = "1.4.1" %}                 # [unix]
+{% set release = "1.4.1" %}            # [win]
+{% set ltrtver = "1.4.1" %}
 
 {% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L76
 
@@ -30,7 +30,6 @@ specs:
   - python {{ python }}*
   - psi4 =={{ release }}*
   - psi4-rt =={{ ltrtver }}                  # [unix]
-  - dftd4                                    # [linux]
   - console_shortcut                         # [win]
   - menuinst                                 # [win]
 
