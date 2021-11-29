@@ -13,10 +13,6 @@ jobs:
         cfg:
           - runs-on: ubuntu-latest
             platform: linux-64
-            python-version: 3.6
-
-          - runs-on: ubuntu-latest
-            platform: linux-64
             python-version: 3.7
 
           - runs-on: ubuntu-latest
@@ -26,10 +22,6 @@ jobs:
           - runs-on: ubuntu-latest
             platform: linux-64
             python-version: 3.9
-
-          - runs-on: macos-latest
-            platform: osx-64
-            python-version: 3.6
 
           - runs-on: macos-latest
             platform: osx-64
