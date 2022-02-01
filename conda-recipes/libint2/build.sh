@@ -35,7 +35,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers
     set +x
-    source /theoryfs2/common/software/intel2019/bin/compilervars.sh intel64
+    source /theoryfs2/common/software/intel2021/oneapi/setvars.sh --config="/theoryfs2/common/software/intel2021/oneapi/config-no-intelpython.txt" intel64
     set -x
 
     # allow more arguments to avoid the dreaded `x86_64-conda_cos6-linux-gnu-ld: Argument list too long` upon linking
@@ -72,6 +72,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_FORTRAN=OFF \
         -DBUILD_TESTING=ON
 fi
+        #-DLIBINT2_SHGAUSS_ORDERING=gaussian \ usual psi4 gss
+        #-DLIBINT2_SHGAUSS_ORDERING=standard \ future psi4 sss
 
 # build & install & test
 cd build
