@@ -3,10 +3,10 @@ KEEPCFLAGS=$CFLAGS
 KEEPFCFLAGS=$FCFLAGS
 KEEPCXXFLAGS=$CXXFLAGS
 KEEPLDFLAGS=$LDFLAGS
-unset CFLAGS
-unset FCFLAGS
-unset CXXFLAGS
-unset LDFLAGS
+#unset CFLAGS
+#unset FCFLAGS
+#unset CXXFLAGS
+#unset LDFLAGS
 
 if [ "$(uname)" == "Darwin" ]; then
 
@@ -47,7 +47,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers
     set +x
-    source /theoryfs2/common/software/intel2019/bin/compilervars.sh intel64
+    source /theoryfs2/common/software/intel2021/oneapi/setvars.sh --config="/theoryfs2/common/software/intel2021/oneapi/config-no-intelpython.txt" intel64
     set -x
 
     # link against conda GCC
@@ -62,18 +62,17 @@ if [ "$(uname)" == "Linux" ]; then
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_C_COMPILER=icc \
-        -DCMAKE_C_FLAGS="${ALLOPTS}" \
-        -DCMAKE_CXX_COMPILER=icpc \
-        -DCMAKE_CXX_FLAGS="${ALLOPTS}" \
-        -DCMAKE_Fortran_COMPILER=ifort \
-        -DCMAKE_Fortran_FLAGS="${ALLOPTS}" \
+        -DCMAKE_C_COMPILER=${GCC} \
+        -DCMAKE_C_FLAGS="${CFLAGS}" \
+        -DCMAKE_CXX_COMPILER=${GXX} \
+        -DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
+        -DCMAKE_Fortran_COMPILER=${GFORTRAN} \
+        -DCMAKE_Fortran_FLAGS="${FFLAGS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
         -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
         -DPYTHON_INTERPRETER=${PYTHON} \
         -DENABLE_OPENMP=OFF \
         -DENABLE_GENERIC=OFF \
-        -DLIBC_INTERJECT="${LIBC_INTERJECT}" \
         -DENABLE_DOCS=OFF \
         -DENABLE_TESTS=ON \
         -DENABLE_TIMER=OFF \
@@ -82,6 +81,14 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_FORTRAN_API=OFF \
         -DENABLE_CXX11_SUPPORT=ON
 fi
+
+        #-DCMAKE_C_COMPILER=icc \
+        #-DCMAKE_C_FLAGS="${ALLOPTS}" \
+        #-DCMAKE_CXX_COMPILER=icpc \
+        #-DCMAKE_CXX_FLAGS="${ALLOPTS}" \
+        #-DCMAKE_Fortran_COMPILER=ifort \
+        #-DCMAKE_Fortran_FLAGS="${ALLOPTS}" \
+        #-DLIBC_INTERJECT="${LIBC_INTERJECT}" \
 
         #-DCMAKE_C_COMPILER=${GCC} \
         #-DCMAKE_C_FLAGS="${CFLAGS}" \
@@ -122,6 +129,9 @@ export LDFLAGS=KEEPLDFLAGS
 # Notes
 # -----
 
+# * [Feb 2022] "libz.so: undefined reference to `memcpy@GLIBC_2.14'" observed and not
+#   fixable by moving back gcc to 7.3 from 7.5 or changing unset flags. So dropping
+#   Intel and using straight conda compilers.
 # * [Apr 2018] Removing -DSHARED_LIBRARY_ONLY=ON so that can build
 #   and run tests. We don't want to distribute static libs in a conda
 #   pkg though, and unless user sets static/shared component, can't trust

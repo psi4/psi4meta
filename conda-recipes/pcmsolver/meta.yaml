@@ -12,18 +12,18 @@ source:
     #git_tag: 183a20e
     git_url: git@github.com:loriab/pcmsolver.git      # [linux]
     git_url: https://github.com/loriab/pcmsolver.git  # [osx]
-    git_tag: v1211
+    git_tag: v1211  # _3: conda compilers, py310, gcc75
 
 build:
-    number: 2                                            # [linux]
+    number: 3                                            # [linux]
     number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
     run_exports:
         - {{ pin_subpackage('pcmsolver', max_pin='x.x.x') }}
-    ignore_run_exports:
-        # unused libraries
-        - libgfortran-ng
+    #ignore_run_exports:
+    #    # unused libraries
+    #    - libgfortran-ng
 
 requirements:
     build:
@@ -47,7 +47,7 @@ test:
         - test -f $PREFIX/bin/go_pcm.py
         - test -f $SP_DIR/pcmsolver/pcmparser.py
         # Inspect linkage
-        - ldd -r -u $PREFIX/lib/libpcm.so    # [linux]
+        - ldd -r -u $PREFIX/lib/libpcm$SHLIB_EXT && return 0  # [linux]
         - ldd -v $PREFIX/lib/libpcm.so       # [linux]
         - otool -L $PREFIX/lib/libpcm.dylib  # [osx]
         - conda inspect linkages --show-files --groupby=dependency pcmsolver

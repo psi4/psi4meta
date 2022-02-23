@@ -47,6 +47,7 @@ requirements:
         - numpy >=1.12.0
         - qcelemental {{ qcelemental }}
         - qcengine {{ qcengine }}
+        - scipy
 
 outputs:
     - name: psi4
@@ -99,9 +100,11 @@ outputs:
               - {{ pin_compatible('python', max_pin='x.x') }}
               - {{ pin_compatible('qcelemental', max_pin='x') }}
               - {{ pin_compatible('qcengine', max_pin='x') }}
+              - scipy
               # qc
               - {{ pin_compatible('dftd3', max_pin='x.x') }}
               - {{ pin_compatible('gcp', max_pin='x.x') }}
+              - libint2 {{ libint }} {{ libint_bld }}  # temporary so tests run in recipe and so L2 is steady in the wild this season
       files:
           - bin/psi4
           - include/psi4

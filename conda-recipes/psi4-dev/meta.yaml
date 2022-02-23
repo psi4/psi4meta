@@ -53,6 +53,7 @@ outputs:
               - numpy >=1.12.0
               - pytest
               - pytest-xdist
+              - scipy
               - qcelemental >={{ qcelemental }},<1.0
               - qcengine >={{ qcengine }},<1.0
               - libint2 {{ libint }} {{ libint_bld }}

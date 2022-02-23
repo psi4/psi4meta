@@ -643,6 +643,7 @@ if host == "psinet":
 
 # py39: pybind11, openfermion, chemps2-multiout, cppe, gau2grid-multiout, pcmsolver
 # --39: ambit, dkh, gdma, libint, libint2, simint, libxc
+# py310: pybind11, chemps2-multiout, pcmsolver
 
 # L/CBCY1: if anything in LT changed, edit cbcy.
 #          start new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.
@@ -677,6 +678,7 @@ if host == "psinet":
 #{'recipe': 'cct3', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'miniforte', 'build_channels': ['psi4/label/dev']},  # chnl: psi4
 #{'recipe': 'libtensorlight'},
+#{'recipe': 'mdsapt', 'build_channels': ['psi4/label/dev', 'conda-forge', 'defaults']},
 
 # py39: libefp-multiout, resp, snsmp2, v2rdm, openfermionpsi4, fockci
 

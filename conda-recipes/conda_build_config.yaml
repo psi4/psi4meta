@@ -44,11 +44,12 @@ mkl:
     # - 2019  # retired 22 Nov 2021
     - 2021
 pybind11:
-    - 2.7.0
+    - 2.9.1
 python:
+    - 3.10  # added 21 Feb 2022 by 1.6.dev1
     - 3.9  # added 9 Dec 2020 by 1.4.dev23
     - 3.8
-    - 3.7
+    # - 3.7  # retired 21 Feb 2022
     # - 3.6  # retired 5 Aug 2021
 zlib:
     - 1.2
@@ -76,7 +77,7 @@ ltrtver:
     # * for postrelease new line and record anything not in continuous order with <> or blanking
     # * in the "starred" sequence in poodle, ltrtver must be set correctly before building psi4-rt.
     # * beyond the "|" aren't in ltrtver.
-    #                         noarch                                                                                                         L      L          L                        L                              L        L                        L
+    #                         noarch                                                                                                         L      L          L                        L                              L->cf    L->cf    ->cf     ->cf   L
     #                                    ambit    pb11   chemps2  dftd3  dkh      libefp erd   g2g   gcp    gdma     gpu   libint   pcm      qcel   resp  sim  sns      v2rdm     libxc qcng   mp2d  | pylibefp hdf5   ofermi   ofermip4 cppe     adcc   fockci mkl  networkx pydantic pint  pymdi
     #                                    ------   ------ -------- ------ -------- ------ ----- ----- ------ -------- ----- ------   -------- ------ ----- ---- ------   --------  ----- ------ -----   -------- ------ -------- -------- -------  ----   ------ ---  -------- -------- ----  -----
     # - "1.2a1.dev6"  # (   Apr 2018)             2.2.3  1.8.7b1  3.2.0  1.2      1.5b2        1.0.1 2.0.2  2.2.6          1.2.1    1.2.0rc1                   1.0.1    0.7a1     4.0.1                         1.10.1                                          2018
@@ -144,10 +145,11 @@ ltrtver:
     # - "1.5.dev1"    # ( 5 Oct 2021)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      0.23.0 ...   ...  ...      ...       ...   0.20.0 ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
     # - "1.4.1"       # ( 7 Oct 2021) ditto dev1 for v1.4.1
     # - "1.5.dev2"    # (23 Nov 2021)    ..._L1M3 ...    1.8.10   ...    ...      ..._L3M1     ...   ...    ...      ...   ...      ...      0.24.0 ...   ...  ...      ..._L9M7  ...   0.21.0 ...     ..._L3M1 ...    ...      ...      ...      ...           2021 ...      ...
+    # - "1.5"         # (28 Nov 2021) ditto dev2 for v1.5
 
-    - "1.5"           # (28 Nov 2021) ditto dev2 for v1.5
+    - "1.6.dev1"      # (22 Feb 2022)    ...      2.9.1  1.8.11   ...    ...      ..._L4        ...   ...    ...      ...   ...     ..._L3   ...    ...   ...  ...      ..._L10   ...   ...    ...     ..._L4   ...    !1.3.0   !        !        !             ...  ...      ...
 
-    # - "XXX"         # (   WIP 2021)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
+    # - "XXX"         # (   WIP 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
     # !* sns in 1.3.dev10: 1.0.3 was ready but forgot to include it again until 1.4.dev2 (at L2M1)
     # ! in 1.4.dev23 ofermi & adcc not for py39 b/c need h5py from defaults. pcmsolver 1.3.0 not testing correctly so skipped.
 MAX_AM_ERI:
@@ -180,7 +182,7 @@ adcc:
 ambit:
     - 0.5.1
 chemps2:
-    - 1.8.10
+    - 1.8.11
 pycppe:
     - 0.3.1
 dftd3:
@@ -210,7 +212,7 @@ libint_bld:
 mp2d:
     - 1.1
 openfermion:
-    - 1.0
+    - 1.3       # pulled from c-f as of 1.3 (Feb 2022)
 #openfermion_bld:  # temporary until new release has correct scipy pinnings
 #    - _2
 openfermionpsi4:
@@ -220,7 +222,7 @@ pcmsolver:
 pylibefp:
     - 0.6.1
 #pylibefp_bld:  # temporary to pull along looser qcel
-#    - _3
+#    - _4
 pymdi:
     - 1.2
 qcelemental:
@@ -239,7 +241,10 @@ v2rdm_casscf_bld:
     # ordinary master (sometimes have to pin for resolver)
     - ''
 #    - _7  [osx]
-#    - _9  [linux]
+#    - _10  [linux]
+    # c. v1.5.x _L9M7
+    #- _7  [osx]
+    #- _9  [linux]
     # c. v1.4.x _L8M6
     #- _6 [osx]
     #- _8 [linux]

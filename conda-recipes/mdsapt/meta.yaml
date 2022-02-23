@@ -1,0 +1,66 @@
+{% set name = "MDSAPT" %}
+{% set version = "1.1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/calpolyccg/{{ name }}/archive/v{{ version }}.tar.gz
+
+build:
+  noarch: python
+  number: 0
+  script: "python setup.py install --single-version-externally-managed --record=record.txt -vvv"
+
+  # MDSAPT does not officially support windows.
+#  skip: True  # [win]
+#  script: {{ PYTHON }} -m pip install . --no-deps -vv
+
+about:
+  home: https://github.com/calpolyccg/MDSAPT
+  license: GPL-3.0
+  license_file: LICENSE
+  license_family: GPL
+  license_url: https://opensource.org/licenses/GPL-3.0
+  summary: SAPT Calculations for MDAnalysis
+  doc_url: https://mdsapt.readthedocs.io/
+  dev_url: https://github.com/calpolyccg/MDSAPT
+
+requirements:
+  host:
+    - python >=3.6
+    - pip
+  run:
+    - mdanalysis>=2.0.0, <2.1
+    - nglview>=3.0.3, <3.1
+    - numpy
+    - openmm
+    - pandas
+    - pdbfixer
+    - python >=3.6.0
+    - psi4
+    - pyyaml
+    - rdkit
+
+test:
+  imports:
+    - mdsapt
+    - mdsapt.tests
+  source_files:
+    - mdsapt/**/*
+  requires:
+    - pip
+    - pytest
+  commands:
+    - pip check
+    - pytest -v mdsapt
+
+extra:
+  maintainers:
+   - ALescoulie
+   - astralbijection
+  recipe-maintainers:
+   - ALescoulie
+   - astralbijection
+
