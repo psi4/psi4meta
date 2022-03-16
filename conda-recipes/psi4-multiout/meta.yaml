@@ -105,6 +105,8 @@ outputs:
               - {{ pin_compatible('dftd3', max_pin='x.x') }}
               - {{ pin_compatible('gcp', max_pin='x.x') }}
               - libint2 {{ libint }} {{ libint_bld }}  # temporary so tests run in recipe and so L2 is steady in the wild this season
+              - gau2grid {{ gau2grid }} {{ gau2grid_bld }}  # temporary so psi4 channel preferred to c-f
+              - libxc {{ libxc }} {{ libxc_bld }}  # temporary so psi4 channel preferred to c-f
       files:
           - bin/psi4
           - include/psi4
