@@ -177,7 +177,7 @@ if [ "$(uname)" == "Linux" ]; then
     chmod u+x stage/bin/psi4
 
     stage/bin/psi4 ../tests/tu1-h2o-energy/input.dat
-    MKL_CBWR=AVX ctest -j${CPU_COUNT} #-L quick
+    MKL_CBWR=AVX ctest -j${CPU_COUNT}  --test-timeout 3600 #-L quick
 
     mv -f stage/bin/psi4_reserve stage/bin/psi4
 
