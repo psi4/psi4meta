@@ -43,7 +43,6 @@ outputs:
               - eigen
               - llvm-openmp                    # [osx]
               - mkl-devel {{ mkl }}*
-              - mpfr
               - {{ pin_compatible('pybind11-headers', max_pin='x.x') }}
               - {{ pin_compatible('python', max_pin='x.x') }}
               # rt
@@ -182,6 +181,11 @@ outputs:
 
 # NOTES
 # -----
+# * retirements
+#      requirements:
+#          run:
+#              - mpfr
+#
 # * had trouble with llvm-openmp 10 vs. 12. one soln was to have below in both host and run, plus further below in _local_ cbc.yaml
 #              - llvm-openmp 12.*                   # [osx]
 #       c_compiler_version:

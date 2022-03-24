@@ -24,10 +24,8 @@ requirements:
         - {{ compiler('fortran') }}      # [osx]     # nofortran
         - llvm-openmp                    # [osx]
     host:
-        - dataclasses                    # [py==36]
         - eigen
         - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
-        - mpfr
         - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
         - pybind11-headers {{ pybind11 }}
         - python {{ python }}
@@ -54,9 +52,6 @@ outputs:
       build:
           requires_features:
               blas: {{ blas_impl }}
-          ignore_run_exports:
-              - eigen
-              - mpfr
           run_exports:
               - {{ pin_subpackage('psi4', max_pin='x.x') }}
       requirements:
@@ -69,10 +64,8 @@ outputs:
               - {{ compiler('fortran') }}      # [osx]       # nofortran
               - llvm-openmp                    # [osx]
           host:
-              - dataclasses                    # [py==36]
               - eigen
               - mkl-devel {{ mkl }}            # [blas_impl == 'mkl']
-              - mpfr
               - openblas-devel {{ openblas }}  # [blas_impl == 'openblas']
               - pybind11-headers {{ pybind11 }}
               - python {{ python }}
@@ -92,7 +85,6 @@ outputs:
               - gcp {{ gcp }}
               - llvm-openmp 10.*                              # [osx]  # temp, I hope to avoid 10 and 12 dep
           run:
-              - dataclasses                    # [py==36]
               - intel-openmp                   # [linux]
               - networkx
               - numpy >=1.12.0
@@ -162,6 +154,17 @@ outputs:
 
 # NOTES
 # -----
+# * retirements
+#       requirements:
+#          host:
+#              - mpfr
+#              - dataclasses                    # [py==36]
+#          run:
+#              - dataclasses                    # [py==36]
+#          ignore_run_exports:
+#              - eigen
+#              - mpfr
+#
 # * weird mkl 2019-2021 pinning:
 #      build:
 #          ignore_run_exports:

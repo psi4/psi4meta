@@ -60,8 +60,8 @@ psi4ver:
     # toggle between '' for nightly builds, which goes with `git_tag: master` for psi4-multiout and psi4-docs
     #   but sometimes needs a specific version or range like 1.4a2* when wrong psi picked up by resolver
     - ''
-#    - '1.6a1.dev91'                    # [osx]
-#    - '1.6a1.dev91'                    # [linux]
+#    - '1.6a1.dev103'                    # [osx]
+#    - '1.6a1.dev103'                    # [linux]
     # toggle between specific version for targeted build, which goes with e.g., `git_tag: v1.3.1` for psi4-multiout and psi4-docs
     #- 1.3.2
 
@@ -148,8 +148,9 @@ ltrtver:
     # - "1.5"         # (28 Nov 2021) ditto dev2 for v1.5
     # - "1.6.dev1"    # (22 Feb 2022)    ...      2.9.1  1.8.11   ...    ...      ..._L4M2     ...   ...    ...      ...   ...      ..._L3   ...    ...   ...  ...      ..._L10M8 ...   ...    ...     ..._L4   ...    !1.3.0   !        !        !             ...  ...      ...
     # - "1.6.dev2"    # (11 Mar 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   _L13M4W3 ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
+    # - "1.6.dev3"    # (16 Mar 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ..._M6W5 ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
 
-    - "1.6.dev3"      # (16 Mar 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ..._M6W5 ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
+    - "1.6.dev4"      # (23 Mar 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   _L15M7W4 ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
 
     # - "XXX"         # (   WIP 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
     # !* sns in 1.3.dev10: 1.0.3 was ready but forgot to include it again until 1.4.dev2 (at L2M1)
@@ -211,12 +212,18 @@ gdma:
 gpu_dfcc:
     - 0.3
 libint:
-    - 2.6.0
+    - 2.7.1          [linux]
+    - 2.6.0          [osx]
+    - 2.6.0          [win]
 libint_bld:
+      # c. 2022 l2 fork Mar 2022
+    - h2fe1556_15    [linux]
+    - h879752b_7     [osx]
+    - h2e52968_4     [win]
       # c. l2-oei Mar 2022
-    - h2fe1556_13    [linux]
-    - h879752b_6     [osx]
-    - h2e52968_5     [win]
+    # - h2fe1556_13    [linux]
+    # - h879752b_6     [osx]
+    # - h2e52968_5     [win]
       # longstanding c. l2-tei Nov 2020; v1.4, v1.5
     # - h879752b_3     [osx]
     # - hc9558a2_9     [linux]

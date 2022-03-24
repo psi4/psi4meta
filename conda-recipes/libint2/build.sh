@@ -11,24 +11,37 @@ if [ "$(uname)" == "Darwin" ]; then
 
     # configure
     ${BUILD_PREFIX}/bin/cmake \
-        -H${SRC_DIR} \
-        -Bbuild \
-        -GNinja \
-        -DCMAKE_INSTALL_PREFIX=${PREFIX} \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_CXX_COMPILER=${CLANGXX} \
-        -DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
-        -DCMAKE_INSTALL_LIBDIR=lib \
-        -DBUILD_SHARED=ON \
-        -DBUILD_STATIC=OFF \
-        -DLIBINT2_SHGAUSS_ORDERING=gaussian \
-        -DLIBINT2_CARTGAUSS_ORDERING=standard \
-        -DLIBINT2_SHELL_SET=standard \
-        -DMPFR_ROOT=${PREFIX} \
-        -DBOOST_ROOT=${PREFIX} \
-        -DEigen3_ROOT=${PREFIX} \
-        -DENABLE_FORTRAN=OFF \
-        -DBUILD_TESTING=ON
+        -S ${SRC_DIR} \
+        -B build \
+        -G Ninja \
+        -D CMAKE_INSTALL_PREFIX=${PREFIX} \
+        -D CMAKE_BUILD_TYPE=Release \
+        -D CMAKE_C_COMPILER=${CLANG} \
+        -D CMAKE_C_FLAGS="${CFLAGS}" \
+        -D CMAKE_CXX_COMPILER=${CLANGXX} \
+        -D CMAKE_CXX_FLAGS="${CXXFLAGS}" \
+        -D CMAKE_INSTALL_LIBDIR=lib \
+        -D BUILD_SHARED_LIBS=ON \
+        -D LIBINT2_SHGAUSS_ORDERING=gaussian \
+        -D LIBINT2_CARTGAUSS_ORDERING=standard \
+        -D LIBINT2_SHELL_SET=standard \
+        -D Eigen3_ROOT=${PREFIX} \
+        -D ENABLE_FORTRAN=OFF \
+        -D REQUIRE_CXX_API=ON \
+        -D REQUIRE_CXX_API_COMPILE=OFF \
+        -D BUILD_TESTING=ON \
+        -D ENABLE_XHOST=OFF \
+        -D CMAKE_OSX_DEPLOYMENT_TARGET="10.10" \
+        -D CMAKE_OSX_SYSROOT="/Users/github/Git/MacOSX-SDKs/MacOSX10.10.sdk" \
+        -D CMAKE_VERBOSE_MAKEFILE=ON
+
+#           2019 L2 fork
+#        -D BUILD_SHARED=ON \
+#        -D BUILD_STATIC=OFF \
+#        -D ENABLE_CXX11API=ON \
+#        -D MPFR_ROOT=${PREFIX} \
+#        -D BOOST_ROOT=${PREFIX} \
+
 fi
 
 if [ "$(uname)" == "Linux" ]; then
@@ -48,29 +61,29 @@ if [ "$(uname)" == "Linux" ]; then
 
     # configure
     ${BUILD_PREFIX}/bin/cmake \
-        -H${SRC_DIR} \
-        -Bbuild \
-        -GNinja \
-        -DCMAKE_INSTALL_PREFIX=${PREFIX} \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_CXX_COMPILER=icpc \
-        -DCMAKE_CXX_FLAGS="${ALLOPTS}" \
-        -DCMAKE_INSTALL_LIBDIR=lib \
-        -DBUILD_SHARED=ON \
-        -DBUILD_STATIC=OFF \
-        -DLIBINT2_SHGAUSS_ORDERING=gaussian \
-        -DLIBINT2_CARTGAUSS_ORDERING=standard \
-        -DLIBINT2_SHELL_SET=standard \
-        -DERI3_PURE_SH=OFF \
-        -DERI2_PURE_SH=OFF \
-        -DMPFR_ROOT=${PREFIX} \
-        -DBOOST_ROOT=${PREFIX} \
-        -DEigen3_ROOT=${PREFIX} \
-        -DLIBINT_GENERATE_FMA=ON \
-        -DENABLE_XHOST=OFF \
-        -DENABLE_CXX11API=ON \
-        -DENABLE_FORTRAN=OFF \
-        -DBUILD_TESTING=ON
+        -S ${SRC_DIR} \
+        -B build \
+        -G Ninja \
+        -D CMAKE_INSTALL_PREFIX=${PREFIX} \
+        -D CMAKE_BUILD_TYPE=Release \
+        -D CMAKE_CXX_COMPILER=icpc \
+        -D CMAKE_CXX_FLAGS="${ALLOPTS}" \
+        -D CMAKE_INSTALL_LIBDIR=lib \
+        -D BUILD_SHARED=ON \
+        -D BUILD_STATIC=OFF \
+        -D LIBINT2_SHGAUSS_ORDERING=gaussian \
+        -D LIBINT2_CARTGAUSS_ORDERING=standard \
+        -D LIBINT2_SHELL_SET=standard \
+        -D ERI3_PURE_SH=OFF \
+        -D ERI2_PURE_SH=OFF \
+        -D MPFR_ROOT=${PREFIX} \
+        -D BOOST_ROOT=${PREFIX} \
+        -D Eigen3_ROOT=${PREFIX} \
+        -D LIBINT_GENERATE_FMA=ON \
+        -D ENABLE_XHOST=OFF \
+        -D ENABLE_CXX11API=ON \
+        -D ENABLE_FORTRAN=OFF \
+        -D BUILD_TESTING=ON
 fi
         #-DLIBINT2_SHGAUSS_ORDERING=gaussian \ usual psi4 gss
         #-DLIBINT2_SHGAUSS_ORDERING=standard \ future psi4 sss
