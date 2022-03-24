@@ -43,7 +43,6 @@ outputs:
               - eigen
               - llvm-openmp                    # [osx]
               - mkl-devel {{ mkl }}*
-              - mpfr
               - {{ pin_compatible('pybind11-headers', max_pin='x.x') }}
               - {{ pin_compatible('python', max_pin='x.x') }}
               # rt

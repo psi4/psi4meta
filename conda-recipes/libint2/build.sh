@@ -48,36 +48,41 @@ if [ "$(uname)" == "Linux" ]; then
 
     # configure
     ${BUILD_PREFIX}/bin/cmake \
-        -H${SRC_DIR} \
-        -Bbuild \
-        -GNinja \
-        -DCMAKE_INSTALL_PREFIX=${PREFIX} \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_CXX_COMPILER=icpc \
-        -DCMAKE_CXX_FLAGS="${ALLOPTS}" \
-        -DCMAKE_INSTALL_LIBDIR=lib \
-        -DBUILD_SHARED=ON \
-        -DBUILD_STATIC=OFF \
-        -DLIBINT2_SHGAUSS_ORDERING=gaussian \
-        -DLIBINT2_CARTGAUSS_ORDERING=standard \
-        -DLIBINT2_SHELL_SET=standard \
-        -DERI3_PURE_SH=OFF \
-        -DERI2_PURE_SH=OFF \
-        -DMPFR_ROOT=${PREFIX} \
-        -DBOOST_ROOT=${PREFIX} \
-        -DEigen3_ROOT=${PREFIX} \
-        -DLIBINT_GENERATE_FMA=ON \
-        -DENABLE_XHOST=OFF \
-        -DENABLE_CXX11API=ON \
-        -DENABLE_FORTRAN=OFF \
-        -DBUILD_TESTING=ON
+        -S ${SRC_DIR} \
+        -B build \
+        -G Ninja \
+        -D CMAKE_INSTALL_PREFIX=${PREFIX} \
+        -D CMAKE_BUILD_TYPE=Release \
+        -D CMAKE_CXX_COMPILER=icpc \
+        -D CMAKE_CXX_FLAGS="${ALLOPTS}" \
+        -D CMAKE_INSTALL_LIBDIR=lib \
+        -D BUILD_SHARED_LIBS=ON \
+        -D LIBINT2_SHGAUSS_ORDERING=gaussian \
+        -D LIBINT2_CARTGAUSS_ORDERING=standard \
+        -D LIBINT2_SHELL_SET=standard \
+        -D Eigen3_ROOT=${PREFIX} \
+        -D LIBINT_GENERATE_FMA=ON \
+        -D ENABLE_XHOST=OFF \
+        -D REQUIRE_CXX_API=ON \
+        -D REQUIRE_CXX_API_COMPILE=OFF \
+        -D ENABLE_FORTRAN=OFF \
+        -D BUILD_TESTING=ON
 fi
+
+        # l2cmake
+        #-D BUILD_SHARED=ON \
+        #-D BUILD_STATIC=OFF \
+        #-D ERI3_PURE_SH=OFF \
+        #-D ERI2_PURE_SH=OFF \
+        #-D MPFR_ROOT=${PREFIX} \
+        #-D BOOST_ROOT=${PREFIX} \
+        #-D ENABLE_CXX11API=ON \
+
         #-DLIBINT2_SHGAUSS_ORDERING=gaussian \ usual psi4 gss
         #-DLIBINT2_SHGAUSS_ORDERING=standard \ future psi4 sss
 
 # build & install & test
-cd build
-cmake --build . --target install -j${CPU_COUNT}
+cmake --build build --target install -j${CPU_COUNT}
 
 
 # This works for making a conda package out of a pre-built install
