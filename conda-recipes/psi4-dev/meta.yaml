@@ -28,6 +28,7 @@ outputs:
               - ambit {{ ambit }}
               - chemps2 {{ chemps2 }}
               - dkh {{ dkh }}
+              - libecpint {{ libecpint }}
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}
               - libint2 {{ libint }} {{ libint_bld }}
@@ -91,6 +92,7 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_ecpint=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_simint=ON
@@ -118,7 +120,7 @@ outputs:
               - printf "\n\n   <<  II.A psi4-dev@conda --> Intel Psi4  >>\n\n\n"         # [linux]
               - cd psi4                                                                  # [linux]
               - PPAOUT="$(psi4-path-advisor --intel)"                                    # [linux]
-              - source /theoryfs2/common/software/intel2021/oneapi/setvars.sh --config="/theoryfs2/common/software/intel2021/oneapi/config-no-intelpython.txt" intel64  # [linux]
+              - source /psi/gits/software/intel/oneapi/setvars.sh intel64                # [linux]
               - >                                                                        # [linux]
                   eval                                                                   # [linux]
                   ${PPAOUT}-intel                                                        # [linux]
@@ -131,6 +133,7 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON                                   # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_CheMPS2=ON                                 # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON                                     # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_ecpint=ON                                  # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON                                    # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON                               # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_simint=ON                                  # [linux]

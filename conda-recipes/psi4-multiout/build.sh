@@ -102,7 +102,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # load Intel compilers
     set +x
-    source /theoryfs2/common/software/intel2021/oneapi/setvars.sh --config="/theoryfs2/common/software/intel2021/oneapi/config-no-intelpython.txt" intel64
+    source /psi/gits/software/intel/oneapi/setvars.sh intel64
     set -x
 
     # link against conda MKL & GCC
@@ -146,6 +146,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DENABLE_dkh=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_dkh=ON \
         -DENABLE_gdma=ON \
+        -DCMAKE_INSIST_FIND_PACKAGE_ecpint=ON \
+        -DENABLE_ecpint=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_gdma=ON \
         -DENABLE_PCMSolver=ON \
         -DCMAKE_INSIST_FIND_PACKAGE_PCMSolver=ON \
@@ -171,13 +173,14 @@ if [ "$(uname)" == "Linux" ]; then
 
     # test
     # * full PREFIX is too long for shebang (in bin/psi4 tests), so use env python just for tests
+    # * this doesn't work for DDD, so comment psi4_reserve, inclusive
     mv stage/bin/psi4 stage/bin/psi4_reserve
     echo "#! /usr/bin/env python" > stage/bin/psi4
     cat stage/bin/psi4_reserve >> stage/bin/psi4
     chmod u+x stage/bin/psi4
 
     stage/bin/psi4 ../tests/tu1-h2o-energy/input.dat
-    MKL_CBWR=AVX ctest -j${CPU_COUNT} #-L quick
+    MKL_CBWR=AVX ctest -j${CPU_COUNT}  --test-timeout 3600 #-L quick
 
     mv -f stage/bin/psi4_reserve stage/bin/psi4
 
@@ -189,6 +192,7 @@ if [ "$(uname)" == "Linux" ]; then
     sed -i "s|${BUILD_PREFIX}/${HOST}/sysroot/usr/lib/libpthread.so|-lpthread|g" ${PREFIX}/share/cmake/TargetHDF5/TargetHDF5Targets.cmake
     sed -i "s|${BUILD_PREFIX}/${HOST}/sysroot/usr/lib/libdl.so|-ldl|g" ${PREFIX}/share/cmake/TargetHDF5/TargetHDF5Targets.cmake
     sed -i "s|${BUILD_PREFIX}/${HOST}/sysroot/usr/lib/libm.so|-lm|g" ${PREFIX}/share/cmake/TargetHDF5/TargetHDF5Targets.cmake
+    #TODO
 fi
 
 # NOTES

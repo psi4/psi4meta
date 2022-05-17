@@ -34,6 +34,7 @@ requirements:
         - ambit {{ ambit }}
         - chemps2 {{ chemps2 }}
         - dkh {{ dkh }}                             # nofortran
+        - libecpint {{ libecpint }}
         - gau2grid {{ gau2grid }}
         - gdma {{ gdma }}                           # nofortran
         - libint2 {{ libint }} {{ libint_bld }}
@@ -73,6 +74,7 @@ outputs:
               - ambit {{ ambit }}
               - chemps2 {{ chemps2 }}
               - dkh {{ dkh }}                    # nofortran
+              - libecpint {{ libecpint }}
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}                  # nofortran
               - libint2 {{ libint }} {{ libint_bld }}
@@ -86,6 +88,7 @@ outputs:
               - llvm-openmp 10.*                              # [osx]  # temp, I hope to avoid 10 and 12 dep
           run:
               - intel-openmp                   # [linux]
+              - msgpack-python
               - networkx
               - numpy >=1.12.0
               - msgpack-python
@@ -123,7 +126,7 @@ outputs:
               - ldd -r -u $SP_DIR/psi4/core$PYLIB_EXT  # [linux]
               - ldd -v $SP_DIR/psi4/core$PYLIB_EXT     # [linux]
               - otool -L $SP_DIR/psi4/core$PYLIB_EXT   # [osx]
-              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint2 pcmsolver simint libxc psi4  # erd ; comment for  # nofortran
+              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh libecpint gau2grid gdma libint2 pcmsolver simint libxc psi4  # erd ; comment for  # nofortran
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               - grep -r theoryfs2 $PREFIX/share/cmake/ || true  # [linux]
               # Actually test

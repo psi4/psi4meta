@@ -72,28 +72,33 @@ if [ "$(uname)" == "Linux" ]; then
         -D CMAKE_CXX_COMPILER=icpc \
         -D CMAKE_CXX_FLAGS="${ALLOPTS}" \
         -D CMAKE_INSTALL_LIBDIR=lib \
-        -D BUILD_SHARED=ON \
-        -D BUILD_STATIC=OFF \
+        -D BUILD_SHARED_LIBS=ON \
         -D LIBINT2_SHGAUSS_ORDERING=gaussian \
         -D LIBINT2_CARTGAUSS_ORDERING=standard \
         -D LIBINT2_SHELL_SET=standard \
-        -D ERI3_PURE_SH=OFF \
-        -D ERI2_PURE_SH=OFF \
-        -D MPFR_ROOT=${PREFIX} \
-        -D BOOST_ROOT=${PREFIX} \
         -D Eigen3_ROOT=${PREFIX} \
         -D LIBINT_GENERATE_FMA=ON \
         -D ENABLE_XHOST=OFF \
-        -D ENABLE_CXX11API=ON \
+        -D REQUIRE_CXX_API=ON \
+        -D REQUIRE_CXX_API_COMPILE=OFF \
         -D ENABLE_FORTRAN=OFF \
         -D BUILD_TESTING=ON
 fi
+
+        # l2cmake
+        #-D BUILD_SHARED=ON \
+        #-D BUILD_STATIC=OFF \
+        #-D ERI3_PURE_SH=OFF \
+        #-D ERI2_PURE_SH=OFF \
+        #-D MPFR_ROOT=${PREFIX} \
+        #-D BOOST_ROOT=${PREFIX} \
+        #-D ENABLE_CXX11API=ON \
+
         #-DLIBINT2_SHGAUSS_ORDERING=gaussian \ usual psi4 gss
         #-DLIBINT2_SHGAUSS_ORDERING=standard \ future psi4 sss
 
 # build & install & test
-cd build
-cmake --build . --target install -j${CPU_COUNT}
+cmake --build build --target install -j${CPU_COUNT}
 
 
 # This works for making a conda package out of a pre-built install

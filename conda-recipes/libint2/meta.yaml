@@ -15,11 +15,13 @@ source:
     ##url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-4-3---5-4--_mm4ob2.tgz  # 4354_mm4ob2
     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_mm4ob2.tgz  # 543654_mm4ob2
     url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_mm4f12ob2.tgz  # [osx] mm4f12ob2 2.7.1
-
+    url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_mm4f12ob2.tgz  # [linux] mm4f12ob2 2.7.1
+    #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-7-7-4-8-8-5_mm4f12ob2.tgz  # [linux] mm4f12ob2_lg 2.7.1
 
 build:
     #number: 9                                            # [linux]  # 9 is am7_1 w/boost
     #number: 14                                           # [linux]  # 14 is mm0sssf12ob2pd but gss and constexpr=0. 13 is same src as 12 but gss. 12 is mm25sssf12ob2. 11 is mm25sssf12. 10 is mm25sss.
+    number: 17                                           # [linux]  # 17 is mm4f12ob2_lg as gss (incomplete!). 16 is mm4f12ob2 as sss. 15 is mm4f12ob2 as gss.
     #number: 3                                            # [osx]    # 3 is am5_1 w/boost
     number: 8                                            # [osx]     # 8 is mm4f12ob2 as sss (bumped v to 2.7.1). 7 is mm4f12ob2 as gss (v still 2.6.0). 6 is 543654_mm4ob2. 5 is trial 4354_mm4ob2.tgz. 4 is mm25sssf12ob2 but gss.
     #number: 0                                            # [win]
@@ -30,7 +32,7 @@ build:
 
 requirements:
     build:
-        - cmake >=3.8
+        - cmake >=3.16
         - {{ compiler('cxx') }}
         - ninja
     host:
