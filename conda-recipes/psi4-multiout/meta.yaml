@@ -159,6 +159,17 @@ outputs:
 
 # NOTES
 # -----
+# * retirements
+#       requirements:
+#          host:
+#              - mpfr
+#              - dataclasses                    # [py==36]
+#          run:
+#              - dataclasses                    # [py==36]
+#          ignore_run_exports:
+#              - eigen
+#              - mpfr
+#
 # * weird mkl 2019-2021 pinning:
 #      build:
 #          ignore_run_exports:

@@ -263,7 +263,7 @@ v2rdm_casscf:
 v2rdm_casscf_bld:
     # ordinary master (sometimes have to pin for resolver)
     - ''
-#    - _7  [osx]
+#    - _8  [osx]
 #    - _10  [linux]
     # c. v1.5.x _L9M7
     #- _7  [osx]

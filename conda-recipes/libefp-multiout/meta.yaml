@@ -12,8 +12,8 @@ source:
     git_tag: v0.6.1
 
 build:
-    number: 4                                            # [linux]   # L4: py310 L3: mkl2021
-    number: 1                                            # [osx]     # M1: mkl2021
+    number: 4                                            # [linux]   # L4: py310  L3: mkl2021
+    number: 2                                            # [osx]     # M2: py310  M1: mkl2021
     binary_relocation: true
     skip: true                                           # [win]
 

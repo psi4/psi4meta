@@ -311,6 +311,9 @@
 # [LAB 22 Nov 2021]
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.21.0/noarch/qcengine-0.21.0-pyhd8ed1ab_0.tar.bz2
 
+# [LAB 1 Mar 2022]
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.22.0/noarch/qcengine-0.22.0-pyhd8ed1ab_0.tar.bz2
+
 # [LAB 15 Mar 2022]
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.23.0/noarch/qcengine-0.23.0-pyhd8ed1ab_0.tar.bz2
 
@@ -647,7 +650,7 @@ if host == "psinet":
 
 # py39: pybind11, openfermion, chemps2-multiout, cppe, gau2grid-multiout, pcmsolver
 # --39: ambit, dkh, gdma, libint, libint2, simint, libxc
-# py310: pybind11, chemps2-multiout, pcmsolver
+# py310: pybind11, chemps2-multiout, pcmsolver (L-only), pylibefp, v2rdm
 
 # L/CBCY1: if anything in LT changed, edit cbcy.
 #          start new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.
