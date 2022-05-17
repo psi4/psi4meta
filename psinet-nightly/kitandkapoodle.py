@@ -367,6 +367,7 @@ elif sys.platform == 'darwin':
     croot = '/Users/github/builds/conda-builds'  # formerly CONDA_BLD_PATH
     lenv = {
         'CPU_COUNT': '2',
+#        'CPU_COUNT': '1',
         'PATH': '/Users/github/toolchainconda/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin',
         }
 else:
@@ -550,6 +551,7 @@ if host == "macpsinet":
 #{'recipe': 'pcmsolver'},
 #{'recipe': 'simint'},
 #{'recipe': 'libxc'},
+#{'recipe': 'libecpint'},
 
 # M/CBCY1: if anything in LT changed, edit cbcy.
 #          start new ltrtver line and bump versions in "ltrtver" table & "<addon>" entries.

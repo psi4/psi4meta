@@ -17,6 +17,8 @@ if [ "$(uname)" == "Darwin" ]; then
         -DCMAKE_C_FLAGS="${CFLAGS} ${OPTS}" \
         -DCMAKE_CXX_FLAGS="${CXXFLAGS} ${OPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
+        -DPython_EXECUTABLE=${PYTHON} \
         -DSHARED_ONLY=ON \
         -DENABLE_OPENMP=ON \
         -DOpenMP_C_FLAG="-fopenmp=libiomp5" \
@@ -54,6 +56,8 @@ if [ "$(uname)" == "Linux" ]; then
         -DCMAKE_C_FLAGS="${ALLOPTS}" \
         -DCMAKE_CXX_FLAGS="${ALLOPTS}" \
         -DCMAKE_INSTALL_LIBDIR=lib \
+        -DPYMOD_INSTALL_LIBDIR="/python${PY_VER}/site-packages" \
+        -DPython_EXECUTABLE=${PYTHON} \
         -DSHARED_ONLY=ON \
         -DENABLE_OPENMP=ON \
         -DENABLE_XHOST=OFF \

@@ -1,4 +1,4 @@
-{% set version = "0.5.1" %}
+{% set version = "0.6" %}
 
 package:
     name: ambit
@@ -7,12 +7,12 @@ package:
 source:
     git_url: git@github.com:jturney/ambit.git            # [linux]
     git_url: https://github.com/jturney/ambit.git        # [osx]
-    # git_tag: v{{ version }}                                        # M1: hdf5 1.10.6 no intel-openmp
-    git_tag: loriab-patch-1                                          # L1M3: mkl 2021 & pip
+    #git_tag: v{{ version }}
+    git_tag: 733c529                                     # L2M2: right zlib,  L1M1: right version
 
 build:
-    number: 1                                            # [linux]
-    number: 3                                            # [osx]
+    number: 2                                            # [linux]
+    number: 2                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
     requires_features:
@@ -27,7 +27,8 @@ requirements:
     build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        - cmake >=3.1
+        - cmake >=3.16
+        - ninja
         - llvm-openmp                                   # [osx]
         - pip                                           # [linux]
     host:
@@ -36,19 +37,33 @@ requirements:
         - mkl-devel {{ mkl }}                           # [blas_impl == 'mkl']
         - openblas-devel {{ openblas }}                 # [blas_impl == 'openblas']
         - zlib {{ zlib }}
+        - pybind11-headers {{ pybind11 }}
+        - python {{ python }}
+        - numpy >=1.12.0
     run:
         - intel-openmp                                  # [linux]
+        - {{ pin_compatible('python', max_pin='x.x') }}
+        - numpy
 
 test:
+    requires:
+        - pytest
+    imports:
+        - ambit
     commands:
-        # Verify library and executable
-        - test -f $PREFIX/lib/libambit$SHLIB_EXT
+        # Verify library and module
+        - test -f $PREFIX/lib/libambit$SHLIB_EXT                             # [unix]
+        - if not exist %PREFIX%\\Library\\lib\\ambit.lib exit 1              # [win]
+        - ls -l $SP_DIR/ambit                                                # [unix]
+        - dir %SP_DIR%\ambit                                                 # [win]
         # Inspect linkage
-        - ldd -r -u $PREFIX/lib/libambit.so && return 0  # [linux]
-        - ldd -v $PREFIX/lib/libambit.so                 # [linux]
-        - otool -L $PREFIX/lib/libambit.dylib            # [osx]
-        - conda inspect linkages --show-files --groupby=dependency ambit
-        - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+        - ldd -r -u $PREFIX/lib/libambit$SHLIB_EXT && return 0               # [linux]
+        - ldd -v $PREFIX/lib/libambit$SHLIB_EXT                              # [linux]
+        - otool -L $PREFIX/lib/libambit$SHLIB_EXT                            # [osx]
+        - conda inspect linkages --show-files --groupby=dependency ambit     # [unix]
+        - conda inspect objects -p $PREFIX $PKG_NAME                         # [osx]
+        # Test
+        - pytest -rws --capture=sys $SP_DIR/ambit
 
 about:
     home: https://github.com/jturney/ambit
@@ -64,5 +79,7 @@ about:
 
 
 # History
+    #git_tag: loriab-patch-1                                          # L1M3: mkl 2021 & pip        # v0.5.1
+    #git_tag: v{{ version }}                                        # M1: hdf5 1.10.6 no intel-openmp
     #git_tag: v{{ version }}  # L0,1,M0: 0.3
     #git_tag: # 0.2: 9c7049a  # v0.2 + 37

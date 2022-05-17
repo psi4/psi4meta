@@ -1,4 +1,4 @@
-{% set version = "2.6.0" %}
+{% set version = "2.7.1" %}
 
 package:
     name: libint2
@@ -6,23 +6,27 @@ package:
 
 source:
     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-7-7-0-10-7-0_0.tgz  # [linux] Susi
-    url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-7-7-4-7-7-5_1.tgz  # [linux]
-    url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_1.tgz  # [osx or win]
+    #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-7-7-4-7-7-5_1.tgz  # [linux]  # longstanding v1.4, v1.5
+    #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_1.tgz  # [osx or win]  # longstanding v1.4, v1.5
     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_mm25.tgz  # [linux] mm25sss
     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_mm25f12.tgz  # [linux] mm25sssf12
-    #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_mm25f12ob2.tgz  # [linux] mm25sssf12ob2
+    #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_mm25f12ob2.tgz  # mm25sssf12ob2
     #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_mm0f12ob2pd.tgz  # [linux] mm0sssf12ob2pd
+    ##url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-4-3---5-4--_mm4ob2.tgz  # 4354_mm4ob2
+    #url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_mm4ob2.tgz  # 543654_mm4ob2
+    url: https://github.com/loriab/libint/releases/download/v0.1/Libint2-export-5-4-3-6-5-4_mm4f12ob2.tgz  # [osx] mm4f12ob2 2.7.1
+
 
 build:
-    number: 9                                            # [linux]  # 9 is am7_1 w/boost
+    #number: 9                                            # [linux]  # 9 is am7_1 w/boost
     #number: 14                                           # [linux]  # 14 is mm0sssf12ob2pd but gss and constexpr=0. 13 is same src as 12 but gss. 12 is mm25sssf12ob2. 11 is mm25sssf12. 10 is mm25sss.
-    number: 3                                            # [osx]    # 3 is am5_1 w/boost
-    number: 0                                            # [win]    # 3 (JMT) is same src as 2 but gss. 2 (JMT) is mm25sssf12ob2.
+    #number: 3                                            # [osx]    # 3 is am5_1 w/boost
+    number: 8                                            # [osx]     # 8 is mm4f12ob2 as sss (bumped v to 2.7.1). 7 is mm4f12ob2 as gss (v still 2.6.0). 6 is 543654_mm4ob2. 5 is trial 4354_mm4ob2.tgz. 4 is mm25sssf12ob2 but gss.
+    #number: 0                                            # [win]
+    #number: 3                                            # [win]    # 3 (JMT) is same src as 2 but gss. 2 (JMT) is mm25sssf12ob2.
     binary_relocation: true
     run_exports:
         - {{ pin_subpackage('libint2', max_pin='x') }}
-    ignore_run_exports:
-        - mpfr
 
 requirements:
     build:
@@ -32,7 +36,6 @@ requirements:
     host:
         # want NO boost so that include/libint2/boost/ installs
         - eigen
-        - mpfr
 
 test:
     commands:

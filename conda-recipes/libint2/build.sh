@@ -35,6 +35,9 @@ if [ "$(uname)" == "Darwin" ]; then
         -D CMAKE_OSX_SYSROOT="/Users/github/Git/MacOSX-SDKs/MacOSX10.10.sdk" \
         -D CMAKE_VERBOSE_MAKEFILE=ON
 
+        #-D LIBINT2_SHGAUSS_ORDERING=gaussian \ usual psi4 gss
+        #-D LIBINT2_SHGAUSS_ORDERING=standard \ future psi4 sss
+
 #           2019 L2 fork
 #        -D BUILD_SHARED=ON \
 #        -D BUILD_STATIC=OFF \
