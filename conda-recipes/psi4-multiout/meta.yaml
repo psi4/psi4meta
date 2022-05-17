@@ -34,6 +34,7 @@ requirements:
         - ambit {{ ambit }}
         - chemps2 {{ chemps2 }}
         - dkh {{ dkh }}                             # nofortran
+        - libecpint {{ libecpint }}
         - gau2grid {{ gau2grid }}
         - gdma {{ gdma }}                           # nofortran
         - libint2 {{ libint }} {{ libint_bld }}
@@ -73,6 +74,7 @@ outputs:
               - ambit {{ ambit }}
               - chemps2 {{ chemps2 }}
               - dkh {{ dkh }}                    # nofortran
+              - libecpint {{ libecpint }}
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}                  # nofortran
               - libint2 {{ libint }} {{ libint_bld }}
@@ -86,6 +88,7 @@ outputs:
               - llvm-openmp 10.*                              # [osx]  # temp, I hope to avoid 10 and 12 dep
           run:
               - intel-openmp                   # [linux]
+              - msgpack-python
               - networkx
               - numpy >=1.12.0
               - pytest                                         # drive psi4 --test
@@ -122,7 +125,7 @@ outputs:
               - ldd -r -u $SP_DIR/psi4/core$PYLIB_EXT  # [linux]
               - ldd -v $SP_DIR/psi4/core$PYLIB_EXT     # [linux]
               - otool -L $SP_DIR/psi4/core$PYLIB_EXT   # [osx]
-              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh gau2grid gdma libint2 pcmsolver simint libxc psi4  # erd ; comment for  # nofortran
+              - conda inspect linkages --show-files --groupby=dependency ambit chemps2 dkh libecpint gau2grid gdma libint2 pcmsolver simint libxc psi4  # erd ; comment for  # nofortran
               - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
               - grep -r theoryfs2 $PREFIX/share/cmake/ || true  # [linux]
               # Actually test
@@ -132,7 +135,9 @@ outputs:
               - python $PREFIX/share/psi4/scripts/test_threading.py --passfail --ldd  # [py3k]
               - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psiapi -n6  # [py3k]
               - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n6  # [py3k and not osx]
-              - python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', os.environ.get('CPU_COUNT')]))"  # [linux]
+              #- python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', os.environ.get('CPU_COUNT')]))"  # [linux]
+              #- pytest -rws -v --durations=20 -n auto -m quick --pyargs psi4  # [linux]
+              - MKL_CBWR=AVX pytest -rws -v --durations=20 -n auto $SP_DIR/psi4  # [linux]
               - python -c "import psi4, sys, os; sys.exit(psi4.test('quick', extras=['-k', 'not run_dftd3__3body', '--durations=50', '-n', '1']))"  # [osx]
                 # works but tries to test qcdb too  - pytest -rws -v --durations=0 -n ${CPU_COUNT} -m quick --pyargs psi4
               - python -c "import psi4; print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"

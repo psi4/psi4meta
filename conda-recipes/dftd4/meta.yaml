@@ -1,5 +1,5 @@
 {% set name = "dftd4" %}
-{% set version = "v3.3.0" %}
+{% set version = "v3.3.0" %}  # ditch the v
 
 package:
   name: {{ name|lower }}

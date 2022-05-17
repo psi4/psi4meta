@@ -28,6 +28,9 @@ set(CheMPS2_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/CheMPS2
 set(ENABLE_dkh             ON CACHE BOOL "")
 set(dkh_DIR                "/opt/anaconda1anaconda2anaconda3/share/cmake/dkh" CACHE PATH "")
 
+set(ENABLE_ecpint          ON CACHE BOOL "")
+set(ecpint_DIR             "/opt/anaconda1anaconda2anaconda3/lib/cmake/ecpint" CACHE PATH "")
+
 #set(ENABLE_libefp          ON CACHE BOOL "")
 #set(libefp_DIR             "/opt/anaconda1anaconda2anaconda3/share/cmake/libefp" CACHE PATH "")
 
@@ -40,7 +43,7 @@ set(ENABLE_gdma            ON CACHE BOOL "")
 set(gdma_DIR               "/opt/anaconda1anaconda2anaconda3/share/cmake/gdma" CACHE PATH "")
 
 set(MAX_AM_ERI             "5" CACHE STRING "")
-set(Libint2_DIR            "/opt/anaconda1anaconda2anaconda3/share/cmake/Libint2" CACHE PATH "")
+set(Libint2_DIR            "/opt/anaconda1anaconda2anaconda3/lib/cmake/libint2" CACHE PATH "")
 
 set(ENABLE_PCMSolver       OFF CACHE BOOL "")
 set(PCMSolver_DIR          "/opt/anaconda1anaconda2anaconda3/share/cmake/PCMSolver" CACHE PATH "")

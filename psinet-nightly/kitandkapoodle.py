@@ -630,7 +630,7 @@ if host == "psinet":
 #       bump in recipe any upstream versions Psi means to support. rebuild packages.
 #       upon any failure, adjust source of Psi & upstream.
 # ----------------------------------------------------------------------------------
-#{'recipe': 'ambit', 'build_channels': ['psi4/label/dev']},  # chnl: hdf5
+#{'recipe': 'ambit'}, #, 'build_channels': ['psi4/label/dev']},  # chnl: hdf5
 #{'recipe': 'chemps2-multiout', 'build_channels': ['psi4/label/dev']},  # chnl: hdf5
 #{'recipe': 'cppe', 'build_channels': ['psi4/label/dev']},  # chnl: pybind11
 #{'recipe': 'dkh'},
@@ -643,6 +643,7 @@ if host == "psinet":
 #{'recipe': 'libxc'},
 #{'recipe': 'optking', 'build_channels': ['conda-forge']},
 #{"recipe": "optking", "build_channels": ["psi4/label/dev"]},  # chnl: psi4
+#{"recipe": "libecpint"},  # build with only one python
 
 # py39: pybind11, openfermion, chemps2-multiout, cppe, gau2grid-multiout, pcmsolver
 # --39: ambit, dkh, gdma, libint, libint2, simint, libxc

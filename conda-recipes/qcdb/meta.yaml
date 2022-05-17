@@ -1,5 +1,5 @@
 {% set name = "qcdb" %}
-{% set version = "0.1.0" %}
+{% set version = "0.4.0" %}
 #{% set sha256 = "55e16cc13b6b8f69153d1de287a32b80008b7433ab824cec21194f5c78d91c34" %}
 
 package:
@@ -7,9 +7,9 @@ package:
     version: {{ version }}
 
 source:
-#    git_url: git@github.com:{{ name }}/{{ name }}.git
-#    git_tag: master
-    path: /psi/gits/qccddb
+    git_url: git@github.com:{{ name }}/{{ name }}.git
+    git_tag: master
+#    path: /psi/gits/qccddb
 
 #source:
 #    url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
@@ -22,15 +22,15 @@ build:
 
 requirements:
     build:
-        - python >=3.6
+        - python >=3.9
         - pip
         - setuptools
     run:
         - msgpack-python
         - numpy
-        - python >=3.6.0
-        - qcelemental >=0.19.0
-        - qcengine >=0.18.0
+        - python >=3.9.0
+        - qcelemental >=0.22.1
+        - qcengine >=0.19.1
 
 test:
     imports:
@@ -44,7 +44,9 @@ test:
         - test -f $SP_DIR/qcdb/__init__.py
         - test -f $SP_DIR/qcdb/databases/S22.py
         - test -f $SP_DIR/qcdb/basis/sto-3g.gbs
+        - test -f $SP_DIR/qcdb/basis/GENBAS
         - pytest -rws -v $SP_DIR/qcdb -k "standard_suite and adz" -n $CPU_COUNT
+        #- pytest -rws -v $SP_DIR/qcdb -k "test_tu" -n $CPU_COUNT
 
 about:
     home: https://github.com/qcdb/qcdb

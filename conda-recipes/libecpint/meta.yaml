@@ -1,0 +1,60 @@
+{% set name = "libecpint" %}
+{% set version = "1.0.7" %}
+{% set sha256 = "e9c60fddb2614f113ab59ec620799d961db73979845e6e637c4a6fb72aee51cc" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/robashaw/libecpint/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+    number: 0                                            # [linux]
+    number: 0                                            # [osx]
+    binary_relocation: true
+    skip: true                                           # [win]
+    run_exports:
+        - {{ pin_subpackage('libecpint', max_pin='x') }}
+
+requirements:
+  build:
+    - cmake
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - ninja
+  host:
+    - python
+
+test:
+  commands:
+    # Verify library
+    - test -L $PREFIX/lib/libecpint$SHLIB_EXT
+    # Inspect linkage
+    - ldd -v $PREFIX/lib/libecpint$SHLIB_EXT             # [linux]
+    - otool -L $PREFIX/lib/libecpint$SHLIB_EXT           # [osx]
+    - conda inspect linkages --show-files --groupby=dependency libecpint
+    - conda inspect objects -p $PREFIX $PKG_NAME     # [osx]
+
+about:
+  home: https://github.com/robashaw/libecpint
+  doc_url: https://libecpint.readthedocs.io/
+  dev_url: https://github.com/robashaw/libecpint
+  # doc_source_url:
+  license: MIT
+  license_url: https://opensource.org/licenses/MIT
+  license_file: LICENSE
+  license_family: MIT
+  summary: 'A C++ library for the efficient evaluation of integrals over effective core potentials.'
+  description: |
+    Libecpint is a C++ library for the efficient evaluation of integrals
+    over ab initio effective core potentials, using a mixture of
+    generated, recursive code and Gauss-Chebyshev quadrature. It is
+    designed to be standalone and generic, and is now in its first stable
+    release. If you experience any problems please raise an issue here;
+    contributions and suggestions are also welcome.
+
+
+# NOTES
+
