@@ -72,13 +72,15 @@ if [ "$(uname)" == "Darwin" ]; then
 
     # build
     cd build
-    make -j${CPU_COUNT}
+    #make -j${CPU_COUNT}
+    make -j4
 
     # install
     make install
 
     # test (full suite too stressful for macpsinet)
-    ctest -j${CPU_COUNT} -L quick --test-timeout 3600
+    #ctest -j${CPU_COUNT} -L quick --test-timeout 3600
+    ctest -j4 -L smoke --test-timeout 3600
 
     # remove conda-build-bound Cache file, to be replaced by psi4-dev
     rm ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake

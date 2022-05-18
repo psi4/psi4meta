@@ -368,8 +368,8 @@ elif sys.platform == 'darwin':
     recipe_box = '/Users/github/Git/psi4meta/conda-recipes'
     croot = '/Users/github/builds/conda-builds'  # formerly CONDA_BLD_PATH
     lenv = {
-        'CPU_COUNT': '2',
-#        'CPU_COUNT': '1',
+#        'CPU_COUNT': '2',
+        'CPU_COUNT': '1',
         'PATH': '/Users/github/toolchainconda/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin',
         }
 else:

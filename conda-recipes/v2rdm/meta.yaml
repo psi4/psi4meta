@@ -16,7 +16,7 @@ source:
 
 build:
     number: 10                                           # [linux]
-    number: 8                                            # [osx]
+    number: 9                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
     ignore_run_exports:
@@ -37,7 +37,7 @@ requirements:
     host:
         - eigen
         - mkl-devel {{ mkl }}
-        - mpfr
+#        - mpfr
         - psi4 {{ psi4ver }}                              # for psi4OptionsTools to initiate plugin and to link against
         - pybind11-headers {{ pybind11 }}
         - python {{ python }}                             # to resolve site-packages dir name
