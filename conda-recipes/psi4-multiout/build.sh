@@ -173,19 +173,6 @@ if [ "$(uname)" == "Linux" ]; then
     # install
     make install
 
-    # test
-    # * full PREFIX is too long for shebang (in bin/psi4 tests), so use env python just for tests
-    # * this doesn't work for DDD, so comment psi4_reserve, inclusive
-    mv stage/bin/psi4 stage/bin/psi4_reserve
-    echo "#! /usr/bin/env python" > stage/bin/psi4
-    cat stage/bin/psi4_reserve >> stage/bin/psi4
-    chmod u+x stage/bin/psi4
-
-    stage/bin/psi4 ../tests/tu1-h2o-energy/input.dat
-    MKL_CBWR=AVX ctest -j${CPU_COUNT}  --test-timeout 3600 #-L quick
-
-    mv -f stage/bin/psi4_reserve stage/bin/psi4
-
     # remove conda-build-bound Cache file, to be replaced by psi4-dev
     rm ${PREFIX}/share/cmake/psi4/psi4PluginCache.cmake
 
@@ -194,11 +181,23 @@ if [ "$(uname)" == "Linux" ]; then
     sed -i "s|${BUILD_PREFIX}/${HOST}/sysroot/usr/lib/libpthread.so|-lpthread|g" ${PREFIX}/share/cmake/TargetHDF5/TargetHDF5Targets.cmake
     sed -i "s|${BUILD_PREFIX}/${HOST}/sysroot/usr/lib/libdl.so|-ldl|g" ${PREFIX}/share/cmake/TargetHDF5/TargetHDF5Targets.cmake
     sed -i "s|${BUILD_PREFIX}/${HOST}/sysroot/usr/lib/libm.so|-lm|g" ${PREFIX}/share/cmake/TargetHDF5/TargetHDF5Targets.cmake
-    #TODO
+    sed -i "s|;-Wl,-Bstatic;-lsvml;-Wl,-Bdynamic||g" ${PREFIX}/share/cmake/TargetLAPACK/TargetLAPACKTargets.cmake
 fi
 
 # NOTES
 # -----
+
+# * old full ctests
+#    # test
+#    # * full PREFIX is too long for shebang (in bin/psi4 tests), so use env python just for tests
+#    # * this doesn't work for DDD, so comment psi4_reserve, inclusive
+#    mv stage/bin/psi4 stage/bin/psi4_reserve
+#    echo "#! /usr/bin/env python" > stage/bin/psi4
+#    cat stage/bin/psi4_reserve >> stage/bin/psi4
+#    chmod u+x stage/bin/psi4
+#    stage/bin/psi4 ../tests/tu1-h2o-energy/input.dat
+#    MKL_CBWR=AVX ctest -j${CPU_COUNT}  --test-timeout 3600 #-L quick
+#    mv -f stage/bin/psi4_reserve stage/bin/psi4
 
 # * old dashboard upload
 #   MKL_CBWR=AVX ctest -M Nightly -T Test -T Submit -j${CPU_COUNT} #-L quick
