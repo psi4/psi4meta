@@ -94,8 +94,11 @@ outputs:
               - msgpack-python
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
-              - {{ pin_compatible('qcelemental', max_pin='x') }}
-              - {{ pin_compatible('qcengine', max_pin='x') }}
+              # tightening for qcsk transition
+              #- {{ pin_compatible('qcelemental', max_pin='x') }}
+              #- {{ pin_compatible('qcengine', max_pin='x') }}
+              - {{ pin_compatible('qcelemental', upper_bound='0.26') }}
+              - {{ pin_compatible('qcengine', upper_bound='0.25') }}
               - scipy
               # qc
               - {{ pin_compatible('dftd3', max_pin='x.x') }}
@@ -139,7 +142,7 @@ outputs:
               #- python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', os.environ.get('CPU_COUNT')]))"  # [linux]
               #- python -c "import psi4, sys, os; sys.exit(psi4.test('quick', extras=['-k', 'not qcng_dftd3 and not testing', '--durations=50']))"  # [osx]
               - MKL_CBWR=AVX pytest -rws -v --durations=20 -n auto $SP_DIR/psi4  # [linux]
-              - pytest -rws -v --durations=20 -n auto $SP_DIR/psi4 -m "quick and api" -k "not suite and not angmom"  # [osx]
+              #- pytest -rws -v --durations=20 -n auto $SP_DIR/psi4 -m "quick and api" -k "not suite and not angmom"  # [osx]
               - pytest -rws -v --durations=20 -n auto $SP_DIR/psi4 -m "quick and api" -k "suite"  # [osx]
               - pytest -rws -v --durations=20 -n auto $SP_DIR/psi4 -m "quick and cli"  # [osx]
               - python -c "import psi4; print('*** Psi4 {} built successfully. Buy psinet a beer!'.format(psi4.__version__))"
