@@ -320,6 +320,9 @@
 # [LAB 13 Jun 2022]
 # anaconda copy --to-owner psi4 conda-forge/qcelemental/0.25.0/noarch/qcelemental-0.25.0-pyhd8ed1ab_0.tar.bz2
 
+# [LAB 8 Jul 2022]
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.24.0/noarch/qcengine-0.24.0-pyhd8ed1ab_0.tar.bz2
+
 #anaconda copy --to-owner psi4 adcc/libtensorlight/3.0.1.dev/osx-64/libtensorlight-3.0.1.dev-h2caaeef_0.tar.bz2
 
 
