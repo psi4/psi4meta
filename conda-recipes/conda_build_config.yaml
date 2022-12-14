@@ -43,8 +43,14 @@ mkl:
     # - 2018  # retired 15 Aug 2019
     # - 2019  # retired 22 Nov 2021
     - 2021
+numpy:
+    # python 3.10
+    - 1.21
+    # python 3.7-3.9
+    - 1.16    # [not (osx and arm64)]
+    - 1.16    # [not (osx and arm64)]
 pybind11:
-    - 2.9.1
+    - 2.10.1
 python:
     - 3.10  # added 21 Feb 2022 by 1.6.dev1
     - 3.9  # added 9 Dec 2020 by 1.4.dev23
@@ -53,6 +59,11 @@ python:
     # - 3.6  # retired 5 Aug 2021
 zlib:
     - 1.2
+zip_keys:
+  -
+    - python
+    - numpy
+    - pcmsolver_bld
 
 # <<<  Psi Stuff  >>>
 
@@ -79,8 +90,8 @@ ltrtver:
     # * in the "starred" sequence in poodle, ltrtver must be set correctly before building psi4-rt.
     # * beyond the "|" aren't in ltrtver.
     #                         noarch                                                                                                         L      L          L                        L                              L->cf    L->cf    ->cf     ->cf   L
-    #                                    ambit    pb11   chemps2  dftd3  dkh      libefp erd   g2g   gcp    gdma     gpu   libint   pcm      qcel   resp  sim  sns      v2rdm     libxc qcng   mp2d  | pylibefp hdf5   ofermi   ofermip4 cppe     adcc   fockci mkl  networkx pydantic pint  pymdi  ecpint
-    #                                    ------   ------ -------- ------ -------- ------ ----- ----- ------ -------- ----- ------   -------- ------ ----- ---- ------   --------  ----- ------ -----   -------- ------ -------- -------- -------  ----   ------ ---  -------- -------- ----  -----  ------
+    #                                    ambit    pb11   chemps2  dftd3  dkh      libefp erd   g2g   gcp    gdma     gpu   libint   pcm      qcel   resp  sim  sns      v2rdm     libxc qcng   mp2d  | pylibefp hdf5   ofermi   ofermip4 cppe     adcc   fockci mkl  networkx pydantic pint  pymdi  ecpint optking
+    #                                    ------   ------ -------- ------ -------- ------ ----- ----- ------ -------- ----- ------   -------- ------ ----- ---- ------   --------  ----- ------ -----   -------- ------ -------- -------- -------  ----   ------ ---  -------- -------- ----  -----  ------ -------
     # - "1.2a1.dev6"  # (   Apr 2018)             2.2.3  1.8.7b1  3.2.0  1.2      1.5b2        1.0.1 2.0.2  2.2.6          1.2.1    1.2.0rc1                   1.0.1    0.7a1     4.0.1                         1.10.1                                          2018
     # - "1.2a1.dev7"  # ( 1 May 2018)             ...    1.8.7    ...    ...      ...          ...   ...    ...            ...      1.2.0rc2                   ...      ...       ...                           ...
     # - "1.2a1.dev8"  # ( 1 May 2018)             ...    ...      ...    ...      ...          ...   ...    ...            ...      1.2.1                      ...      ...       4.0.2                         ...
@@ -155,8 +166,11 @@ ltrtver:
     # - "1.6.dev6"    # (18 May 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      ...    ...   ...  ...      ..._L11M9 ...   ...    ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
     # - "1.6"         # (19 May 2022)  ditto 1.6.dev6 for v1.6
     # - "1.6.1"       # ( 7 Jul 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      0.25.0 ...   ...  ...      ...       ...   0.23.0 ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
+    # - "1.7.dev1"    # ( 8 Jul 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      0.25.0 ...   ...  ...      ...       ...   0.23.0 ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
+    # - "1.7.dev2"    # (17 Aug 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      ...    ...   ...  ...      ..._L12   ...   0.24.1 ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
+    # - "1.7"         # ( 6 Dec 2022)    ...      2.10.1 ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      0.25.1 ...   ...  ...      ..._L13   5.2.3 0.26.0 ...     ...      ...    ...      ...      ...      ...           ...  ...      ...                          0.2.1
 
-    - "1.7.dev1"      # ( 8 Jul 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      0.25.0 ...   ...  ...      ...       ...   0.23.0 ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
+    - "1.8.dev1"      # (   WIP 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
 
     # - "XXX"         # (   WIP 2022)    ...      ...    ...      ...    ...      ...          ...   ...    ...      ...   ...      ...      ...    ...   ...  ...      ...       ...   ...    ...     ...      ...    ...      ...      ...      ...           ...  ...      ...
     # !* sns in 1.3.dev10: 1.0.3 was ready but forgot to include it again until 1.4.dev2 (at L2M1)
@@ -244,8 +258,14 @@ openfermion:
 #    - _2
 openfermionpsi4:
     - 0.5
+optking:
+    - 0.2.1
 pcmsolver:
     - 1.2.1.1
+pcmsolver_bld:
+    - py310h92d4acf_3
+    - py39h92d4acf_3
+    - py38h92d4acf_3
 pylibefp:
     - 0.6.1
 #pylibefp_bld:  # temporary to pull along looser qcel
@@ -253,9 +273,9 @@ pylibefp:
 pymdi:
     - 1.2
 qcelemental:
-    - 0.25.0
+    - 0.25.1
 qcengine:
-    - 0.23.0
+    - 0.26.0
 resp:
     - 1.0
 simint:
@@ -268,7 +288,7 @@ v2rdm_casscf_bld:
     # ordinary master (sometimes have to pin for resolver)
     - ''
 #    - _9  [osx]
-#    - _11  [linux]
+#    - _13  [linux]
     # c. v1.6.x _L11M9
     #- _9  [osx]
     #- _11  [linux]
@@ -282,10 +302,10 @@ v2rdm_casscf_bld:
     #- _5  [osx]
     #- _6  [linux]
 libxc:
-    - 5.1.5
+    - 5.2.3
 libxc_bld:
-    - h84b9e52_1     [linux]
-    - haf1e3a3_0     [osx]
+    - hfebba4c_0     [linux]
+    # TBE- haf1e3a3_0     [osx]
 
 # <<<  Concluding Stuff  >>>
 

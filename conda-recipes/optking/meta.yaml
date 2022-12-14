@@ -1,60 +1,52 @@
 {% set name = "optking" %}
-{% set version = "0.1.0" %}
-#{% set sha256 = "55e16cc13b6b8f69153d1de287a32b80008b7433ab824cec21194f5c78d91c34" %}
+{% set version = "0.2.1" %}
 
 package:
-    name: {{ name|lower }}
-    version: {{ version }}
+  name: {{ name|lower }}
+  version: {{ version }}
 
 source:
-    git_url: git@github.com:psi-rking/{{ name }}.git
-    git_tag: master
-
-#source:
-#    url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-#    sha256: {{ sha256 }}
+  url: https://github.com/psi-rking/optking/archive/{{ version }}.tar.gz
+  sha256: 1076af33946f071edd86baf0d359b153c37bce54b6c143d286ba5559632c50b5
 
 build:
-    noarch: python
-    number: 6
-    script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+  number: 1
 
 requirements:
-    build:
-        - python >=3.6
-        - pip
-        - setuptools
-    run:
-        - msgpack-python
-        - numpy
-        - python >=3.6.0
-        - qcelemental >=0.12.0
-        - qcengine >=0.12.0
+  host:
+    - python >=3.7
+    - pip
+  run:
+    - python >=3.7
+    - numpy >=1.12
+    - qcelemental >=0.21.0
+    - qcengine >=0.21.0
+    - msgpack-python >=1.0
 
 test:
-    imports:
-        - optking
-    requires:
-        - dftd3
-        - psi4
-        - pytest >=4.0.0
-        - pytest-xdist
-    commands:
-        - pytest -rws -v $SP_DIR/optking -n $CPU_COUNT
+  imports:
+    - optking
+  commands:
+    - pip check
+    - pytest -k test_lj_external_gradient
+  source_files:
+    - optking/tests/test_opthelper.py
+  requires:
+    - pip
+    - pytest >=4.0.0
+
 
 about:
-    home: https://github.com/psi-rking/optking
-    dev_url: https://github.com/psi-rking/optking
-#    doc_url: https://qcelemental.readthedocs.io/en/latest/
-#    doc_source_url: https://github.com/MolSSI/QCElemental/blob/master/docs/source/index.rst
-    license: BSD-3-Clause
-    license_url: https://opensource.org/licenses/BSD-3-Clause
-    license_file: LICENSE
-    license_family: BSD
-    summary: A geometry optimizer for quantum chemistry.
+  home: https://github.com/psi-rking/optking
+  license: BSD-3-Clause
+  license_file: LICENSE
+  summary: A molecular optimizer for Quantum Chemistry calculations.
+  dev_url: https://github.com/psi-rking/optking.git
+  doc_url: https://optking.readthedocs.io/en/latest/
+  doc_source_url: https://github.com/psi-rking/optking/blob/master/docs/source/index.rst
 
 extra:
-    recipe-maintainers:
-        - psi-rking
-        - AlexHeide
-        - loriab
+  recipe-maintainers:
+    - AlexHeide

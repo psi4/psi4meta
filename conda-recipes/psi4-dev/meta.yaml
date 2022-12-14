@@ -51,6 +51,7 @@ outputs:
               - msgpack-python
               - networkx >=2.4
               - numpy >=1.12.0
+              - optking
               - pytest
               - pytest-xdist
               - scipy
@@ -87,6 +88,7 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_Libint2=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON
+                  -DCMAKE_INSIST_FIND_PACKAGE_optking=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_qcengine=ON
                   -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON
@@ -128,6 +130,7 @@ outputs:
                   -DCMAKE_INSIST_FIND_PACKAGE_Libint2=ON                                 # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_pybind11=ON                                # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_Libxc=ON                                   # [linux]
+                  -DCMAKE_INSIST_FIND_PACKAGE_optking=ON                                 # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_qcelemental=ON                             # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_qcengine=ON                                # [linux]
                   -DCMAKE_INSIST_FIND_PACKAGE_ambit=ON                                   # [linux]

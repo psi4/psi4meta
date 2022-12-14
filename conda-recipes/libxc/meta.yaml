@@ -1,6 +1,6 @@
 {% set name = "libxc" %}
-{% set version = "5.1.5" %}
-{% set sha256 = "60d9ead0f62e40991b6ff043242902090141c437343eb345a981ec8e3fd224d8" %}
+{% set version = "5.2.3" %}
+{% set sha256 = "6cd45669d7f92bdcdb6879bea232dac94ad57d025cf2edfd019182ccf6494a75" %}
 
 package:
     name: {{ name }}
@@ -11,7 +11,7 @@ source:
     sha256: {{ sha256 }}
 
 build:
-    number: 1                                            # [linux]
+    number: 0                                            # [linux]
     number: 0                                            # [osx]
     binary_relocation: true
     skip: true                                           # [win]
@@ -71,3 +71,6 @@ about:
 #    git_tag: 4.3.3  # L0/M0: 4.3.3
 #    git_tag: 4.3.0  # L1/M1 4.3.0, L2 c-b 3.17
 #                    # L0/M0 loriab branch
+
+#   {% set version = "5.1.5" %}
+#   {% set sha256 = "60d9ead0f62e40991b6ff043242902090141c437343eb345a981ec8e3fd224d8" %}

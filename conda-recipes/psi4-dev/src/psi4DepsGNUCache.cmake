@@ -11,7 +11,7 @@
 # See ``psi4-path-advisor`` (or cmake command below) for use.
 #
 # >>> /opt/anaconda1anaconda2anaconda3/bin/cmake \
-#       -H. \
+#       -S. \
 #       -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsGNUCache.cmake \
 #       -Bobjdir
 #

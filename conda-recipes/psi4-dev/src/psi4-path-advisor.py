@@ -82,7 +82,7 @@ else:
 
 #advice = {
 #    'cmake':  '/opt/anaconda1anaconda2anaconda3/bin/cmake \\',
-#    'here':   '    -H. \\',
+#    'here':   '    -S. \\',
 #    'deps':   '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsCache.cmake \\',
 #    'nooptl': '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsDisableCache.cmake \\',
 #    'Lintel': '    -C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsIntelCache.cmake \\',
@@ -93,7 +93,7 @@ else:
 #}
 
 recc = ['/opt/anaconda1anaconda2anaconda3/bin/cmake',
-        '-H.',
+        '-S.',
         '-C/opt/anaconda1anaconda2anaconda3/share/cmake/psi4/psi4DepsCache.cmake',
         '-Bobjdir']
 

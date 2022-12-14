@@ -323,6 +323,21 @@
 # [LAB 8 Jul 2022]
 # anaconda copy --to-owner psi4 conda-forge/qcengine/0.24.0/noarch/qcengine-0.24.0-pyhd8ed1ab_0.tar.bz2
 
+# [LAB 16 Aug 2022]
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.24.1/noarch/qcengine-0.24.1-pyhd8ed1ab_0.tar.bz2
+
+# [LAB 31 Oct 2022]
+# anaconda copy --to-owner psi4 conda-forge/qcelemental/0.25.1/noarch/qcelemental-0.25.1-pyhd8ed1ab_1.tar.bz2
+
+# [LAB 14 Nov 2022]
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.25.0/noarch/qcengine-0.25.0-pyhd8ed1ab_0.tar.bz2
+
+# [LAB 30 Nov 2022]
+# anaconda copy --to-owner psi4 conda-forge/qcengine/0.26.0/noarch/qcengine-0.26.0-pyhd8ed1ab_0.conda
+
+# [LAB 6 Dec 2022]
+# anaconda copy --to-owner psi4 conda-forge/optking/0.2.1/noarch/optking-0.2.1-pyhd8ed1ab_0.conda
+
 #anaconda copy --to-owner psi4 adcc/libtensorlight/3.0.1.dev/osx-64/libtensorlight-3.0.1.dev-h2caaeef_0.tar.bz2
 
 
@@ -668,13 +683,14 @@ if host == "psinet":
 # L/PSI4: build Psi4 w/o any RT deps or tests (***)
 # -------------------------------------------------
 {'recipe': 'psi4-multiout', 'build_channels': ['psi4/label/dev']},
+#{'recipe': 'psi4-multiout', 'build_channels': ['defaults', 'psi4/label/dev']},
 
 # L/RT-MP: build RT metapackage w/existing downstreams and new Psi4 (***)
 #          upon any failure, step back (preferred), adjusting source of Psi to fix Psi+downstream interface
 #                       -OR- step forward, rebuilding downstream against new Psi ABI or adjusting source of downstream.
 #          upon success, continue at L/DEV.
 # ---------------------------------------------------------------------------------------------------------------------
-{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev', 'adcc']},
+{'recipe': 'psi4-rt', 'build_channels': ['psi4/label/dev']},  #, 'adcc']},
 
 # L/RT: if psi4-rt tests fail, build the downstreams as needed.
 # -------------------------------------------------------------

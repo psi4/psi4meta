@@ -7,7 +7,7 @@ package:
 source:
     git_url: git@github.com:psi4/psi4.git      # [linux]
     git_url: https://github.com/psi4/psi4.git  # [osx]
-    # git_tag: v1.3.2  # explicit tag when you don't want tag.dev1  # v1.2 L1: AVX-512  # v1.2.1 L1: am8 c. v1.3  # v1.3 L1/M1: qcel max 0.5
+    # git_tag: v1.3.2  # explicit tag when you don't want tag.dev1  # v1.2 L1: AVX-512  # v1.2.1 L1: am8 c. v1.3  # v1.3 L1/M1: qcel max 0.5  # v1.7 L1: pcmsolver_bld pin
     git_tag: master
 
 build:
@@ -38,12 +38,13 @@ requirements:
         - gau2grid {{ gau2grid }}
         - gdma {{ gdma }}                           # nofortran
         - libint2 {{ libint }} {{ libint_bld }}
-        - pcmsolver {{ pcmsolver }}                 # nofortran
+        - optking {{ optking }}
+        - pcmsolver {{ pcmsolver }} {{ pcmsolver_bld }}  # nofortran
         - simint {{ simint }}
         - libxc {{ libxc }}
         # rt for ctest
         - networkx
-        - numpy >=1.12.0
+        - numpy {{ numpy }}
         - qcelemental {{ qcelemental }}
         - qcengine {{ qcengine }}
         - scipy
@@ -55,6 +56,8 @@ outputs:
               blas: {{ blas_impl }}
           run_exports:
               - {{ pin_subpackage('psi4', max_pin='x.x') }}
+          ignore_run_exports:
+              - numpy
       requirements:
           run_constrained:
               - pymdi >={{ pymdi }}
@@ -78,7 +81,8 @@ outputs:
               - gau2grid {{ gau2grid }}
               - gdma {{ gdma }}                  # nofortran
               - libint2 {{ libint }} {{ libint_bld }}
-              - pcmsolver {{ pcmsolver }}        # nofortran
+              - optking {{ optking }}
+              - pcmsolver {{ pcmsolver }} {{ pcmsolver_bld }}  # nofortran
               - qcelemental {{ qcelemental }}
               - qcengine {{ qcengine }}
               - simint {{ simint }}
@@ -90,15 +94,16 @@ outputs:
               - intel-openmp                   # [linux]
               - msgpack-python
               - networkx
-              - numpy >=1.12.0
+              - numpy >={{ numpy }},<1.26.0
               - msgpack-python
               - pytest                                         # drive psi4 --test
               - {{ pin_compatible('python', max_pin='x.x') }}
+              - {{ pin_compatible('optking', upper_bound='0.5') }}
               # tightening for qcsk transition
               #- {{ pin_compatible('qcelemental', max_pin='x') }}
               #- {{ pin_compatible('qcengine', max_pin='x') }}
               - {{ pin_compatible('qcelemental', upper_bound='0.26') }}
-              - {{ pin_compatible('qcengine', upper_bound='0.25') }}
+              - {{ pin_compatible('qcengine', upper_bound='0.27') }}
               - scipy
               # qc
               - {{ pin_compatible('dftd3', max_pin='x.x') }}
@@ -106,6 +111,7 @@ outputs:
               - libint2 {{ libint }} {{ libint_bld }}  # temporary so tests run in recipe and so L2 is steady in the wild this season
               - gau2grid {{ gau2grid }} {{ gau2grid_bld }}  # temporary so psi4 channel preferred to c-f
               - libxc {{ libxc }} {{ libxc_bld }}  # temporary so psi4 channel preferred to c-f
+              - pcmsolver {{ pcmsolver }} {{ pcmsolver_bld }}  # temporary so right intel_sse4_strlen
       files:
           - bin/psi4
           - include/psi4
@@ -141,7 +147,7 @@ outputs:
               - python $PREFIX/share/psi4/scripts/test_threading.py ${PASSFAIL} --psithon -n6  # [py3k and not osx]
               #- python -c "import psi4, sys, os; sys.exit(psi4.test('long', extras=['--durations=50', '-n', os.environ.get('CPU_COUNT')]))"  # [linux]
               #- python -c "import psi4, sys, os; sys.exit(psi4.test('quick', extras=['-k', 'not qcng_dftd3 and not testing', '--durations=50']))"  # [osx]
-              - MKL_CBWR=AVX pytest -rws -v --durations=20 -n auto $SP_DIR/psi4  # [linux]
+              - MKL_CBWR=AVX pytest -rws -v --durations=100 --durations-min 60.0 -n auto -k "not (large and freq)" $SP_DIR/psi4  # [linux]
               #- pytest -rws -v --durations=20 -n auto $SP_DIR/psi4 -m "quick and api" -k "not suite and not angmom"  # [osx]
               - pytest -rws -v --durations=20 -n auto $SP_DIR/psi4 -m "quick and api" -k "suite"  # [osx]
               - pytest -rws -v --durations=20 -n auto $SP_DIR/psi4 -m "quick and cli"  # [osx]
@@ -215,3 +221,5 @@ outputs:
 #         requirements:
 #             host:
 #                 - cython
+
+#        - numpy >=1.12.0,<1.23.0

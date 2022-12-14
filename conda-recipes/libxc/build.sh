@@ -10,7 +10,7 @@ if [ "$(uname)" == "Darwin" ]; then
 
     # configure
     ${BUILD_PREFIX}/bin/cmake \
-        -H${SRC_DIR} \
+        -S${SRC_DIR} \
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
@@ -34,7 +34,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     # configure
     ${BUILD_PREFIX}/bin/cmake \
-        -H${SRC_DIR} \
+        -S${SRC_DIR} \
         -Bbuild \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
