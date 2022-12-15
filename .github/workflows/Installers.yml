@@ -23,17 +23,17 @@ jobs:
             platform: linux-64
             python-version: 3.9
 
-          - runs-on: macos-latest
-            platform: osx-64
-            python-version: '3.10'
+          #- runs-on: macos-latest
+          #  platform: osx-64
+          #  python-version: '3.10'
 
-          - runs-on: macos-latest
-            platform: osx-64
-            python-version: 3.8
+          #- runs-on: macos-latest
+          #  platform: osx-64
+          #  python-version: 3.8
 
-          - runs-on: macos-latest
-            platform: osx-64
-            python-version: 3.9
+          #- runs-on: macos-latest
+          #  platform: osx-64
+          #  python-version: 3.9
 
           - runs-on: windows-latest
             platform: win-64
