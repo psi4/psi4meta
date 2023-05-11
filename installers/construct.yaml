@@ -16,10 +16,7 @@
 name: {{ name }}
 version: {{ release }}
 
-#{% set platform = "Linux-x86_64" %}          # [linux]
-#{% set platform = "MacOSX-x86_64" %}         # [osx]
 {% set ext = "sh" %}                         # [unix]
-#{% set platform = "Windows-x86_64" %}        # [win]
 {% set ext = "exe" %}                        # [win]
 
 installer_filename: {{ name }}-{{ release }}-py{{ python | replace(".", "") }}-{{ platform }}.{{ ext }}

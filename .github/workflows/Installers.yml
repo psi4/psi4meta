@@ -125,7 +125,12 @@ jobs:
             cd installers/
             sed -i.bak 's/{% set python = "3.8" %}/{% set python = "${{ env.PYVER }}" %}/g' construct.yaml
             sed -i.bak 's/{% set platform = "xxx" %}/{% set platform = "${{ matrix.cfg.formal_platform }}" %}/g' construct.yaml
-            constructor --platform ${{ matrix.cfg.platform }}
+            if [[ "${{ runner.os }}" == "Windows" ]]; then
+              CONDAEXE_FILE="${CONDA_PREFIX}/Library/bin/conda.exe"
+            else
+              CONDAEXE_FILE="${CONDA_PREFIX}/bin/conda"
+            fi
+            constructor --platform ${{ matrix.cfg.platform }} --conda-exe ${CONDAEXE_FILE}
             echo "ARTIFACT=`ls -1 Psi4conda*`" >> $GITHUB_ENV
 
       - name: Archive Psi4Conda Installer
@@ -150,8 +155,8 @@ jobs:
           which conda python psi4
           psi4 --version
           if [[ "${{ runner.os }}" == "Windows" ]]; then
-            psi4 --test=smoke_not_d2ints
+            psi4 --test=smoke_not_d2ints -n2
           else
-            psi4 --test
+            psi4 --test -n2
           fi
 
