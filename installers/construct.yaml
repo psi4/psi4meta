@@ -1,7 +1,6 @@
 ###  Configuration
 
 {% set release = "1.8a3" %}
-#{% set ltrtver = "1.7" %}
 
 {% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L76
 
@@ -28,7 +27,6 @@ specs:
   - conda
   - python {{ python }}*
   - psi4 =={{ release }}*
-  #- psi4-rt =={{ ltrtver }}                  # [unix]
   - pytest-xdist
   - dftd3-python
   - dftd4-python

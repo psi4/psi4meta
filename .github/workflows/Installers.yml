@@ -37,7 +37,7 @@ jobs:
 
           - runs-on: windows-latest
             platform: win-64
-            python-version: 3.10
+            python-version: '3.10'
 
     env:
       PLATFORM: ${{ matrix.cfg.platform }}
@@ -87,6 +87,7 @@ jobs:
       - name: Test Installer
         run: |
           conda info
+          conda list
           which conda python psi4
           psi4 --version
           psi4 --test
