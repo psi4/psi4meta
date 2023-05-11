@@ -3,6 +3,7 @@
 {% set release = "1.8a3" %}
 
 {% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L76
+{% set platform = "xxx" %}                   # if edit, same as above
 
 {% set name = "Psi4conda" %}
 #{% set repo = "https://conda.anaconda.org/" %}
@@ -15,10 +16,10 @@
 name: {{ name }}
 version: {{ release }}
 
-{% set platform = "Linux-x86_64" %}          # [linux]
-{% set platform = "MacOSX-x86_64" %}         # [osx]
+#{% set platform = "Linux-x86_64" %}          # [linux]
+#{% set platform = "MacOSX-x86_64" %}         # [osx]
 {% set ext = "sh" %}                         # [unix]
-{% set platform = "Windows-x86_64" %}        # [win]
+#{% set platform = "Windows-x86_64" %}        # [win]
 {% set ext = "exe" %}                        # [win]
 
 installer_filename: {{ name }}-{{ release }}-py{{ python | replace(".", "") }}-{{ platform }}.{{ ext }}
@@ -31,10 +32,8 @@ specs:
   - dftd3-python
   - dftd4-python
   - gcp-correction
-  #- console_shortcut                         # [win]
-  #- menuinst                                 # [win]
   - pip
-  - miniforge_console_shortcut 1.*  # [win]
+  - miniforge_console_shortcut 1.*           # [win]
 
 channels: &id1
   - conda-forge/label/psi4_dev
