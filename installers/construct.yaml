@@ -1,13 +1,12 @@
 ###  Configuration
 
-{% set release = "1.7" %}                 # [unix]
-{% set release = "1.7" %}            # [win]
-{% set ltrtver = "1.7" %}
+{% set release = "1.8a3" %}
+#{% set ltrtver = "1.7" %}
 
 {% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L76
 
 {% set name = "Psi4conda" %}
-{% set repo = "https://conda.anaconda.org/" %}
+#{% set repo = "https://conda.anaconda.org/" %}
 {% set channel = "psi4" %}
 {% set channel_tag = "" %}  # toggle to empty string for releases, `-c psi4`, vs. "/label/dev" for release candidates, `-c psi4/label/dev`
 
@@ -29,24 +28,30 @@ specs:
   - conda
   - python {{ python }}*
   - psi4 =={{ release }}*
-  - psi4-rt =={{ ltrtver }}                  # [unix]
-  - dftd4                                    # [linux]
-  - dftd4-python                             # [win]
-  - console_shortcut                         # [win]
-  - menuinst                                 # [win]
+  #- psi4-rt =={{ ltrtver }}                  # [unix]
+  - dftd3-python
+  - dftd4-python
+  - gcp-correction
+  #- console_shortcut                         # [win]
+  #- menuinst                                 # [win]
+  - pip
+  - miniforge_console_shortcut 1.*  # [win]
 
 channels: &id1
-  - https://conda.anaconda.org/conda-forge/  # [win]
-  - https://repo.anaconda.com/pkgs/main/
-  - https://repo.anaconda.com/pkgs/msys2/    # [win]
-  - {{ repo }}{{ channel }}{{ channel_tag }}
-  - {{ repo }}adcc
+  - conda-forge/label/psi4_dev
+  - conda-forge/label/libint_dev
+  - conda-forge
+  #- https://conda.anaconda.org/conda-forge/  # [win]
+  #- https://repo.anaconda.com/pkgs/main/
+  #- https://repo.anaconda.com/pkgs/msys2/    # [win]
+  #- {{ repo }}{{ channel }}{{ channel_tag }}
+  #- {{ repo }}adcc
 
 conda_default_channels: *id1
 
 keep_pkgs: false
 
-ignore_duplicate_files: true                 # [osx]  # for iomp5
+#ignore_duplicate_files: true                 # [osx]  # for iomp5
 
 license_file: COPYING.LESSER
 
