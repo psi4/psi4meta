@@ -29,6 +29,7 @@ specs:
   - python {{ python }}*
   - psi4 =={{ release }}*
   #- psi4-rt =={{ ltrtver }}                  # [unix]
+  - pytest-xdist
   - dftd3-python
   - dftd4-python
   - gcp-correction
