@@ -126,9 +126,11 @@ jobs:
             sed -i.bak 's/{% set python = "3.8" %}/{% set python = "${{ env.PYVER }}" %}/g' construct.yaml
             sed -i.bak 's/{% set platform = "xxx" %}/{% set platform = "${{ matrix.cfg.formal_platform }}" %}/g' construct.yaml
             if [[ "${{ runner.os }}" == "Windows" ]]; then
-              CONDAEXE_FILE="${CONDA_PREFIX}/Library/bin/conda.exe"
-            else
-              CONDAEXE_FILE="${CONDA_PREFIX}/bin/conda"
+              CONDAEXE_FILE="C:\Miniconda\Scripts\conda.exe"
+            elif [[ "${{ runner.os }}" == "Linux" ]]; then
+              CONDAEXE_FILE="/usr/share/miniconda/condabin/conda"
+            elif [[ "${{ runner.os }}" == "macOS" ]]; then
+              CONDAEXE_FILE="/usr/local/miniconda/condabin/conda"
             fi
             constructor --platform ${{ matrix.cfg.platform }} --conda-exe ${CONDAEXE_FILE}
             echo "ARTIFACT=`ls -1 Psi4conda*`" >> $GITHUB_ENV

@@ -19,6 +19,7 @@ version: {{ release }}
 {% set ext = "sh" %}                         # [unix]
 {% set ext = "exe" %}                        # [win]
 
+
 installer_filename: {{ name }}-{{ release }}-py{{ python | replace(".", "") }}-{{ platform }}.{{ ext }}
 
 specs:
