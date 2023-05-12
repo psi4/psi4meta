@@ -116,7 +116,7 @@ jobs:
 
       - name: Environment Information
         run: |
-          conda install -y -q -c conda-forge constructor jinja2
+          conda install -y -q -c conda-forge constructor jinja2 conda-standalone
           conda env list
           conda list
 
@@ -125,14 +125,16 @@ jobs:
             cd installers/
             sed -i.bak 's/{% set python = "3.8" %}/{% set python = "${{ env.PYVER }}" %}/g' construct.yaml
             sed -i.bak 's/{% set platform = "xxx" %}/{% set platform = "${{ matrix.cfg.formal_platform }}" %}/g' construct.yaml
-            if [[ "${{ runner.os }}" == "Windows" ]]; then
-              CONDAEXE_FILE="C:\Miniconda\Scripts\conda.exe"
-            elif [[ "${{ runner.os }}" == "Linux" ]]; then
-              CONDAEXE_FILE="/usr/share/miniconda/condabin/conda"
-            elif [[ "${{ runner.os }}" == "macOS" ]]; then
-              CONDAEXE_FILE="/usr/local/miniconda/condabin/conda"
-            fi
-            constructor --platform ${{ matrix.cfg.platform }} --conda-exe ${CONDAEXE_FILE}
+            #if [[ "${{ runner.os }}" == "Windows" ]]; then
+            #  CONDAEXE_FILE="C:\Miniconda\Scripts\conda.exe"
+            #  #CONDAEXE_FILE="${CONDA_PREFIX}/Library/bin/conda.exe"
+            #elif [[ "${{ runner.os }}" == "Linux" ]]; then
+            #  CONDAEXE_FILE="/usr/share/miniconda/condabin/conda"
+            #elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            #  CONDAEXE_FILE="/usr/local/miniconda/condabin/conda"
+            #  #CONDAEXE_FILE="${CONDA_PREFIX}/bin/conda"
+            #fi
+            constructor --platform ${{ matrix.cfg.platform }} #--conda-exe ${CONDAEXE_FILE}
             echo "ARTIFACT=`ls -1 Psi4conda*`" >> $GITHUB_ENV
 
       - name: Archive Psi4Conda Installer
