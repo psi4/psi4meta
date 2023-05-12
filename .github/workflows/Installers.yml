@@ -116,7 +116,7 @@ jobs:
 
       - name: Environment Information
         run: |
-          conda install -y -q -c conda-forge constructor jinja2 conda-standalone
+          conda install -y -q -c conda-forge constructor jinja2 curl libarchive #conda-standalone
           conda env list
           conda list
 
@@ -161,6 +161,7 @@ jobs:
           retention-days: 1
 
       - name: Install Installer
+        if: matrix.cfg.platform != 'osx-arm64'
         uses: conda-incubator/setup-miniconda@v2.0.1
         with:
           installer-url: file://${{ github.workspace }}/installers/${{ env.ARTIFACT }}
@@ -168,6 +169,7 @@ jobs:
           activate-environment: ""
 
       - name: Test Installer
+        if: matrix.cfg.platform != 'osx-arm64'
         run: |
           conda info
           conda list

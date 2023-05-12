@@ -23,7 +23,7 @@ version: {{ release }}
 installer_filename: {{ name }}-{{ release }}-py{{ python | replace(".", "") }}-{{ platform }}.{{ ext }}
 
 specs:
-  - mamba 1.4.2
+  #- mamba 1.4.2
   - conda
   - python {{ python }}*
   - psi4 =={{ release }}*
