@@ -125,6 +125,21 @@ jobs:
             cd installers/
             sed -i.bak 's/{% set python = "3.8" %}/{% set python = "${{ env.PYVER }}" %}/g' construct.yaml
             sed -i.bak 's/{% set platform = "xxx" %}/{% set platform = "${{ matrix.cfg.formal_platform }}" %}/g' construct.yaml
+            if [[ "${{ matrix.cfg.platform }}" != win-* ]]; then
+                MICROMAMBA_VERSION=1.3.1
+                MICROMAMBA_BUILD=0
+                #mkdir "${TEMP_DIR}/micromamba"
+                #pushd "${TEMP_DIR}/micromamba"
+                curl -L -O "https://anaconda.org/conda-forge/micromamba/${MICROMAMBA_VERSION}/download/${{ matrix.cfg.platform }}/micromamba-${MICROMAMBA_VERSION}-${MICROMAMBA_BUILD}.tar.bz2"
+                bsdtar -xf "micromamba-${MICROMAMBA_VERSION}-${MICROMAMBA_BUILD}.tar.bz2"
+                if [[ "${{ matrix.cfg.platform }}" == win-* ]]; then
+                  MICROMAMBA_FILE="${PWD}/Library/bin/micromamba.exe"
+                else
+                  MICROMAMBA_FILE="${PWD}/bin/micromamba"
+                fi
+                #popd
+                EXTRA_CONSTRUCTOR_ARGS="${EXTRA_CONSTRUCTOR_ARGS} --conda-exe ${MICROMAMBA_FILE}" # --platform ${TARGET_PLATFORM}"
+            fi
             #if [[ "${{ runner.os }}" == "Windows" ]]; then
             #  CONDAEXE_FILE="C:\Miniconda\Scripts\conda.exe"
             #  #CONDAEXE_FILE="${CONDA_PREFIX}/Library/bin/conda.exe"
@@ -134,7 +149,7 @@ jobs:
             #  CONDAEXE_FILE="/usr/local/miniconda/condabin/conda"
             #  #CONDAEXE_FILE="${CONDA_PREFIX}/bin/conda"
             #fi
-            constructor --platform ${{ matrix.cfg.platform }} #--conda-exe ${CONDAEXE_FILE}
+            constructor --platform ${{ matrix.cfg.platform }} ${EXTRA_CONSTRUCTOR_ARGS} ##--conda-exe ${CONDAEXE_FILE}
             echo "ARTIFACT=`ls -1 Psi4conda*`" >> $GITHUB_ENV
 
       - name: Archive Psi4Conda Installer
