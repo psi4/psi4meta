@@ -2,13 +2,13 @@
 
 {% set release = "1.8" %}
 
-{% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L76
-{% set platform = "xxx" %}                   # if edit, same as above
+{% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L126
+{% set platform = "xxx" %}                   # if edit, same as above L127
 
 {% set name = "Psi4conda" %}
 #{% set repo = "https://conda.anaconda.org/" %}
-{% set channel = "psi4" %}
-{% set channel_tag = "" %}  # toggle to empty string for releases, `-c psi4`, vs. "/label/dev" for release candidates, `-c psi4/label/dev`
+#{% set channel = "psi4" %}
+#{% set channel_tag = "" %}  # toggle to empty string for releases, `-c psi4`, vs. "/label/dev" for release candidates, `-c psi4/label/dev`
 
 
 ###  Recipe
@@ -19,11 +19,9 @@ version: {{ release }}
 {% set ext = "sh" %}                         # [unix]
 {% set ext = "exe" %}                        # [win]
 
-
 installer_filename: {{ name }}-{{ release }}-py{{ python | replace(".", "") }}-{{ platform }}.{{ ext }}
 
 specs:
-  #- mamba 1.4.2
   - conda
   - python {{ python }}*
   - psi4 =={{ release }}*

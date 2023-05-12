@@ -11,91 +11,91 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-          #- runs-on: ubuntu-latest
-          #  platform: linux-64
-          #  formal_platform: "Linux-x86_64"
-          #  python-version: 3.8
+          - runs-on: ubuntu-latest
+            platform: linux-64
+            formal_platform: "Linux-x86_64"
+            python-version: 3.8
 
-          #- runs-on: ubuntu-latest
-          #  platform: linux-64
-          #  formal_platform: "Linux-x86_64"
-          #  python-version: 3.9
+          - runs-on: ubuntu-latest
+            platform: linux-64
+            formal_platform: "Linux-x86_64"
+            python-version: 3.9
 
           - runs-on: ubuntu-latest
             platform: linux-64
             formal_platform: "Linux-x86_64"
             python-version: '3.10'
 
-          #- runs-on: ubuntu-latest
-          #  platform: linux-64
-          #  formal_platform: "Linux-x86_64"
-          #  python-version: '3.11'
+          - runs-on: ubuntu-latest
+            platform: linux-64
+            formal_platform: "Linux-x86_64"
+            python-version: '3.11'
 
           #########################
 
-          #- runs-on: macos-latest
-          #  platform: osx-arm64
-          #  formal_platform: "MacOSX-arm64"
-          #  python-version: '3.8'
+          - runs-on: macos-latest
+            platform: osx-arm64
+            formal_platform: "MacOSX-arm64"
+            python-version: '3.8'
 
-          #- runs-on: macos-latest
-          #  platform: osx-arm64
-          #  formal_platform: "MacOSX-arm64"
-          #  python-version: '3.9'
+          - runs-on: macos-latest
+            platform: osx-arm64
+            formal_platform: "MacOSX-arm64"
+            python-version: '3.9'
 
           - runs-on: macos-latest
             platform: osx-arm64
             formal_platform: "MacOSX-arm64"
             python-version: '3.10'
 
-          #- runs-on: macos-latest
-          #  platform: osx-arm64
-          #  formal_platform: "MacOSX-arm64"
-          #  python-version: '3.11'
+          - runs-on: macos-latest
+            platform: osx-arm64
+            formal_platform: "MacOSX-arm64"
+            python-version: '3.11'
 
           #########################
 
-          #- runs-on: macos-latest
-          #  platform: osx-64
-          #  formal_platform: "MacOSX-x86_64"
-          #  python-version: 3.8
+          - runs-on: macos-latest
+            platform: osx-64
+            formal_platform: "MacOSX-x86_64"
+            python-version: 3.8
 
-          #- runs-on: macos-latest
-          #  platform: osx-64
-          #  formal_platform: "MacOSX-x86_64"
-          #  python-version: 3.9
+          - runs-on: macos-latest
+            platform: osx-64
+            formal_platform: "MacOSX-x86_64"
+            python-version: 3.9
 
           - runs-on: macos-latest
             platform: osx-64
             formal_platform: "MacOSX-x86_64"
             python-version: '3.10'
 
-          #- runs-on: macos-latest
-          #  platform: osx-64
-          #  formal_platform: "MacOSX-x86_64"
-          #  python-version: '3.11'
+          - runs-on: macos-latest
+            platform: osx-64
+            formal_platform: "MacOSX-x86_64"
+            python-version: '3.11'
 
           #########################
 
-          #- runs-on: windows-latest
-          #  platform: win-64
-          #  formal_platform: "Windows-x86_64"
-          #  python-version: '3.8'
+          - runs-on: windows-latest
+            platform: win-64
+            formal_platform: "Windows-x86_64"
+            python-version: '3.8'
 
-          #- runs-on: windows-latest
-          #  platform: win-64
-          #  formal_platform: "Windows-x86_64"
-          #  python-version: '3.9'
+          - runs-on: windows-latest
+            platform: win-64
+            formal_platform: "Windows-x86_64"
+            python-version: '3.9'
 
           - runs-on: windows-latest
             platform: win-64
             formal_platform: "Windows-x86_64"
             python-version: '3.10'
 
-          #- runs-on: windows-latest
-          #  platform: win-64
-          #  formal_platform: "Windows-x86_64"
-          #  python-version: '3.11'
+          - runs-on: windows-latest
+            platform: win-64
+            formal_platform: "Windows-x86_64"
+            python-version: '3.11'
 
     env:
       PLATFORM: ${{ matrix.cfg.platform }}
@@ -107,10 +107,10 @@ jobs:
     name: "🐍 ${{ matrix.cfg.python-version }} • ${{ matrix.cfg.platform }}"
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Create Conda Environment
-        uses: conda-incubator/setup-miniconda@v2.0.1
+        uses: conda-incubator/setup-miniconda@v2
         with:
           show-channel-urls: true
 
@@ -153,7 +153,7 @@ jobs:
             echo "ARTIFACT=`ls -1 Psi4conda*`" >> $GITHUB_ENV
 
       - name: Archive Psi4Conda Installer
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           if-no-files-found: error
           name: ${{ env.PLATFORM }}-${{ env.PYVER }}
@@ -162,7 +162,7 @@ jobs:
 
       - name: Install Installer
         if: matrix.cfg.platform != 'osx-arm64'
-        uses: conda-incubator/setup-miniconda@v2.0.1
+        uses: conda-incubator/setup-miniconda@v2
         with:
           installer-url: file://${{ github.workspace }}/installers/${{ env.ARTIFACT }}
           auto-activate-base: true
