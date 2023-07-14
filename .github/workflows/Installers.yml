@@ -82,20 +82,20 @@ jobs:
             formal_platform: "Windows-x86_64"
             python-version: '3.8'
 
-          - runs-on: windows-latest
-            platform: win-64
-            formal_platform: "Windows-x86_64"
-            python-version: '3.9'
+          #- runs-on: windows-latest
+          #  platform: win-64
+          #  formal_platform: "Windows-x86_64"
+          #  python-version: '3.9'
 
-          - runs-on: windows-latest
-            platform: win-64
-            formal_platform: "Windows-x86_64"
-            python-version: '3.10'
+          #- runs-on: windows-latest
+          #  platform: win-64
+          #  formal_platform: "Windows-x86_64"
+          #  python-version: '3.10'
 
-          - runs-on: windows-latest
-            platform: win-64
-            formal_platform: "Windows-x86_64"
-            python-version: '3.11'
+          #- runs-on: windows-latest
+          #  platform: win-64
+          #  formal_platform: "Windows-x86_64"
+          #  python-version: '3.11'
 
     env:
       PLATFORM: ${{ matrix.cfg.platform }}
