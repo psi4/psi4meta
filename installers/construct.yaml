@@ -26,9 +26,9 @@ specs:
   - python {{ python }}*
   - psi4 =={{ release }}*
   - pytest-xdist
-  - dftd3-python
-  - dftd4-python
-  - gcp-correction
+  - dftd3-python                             # [not win]
+  - dftd4-python                             # [not win]
+  - gcp-correction                           # [not win]
   - pip
   - miniforge_console_shortcut 1.*           # [win]
 
