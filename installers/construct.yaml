@@ -26,7 +26,7 @@ specs:
   - python {{ python }}*
   - psi4 =={{ release }}*
   - pytest-xdist
-  - dftd3-python                             # [not win]
+  - dftd3-python
   - dftd4-python                             # [not win]
   - gcp-correction
   - pip
