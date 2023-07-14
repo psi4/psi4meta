@@ -1,6 +1,6 @@
 ###  Configuration
 
-{% set release = "1.8.1" %}
+{% set release = "1.8" %}
 
 {% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L126
 {% set platform = "xxx" %}                   # if edit, same as above L127
@@ -26,9 +26,9 @@ specs:
   - python {{ python }}*
   - psi4 =={{ release }}*
   - pytest-xdist
-  - dftd3-python
-  - dftd4-python
-  - gcp-correction
+  - dftd3-python                             # [not (osx and arm64)]
+  - dftd4-python                             # [not (osx and arm64)]
+  - gcp-correction                           # [not (osx and arm64)]
   - pip
   - miniforge_console_shortcut 1.*           # [win]
 
