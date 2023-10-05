@@ -1,6 +1,6 @@
 ###  Configuration
 
-{% set release = "1.8.1" %}
+{% set release = "1.8.2" %}
 
 {% set name = "Psi4conda" %}
 {% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L126
