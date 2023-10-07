@@ -20,7 +20,7 @@ jobs:
       run:
         shell: bash -l {0}
     runs-on: ${{ matrix.cfg.runs-on }}
-    name: "🐍 ${{ matrix.cfg.python-version }} • ${{ matrix.cfg.platform }}"
+    name: "Docker • 🐍 ${{ matrix.cfg.python-version }} • ${{ matrix.cfg.platform }}"
 
     steps:
       - uses: actions/checkout@v3
@@ -45,13 +45,11 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./docker
-          #file: docker/Dockerfile
           build-args: |
             CondaFile=environment.yaml
-          push: false
+          push: true
           tags: ${{ matrix.cfg.tags }}
           #tags: psi4/psi4:latest,psi4/psi4:1.8.0,psi4/psi4:1.8
-          #tags: ${{ secrets.DOCKERHUB_USERNAME }}/psi4:latest
 
       - name: Test
         run: |
@@ -77,7 +75,6 @@ jobs:
  
       - name: Archive Apptainer Image
         if: false
-        #if: ${{ github.repository == 'psi4/psi4' }}
         uses: actions/upload-artifact@v2
         with:
           name: apptainer_sif
@@ -88,35 +85,3 @@ jobs:
       - name: Push to Sylabs
         if: false
         run: apptainer push psi4-1.8.sif library://psi4/psi4/psi4-1.8:latest
-      
-      #$ singularity push my-container.sif library://your-name/project-dir/my-container:latest
-  #singularity push my-container.sif library://your-name/project-dir/my-container:latest
-  #singularity push -U image.sif library://your-username/project-dir/my-container:tags
-  #apptainer push /home/user/my.sif library://user/collection/my.sif:latest
-# #!/bin/bash
-
-# set -eu
-
-# CONDA_FILE="${1}"
-# FILE_BASE="${1//.yaml/}"
-# PROGRAM="${FILE_BASE//_*/}"
-# VERSION="${FILE_BASE//*_/}"
-# MANIFEST="${FILE_BASE}.manifest"
-
-# DOCKER_TAG="${PROGRAM}:${VERSION}"
-
-# if [[ ! -f "${CONDA_FILE}" ]]
-# then
-#   echo "File ${CONDA_FILE} does not exist or is not a file"
-#   exit 1
-# fi
-
-# echo "--------------------------------------------------------"
-# echo "Conda file: ${CONDA_FILE}"
-# echo "Program:    ${PROGRAM}"
-# echo "Version:    ${VERSION}"
-# echo "--------------------------------------------------------"
-
-# docker build . --build-arg CondaFile="${CONDA_FILE}" -t "${DOCKER_TAG}"
-# docker run ${DOCKER_TAG} micromamba list --json > "${MANIFEST}"
-# apptainer build ${FILE_BASE}.sif docker-daemon:${DOCKER_TAG}
