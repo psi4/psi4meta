@@ -35,6 +35,7 @@ jobs:
         run: |
             cd docker/
             sed -i.bak 's/- python=3.8/- python=${{ matrix.cfg.python-version }}/g' environment.yaml
+            cat environment.yaml
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -45,8 +46,7 @@ jobs:
           context: ./docker
           #file: docker/Dockerfile
           build-args: |
-            CondaFile=docker/environment.yaml
-          #push: true
+            CondaFile=environment.yaml
           push: false
           tags: ${{ matrix.cfg.tags }}
           #tags: psi4/psi4:latest,psi4/psi4:1.8.0,psi4/psi4:1.8
