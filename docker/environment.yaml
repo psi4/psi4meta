@@ -1,0 +1,14 @@
+name: p4env
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.8     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Docker.yml#L126
+  - psi4
+  - conda-forge/label/libint_dev::libint
+  
+  - pytest-xdist
+  - dftd3-python
+  - dftd4-python
+  - toml
+  - gcp-correction
