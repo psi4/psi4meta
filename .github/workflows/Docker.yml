@@ -35,7 +35,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: psi4
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Set up Docker Buildx
@@ -55,8 +55,8 @@ jobs:
 
       - name: Test
         run: |
-          docker run ${{ secrets.DOCKERHUB_USERNAME }}/psi4:latest psi4 --version
-          docker run ${{ secrets.DOCKERHUB_USERNAME }}/psi4:latest pytest -v /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/ --color yes -n auto -m smoke
+          docker run psi4/psi4:latest psi4 --version
+          docker run psi4/psi4:latest pytest -v /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/ --color yes -n auto -m smoke
  
       - name: Set up Apptainer
         if: false
@@ -67,7 +67,7 @@ jobs:
       - name: Run an apptainer container
         if: false
         #run: apptainer run docker://alpine cat /etc/os-release
-        run: apptainer build psi4-1.8.sif docker-daemon:${{ secrets.DOCKERHUB_USERNAME }}/psi4:latest
+        run: apptainer build psi4-1.8.sif docker-daemon:psi4/psi4:latest
 
       - name: Test Apptainer
         if: false
