@@ -1,0 +1,121 @@
+name: Docker
+
+on:
+  push:
+    paths:
+    - 'docker/environment.yaml'
+    - '.github/workflows/Docker.yml'
+
+jobs:
+  build-docker:
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+          - runs-on: 'ubuntu-latest'
+            platform: linux-64
+            python-version: '3.10'
+            tags: 'psi4/psi4:latest,psi4/psi4:1.8.2,psi4/psi4:1.8'
+    defaults:
+      run:
+        shell: bash -l {0}
+    runs-on: ${{ matrix.cfg.runs-on }}
+    name: "🐍 ${{ matrix.cfg.python-version }} • ${{ matrix.cfg.platform }}"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Specialize Python
+        run: |
+            cd docker/
+            sed -i.bak 's/- python=3.8/- python=${{ matrix.cfg.python-version }}/g' environment.yaml
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./docker
+          #file: docker/Dockerfile
+          build-args: |
+            CondaFile=docker/environment.yaml
+          #push: true
+          push: false
+          tags: ${{ matrix.cfg.tags }}
+          #tags: psi4/psi4:latest,psi4/psi4:1.8.0,psi4/psi4:1.8
+          #tags: ${{ secrets.DOCKERHUB_USERNAME }}/psi4:latest
+
+      - name: Test
+        run: |
+          docker run ${{ secrets.DOCKERHUB_USERNAME }}/psi4:latest psi4 --version
+          docker run ${{ secrets.DOCKERHUB_USERNAME }}/psi4:latest pytest -v /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/ --color yes -n auto -m smoke
+ 
+      - name: Set up Apptainer
+        if: false
+        uses: eWaterCycle/setup-apptainer@v2
+        with:
+          apptainer-version: 1.1.2
+ 
+      - name: Run an apptainer container
+        if: false
+        #run: apptainer run docker://alpine cat /etc/os-release
+        run: apptainer build psi4-1.8.sif docker-daemon:${{ secrets.DOCKERHUB_USERNAME }}/psi4:latest
+
+      - name: Test Apptainer
+        if: false
+        run: |
+          apptainer run psi4-1.8.sif psi4 --version
+          apptainer run psi4-1.8.sif pytest -v /opt/conda/lib/python3.10/site-packages/psi4/tests/ --color yes -n auto -m smoke
+ 
+      - name: Archive Apptainer Image
+        if: false
+        #if: ${{ github.repository == 'psi4/psi4' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: apptainer_sif
+          path: |
+            psi4-1.8.sif
+          retention-days: 1
+
+      - name: Push to Sylabs
+        if: false
+        run: apptainer push psi4-1.8.sif library://psi4/psi4/psi4-1.8:latest
+      
+      #$ singularity push my-container.sif library://your-name/project-dir/my-container:latest
+  #singularity push my-container.sif library://your-name/project-dir/my-container:latest
+  #singularity push -U image.sif library://your-username/project-dir/my-container:tags
+  #apptainer push /home/user/my.sif library://user/collection/my.sif:latest
+# #!/bin/bash
+
+# set -eu
+
+# CONDA_FILE="${1}"
+# FILE_BASE="${1//.yaml/}"
+# PROGRAM="${FILE_BASE//_*/}"
+# VERSION="${FILE_BASE//*_/}"
+# MANIFEST="${FILE_BASE}.manifest"
+
+# DOCKER_TAG="${PROGRAM}:${VERSION}"
+
+# if [[ ! -f "${CONDA_FILE}" ]]
+# then
+#   echo "File ${CONDA_FILE} does not exist or is not a file"
+#   exit 1
+# fi
+
+# echo "--------------------------------------------------------"
+# echo "Conda file: ${CONDA_FILE}"
+# echo "Program:    ${PROGRAM}"
+# echo "Version:    ${VERSION}"
+# echo "--------------------------------------------------------"
+
+# docker build . --build-arg CondaFile="${CONDA_FILE}" -t "${DOCKER_TAG}"
+# docker run ${DOCKER_TAG} micromamba list --json > "${MANIFEST}"
+# apptainer build ${FILE_BASE}.sif docker-daemon:${DOCKER_TAG}
