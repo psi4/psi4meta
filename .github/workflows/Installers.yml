@@ -31,6 +31,11 @@ jobs:
             formal_platform: "Linux-x86_64"
             python-version: '3.11'
 
+          - runs-on: ubuntu-latest
+            platform: linux-64
+            formal_platform: "Linux-x86_64"
+            python-version: '3.12'
+
           #########################
 
           - runs-on: macos-latest
@@ -52,6 +57,11 @@ jobs:
             platform: osx-arm64
             formal_platform: "MacOSX-arm64"
             python-version: '3.11'
+
+          - runs-on: macos-latest
+            platform: osx-arm64
+            formal_platform: "MacOSX-arm64"
+            python-version: '3.12'
 
           #########################
 
@@ -75,6 +85,11 @@ jobs:
             formal_platform: "MacOSX-x86_64"
             python-version: '3.11'
 
+          - runs-on: macos-latest
+            platform: osx-64
+            formal_platform: "MacOSX-x86_64"
+            python-version: '3.12'
+
           #########################
 
           - runs-on: windows-latest
@@ -96,6 +111,11 @@ jobs:
             platform: win-64
             formal_platform: "Windows-x86_64"
             python-version: '3.11'
+
+          - runs-on: windows-latest
+            platform: win-64
+            formal_platform: "Windows-x86_64"
+            python-version: '3.12'
 
     env:
       PLATFORM: ${{ matrix.cfg.platform }}

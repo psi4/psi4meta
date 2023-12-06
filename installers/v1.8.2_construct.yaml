@@ -1,6 +1,6 @@
 ###  Configuration
 
-{% set release = "1.9" %}                    # e.g., "1.8" or "1.8.1"
+{% set release = "1.8.2" %}
 
 {% set name = "Psi4conda" %}
 {% set python = "3.8" %}                     # if edit, also edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Installers.yml#L126
@@ -25,8 +25,8 @@ specs:
   - python {{ python }}*
   - psi4 =={{ release }}*
   - pytest-xdist
-  - dftd3-python                                                       # [not (win and py==312)]
-  - dftd4-python                                                       # [py != 312]
+  - dftd3-python
+  - dftd4-python
   - gcp-correction
   - pip
   - miniforge_console_shortcut 1.*           # [win]
@@ -50,3 +50,4 @@ keep_pkgs: false
 license_file: COPYING.LESSER
 
 welcome_image: psi4square.png                # [win]
+
