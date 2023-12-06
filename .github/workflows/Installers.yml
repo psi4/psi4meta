@@ -140,11 +140,23 @@ jobs:
           conda env list
           conda list
 
-      - name: Build Installer
+      - name: Prepare construct.yaml
         run: |
             cd installers/
             sed -i.bak 's/{% set python = "3.8" %}/{% set python = "${{ env.PYVER }}" %}/g' construct.yaml
             sed -i.bak 's/{% set platform = "xxx" %}/{% set platform = "${{ matrix.cfg.formal_platform }}" %}/g' construct.yaml
+            if [[ "${{ matrix.cfg.python-version }}" == 3.12 ]]; then
+                sed -i.bak 's/- dftd4-python/#- dftd4-python/g' construct.yaml
+            fi
+            if [[ "${{ matrix.cfg.platform }}" == win-* ]]; then
+                if [[ "${{ matrix.cfg.python-version }}" == 3.12 ]]; then
+                    sed -i.bak 's/- dftd3-python/#- dftd3-python/g' construct.yaml
+                fi
+            fi
+
+      - name: Build Installer
+        run: |
+            cd installers/
             if [[ "${{ matrix.cfg.platform }}" != win-* ]]; then
                 MICROMAMBA_VERSION=1.3.1
                 MICROMAMBA_BUILD=0
