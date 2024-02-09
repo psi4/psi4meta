@@ -147,6 +147,7 @@ jobs:
             sed -i.bak 's/{% set platform = "xxx" %}/{% set platform = "${{ matrix.cfg.formal_platform }}" %}/g' construct.yaml
             if [[ "${{ matrix.cfg.python-version }}" == 3.12 ]]; then
                 sed -i.bak 's/- dftd4-python/#- dftd4-python/g' construct.yaml
+                sed -i.bak 's/- cppe/#- cppe/g' construct.yaml
             fi
             if [[ "${{ matrix.cfg.platform }}" == win-* ]]; then
                 if [[ "${{ matrix.cfg.python-version }}" == 3.12 ]]; then
