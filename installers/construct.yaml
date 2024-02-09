@@ -31,6 +31,11 @@ specs:
   - gcp-correction
   - pip
   - miniforge_console_shortcut 1.*           # [win]
+  - adcc                                     # [unix]
+  - cppe                                     # [unix]
+  - pyddx                                    # [unix]
+  - pylibefp
+  - geometric
 
 channels: &id1
   #- conda-forge/label/psi4_dev
