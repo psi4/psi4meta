@@ -26,7 +26,8 @@ specs:
   - psi4 =={{ release }}*
   - pytest-xdist
   - dftd3-python                                                       # subject to GHA logic for missing win+py312 packages
-  - dftd4-python                                                       # subject to GHA logic for missing py312 packages
+  - dftd4-python 3.6                         # [not win]               # subject to GHA logic for missing py312 packages
+  - dftd4-python 3.4                         # [win]
   - gcp-correction
   - pip
   - miniforge_console_shortcut 1.*           # [win]
