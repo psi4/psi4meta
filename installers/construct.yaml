@@ -32,7 +32,7 @@ specs:
   - pip
   - miniforge_console_shortcut 1.*           # [win]
   - adcc                                     # [unix]
-  - cppe                                     # [unix]
+  - cppe                                     # [unix]                  # subject to GHA logic for missing py312 packages for constraint
   - pyddx                                    # [unix]
   - pylibefp
   - geometric
