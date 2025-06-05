@@ -12,7 +12,6 @@
 
 ###  Recipe
 
-
 name: {{ name }}
 version: {{ release }}
 
