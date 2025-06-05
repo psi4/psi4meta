@@ -14,17 +14,12 @@ jobs:
           - runs-on: ubuntu-latest
             platform: linux-64
             formal_platform: "Linux-x86_64"
-            python-version: 3.8
-
-          - runs-on: ubuntu-latest
-            platform: linux-64
-            formal_platform: "Linux-x86_64"
             python-version: 3.9
 
           - runs-on: ubuntu-latest
             platform: linux-64
             formal_platform: "Linux-x86_64"
-            python-version: '3.10'
+            python-version: 3.10
 
           - runs-on: ubuntu-latest
             platform: linux-64
@@ -36,12 +31,12 @@ jobs:
             formal_platform: "Linux-x86_64"
             python-version: '3.12'
 
-          #########################
+          - runs-on: ubuntu-latest
+            platform: linux-64
+            formal_platform: "Linux-x86_64"
+            python-version: '3.13'
 
-          - runs-on: macos-latest
-            platform: osx-arm64
-            formal_platform: "MacOSX-arm64"
-            python-version: '3.8'
+          #########################
 
           - runs-on: macos-latest
             platform: osx-arm64
@@ -63,12 +58,12 @@ jobs:
             formal_platform: "MacOSX-arm64"
             python-version: '3.12'
 
-          #########################
-
           - runs-on: macos-latest
-            platform: osx-64
-            formal_platform: "MacOSX-x86_64"
-            python-version: 3.8
+            platform: osx-arm64
+            formal_platform: "MacOSX-arm64"
+            python-version: '3.13'
+
+          #########################
 
           - runs-on: macos-latest
             platform: osx-64
@@ -78,7 +73,7 @@ jobs:
           - runs-on: macos-latest
             platform: osx-64
             formal_platform: "MacOSX-x86_64"
-            python-version: '3.10'
+            python-version: 3.10
 
           - runs-on: macos-latest
             platform: osx-64
@@ -90,12 +85,12 @@ jobs:
             formal_platform: "MacOSX-x86_64"
             python-version: '3.12'
 
-          #########################
+          - runs-on: macos-latest
+            platform: osx-64
+            formal_platform: "MacOSX-x86_64"
+            python-version: '3.13'
 
-          - runs-on: windows-latest
-            platform: win-64
-            formal_platform: "Windows-x86_64"
-            python-version: '3.8'
+          #########################
 
           - runs-on: windows-latest
             platform: win-64
@@ -116,6 +111,11 @@ jobs:
             platform: win-64
             formal_platform: "Windows-x86_64"
             python-version: '3.12'
+
+          - runs-on: windows-latest
+            platform: win-64
+            formal_platform: "Windows-x86_64"
+            python-version: '3.13'
 
     env:
       PLATFORM: ${{ matrix.cfg.platform }}
@@ -143,7 +143,7 @@ jobs:
       - name: Prepare construct.yaml
         run: |
             cd installers/
-            sed -i.bak 's/{% set python = "3.8" %}/{% set python = "${{ env.PYVER }}" %}/g' construct.yaml
+            sed -i.bak 's/{% set python = "3.12" %}/{% set python = "${{ env.PYVER }}" %}/g' construct.yaml
             sed -i.bak 's/{% set platform = "xxx" %}/{% set platform = "${{ matrix.cfg.formal_platform }}" %}/g' construct.yaml
             if [[ "${{ matrix.cfg.python-version }}" == 3.12 ]]; then
                 sed -i.bak 's/- dftd4-python/#- dftd4-python/g' construct.yaml
