@@ -18,6 +18,7 @@ version: {{ release }}
 {% set ext = "sh" %}                         # [unix]
 {% set ext = "exe" %}                        # [win]
 
+
 installer_filename: {{ name }}-{{ release }}-py{{ python | replace(".", "") }}-{{ platform }}.{{ ext }}
 
 specs:
@@ -34,6 +35,8 @@ specs:
   - pyddx                                    # [unix]
   - pylibefp
   - geometric
+  - libgcc <14.3                             # [win]
+  - setuptools <80.9
 
 channels: &id1
   #- conda-forge/label/psi4_dev
