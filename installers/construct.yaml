@@ -1,5 +1,6 @@
 ###  Configuration
 
+
 {% set release = "1.9.1" %}                    # e.g., "1.8" or "1.8.1"
 
 {% set name = "Psi4conda" %}

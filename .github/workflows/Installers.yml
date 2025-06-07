@@ -16,25 +16,6 @@ jobs:
             formal_platform: "Linux-x86_64"
             python-version: '3.9'
 
-          - runs-on: ubuntu-latest
-            platform: linux-64
-            formal_platform: "Linux-x86_64"
-            python-version: '3.10'
-
-          - runs-on: ubuntu-latest
-            platform: linux-64
-            formal_platform: "Linux-x86_64"
-            python-version: '3.11'
-
-          - runs-on: ubuntu-latest
-            platform: linux-64
-            formal_platform: "Linux-x86_64"
-            python-version: '3.12'
-
-          - runs-on: ubuntu-latest
-            platform: linux-64
-            formal_platform: "Linux-x86_64"
-            python-version: '3.13'
 
           #########################
 
@@ -43,25 +24,6 @@ jobs:
             formal_platform: "MacOSX-arm64"
             python-version: '3.9'
 
-          - runs-on: macos-latest
-            platform: osx-arm64
-            formal_platform: "MacOSX-arm64"
-            python-version: '3.10'
-
-          - runs-on: macos-latest
-            platform: osx-arm64
-            formal_platform: "MacOSX-arm64"
-            python-version: '3.11'
-
-          - runs-on: macos-latest
-            platform: osx-arm64
-            formal_platform: "MacOSX-arm64"
-            python-version: '3.12'
-
-          - runs-on: macos-latest
-            platform: osx-arm64
-            formal_platform: "MacOSX-arm64"
-            python-version: '3.13'
 
           #########################
 
@@ -70,25 +32,6 @@ jobs:
             formal_platform: "MacOSX-x86_64"
             python-version: '3.9'
 
-          - runs-on: macos-latest
-            platform: osx-64
-            formal_platform: "MacOSX-x86_64"
-            python-version: '3.10'
-
-          - runs-on: macos-latest
-            platform: osx-64
-            formal_platform: "MacOSX-x86_64"
-            python-version: '3.11'
-
-          - runs-on: macos-latest
-            platform: osx-64
-            formal_platform: "MacOSX-x86_64"
-            python-version: '3.12'
-
-          - runs-on: macos-latest
-            platform: osx-64
-            formal_platform: "MacOSX-x86_64"
-            python-version: '3.13'
 
           #########################
 
@@ -97,25 +40,13 @@ jobs:
             formal_platform: "Windows-x86_64"
             python-version: '3.9'
 
-          - runs-on: windows-latest
-            platform: win-64
-            formal_platform: "Windows-x86_64"
-            python-version: '3.10'
 
-          - runs-on: windows-latest
-            platform: win-64
-            formal_platform: "Windows-x86_64"
-            python-version: '3.11'
+          #########################
 
-          - runs-on: windows-latest
-            platform: win-64
-            formal_platform: "Windows-x86_64"
-            python-version: '3.12'
-
-          - runs-on: windows-latest
-            platform: win-64
-            formal_platform: "Windows-x86_64"
-            python-version: '3.13'
+          - runs-on: ubuntu-latest
+            platform: linux-aarch64
+            formal_platform: "Linux-aarch64"
+            python-version: '3.9'
 
     env:
       PLATFORM: ${{ matrix.cfg.platform }}
@@ -145,15 +76,15 @@ jobs:
             cd installers/
             sed -i.bak 's/{% set python = "3.12" %}/{% set python = "${{ env.PYVER }}" %}/g' construct.yaml
             sed -i.bak 's/{% set platform = "xxx" %}/{% set platform = "${{ matrix.cfg.formal_platform }}" %}/g' construct.yaml
-            if [[ "${{ matrix.cfg.python-version }}" == 3.12 ]]; then
-                sed -i.bak 's/- dftd4-python/#- dftd4-python/g' construct.yaml
-                sed -i.bak 's/- cppe/#- cppe/g' construct.yaml
-            fi
-            if [[ "${{ matrix.cfg.platform }}" == win-* ]]; then
-                if [[ "${{ matrix.cfg.python-version }}" == 3.12 ]]; then
-                    sed -i.bak 's/- dftd3-python/#- dftd3-python/g' construct.yaml
-                fi
-            fi
+            # if [[ "${{ matrix.cfg.python-version }}" == 3.12 ]]; then
+            #     sed -i.bak 's/- dftd4-python/#- dftd4-python/g' construct.yaml
+            #     sed -i.bak 's/- cppe/#- cppe/g' construct.yaml
+            # fi
+            # if [[ "${{ matrix.cfg.platform }}" == win-* ]]; then
+            #     if [[ "${{ matrix.cfg.python-version }}" == 3.12 ]]; then
+            #         sed -i.bak 's/- dftd3-python/#- dftd3-python/g' construct.yaml
+            #     fi
+            # fi
 
       - name: Build Installer
         run: |
@@ -194,7 +125,7 @@ jobs:
           retention-days: 1
 
       - name: Install Installer
-        if: matrix.cfg.platform != 'osx-arm64'
+        # if: matrix.cfg.platform != 'osx-arm64'
         uses: conda-incubator/setup-miniconda@v3
         with:
           installer-url: file://${{ github.workspace }}/installers/${{ env.ARTIFACT }}
@@ -202,7 +133,7 @@ jobs:
           activate-environment: ""
 
       - name: Test Installer
-        if: matrix.cfg.platform != 'osx-arm64'
+        # if: matrix.cfg.platform != 'osx-arm64'
         run: |
           conda info
           conda list
@@ -214,3 +145,26 @@ jobs:
             psi4 --test -n2
           fi
 
+  collect-artifacts:
+    runs-on: ubuntu-latest
+    needs: [build-installers]
+    steps:
+      - name: Get list of artifacts for this run
+        id: get-artifacts
+        run: |
+          artifacts=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts --paginate)
+          echo "$artifacts" > artifacts.json
+          echo "Artifacts JSON saved."
+          cat artifacts.json
+
+      - name: Filter artifact IDs from job 'build-installers'
+        id: filter-artifacts
+        run: |
+          ids=$(jq '[.artifacts[] | select(.name | test("^build-installers-")) | .id]' artifacts.json)
+          echo "$ids"
+          echo "ids=$ids" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Output result
+        run: echo "Artifact IDs: ${{ steps.filter-artifacts.outputs.ids }}"
