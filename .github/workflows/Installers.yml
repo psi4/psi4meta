@@ -146,7 +146,7 @@ jobs:
       - name: Filter artifact IDs from job 'build-installers'
         id: filter-artifacts
         run: |
-          ids=$(jq '[.artifacts[] | select(.name | test("^build-installers-")) | .id]' artifacts.json)
+          ids=$(jq '[.artifacts[] | select(.name) | .id]' artifacts.json)
           echo "$ids"
           echo "ids=$ids" >> "$GITHUB_OUTPUT"
         env:
