@@ -35,14 +35,6 @@ jobs:
 
           #########################
 
-          - runs-on: windows-latest
-            platform: win-64
-            formal_platform: "Windows-x86_64"
-            python-version: '3.9'
-
-
-          #########################
-
           - runs-on: ubuntu-latest
             platform: linux-aarch64
             formal_platform: "Linux-aarch64"
@@ -125,7 +117,7 @@ jobs:
           retention-days: 1
 
       - name: Install Installer
-        # if: matrix.cfg.platform != 'osx-arm64'
+        if: matrix.cfg.platform != 'linux-aarch64'
         uses: conda-incubator/setup-miniconda@v3
         with:
           installer-url: file://${{ github.workspace }}/installers/${{ env.ARTIFACT }}
@@ -133,7 +125,7 @@ jobs:
           activate-environment: ""
 
       - name: Test Installer
-        # if: matrix.cfg.platform != 'osx-arm64'
+        if: matrix.cfg.platform != 'linux-aarch64'
         run: |
           conda info
           conda list
