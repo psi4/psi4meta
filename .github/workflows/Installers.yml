@@ -167,4 +167,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Output result
-        run: echo "Artifact IDs: ${{ steps.filter-artifacts.outputs.ids }}"
+        run: |
+          echo "Artifact IDs: ${{ steps.filter-artifacts.outputs.ids }}"
+
