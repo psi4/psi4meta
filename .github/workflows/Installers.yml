@@ -27,14 +27,6 @@ jobs:
 
           #########################
 
-          - runs-on: macos-latest
-            platform: osx-64
-            formal_platform: "MacOSX-x86_64"
-            python-version: '3.9'
-
-
-          #########################
-
           - runs-on: ubuntu-latest
             platform: linux-aarch64
             formal_platform: "Linux-aarch64"
@@ -143,6 +135,8 @@ jobs:
     steps:
       - name: Get list of artifacts for this run
         id: get-artifacts
+        env:
+            GH_TOKEN: ${{ github.token }}
         run: |
           artifacts=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts --paginate)
           echo "$artifacts" > artifacts.json
