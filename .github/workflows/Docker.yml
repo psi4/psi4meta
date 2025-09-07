@@ -14,8 +14,8 @@ jobs:
         cfg:
           - runs-on: ubuntu-latest
             platform: linux-64
-            python-version: '3.10'
-            tags: 'psi4/psi4:latest,psi4/psi4:1.9.1,psi4/psi4:1.9'
+            python-version: '3.12'
+            tags: 'psi4/psi4:latest,psi4/psi4:1.10.0,psi4/psi4:1.10'
     defaults:
       run:
         shell: bash -l {0}
