@@ -7,7 +7,7 @@ dependencies:
   # don't edit python version below. it's controlled by edit https://github.com/psi4/psi4meta/blob/master/.github/workflows/Docker.yml#L17
   - python=3.8     
   - psi4
-  - libint
+  # - libint
   
   - pytest-xdist
   - dftd3-python

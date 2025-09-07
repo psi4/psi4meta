@@ -54,14 +54,16 @@ jobs:
       - name: Test
         run: |
           docker run psi4/psi4:latest psi4 --version
+          docker run psi4/psi4:latest psi4 -o stdout -i /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/tu1-h2o-energy/input.dat
+          docker run psi4/psi4:latest psi4 -o stdout -i /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/dftd4/energy/input.dat
           docker run psi4/psi4:latest pytest -v /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/ --color yes -n auto -m smoke
- 
+
       - name: Set up Apptainer
         if: false
         uses: eWaterCycle/setup-apptainer@v2
         with:
           apptainer-version: 1.1.2
- 
+
       - name: Run an apptainer container
         if: false
         #run: apptainer run docker://alpine cat /etc/os-release
@@ -72,7 +74,7 @@ jobs:
         run: |
           apptainer run psi4-1.8.sif psi4 --version
           apptainer run psi4-1.8.sif pytest -v /opt/conda/lib/python3.10/site-packages/psi4/tests/ --color yes -n auto -m smoke
- 
+
       - name: Archive Apptainer Image
         if: false
         uses: actions/upload-artifact@v4
