@@ -10,7 +10,8 @@ dependencies:
   # - libint
   
   - pytest-xdist
-  - dftd3-python
-  - dftd4-python
-  - toml
-  - gcp-correction
+  # DFT-D3 C extension unimportable, cannot use C-API
+  # - dftd3-python
+  # - dftd4-python
+  # - toml
+  # - gcp-correction

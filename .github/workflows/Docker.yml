@@ -14,7 +14,7 @@ jobs:
         cfg:
           - runs-on: ubuntu-latest
             platform: linux-64
-            python-version: '3.10'
+            python-version: '3.12'
             tags: 'psi4/psi4:latest,psi4/psi4:1.10.0,psi4/psi4:1.10'
     defaults:
       run:
@@ -55,7 +55,7 @@ jobs:
         run: |
           docker run psi4/psi4:latest psi4 --version
           docker run psi4/psi4:latest psi4 -o stdout -i /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/tu1-h2o-energy/input.dat
-          docker run psi4/psi4:latest psi4 -o stdout -i /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/dftd4/energy/input.dat
+          # docker run psi4/psi4:latest psi4 -o stdout -i /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/dftd4/energy/input.dat
           docker run psi4/psi4:latest pytest -v /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/ --color yes -n auto -m smoke
 
       - name: Set up Apptainer
