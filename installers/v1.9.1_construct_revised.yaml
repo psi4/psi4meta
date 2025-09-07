@@ -1,6 +1,6 @@
 ###  Configuration
 
-{% set release = "1.10" %}                    # e.g., "1.8" or "1.8.1"
+{% set release = "1.9.1" %}                    # e.g., "1.8" or "1.8.1"
 
 
 {% set name = "Psi4conda" %}
@@ -36,6 +36,8 @@ specs:
   - pyddx                                    # [unix]
   - pylibefp
   - geometric
+  - libgcc <14.3                             # [win]
+  - setuptools <80.9
 
 channels: &id1
   #- conda-forge/label/psi4_dev
