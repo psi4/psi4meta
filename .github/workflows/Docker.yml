@@ -47,9 +47,9 @@ jobs:
           context: ./docker
           build-args: |
             CondaFile=environment.yaml
-          push: true
+          #push: true
+          push: false
           tags: ${{ matrix.cfg.tags }}
-          #tags: psi4/psi4:latest,psi4/psi4:1.8.0,psi4/psi4:1.8
 
       - name: Test
         run: |
@@ -59,29 +59,29 @@ jobs:
           docker run psi4/psi4:latest pytest -v /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/ --color yes -n auto -m smoke
 
       - name: Set up Apptainer
-        if: false
+        if: true
         uses: eWaterCycle/setup-apptainer@v2
         with:
           apptainer-version: 1.1.2
 
       - name: Run an apptainer container
-        if: false
+        if: true
         #run: apptainer run docker://alpine cat /etc/os-release
-        run: apptainer build psi4-1.8.sif docker-daemon:psi4/psi4:latest
+        run: apptainer build psi4-1.10.sif docker-daemon:psi4/psi4:latest
 
       - name: Test Apptainer
-        if: false
+        if: true
         run: |
-          apptainer run psi4-1.8.sif psi4 --version
-          apptainer run psi4-1.8.sif pytest -v /opt/conda/lib/python3.10/site-packages/psi4/tests/ --color yes -n auto -m smoke
+          apptainer run psi4-1.10.sif psi4 --version
+          apptainer run psi4-1.10.sif pytest -v /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/ --color yes -n auto -m smoke
 
       - name: Archive Apptainer Image
-        if: false
+        if: true
         uses: actions/upload-artifact@v4
         with:
           name: apptainer_sif
           path: |
-            psi4-1.8.sif
+            psi4-1.10.sif
           retention-days: 1
 
       - name: Push to Sylabs
