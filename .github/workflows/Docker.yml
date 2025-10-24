@@ -47,7 +47,7 @@ jobs:
           context: ./docker
           build-args: |
             CondaFile=environment.yaml
-          #push: true
+          #push: true  # TODO edit this for any new Psi4
           push: false
           tags: ${{ matrix.cfg.tags }}
 
@@ -82,7 +82,7 @@ jobs:
           name: apptainer_sif
           path: |
             psi4-1.10.sif
-          retention-days: 1
+          retention-days: 30
 
       - name: Push to Sylabs
         if: false
