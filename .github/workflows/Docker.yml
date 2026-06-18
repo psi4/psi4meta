@@ -47,8 +47,8 @@ jobs:
           context: ./docker
           build-args: |
             CondaFile=environment.yaml
-          #push: true  # TODO edit this for any new Psi4
-          push: false
+          push: true  # TODO edit this for any new Psi4
+          #push: false
           tags: ${{ matrix.cfg.tags }}
 
       - name: Test
