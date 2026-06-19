@@ -15,7 +15,7 @@ jobs:
           - runs-on: ubuntu-latest
             platform: linux-64
             python-version: '3.12'
-            tags: 'psi4/psi4:latest,psi4/psi4:1.10.1,psi4/psi4:1.10'
+            tags: 'psi4/psi4:latest,psi4/psi4:1.10.2,psi4/psi4:1.10'
     defaults:
       run:
         shell: bash -l {0}
