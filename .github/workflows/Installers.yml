@@ -220,8 +220,8 @@ jobs:
           path: installers/${{ env.ARTIFACT }}
           retention-days: 1
 
-      - name: Install Installer
-        if: matrix.cfg.platform != 'linux-aarch64'
+      - name: Install Installer (L & W)
+        if: matrix.cfg.platform != 'linux-aarch64' && !startsWith(matrix.cfg.platform, 'osx-')
         uses: conda-incubator/setup-miniconda@v4
         with:
           installer-url: file://${{ github.workspace }}/installers/${{ env.ARTIFACT }}
@@ -229,20 +229,41 @@ jobs:
           auto-activate-base: true
           activate-environment: ""
 
-      - name: Test Installer
-        if: matrix.cfg.platform != 'linux-aarch64'
+      - name: Install Installer (M)
+        if: startsWith(matrix.cfg.platform, 'osx-')
+        run: |
+          INSTALL_PREFIX="$RUNNER_TEMP/psi4-installer"
+          rm -rf "$INSTALL_PREFIX"
+          bash "${{ github.workspace }}/installers/${{ env.ARTIFACT }}" -b -p "$INSTALL_PREFIX"
+          echo "PSI4_INSTALL_PREFIX=$INSTALL_PREFIX" >> $GITHUB_ENV
+
+      - name: Test Installer (L & W)
+        if: matrix.cfg.platform != 'linux-aarch64' && !startsWith(matrix.cfg.platform, 'osx-')
         run: |
           conda info
           conda list
           which conda python psi4
-          python --version
-          python -c "import sys; print(sys.executable)"
           psi4 --version
           if [[ "${{ runner.os }}" == "Windows" ]]; then
             psi4 --test=smoke_not_d2ints -n2
           else
             psi4 --test -n2
           fi
+
+      - name: Test Installer (M)
+        # isolated prefix b/c late June 2026 Mac started mixing pythons)
+        if: startsWith(matrix.cfg.platform, 'osx-')
+        run: |
+          source "$PSI4_INSTALL_PREFIX/bin/activate"
+          conda info
+          conda list
+          which conda python psi4
+          python --version
+          python -c "import sys, site; print(sys.executable); print(site.getsitepackages())"
+          python -c "import psi4; print(psi4.__file__)"
+          python -c "import pydantic_core; print(pydantic_core.__file__)"
+          psi4 --version
+          psi4 --test -n2
 
   collect-artifacts:
     runs-on: ubuntu-latest

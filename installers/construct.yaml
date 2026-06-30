@@ -20,7 +20,6 @@ version: {{ release }}
 
 installer_filename: {{ name }}-{{ release }}-py{{ python | replace(".", "") }}-{{ platform }}.{{ ext }}
 
-
 specs:
   - conda
   - python {{ python }}*
