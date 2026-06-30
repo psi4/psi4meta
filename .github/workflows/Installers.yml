@@ -31,10 +31,10 @@ jobs:
             formal_platform: "Linux-x86_64"
             python-version: '3.13'
 
-          #- runs-on: ubuntu-latest
-          #  platform: linux-64
-          #  formal_platform: "Linux-x86_64"
-          #  python-version: '3.14'
+          - runs-on: ubuntu-latest
+            platform: linux-64
+            formal_platform: "Linux-x86_64"
+            python-version: '3.14'
 
           #########################
 
@@ -58,10 +58,10 @@ jobs:
             formal_platform: "MacOSX-arm64"
             python-version: '3.13'
 
-          #- runs-on: macos-latest
-          #  platform: osx-arm64
-          #  formal_platform: "MacOSX-arm64"
-          #  python-version: '3.14'
+          - runs-on: macos-latest
+            platform: osx-arm64
+            formal_platform: "MacOSX-arm64"
+            python-version: '3.14'
 
           #########################
 
@@ -85,10 +85,10 @@ jobs:
             formal_platform: "MacOSX-x86_64"
             python-version: '3.13'
 
-          #- runs-on: macos-latest
-          #  platform: osx-64
-          #  formal_platform: "MacOSX-x86_64"
-          #  python-version: '3.14'
+          - runs-on: macos-latest
+            platform: osx-64
+            formal_platform: "MacOSX-x86_64"
+            python-version: '3.14'
 
           #########################
 
@@ -112,10 +112,10 @@ jobs:
             formal_platform: "Windows-x86_64"
             python-version: '3.13'
 
-          #- runs-on: windows-latest
-          #  platform: win-64
-          #  formal_platform: "Windows-x86_64"
-          #  python-version: '3.14'
+          - runs-on: windows-latest
+            platform: win-64
+            formal_platform: "Windows-x86_64"
+            python-version: '3.14'
 
           #########################
 
@@ -139,10 +139,10 @@ jobs:
             formal_platform: "Linux-aarch64"
             python-version: '3.13'
 
-          #- runs-on: ubuntu-latest
-          #  platform: linux-aarch64
-          #  formal_platform: "Linux-aarch64"
-          #  python-version: '3.14'
+          - runs-on: ubuntu-latest
+            platform: linux-aarch64
+            formal_platform: "Linux-aarch64"
+            python-version: '3.14'
 
     env:
       PLATFORM: ${{ matrix.cfg.platform }}

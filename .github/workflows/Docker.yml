@@ -15,7 +15,7 @@ jobs:
           - runs-on: ubuntu-latest
             platform: linux-64
             python-version: '3.12'
-            tags: 'psi4/psi4:latest,psi4/psi4:1.10.2,psi4/psi4:1.10'
+            tags: 'psi4/psi4:latest,psi4/psi4:1.11.0,psi4/psi4:1.11'
     defaults:
       run:
         shell: bash -l {0}
@@ -70,13 +70,13 @@ jobs:
       - name: Run an apptainer container
         if: true
         #run: apptainer run docker://alpine cat /etc/os-release
-        run: apptainer build psi4-1.10.sif docker-daemon:psi4/psi4:latest
+        run: apptainer build psi4-1.11.sif docker-daemon:psi4/psi4:latest
 
       - name: Test Apptainer
         if: true
         run: |
-          apptainer run psi4-1.10.sif psi4 --version
-          apptainer run psi4-1.10.sif pytest -v /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/ --color yes -n auto -m smoke
+          apptainer run psi4-1.11.sif psi4 --version
+          apptainer run psi4-1.11.sif pytest -v /opt/conda/lib/python${{ matrix.cfg.python-version }}/site-packages/psi4/tests/ --color yes -n auto -m smoke
 
       - name: Archive Apptainer Image
         if: true
@@ -84,7 +84,7 @@ jobs:
         with:
           name: apptainer_sif
           path: |
-            psi4-1.10.sif
+            psi4-1.11.sif
           retention-days: 30
 
       - name: Push to Sylabs
