@@ -226,7 +226,6 @@ jobs:
         with:
           installer-url: file://${{ github.workspace }}/installers/${{ env.ARTIFACT }}
           auto-update-conda: false
-          python-version: ${{ matrix.cfg.python-version }}
           auto-activate-base: true
           activate-environment: ""
 
@@ -236,6 +235,8 @@ jobs:
           conda info
           conda list
           which conda python psi4
+          python --version
+          python -c "import sys; print(sys.executable)"
           psi4 --version
           if [[ "${{ runner.os }}" == "Windows" ]]; then
             psi4 --test=smoke_not_d2ints -n2
