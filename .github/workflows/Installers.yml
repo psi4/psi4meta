@@ -163,7 +163,11 @@ jobs:
 
       - name: Environment Information
         run: |
-          conda install -y -q -c conda-forge constructor jinja2 curl libarchive #conda-standalone
+          if [[ "${{ matrix.cfg.platform }}" == osx-* ]]; then
+            conda install -y -q -c conda-forge constructor=3.9.3 jinja2 curl libarchive #conda-standalone
+          else
+            conda install -y -q -c conda-forge constructor jinja2 curl libarchive #conda-standalone
+          fi
           conda env list
           conda list
 
@@ -225,7 +229,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v4
         with:
           installer-url: file://${{ github.workspace }}/installers/${{ env.ARTIFACT }}
-          auto-activate-base: true
+          auto-activate-base: false
           activate-environment: ""
 
       - name: Test Installer
