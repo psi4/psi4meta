@@ -65,27 +65,27 @@ jobs:
 
           #########################
 
-          - runs-on: macos-latest
+          - runs-on: macos-15-intel
             platform: osx-64
             formal_platform: "MacOSX-x86_64"
             python-version: '3.10'
 
-          - runs-on: macos-latest
+          - runs-on: macos-15-intel
             platform: osx-64
             formal_platform: "MacOSX-x86_64"
             python-version: '3.11'
 
-          - runs-on: macos-latest
+          - runs-on: macos-15-intel
             platform: osx-64
             formal_platform: "MacOSX-x86_64"
             python-version: '3.12'
 
-          - runs-on: macos-latest
+          - runs-on: macos-15-intel
             platform: osx-64
             formal_platform: "MacOSX-x86_64"
             python-version: '3.13'
 
-          - runs-on: macos-latest
+          - runs-on: macos-15-intel
             platform: osx-64
             formal_platform: "MacOSX-x86_64"
             python-version: '3.14'
@@ -186,7 +186,7 @@ jobs:
         run: |
             cd installers/
             if [[ "${{ matrix.cfg.platform }}" != win-* ]]; then
-                MICROMAMBA_VERSION=1.3.1
+                MICROMAMBA_VERSION=2.8.1
                 MICROMAMBA_BUILD=0
                 #mkdir "${TEMP_DIR}/micromamba"
                 #pushd "${TEMP_DIR}/micromamba"
